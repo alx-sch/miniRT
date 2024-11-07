@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/07 17:15:34 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/07 17:20:56 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,8 +137,9 @@ $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
 	@echo "| '  \| | ' \| |   / | | "
 	@echo "|_|_|_|_|_||_|_|_|_\ |_|  "
 
-	@echo -n "$(RESET)"
+	@echo "$(RESET)"
 
+	@echo "by Natalie Holbrook & Alex Schenk @42Berlin, December 2024"
 	@echo "\n$(BOLD)$(YELLOW)Usage: './$(NAME) <scene.rt>'$(RESET)"
 
 ############################
