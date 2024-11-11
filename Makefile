@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/07 17:21:45 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/11 17:45:22 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -171,21 +171,33 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)
 # RULES #
 #########
 
-# Target to remove all generated files BUT the program executable.
+# Target to remove all generated files BUT the program executable and compiled libraries.
 clean:
 	@rm -rf $(OBJS_DIR)
-	@rm -rf $(MLX_DIR)
-	@make -s -C $(LIBFT_DIR) fclean  >/dev/null 2>&1
-	@echo "$(BOLD)$(RED)Object and library files removed.$(RESET)"
+	@make -s -C $(LIBFT_DIR) clean  >/dev/null 2>&1
+	@rm -rf $(MLX_DIR)/obj
+	@echo "$(BOLD)$(RED)Object files removed.$(RESET)"
 
-# Target to remove all generated files and the program executable.
+# Target to remove all generated files and the program executable (NOT the compiled libraries).
 fclean:	clean
 	@rm -f $(NAME)
 	@echo "$(BOLD)$(RED)$(NAME) removed.$(RESET)"
 
-# Target to remove all generated files, the program executable,
+# Target to remove all generated files and the program executable (NOT the compiled libraries).
+fclean_all:	fclean
+	@make -s -C $(LIBFT_DIR) fclean  >/dev/null 2>&1
+	@rm -rf $(MLX_DIR)
+	@echo "$(BOLD)$(RED)Library files removed.$(RESET)"
+
+# Target to remove all object files, the program executable,
 # and then rebuild the program.
 re:	fclean
+	@echo ""
+	@$(MAKE) -s all
+
+# Target to remove all object files, the program executable, and the compiled libraries,
+# and then rebuild the program.
+re_all:	fclean_all
 	@echo ""
 	@$(MAKE) -s all
 
