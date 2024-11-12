@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/12 17:38:19 by aschenk          ###   ########.fr       */
+/*   Created: 2024/04/15 15:55:16 by aschenk           #+#    #+#             */
+/*   Updated: 2024/11/12 17:42:03 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#ifndef ERRORS_H
+# define ERRORS_H
 
-int	main(void)
-{
-	t_rt	*rt;
+# define ERR_COLOR			"\033[91m\033[1m" // red and bold
+# define RESET			"\033[0m"
 
-	rt = malloc(sizeof(t_rt));
-	if (!rt)
-		perror_and_exit(ERR_MALLOC, rt);
-	init_mlx(rt);
-	printf("miniRT!\n");
-	free_rt(&rt);
-	return (0);
-}
+# define ERR_ARG			"ERROR: Invalid usage! Use: ./minirt map_file.fdf\n"
+# define ERR_FILE_TYPE		"ERROR: Invalid file format! Use: .fdf\n"
+# define ERR_MLX			"ERROR: MLX"
+# define ERR_MALLOC			"ERROR: malloc() failed"
+
+#endif
