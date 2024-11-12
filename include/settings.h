@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/12 17:38:19 by aschenk          ###   ########.fr       */
+/*   Created: 2024/11/12 16:53:33 by aschenk           #+#    #+#             */
+/*   Updated: 2024/11/12 16:55:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#ifndef SETTINGS_H
+# define SETTINGS_H
 
-int	main(void)
-{
-	t_rt	*rt;
+# define WINDOW_W		1440
+# define WINDOW_H		900
+# define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
 
-	rt = malloc(sizeof(t_rt));
-	if (!rt)
-		perror_and_exit(ERR_MALLOC, rt);
-	init_mlx(rt);
-	printf("miniRT!\n");
-	free_rt(&rt);
-	return (0);
-}
+#endif

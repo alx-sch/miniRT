@@ -6,20 +6,26 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/11 17:45:22 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/12 17:06:40 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			miniRT
 
 SRCS_DIR :=		src
-SRCS :=			$(SRCS_DIR)/main.c
+SRCS :=			$(SRCS_DIR)/main.c \
+				$(SRCS_DIR)/utils.c \
+				$(SRCS_DIR)/init.c \
+				$(SRCS_DIR)/free.c
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 HDRS_DIR :=		include
-HDRS := 		$(HDRS_DIR)/main.h
+HDRS := 		$(HDRS_DIR)/main.h \
+				$(HDRS_DIR)/settings.h \
+				$(HDRS_DIR)/errors.h \
+				$(HDRS_DIR)/types.h
 
 # LIBFT
 LIBFT_DIR :=	lib/libft
@@ -36,8 +42,7 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
 CFLAGS +=		-Wpedantic
-CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
-CFLAGS +=		-g
+CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) # look for headers in these directories
 
 # For compilation progress bar
 TOTAL_SRCS :=	$(words $(SRCS))
