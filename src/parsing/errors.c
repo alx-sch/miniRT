@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/12 16:40:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/12 18:24:21 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,10 @@ void	errors_parsing(int error_code)
 	{
 		perror("Error\nCan't access scene description file");
 		exit(3);
+	}
+	if (error_code == 4)
+	{
+		ft_putstr_fd("Error\nSome error with file.\n", 2);
+		exit(4);
 	}
 }
