@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/12 16:39:22 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/11/12 16:40:07 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "main.h"
 
-# include <unistd.h>	// for open(), close(), read(), write()
-# include <stdio.h>		// for printf(), perror()
-# include <string.h>	// for strerror()
-# include <stdlib.h>	// for malloc(), free(), exit()
-# include "libft.h"
-
-// PARSING
-void	parsing(int argc, char **argv);
-void	errors_parsing(int error_code);
-
-#endif
+void	errors_parsing(int error_code)
+{
+	if (error_code == 1)
+	{
+		ft_putstr_fd("Error\nUsage: ./miniRT <scene.rt>\n", 2);
+		exit(1);
+	}
+	if (error_code == 2)
+	{
+		ft_putstr_fd("Error\nFile extension must be of type '.rt'.\n", 2);
+		exit(2);
+	}
+	if (error_code == 3)
+	{
+		perror("Error\nCan't access scene description file");
+		exit(3);
+	}
+}

@@ -1,0 +1,14 @@
+1. Why do you want to represent directions without considering magnitude?
+
+Representing directions without considering magnitude is useful because it allows you to focus solely on the direction an object is pointing or moving. 
+This is important in scenarios like:
+- Lighting in computer graphics: To calculate how light interacts with surfaces, you need the direction of light rays, not their intensity.
+- Physics simulations: To determine the direction of forces or velocities without being affected by their strength.
+- Navigation and orientation: To understand the direction of movement or orientation without considering speed or distance.
+By normalizing vectors, you ensure that calculations involving directions are consistent and independent of the vector's original length.
+
+2. Why is there an issue if it's not normalized?
+
+If a vector is not normalized, calculations that depend on direction can be skewed by the vector's magnitude. For example, in lighting calculations,
+an unnormalized vector can incorrectly affect the intensity of light on a surface.
+Normalizing ensures that only the direction is considered, leading to accurate and consistent results.

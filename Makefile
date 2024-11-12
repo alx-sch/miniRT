@@ -3,17 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/11 17:45:22 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/12 16:39:09 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			miniRT
 
 SRCS_DIR :=		src
-SRCS :=			$(SRCS_DIR)/main.c
+SRCS :=			$(SRCS_DIR)/main.c \
+				$(SRCS_DIR)/parsing/parsing.c \
+				$(SRCS_DIR)/parsing/errors.c
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
