@@ -6,134 +6,104 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/12 18:32:19 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:23:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	ft_freearray(char **arr)
-{
-	int	crstr;
-	int	max;
-
-	crstr = 0;
-	max = 0;
-	while (arr[crstr])
-	{
-		crstr++;
-		max++;
-	}
-	crstr = 0;
-	while (crstr < max)
-	{
-		free(arr[crstr]);
-		arr[crstr] = NULL;
-		crstr++;
-	}
-	free(arr);
-	arr = NULL;
-	return (0);
-}
-
-static int	check_file_existence(char *str)
-{
-	if (access(str, R_OK) != 0)
-		return (1);
-	return (0);
-}
-
-static int	check_file_extension(char *str)
-{
-	int	end;
-
-	end = ft_strlen(str);
-	if (end < 4)
-		return (1);
-	if (str[end - 1] != 't')
-		return (1);
-	if (str[end - 2] != 'r')
-		return (1);
-	if (str[end - 3] != '.')
-		return (1);
-	return (0);
-}
-
 int	check_unique_identifier(t_pars *parsing)
 {
-	if (!ft_strcmp(parsing->elem_data[0], "A"))
+	if (parsing->elem_data[0][0] == 'A')
 	{
 		if (parsing->a_found)
 			return (1);
 		else
 			parsing->a_found = 1;
 	}
-	if (!ft_strcmp(parsing->elem_data[0], "C"))
+	if (parsing->elem_data[0][0] == 'C')
 	{
 		if (parsing->c_found)
 			return (1);
 		else
 			parsing->c_found = 1;
 	}
-	if (!ft_strcmp(parsing->elem_data[0], "L"))
+	if (parsing->elem_data[0][0] == 'L')
 	{
 		if (parsing->l_found)
 			return (1);
 		else
 			parsing->l_found = 1;
 	}
+	if (parsing->elem_data[0][1])
+		return (1);
 	return (0);
 }
 
-int	check_element(t_pars *parsing)
+int	check_single_element(t_pars *parsing)
+{
+	if (parsing->elem_data[0][0] == 'A')
+		parse_ambience(parsing);
+	// else if (parsing->elem_data[0][0] == 'C')
+	// 	parse_camera(parsing);
+	// else if (parsing->elem_data[0][0] == 'L')
+	// 	parse_light(parsing);
+	// else if (ft_strcmp(parsing->elem_data[0], "sp"))
+	// 	parse_sphere(parsing);
+	// else if (ft_strcmp(parsing->elem_data[0], "pl"))
+	// 	parse_plane(parsing);
+	// else if (ft_strcmp(parsing->elem_data[0], "cy"))
+	// 	parse_cylinder(parsing);
+	// else
+	return (parsing->error_code);
+}
+
+int	check_elements(t_pars *parsing)
 {
 	parsing->elem_data = ft_split(parsing->element, ' ');
 	if (!parsing->elem_data)
-	{
-		free(parsing->element);
-		return (1);
-	}
+		return (4);
 	if (check_unique_identifier(parsing))
-		return (1);
+		return (5);
+	parsing->error_code = check_single_element(parsing);
+	if (parsing->error_code != 0)
+		return (parsing->error_code);
 	ft_freearray(parsing->elem_data);
 	return (0);
 }
 
-void	init_parsing(t_pars *parsing)
+int	file_line_by_line(t_pars *parsing, char *str)
 {
-	parsing->a_found = 0;
-	parsing->l_found = 0;
-	parsing->c_found = 0;
-	parsing->fd = -1;
-	parsing->elem_data = NULL;
-	parsing->element = NULL;
-}
-
-int	file_parsing(char *str)
-{
-	t_pars	parsing;
-
-	init_parsing(&parsing);
-	parsing.fd = open(str, O_RDONLY);
-	parsing.element = get_next_line(parsing.fd);
-	while (parsing.element)
+	parsing->fd = open(str, O_RDONLY);
+	parsing->element = get_next_line(parsing->fd);
+	if (!parsing->element)
+		parsing->error_code = 6;
+	while (parsing->element)
 	{
-		if (check_element(&parsing))
-			return (1);
-		free(parsing.element);
-		parsing.element = get_next_line(parsing.fd);
+		parsing->error_code = check_elements(parsing);
+		if (parsing->error_code != 0)
+		{
+			get_next_line(-1);
+			break ;
+		}
+		free(parsing->element);
+		parsing->element = get_next_line(parsing->fd);
 	}
-	return (0);
+	return (parsing->error_code);
 }
 
 void	parsing(int argc, char **argv)
 {
+	t_scene	scene;
+
+	init_scene(&scene);
 	if (argc != 2)
-		errors_parsing(1);
+		errors_file(1);
 	if (check_file_extension(argv[1]))
-		errors_parsing(2);
+		errors_file(2);
 	if (check_file_existence(argv[1]))
-		errors_parsing(3);
-	if (file_parsing(argv[1]))
-		errors_parsing(4);
+		errors_file(3);
+	file_line_by_line(&scene.pars, argv[1]);
+	if (scene.pars.error_code != 0)
+		errors_parsing(&scene.pars);
 }

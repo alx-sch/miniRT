@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/12 16:39:09 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/11/13 17:09:19 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,15 @@ NAME :=			miniRT
 
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
+				$(SRCS_DIR)/parsing/check_file.c \
+				$(SRCS_DIR)/parsing/check_single_element.c \
+				$(SRCS_DIR)/parsing/errors.c \
+				$(SRCS_DIR)/parsing/ft_atof.c \
+				$(SRCS_DIR)/parsing/init.c \
 				$(SRCS_DIR)/parsing/parsing.c \
-				$(SRCS_DIR)/parsing/errors.c
+				$(SRCS_DIR)/free/free_array.c \
+				$(SRCS_DIR)/free/free_parsing.c \
+				$(SRCS_DIR)/utils/array_length.c
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)

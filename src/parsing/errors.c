@@ -6,13 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/12 18:24:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:41:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	errors_parsing(int error_code)
+void	errors_file(int error_code)
 {
 	if (error_code == 1)
 	{
@@ -29,9 +29,16 @@ void	errors_parsing(int error_code)
 		perror("Error\nCan't access scene description file");
 		exit(3);
 	}
-	if (error_code == 4)
-	{
-		ft_putstr_fd("Error\nSome error with file.\n", 2);
-		exit(4);
-	}
+}
+
+void	errors_parsing(t_pars *parsing)
+{
+	if (parsing->error_code == 4)
+		ft_putstr_fd("Error\nMemory allocation failure.\n", 2);
+	if (parsing->error_code == 5)
+		ft_putstr_fd("Error\nAmbience, camera and light source can only occure \
+once. It must be written as a single 'A', 'C' or 'L'.\n", 2);
+	if (parsing->error_code == 6)
+		ft_putstr_fd("Error\n.rt-file can't be empty.\n", 2);
+	free_parsing_and_exit(parsing);
 }
