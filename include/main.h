@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 17:33:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:59:25 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,8 @@ int		ft_freearray(char **arr);
 
 // UTILS
 int		array_length(char **array);
+int		only_numbers(char *str);
+int		only_numbers_single_signs_and_dec_pt(char *str);
+int		ft_strchr_index(char *str, char c);
 
 #endif

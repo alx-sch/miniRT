@@ -6,45 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:05:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 17:38:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:59:10 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
-static int	only_numbers_single_signs_and_dec_pt(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str[1])
-		return (0);
-	if ((str[0] == '-' && (str[1] < '0' || str[1] > '9'))
-		|| (str[0] == '+' && (str[1] < '0' || str[1] > '9')))
-		return (0);
-	while (str[i] != '\0')
-	{
-		if ((str[i] < '0' || str[i] > '9') && str[i] != '+' && str[i] != '-'
-			&& str[i] != '.')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-static int	ft_strchr_index(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 static int	get_decimals_before_dec_pt(char *str, int i)
 {
