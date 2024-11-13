@@ -18,7 +18,7 @@ int	main(void)
 
 	rt = malloc(sizeof(t_rt));
 	if (!rt)
-		perror_and_exit(ERR_MALLOC, rt);
+		print_perror_and_exit(ERR_MALLOC, rt);
 	init_mlx(rt);
 	printf("miniRT!\n");
 	free_rt(&rt);

@@ -14,7 +14,7 @@ NAME :=			miniRT
 
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
-				$(SRCS_DIR)/utils.c \
+				$(SRCS_DIR)/error.c \
 				$(SRCS_DIR)/init.c \
 				$(SRCS_DIR)/free.c
 
