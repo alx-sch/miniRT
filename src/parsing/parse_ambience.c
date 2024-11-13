@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:45:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 18:00:11 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:05:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ambience_rgb(char **rgb)
 	value = 0;
 	while (rgb[i])
 	{
-		if (!only_numbers(rgb[i]))
+		if (!only_numbers_and_newline(rgb[i]))
 			return (1);
 		value = ft_atoi(rgb[i]);
 		if (value < 0 || value > 255)

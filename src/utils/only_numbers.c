@@ -6,20 +6,20 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:57:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 17:58:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:05:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	only_numbers(char *str)
+int	only_numbers_and_newline(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if ((str[i] < '0' || str[i] > '9') && str[i] != '\n')
 			return (0);
 		i++;
 	}
