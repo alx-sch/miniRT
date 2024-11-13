@@ -27,6 +27,8 @@
 # include <string.h>	// for strerror()
 # include <stdlib.h>	// for malloc(), free(), exit()
 
+# include <errno.h>	// errno
+
 // init.c
 
 void	init_mlx(t_rt *rt);
@@ -36,9 +38,9 @@ void	init_mlx(t_rt *rt);
 void	free_rt(t_rt **rt_ptr);
 
 
-// utils.c
+// error.c
 
-void	msg_and_exit(char *msg, t_rt *rt);
-void	perror_and_exit(char *msg, t_rt *rt);
+void	print_error_and_exit(char *msg, t_rt *rt);
+void	print_perror_and_exit(char *msg, t_rt *rt);
 
 #endif

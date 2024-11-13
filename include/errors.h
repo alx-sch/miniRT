@@ -14,11 +14,10 @@
 # define ERRORS_H
 
 # define ERR_COLOR			"\033[91m\033[1m" // red and bold
-# define RESET			"\033[0m"
+# define RESET				"\033[0m"
 
-# define ERR_ARG			"ERROR: Invalid usage! Use: ./minirt map_file.fdf\n"
-# define ERR_FILE_TYPE		"ERROR: Invalid file format! Use: .fdf\n"
-# define ERR_MLX			"ERROR: MLX"
-# define ERR_MALLOC			"ERROR: malloc() failed"
+# define ERR_ARG			"Invalid argument(s)! Use: './minirt <scene.rt>'"
+# define ERR_FILE_TYPE		"Invalid file format! Use: './minirt <scene.rt>'"
+# define ERR_MALLOC			"malloc() failed"
 
 #endif

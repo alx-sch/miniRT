@@ -22,23 +22,24 @@ within the `rt` structure is deallocated.
 
 // IN FILE
 
-void	msg_and_exit(char *msg, t_rt *rt);
-void	perror_and_exit(char *msg, t_rt *rt);
+void	print_error_and_exit(char *msg, t_rt *rt);
+void	print_perror_and_exit(char *msg, t_rt *rt);
 
 //	+++++++++++++++
 //	++ FUNCTIONS ++
 //	+++++++++++++++
 
 /**
-Prints an error message to stderr, frees memory allocated within the
-rt structure and exits the program.
+Prints a custom error message to stderr, frees all allocated resources within
+the `rt` structure, and exits the program.
 
  @param msg 	Error message to print.
  @param rt 		Pointer to the main structure of the program.
 */
-void	msg_and_exit(char *msg, t_rt *rt)
+void	print_error_and_exit(char *msg, t_rt *rt)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
 	free_rt(&rt);
@@ -46,16 +47,16 @@ void	msg_and_exit(char *msg, t_rt *rt)
 }
 
 /**
-Prints an error message to stderr via perror(), which also prints the last
-encountered error and frees memory allocated within the fdf structure.
-Then, exits the program.
+Prints a custom error message followed by the system error message to stderr,
+frees all allocated resources within the `rt` structure, and exits the program.
 
  @param msg 	Error message to print before the perror() message.
  @param rt 		Pointer to the main structure of the program.
 */
-void	perror_and_exit(char *msg, t_rt *rt)
+void	print_perror_and_exit(char *msg, t_rt *rt)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	perror(msg);
 	ft_putstr_fd(RESET, STDERR_FILENO);
 	free_rt(&rt);
