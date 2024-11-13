@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/12 17:05:36 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/13 18:27:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,18 @@
 
 void	init_mlx(t_rt *rt);
 
-// free.c
+// events.c
 
-void	free_rt(t_rt **rt_ptr);
+int		handle_keypress(int keycode, t_rt *rt);
+int		handle_window_close(t_rt *rt);
 
-
-// error.c
+// utils/error.c
 
 void	print_error_and_exit(char *msg, t_rt *rt);
 void	print_perror_and_exit(char *msg, t_rt *rt);
+
+// free.c
+
+void	free_rt(t_rt **rt_ptr);
 
 #endif
