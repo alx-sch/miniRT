@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 17:21:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:33:48 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		check_file_existence(char *str);
 int		check_file_extension(char *str);
 void	init_parsing(t_pars *parsing);
 void	init_scene(t_scene *scene);
-int		parse_ambience(t_pars *parsing);
+int		parse_ambience(t_scene *scene);
 void	errors_file(int error_code);
 void	errors_parsing(t_pars *pars);
 

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:05:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 17:06:25 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:38:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ static int	ft_strchr_index(char *str, char c)
 	return (-1);
 }
 
+static int	get_decimals_before_dec_pt(char *str, int i)
+{
+	char	*decimal_str;
+	int		dec_res;
+
+	decimal_str = ft_substr(str, 0, i);
+	dec_res = ft_atoi(decimal_str);
+	free(decimal_str);
+	return (dec_res);
+}
+
 float	ft_atof(char *str)
 {
 	int		i;
@@ -58,7 +69,7 @@ float	ft_atof(char *str)
 	i = ft_strchr_index(str, '.') + 1;
 	if (i == 0)
 		return (ft_atoi(str));
-	dec_res = ft_atoi(ft_substr(str, 0, i));
+	dec_res = get_decimals_before_dec_pt(str, i);
 	if (dec_res < 0)
 		dec_res *= -1;
 	fract_res = 0;

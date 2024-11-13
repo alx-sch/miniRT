@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/13 17:09:19 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/11/13 17:38:56 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME :=			miniRT
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/parsing/check_file.c \
-				$(SRCS_DIR)/parsing/check_single_element.c \
+				$(SRCS_DIR)/parsing/parse_elements.c \
 				$(SRCS_DIR)/parsing/errors.c \
 				$(SRCS_DIR)/parsing/ft_atof.c \
 				$(SRCS_DIR)/parsing/init.c \
