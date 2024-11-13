@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 18:27:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/13 23:25:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,21 @@
 
 # include <errno.h>	// errno
 
-// init.c
+// initialization.c
 
 void	init_mlx(t_rt *rt);
 
-// events.c
+// event_handlers.c
 
 int		handle_keypress(int keycode, t_rt *rt);
 int		handle_window_close(t_rt *rt);
 
-// utils/error.c
+// utils/cleanup.c
 
-void	print_error_and_exit(char *msg, t_rt *rt);
-void	print_perror_and_exit(char *msg, t_rt *rt);
+void	cleanup(t_rt **rt_ptr);
 
-// free.c
+// utils/error_exit.c
 
-void	free_rt(t_rt **rt_ptr);
+void	cleanup_error_exit(char *msg, t_rt *rt);
 
 #endif

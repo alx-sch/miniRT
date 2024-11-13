@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   error_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:42 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 17:50:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/13 23:26:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-This file contains functions for terminating the program in a controlled manner
+This file contains a functionsfor terminating the program in a controlled manner
 whenever an error occurs (such as invalid user input, failed file opening,
 memory allocation errors, etc.). Before terminating the program, informative
 error messages are printed to stderr, and all dynamically allocated memory
@@ -22,43 +22,33 @@ within the `rt` structure is deallocated.
 
 // IN FILE
 
-void	print_error_and_exit(char *msg, t_rt *rt);
-void	print_perror_and_exit(char *msg, t_rt *rt);
-
-//	+++++++++++++++
-//	++ FUNCTIONS ++
-//	+++++++++++++++
+void	cleanup_error_exit(char *msg, t_rt *rt);
 
 /**
-Prints a custom error message to stderr, frees all allocated resources within
-the `rt` structure, and exits the program.
+Checks the value of errno:
+ -	If errno is zero, prints a custom error message.
+ -	If errno is non-zero, prints both a custom error message
+ 	and the system error message.
 
- @param msg 	Error message to print.
+In either case, all resources in the `rt` structure are freed before the
+program exits.
+
+ @param msg 	Custom error message to print.
  @param rt 		Pointer to the main structure of the program.
+				Pass `NULL` if `rt` is not initialized.
 */
-void	print_error_and_exit(char *msg, t_rt *rt)
+void	cleanup_error_exit(char *msg, t_rt *rt)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd("Error\n", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
+	if (errno != 0)
+		perror(msg);
+	else
+	{
+		ft_putstr_fd(msg, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
 	ft_putstr_fd(RESET, STDERR_FILENO);
-	free_rt(&rt);
-	exit(EXIT_FAILURE);
-}
-
-/**
-Prints a custom error message followed by the system error message to stderr,
-frees all allocated resources within the `rt` structure, and exits the program.
-
- @param msg 	Error message to print before the perror() message.
- @param rt 		Pointer to the main structure of the program.
-*/
-void	print_perror_and_exit(char *msg, t_rt *rt)
-{
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
-	ft_putstr_fd("Error\n", STDERR_FILENO);
-	perror(msg);
-	ft_putstr_fd(RESET, STDERR_FILENO);
-	free_rt(&rt);
+	cleanup(&rt);
 	exit(EXIT_FAILURE);
 }
