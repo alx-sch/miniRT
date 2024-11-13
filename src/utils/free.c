@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:59 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/12 17:37:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/13 18:30:14 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ execution or whenever the program terminates unexpectedly.
 
 // IN FILE:
 
-void	free_fdf(t_rt **rt_ptr);
+void	free_rt(t_rt **rt_ptr);
 
 /**
 Frees all resources associated with the mlx components and set all pointers
-to NULL for the window, image, and display (connection to X11).
+to NULL for the window, image, and display (connection to X11 display server).
 
  @param rt 	Pointer to the main structure of the program.
 */
@@ -47,7 +47,7 @@ static void	free_mlx(t_rt *rt)
 
 /**
 Frees/closes all resources allocated for the raytracing structure, including
-mlx-related ressources, ....
+mlx-related ressources, EXPAND IF NEED BE
 
  @param rt_ptr	Pointer to the main structure of the program.
 */

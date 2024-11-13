@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/12 17:06:40 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/13 17:29:12 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@ NAME :=			miniRT
 
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
-				$(SRCS_DIR)/error.c \
 				$(SRCS_DIR)/init.c \
-				$(SRCS_DIR)/free.c
+				$(SRCS_DIR)/events.c \
+				$(SRCS_DIR)/utils/error.c \
+				$(SRCS_DIR)/utils/free.c
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
