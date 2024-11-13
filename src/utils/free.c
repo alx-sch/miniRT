@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:59 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 18:30:14 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/13 19:00:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,20 @@ static void	free_mlx(t_rt *rt)
 }
 
 /**
-Frees/closes all resources allocated for the raytracing structure, including
-mlx-related ressources, EXPAND IF NEED BE
+Frees and closes all resources allocated for the raytracing structure,
+including any MLX-related resources. EXPAND IF MORE FREE CALLS ADDED
 
- @param rt_ptr	Pointer to the main structure of the program.
+ @param rt_ptr 	A double pointer to the main structure of the program (t_rt).
+				If `NULL` or if `*rt_ptr` is `NULL`, the function returns
+ 				immediately without performing any cleanup.
 */
 void	free_rt(t_rt **rt_ptr)
 {
 	t_rt	*rt;
 
-	rt = *rt_ptr;
-	if (!rt)
+	if (!rt_ptr || !*rt_ptr)
 		return ;
+	rt = *rt_ptr;
 	free_mlx(rt);
 	// Add more free calls here
 	free(rt);
