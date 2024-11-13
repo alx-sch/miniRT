@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 18:04:43 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:08:39 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ typedef struct s_scene
 {
 	t_pars			pars;
 	float			amb_light;
-	unsigned char	amb_color;
+	unsigned char	amb_color_r;
+	unsigned char	amb_color_g;
+	unsigned char	amb_color_b;
 	float			cam_x;
 	float			cam_y;
 	float			cam_z;

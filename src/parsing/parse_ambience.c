@@ -6,13 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:45:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 18:05:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:11:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-static int	ambience_rgb(char **rgb)
+static int	ambience_rgb(t_scene *scene, char **rgb)
 {
 	int	i;
 	int	value;
@@ -26,6 +26,12 @@ static int	ambience_rgb(char **rgb)
 		value = ft_atoi(rgb[i]);
 		if (value < 0 || value > 255)
 			return (1);
+		if (i == 0)
+			scene->amb_color_r = value;
+		else if (i == 1)
+			scene->amb_color_g = value;
+		else if (i == 2)
+			scene->amb_color_b = value;
 		i++;
 	}
 	return (0);
@@ -43,7 +49,7 @@ int	parse_ambience(t_scene *scene)
 	rgb = ft_split(scene->pars.elem_data[2], ',');
 	if (!rgb)
 		scene->pars.error_code = 4;
-	if (ambience_rgb(rgb))
+	if (ambience_rgb(scene, rgb))
 		scene->pars.error_code = 9;
 	ft_freearray(rgb);
 	return (scene->pars.error_code);

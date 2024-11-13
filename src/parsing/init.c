@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:58:28 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 17:19:42 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:12:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	init_scene(t_scene *scene)
 {
 	init_parsing(&scene->pars);
 	scene->amb_light = 0;
-	scene->amb_color = 0;
+	scene->amb_color_r = 0;
+	scene->amb_color_g = 0;
+	scene->amb_color_b = 0;
 	scene->cam_x = 0;
 	scene->cam_y = 0;
 	scene->cam_z = 0;
