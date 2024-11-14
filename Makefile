@@ -6,11 +6,18 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/14 15:51:42 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/15 00:33:44 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			miniRT
+
+#############################
+# PRE-COMPILATION CONSTANTS #
+#############################
+
+WINDOW_W ?=		1440
+WINDOW_H ?=		900
 
 #########################
 # SOURCE & HEADER FILES #
@@ -24,7 +31,7 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/utils/cleanup.c
 
 OBJS_DIR :=		obj
-OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)	# each o. file has a corresponding c. file
+OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)	# Each o. file has a corresponding c. file
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
@@ -42,8 +49,18 @@ LIBFT_FLAGS :=	-L$(LIBFT_DIR) -lft		# -L: path to library; -l: library name
 LIBFT :=		$(LIBFT_DIR)/libft.a
 
 # MiniLibX
+OS := $(shell uname)				# Detect OS type
+
+ifeq ($(strip $(OS)),Linux)			# Choose correct MiniLibX library based on OS
+	MLX_LIB := mlx_Linux
+else ifeq ($(strip $(OS)),Darwin)
+	MLX_LIB := mlx_Darwin
+else
+	MLX_LIB := mlx
+endif
+
 MLX_DIR :=		lib/mlx
-MLX_FLAGS :=	-L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm	# -L: path to library; -l: library name -lm: math library
+MLX_FLAGS :=	-L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11 -lm	# -L: path to library; -l: library name -lm: math library
 LIBMLX :=		$(MLX_DIR)/libmlx.a
 
 LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
@@ -54,8 +71,14 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
-CFLAGS +=		-Wpedantic
-CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)	# look for headers in these directories
+CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)	# Look for headers in these directories
+CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)
+
+CFLAGS +=		-g -Wpedantic								# Debugging flags, pedantic warnings
+
+ifeq ($(strip $(OS)),Darwin)								# Suppress some errors/warnings on MacOS (due to MiniLibX)
+	CFLAGS += 		-Wno-strict-prototypes
+endif
 
 ######################
 # FORMATTING STRINGS #
@@ -78,22 +101,22 @@ SRC_NUM :=		0
 # Rule to define how to generate object files (%.o) from corresponding
 # source files (%.c). Each .o file depends on the associated .c file and the
 # project header files.
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)		# following lines are executed for each .o file
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)		# Following lines are executed for each .o file
 	@mkdir -p $(@D)		# create directory if it doesn't exist; -p: no error if existing, @D: directory part of target
 
 # Update progress bar variables
-	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))							# increment SRC_NUM
-	@$(eval PERCENT := $(shell echo "$(SRC_NUM) / $(TOTAL_SRCS) * 100" | bc))	# calculate percentage
-	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))							# calculate progress in 5% steps
+	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))							# Increment SRC_NUM
+	@$(eval PERCENT := $(shell echo "$(SRC_NUM) / $(TOTAL_SRCS) * 100" | bc))	# Calculate percentage
+	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))							# Calculate progress in 5% steps
 
 # Print progress bar
 	@printf "$(BOLD)\rCompiling $(NAME): ["										# '\r' moves cursor to beginning of line, overwriting previous line -> progess shown on same line
 	@printf "$(GREEN)%0.s#$(RESET)$(BOLD)" $(shell seq 1 $(PROGRESS))			# Print one '#' for each 5% progress
-	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi	# prints '-' for remaining progress (not filled with '#')
+	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi	# Prints '-' for remaining progress (not filled with '#')
 	@printf "] "
-	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi						# switch to green color for 100%
-	@printf "%d/%d - " $(SRC_NUM) $(TOTAL_SRCS)									# print current compiled and total number of files
-	@printf "%d%% $(RESET)" $(PERCENT)											# print percentage
+	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi						# Switch to green color for 100%
+	@printf "%d/%d - " $(SRC_NUM) $(TOTAL_SRCS)									# Print current compiled and total number of files
+	@printf "%d%% $(RESET)" $(PERCENT)											# Print percentage
 
 # Compile source file into object file
 # - '-c':		Generates o. files without linking.
@@ -182,7 +205,7 @@ $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
 	@echo "$(BOLD)$(YELLOW)\n$(NAME) successfully compiled.$(RESET)"
 
 # Print logo and usage message
-	@echo -n "$(BOLD)$(GREEN)"
+	@printf "$(BOLD)$(GREEN)"
 
 	@echo "       _      _ ___ _____ "
 	@echo " _ __ (_)_ _ (_) _ \_   _|"
