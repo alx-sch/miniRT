@@ -6,11 +6,15 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/13 23:24:59 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/14 15:51:42 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			miniRT
+
+#########################
+# SOURCE & HEADER FILES #
+#########################
 
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
@@ -20,13 +24,17 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/utils/cleanup.c
 
 OBJS_DIR :=		obj
-OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)	# each o. file has a corresponding c. file
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
 				$(HDRS_DIR)/settings.h \
 				$(HDRS_DIR)/errors.h \
 				$(HDRS_DIR)/types.h
+
+#############
+# LIBRARIES #
+#############
 
 # LIBFT
 LIBFT_DIR :=	lib/libft
@@ -40,21 +48,58 @@ LIBMLX :=		$(MLX_DIR)/libmlx.a
 
 LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 
+#####################
+# COMPILATION RULES #
+#####################
+
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
 CFLAGS +=		-Wpedantic
-CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) # look for headers in these directories
+CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)	# look for headers in these directories
 
-# For compilation progress bar
-TOTAL_SRCS :=	$(words $(SRCS))
-SRC_NUM :=		0
+######################
+# FORMATTING STRINGS #
+######################
 
-# Colors and styles
 RESET :=		\033[0m
 BOLD :=			\033[1m
 RED :=			\033[91m
 GREEN :=		\033[32m
 YELLOW :=		\033[33m
+BLINK :=		\033[5m
+
+##############################################
+# COMPILATION OF OBJECT FILES / PROGRESS BAR #
+##############################################
+
+TOTAL_SRCS :=	$(words $(SRCS))
+SRC_NUM :=		0
+
+# Rule to define how to generate object files (%.o) from corresponding
+# source files (%.c). Each .o file depends on the associated .c file and the
+# project header files.
+$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)		# following lines are executed for each .o file
+	@mkdir -p $(@D)		# create directory if it doesn't exist; -p: no error if existing, @D: directory part of target
+
+# Update progress bar variables
+	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))							# increment SRC_NUM
+	@$(eval PERCENT := $(shell echo "$(SRC_NUM) / $(TOTAL_SRCS) * 100" | bc))	# calculate percentage
+	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))							# calculate progress in 5% steps
+
+# Print progress bar
+	@printf "$(BOLD)\rCompiling $(NAME): ["										# '\r' moves cursor to beginning of line, overwriting previous line -> progess shown on same line
+	@printf "$(GREEN)%0.s#$(RESET)$(BOLD)" $(shell seq 1 $(PROGRESS))			# Print one '#' for each 5% progress
+	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi	# prints '-' for remaining progress (not filled with '#')
+	@printf "] "
+	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi						# switch to green color for 100%
+	@printf "%d/%d - " $(SRC_NUM) $(TOTAL_SRCS)									# print current compiled and total number of files
+	@printf "%d%% $(RESET)" $(PERCENT)											# print percentage
+
+# Compile source file into object file
+# - '-c':		Generates o. files without linking.
+# - '$<':		First dependency; '$<' is replaced with the first dependency (the c. file).
+# - '-o $@':	Output file name;  '$@' is replaced with target name (the o. file).
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 #############################
 # 'ALL' RULE WITH DEPENCIES #
@@ -131,12 +176,12 @@ $(LIBFT):	$(LIBFT_DIR)/libft.h \
 	@make -s -C $(LIBFT_DIR)
 	@echo ""
 
-# Compilation of program depends on $(OBJS) and library files.
+# Compilation of program; depends on $(OBJS) and library files
 $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) -o $(NAME)
 	@echo "$(BOLD)$(YELLOW)\n$(NAME) successfully compiled.$(RESET)"
 
-# Logo and usage message
+# Print logo and usage message
 	@echo -n "$(BOLD)$(GREEN)"
 
 	@echo "       _      _ ___ _____ "
@@ -148,30 +193,6 @@ $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
 
 	@echo "by Natalie Holbrook & Alex Schenk @42Berlin, December 2024"
 	@echo "\n$(BOLD)$(YELLOW)Usage: './$(NAME) <scene.rt>'$(RESET)"
-
-############################
-# COMPILATION PROGRESS BAR #
-############################
-
-# Rule to define how to generate object files (%.o) from corresponding
-# source files (%.c). Each .o file depends on the associated .c file and the
-# project header file.
-# -c:		Generates o. files without linking.
-# -o $@:	Output file name;  '$@' is replaced with target name (the o. file).
-# -$<:		Represents the first prerequisite (the c. file).
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)
-	@mkdir -p $(@D)
-	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))
-	@$(eval PERCENT := $(shell printf "%.0f" $(shell echo "scale=4; $(SRC_NUM) / $(TOTAL_SRCS) * 100" | bc)))
-	@printf "$(BOLD)\rCompiling $(NAME): ["
-	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))
-	@printf "$(GREEN)%0.s#$(RESET)$(BOLD)" $(shell seq 1 $(PROGRESS))
-	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi
-	@printf "] "
-	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi
-	@printf "%d/%d - " $(SRC_NUM) $(TOTAL_SRCS)
-	@printf "%d%% $(RESET)" $(PERCENT)
-	@$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) -D FD_SIZE=$(FD_SIZE) -c $< -o $@
 
 ##########
 # RULES #

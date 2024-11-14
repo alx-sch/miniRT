@@ -6,9 +6,13 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:55:16 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 23:29:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/14 14:42:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+Defines constants for error messages and formatting styles.
+*/
 
 #ifndef ERRORS_H
 # define ERRORS_H
