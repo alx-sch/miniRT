@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/15 00:33:44 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/15 00:55:42 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ endif
 
 MLX_DIR :=		lib/mlx
 MLX_FLAGS :=	-L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11 -lm	# -L: path to library; -l: library name -lm: math library
-LIBMLX :=		$(MLX_DIR)/libmlx.a
+LIBMLX := 		$(MLX_DIR)/lib$(MLX_LIB).a
 
 LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 
