@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 18:38:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/13 18:51:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_mlx
 	int		height;
 	char	*title;
 }	t_mlx;
-
 
 /**
 Data structure holding all raytracing-related data.

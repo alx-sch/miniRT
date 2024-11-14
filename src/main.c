@@ -6,12 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 18:33:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/13 23:32:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
 
 /**
 Sets up event hooks and starts the MiniLibX event loop.
@@ -30,21 +29,16 @@ void	run_mlx(t_rt *rt)
 	(void)mlx_loop(rt->mlx.mlx);
 }
 
-
 int	main(void)
 {
 	t_rt	*rt;
 
 	// check args / .rt file
-
 	rt = malloc(sizeof(t_rt));
 	if (!rt)
-		print_perror_and_exit(ERR_MALLOC, rt);
-
+		cleanup_error_exit(ERR_MALLOC, NULL);
 	// populate scene info into data struct (parse file)
-
 	init_mlx(rt);
 	run_mlx(rt);
-
 	return (0);
 }

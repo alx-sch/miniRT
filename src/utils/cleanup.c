@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:59 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 19:00:55 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/14 00:02:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ execution or whenever the program terminates unexpectedly.
 
 // IN FILE:
 
-void	free_rt(t_rt **rt_ptr);
+void	cleanup(t_rt **rt_ptr);
 
 /**
-Frees all resources associated with the mlx components and set all pointers
+Frees all resources associated with the mlx components and sets all pointers
 to NULL for the window, image, and display (connection to X11 display server).
 
  @param rt 	Pointer to the main structure of the program.
 */
-static void	free_mlx(t_rt *rt)
+static void	cleanup_mlx(t_rt *rt)
 {
 	if (rt->mlx.mlx)
 	{
@@ -49,18 +49,18 @@ static void	free_mlx(t_rt *rt)
 Frees and closes all resources allocated for the raytracing structure,
 including any MLX-related resources. EXPAND IF MORE FREE CALLS ADDED
 
- @param rt_ptr 	A double pointer to the main structure of the program (t_rt).
-				If `NULL` or if `*rt_ptr` is `NULL`, the function returns
- 				immediately without performing any cleanup.
+ @param rt_ptr 	Double pointer to the main structure of the program.
+				If `NULL` is passed, the function returns immediately without
+				any cleanup (avoids access of uninitialized struct).
 */
-void	free_rt(t_rt **rt_ptr)
+void	cleanup(t_rt **rt_ptr)
 {
 	t_rt	*rt;
 
 	if (!rt_ptr || !*rt_ptr)
 		return ;
 	rt = *rt_ptr;
-	free_mlx(rt);
+	cleanup_mlx(rt);
 	// Add more free calls here
 	free(rt);
 	*rt_ptr = NULL;
