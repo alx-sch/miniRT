@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 23:32:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/14 14:54:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(void)
 	if (!rt)
 		cleanup_error_exit(ERR_MALLOC, NULL);
 	// populate scene info into data struct (parse file)
+	write(1, "a", 1);
 	init_mlx(rt);
 	run_mlx(rt);
 	return (0);

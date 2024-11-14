@@ -6,12 +6,12 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/13 18:51:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/14 14:43:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-This header file defines custom types and data structures.
+Defines custom types and data structures.
 */
 
 #ifndef TYPES_H
