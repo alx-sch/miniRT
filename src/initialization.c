@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:36:36 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/14 14:39:12 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:06:05 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ Initializes the MiniLibX components required for graphic rendering:
 - Establishes the connection to the graphic system (rt->mlx.mlx).
 - Creates the window (rt->mlx.win).
 - Sets up the image buffer (rt->mlx.img).
+
+ @note 	WINDOW_W and WINDOW_H are pre-compilation constants defined in Makefile.
+		Adjust during compilation, e.g. `make WINDOW_W=1920 WINDOW_H=1080`.
 
  @param rt 	Pointer to the main structure of the program.
 */

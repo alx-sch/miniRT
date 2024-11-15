@@ -6,18 +6,20 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/15 00:55:42 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/15 13:04:14 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			miniRT
 
+OS := 			$(shell uname)			# Detect OS type
+
 #############################
 # PRE-COMPILATION CONSTANTS #
 #############################
 
-WINDOW_W ?=		1440
-WINDOW_H ?=		900
+WINDOW_W ?=		1440 					# Default window width
+WINDOW_H ?=		900						# Default window height
 
 #########################
 # SOURCE & HEADER FILES #
@@ -31,11 +33,10 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/utils/cleanup.c
 
 OBJS_DIR :=		obj
-OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)	# Each o. file has a corresponding c. file
+OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)		# Each o. file has a corresponding c. file
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
-				$(HDRS_DIR)/settings.h \
 				$(HDRS_DIR)/errors.h \
 				$(HDRS_DIR)/types.h
 
@@ -45,22 +46,20 @@ HDRS := 		$(HDRS_DIR)/main.h \
 
 # LIBFT
 LIBFT_DIR :=	lib/libft
-LIBFT_FLAGS :=	-L$(LIBFT_DIR) -lft		# -L: path to library; -l: library name
+LIBFT_FLAGS :=	-L$(LIBFT_DIR) -lft		# -L: path to look for library; -l: library name
 LIBFT :=		$(LIBFT_DIR)/libft.a
 
 # MiniLibX
-OS := $(shell uname)				# Detect OS type
-
-ifeq ($(strip $(OS)),Linux)			# Choose correct MiniLibX library based on OS
-	MLX_LIB := mlx_Linux
+ifeq ($(strip $(OS)),Linux)				# Choose correct MiniLibX library based on OS
+	MLX_LIB :=	mlx_Linux
 else ifeq ($(strip $(OS)),Darwin)
-	MLX_LIB := mlx_Darwin
+	MLX_LIB :=	mlx_Darwin
 else
-	MLX_LIB := mlx
+	MLX_LIB :=	mlx
 endif
 
 MLX_DIR :=		lib/mlx
-MLX_FLAGS :=	-L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11 -lm	# -L: path to library; -l: library name -lm: math library
+MLX_FLAGS :=	-L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11 -lm	# -L: path to look for library; -l: library name
 LIBMLX := 		$(MLX_DIR)/lib$(MLX_LIB).a
 
 LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
@@ -71,12 +70,12 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
-CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)	# Look for headers in these directories
-CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)
+CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)		# Look for headers in these directories
+CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
 
-CFLAGS +=		-g -Wpedantic								# Debugging flags, pedantic warnings
+CFLAGS +=		-g -Wpedantic						# Debugging flag, pedantic warnings
 
-ifeq ($(strip $(OS)),Darwin)								# Suppress some errors/warnings on MacOS (due to MiniLibX)
+ifeq ($(strip $(OS)),Darwin)						# Suppress some errors/warnings on MacOS (due to the way prototypes are defined in MiniLibX)
 	CFLAGS += 		-Wno-strict-prototypes
 endif
 
@@ -89,14 +88,13 @@ BOLD :=			\033[1m
 RED :=			\033[91m
 GREEN :=		\033[32m
 YELLOW :=		\033[33m
-BLINK :=		\033[5m
 
 ##############################################
 # COMPILATION OF OBJECT FILES / PROGRESS BAR #
 ##############################################
 
-TOTAL_SRCS :=	$(words $(SRCS))
-SRC_NUM :=		0
+TOTAL_SRCS :=	$(words $(SRCS))	# Total number of source files
+SRC_COMP :=		0					# Number of source files compiled (object files created)
 
 # Rule to define how to generate object files (%.o) from corresponding
 # source files (%.c). Each .o file depends on the associated .c file and the
@@ -105,8 +103,8 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)		# Following lines are executed for eac
 	@mkdir -p $(@D)		# create directory if it doesn't exist; -p: no error if existing, @D: directory part of target
 
 # Update progress bar variables
-	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))							# Increment SRC_NUM
-	@$(eval PERCENT := $(shell echo "$(SRC_NUM) / $(TOTAL_SRCS) * 100" | bc))	# Calculate percentage
+	@$(eval SRC_COMP := $(shell expr $(SRC_COMP) + 1))							# Increment SRC_NUM
+	@$(eval PERCENT := $(shell echo "$(SRC_COMP) / $(TOTAL_SRCS) * 100" | bc))	# Calculate percentage
 	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))							# Calculate progress in 5% steps
 
 # Print progress bar
@@ -115,7 +113,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)		# Following lines are executed for eac
 	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi	# Prints '-' for remaining progress (not filled with '#')
 	@printf "] "
 	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi						# Switch to green color for 100%
-	@printf "%d/%d - " $(SRC_NUM) $(TOTAL_SRCS)									# Print current compiled and total number of files
+	@printf "%d/%d - " $(SRC_COMP) $(TOTAL_SRCS)									# Print current compiled and total number of files
 	@printf "%d%% $(RESET)" $(PERCENT)											# Print percentage
 
 # Compile source file into object file
