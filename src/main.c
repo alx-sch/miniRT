@@ -6,39 +6,65 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/14 23:59:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:28:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-/**
-Sets up event hooks and starts the MiniLibX event loop.
-
-This function sets up the necessary event hooks for handling key presses
-and window destruction events. It then starts the MiniLibX event loop,
-which waits for events and dispatches them to the appropriate handlers.
-The event loop runs indefinitely until the program is terminated.
-
- @param rt 	Pointer to the main structure of the program.
-*/
-void	run_mlx(t_rt *rt)
+void draw_colored_pixels(t_rt *rt, int color)
 {
-	(void)mlx_key_hook(rt->mlx.win, &handle_keypress, rt);
-	(void)mlx_hook(rt->mlx.win, DestroyNotify, 0, &handle_window_close, rt);
-	(void)mlx_loop(rt->mlx.mlx);
+    int x, y;
+
+    for (y = 10; y < 20; y++)
+    {
+        for (x = 10; x < 20; x++)
+            set_pixel_color(&rt->mlx.img, x, y, color);
+    }
+
+    for (y = 30; y < 40; y++)
+    {
+        for (x = 10; x < 20; x++)
+            set_pixel_color(&rt->mlx.img, x, y, color);
+    }
+
+    for (y = 50; y < 60; y++)
+    {
+        for (x = 10; x < 20; x++)
+            set_pixel_color(&rt->mlx.img, x, y, color);
+    }
+
+    for (y = 70; y < 80; y++)
+    {
+        for (x = 10; x < 20; x++)
+            set_pixel_color(&rt->mlx.img, x, y, color);
+    }
+
+    for (y = 90; y < 100; y++)
+    {
+        for (x = 10; x < 20; x++)
+            set_pixel_color(&rt->mlx.img, x, y, color);
+    }
 }
+
 
 int	main(void)
 {
 	t_rt	*rt;
 
-	// check args / .rt file
 	rt = malloc(sizeof(t_rt));
 	if (!rt)
 		cleanup_error_exit(ERR_MALLOC, NULL);
-	// populate scene info into data struct (parse file)
+
+	//check args / .rt file
+	//populate scene info into data struct (parse file)
+
 	init_mlx(rt);
-	run_mlx(rt);
-	return (0);
+
+	fill_image(rt, YELLOW); // just for testing to see if image shown in window
+	draw_colored_pixels(rt, BLUE); // just for testing to see if image shown in window
+
+	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.win, rt->mlx.img.img, 0, 0);
+
+	start_event_loop(rt);
 }
