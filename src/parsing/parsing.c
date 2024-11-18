@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 18:13:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:16:10 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	check_unique_identifier(t_pars *parsing)
 int	check_single_element(t_scene *scene)
 {
 	if (scene->pars.elem_data[0][0] == 'A')
-		parse_ambience(scene);
-	// else if (parsing->elem_data[0][0] == 'C')
-	// 	parse_camera(parsing);
-	// else if (parsing->elem_data[0][0] == 'L')
-	// 	parse_light(parsing);
+		scene->pars.error_code = parse_ambience(scene);
+	else if (scene->pars.elem_data[0][0] == 'C')
+		scene->pars.error_code = parse_camera(scene);
+	else if (scene->pars.elem_data[0][0] == 'L')
+		scene->pars.error_code = parse_light(scene);
 	// else if (ft_strcmp(parsing->elem_data[0], "sp"))
 	// 	parse_sphere(parsing);
 	// else if (ft_strcmp(parsing->elem_data[0], "pl"))
@@ -96,6 +96,7 @@ int	file_line_by_line(t_scene *scene, char *str)
 		free(scene->pars.element);
 		scene->pars.element = get_next_line(scene->pars.fd);
 	}
+	close(scene->pars.fd);
 	return (scene->pars.error_code);
 }
 

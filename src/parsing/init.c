@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:58:28 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 18:12:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:53:40 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,12 @@ void	init_scene(t_scene *scene)
 	scene->cam_vec_x = 0;
 	scene->cam_vec_y = 0;
 	scene->cam_vec_z = 0;
-	scene->cam_rov = 0;
+	scene->cam_hfov = 0;
+	scene->light_x = 0;
+	scene->light_y = 0;
+	scene->light_z = 0;
+	scene->light_bright = 0;
+	scene->light_color_r = 0;
+	scene->light_color_g = 0;
+	scene->light_color_b = 0;
 }

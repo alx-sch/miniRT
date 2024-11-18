@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:45:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 18:11:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:22:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,17 @@ int	parse_ambience(t_scene *scene)
 	char	**rgb;
 
 	if (array_length(scene->pars.elem_data) != 3)
-		scene->pars.error_code = 7;
+		return (7);
 	scene->amb_light = ft_atof(scene->pars.elem_data[1]);
 	if (scene->amb_light < 0.0 || scene->amb_light > 1.0)
-		scene->pars.error_code = 8;
+		return (8);
 	rgb = ft_split(scene->pars.elem_data[2], ',');
 	if (!rgb)
-		scene->pars.error_code = 4;
-	if (ambience_rgb(scene, rgb))
+		return (4);
+	if (array_length(rgb) != 3)
 		scene->pars.error_code = 9;
+	if (ambience_rgb(scene, rgb))
+		scene->pars.error_code = 10;
 	ft_freearray(rgb);
 	return (scene->pars.error_code);
 }

@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/13 17:59:43 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/11/18 17:14:11 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,12 @@ SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/parsing/check_file.c \
 				$(SRCS_DIR)/parsing/parse_ambience.c \
+				$(SRCS_DIR)/parsing/parse_camera.c \
+				$(SRCS_DIR)/parsing/parse_light.c \
 				$(SRCS_DIR)/parsing/errors.c \
 				$(SRCS_DIR)/parsing/ft_atof.c \
 				$(SRCS_DIR)/parsing/init.c \
+				$(SRCS_DIR)/parsing/init_unique_elements.c \
 				$(SRCS_DIR)/parsing/parsing.c \
 				$(SRCS_DIR)/free/free_array.c \
 				$(SRCS_DIR)/free/free_parsing.c \
