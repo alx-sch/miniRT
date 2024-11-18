@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 18:47:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:23:07 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,15 @@ void	errors_parsing(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_UNIQUE_ELEM, 2);
 	else if (parsing->error_code == ERR_FILE_EMPTY)
 		ft_putstr_fd(ERR_MSG_FILE_EMPTY, 2);
-	else if (parsing->error_code >= 7 && parsing->error_code <= 10)
+	else if (parsing->error_code == ERR_INVALID_IDENTIFIER)
+		ft_putstr_fd(ERR_MSG_INVALID_IDENTIFIER, 2);
+	else if (parsing->error_code >= 8 && parsing->error_code <= 11)
 		ambience_errors(parsing);
-	else if (parsing->error_code >= 11 && parsing->error_code <= 16)
+	else if (parsing->error_code >= 12 && parsing->error_code <= 17)
 		camera_errors(parsing);
-	else if (parsing->error_code >= 17 && parsing->error_code <= 22)
+	else if (parsing->error_code >= 18 && parsing->error_code <= 23)
 		light_errors(parsing);
+	else if (parsing->error_code >= 24 && parsing->error_code <= 29)
+		sphere_errors(parsing);
 	free_parsing_and_exit(parsing);
 }

@@ -6,55 +6,28 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 18:13:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:42:32 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	check_unique_identifier(t_pars *parsing)
-{
-	if (parsing->elem_data[0][0] == 'A')
-	{
-		if (parsing->a_found)
-			return (1);
-		else
-			parsing->a_found = 1;
-	}
-	if (parsing->elem_data[0][0] == 'C')
-	{
-		if (parsing->c_found)
-			return (1);
-		else
-			parsing->c_found = 1;
-	}
-	if (parsing->elem_data[0][0] == 'L')
-	{
-		if (parsing->l_found)
-			return (1);
-		else
-			parsing->l_found = 1;
-	}
-	if (parsing->elem_data[0][1])
-		return (1);
-	return (0);
-}
-
 int	check_single_element(t_scene *scene)
 {
-	if (scene->pars.elem_data[0][0] == 'A')
+	if (!ft_strcmp(scene->pars.elem_data[0], "A"))
 		scene->pars.error_code = parse_ambience(scene);
-	else if (scene->pars.elem_data[0][0] == 'C')
+	else if (!ft_strcmp(scene->pars.elem_data[0], "C"))
 		scene->pars.error_code = parse_camera(scene);
-	else if (scene->pars.elem_data[0][0] == 'L')
+	else if (!ft_strcmp(scene->pars.elem_data[0], "L"))
 		scene->pars.error_code = parse_light(scene);
-	// else if (ft_strcmp(parsing->elem_data[0], "sp"))
-	// 	parse_sphere(parsing);
-	// else if (ft_strcmp(parsing->elem_data[0], "pl"))
+	else if (!ft_strcmp(scene->pars.elem_data[0], "sp"))
+		scene->pars.error_code = parse_sphere(scene);
+	// else if (!ft_strcmp(parsing->elem_data[0], "pl"))
 	// 	parse_plane(parsing);
-	// else if (ft_strcmp(parsing->elem_data[0], "cy"))
+	// else if (!ft_strcmp(parsing->elem_data[0], "cy"))
 	// 	parse_cylinder(parsing);
-	// else
+	else
+		scene->pars.error_code = ERR_INVALID_IDENTIFIER;
 	return (scene->pars.error_code);
 }
 
@@ -67,7 +40,7 @@ int	check_elements(t_scene *scene)
 	scene->pars.elem_data = ft_split(scene->pars.element, ' ');
 	if (!scene->pars.elem_data)
 		return (ERR_MEM_ALLOC);
-	if (check_unique_identifier(&scene->pars))
+	if (check_unique_identifier(&scene->pars, scene->pars.elem_data[0]))
 		return (ERR_UNIQUE_ELEM);
 	scene->pars.error_code = check_single_element(scene);
 	if (scene->pars.error_code != 0)

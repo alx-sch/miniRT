@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/18 18:46:58 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:42:23 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # define ERR_MSG_MEM_ALLOC "Error\nMemory allocation failure.\n"
 # define ERR_MSG_UNIQUE_ELEM "Error\nAmbience, camera and light source can only\
  occure once. It must be written as a single 'A', 'C' or 'L'.\n"
+# define ERR_MSG_INVALID_IDENTIFIER "Error\nInvalid identifier found. \
+The following are allowed:\n[A] Ambience\n[C] Camera\n[L] Light\n[sp] Sphere\n\
+[pl] Plane\n[cy] Cylinder\n"
 # define ERR_MSG_FILE_EMPTY "Error\n.rt-file can't be empty.\n"
 # define ERR_MSG_AMB_FIELDS "Error\nAmbient light must have 3 fields.\n"
 # define ERR_MSG_AMB_LIGHT "Error\nAmbient light must be between 0.0 and 1.0.\n"
@@ -51,6 +54,15 @@ the range of a float\n"
 and 1.\n"
 # define ERR_MSG_LIGHT_COLOR_FIELDS "Error\nNeed 3 light color values.\n"
 # define ERR_MSG_LIGHT_COLOR_VALUES "Error\nLight color values must be between \
+0 and 255.\n"
+# define ERR_MSG_SP_FIELDS "Error\nSphere must have 4 fields.\n"
+# define ERR_MSG_SP_COOR_FIELDS "Error\nNeed 3 sphere coordinate values.\n"
+# define ERR_MSG_SP_COOR_VALUES "Error\nSphere coordinates must be within the \
+range of a float.\n"
+# define ERR_MSG_SP_DM "Error\nSphere diameter must be within the range of a \
+float.\n"
+# define ERR_MSG_SP_COLOR_FIELDS "Error\nNeed 3 sphere color values.\n"
+# define ERR_MSG_SP_COLOR_VALUES "Error\nSphere color values must be between \
 0 and 255.\n"
 
 typedef struct s_pars
@@ -151,6 +163,7 @@ typedef enum e_pars_errors
 	ERR_FILE_ACCESS,
 	ERR_MEM_ALLOC,
 	ERR_UNIQUE_ELEM,
+	ERR_INVALID_IDENTIFIER,
 	ERR_FILE_EMPTY,
 	ERR_AMB_FIELDS,
 	ERR_AMB_LIGHT,
@@ -168,6 +181,12 @@ typedef enum e_pars_errors
 	ERR_LIGHT_BRIGHTNESS,
 	ERR_LIGHT_COLOR_FIELDS,
 	ERR_LIGHT_COLOR_VALUES,
+	ERR_SP_FIELDS,
+	ERR_SP_COOR_FIELDS,
+	ERR_SP_COOR_VALUES,
+	ERR_SP_DM,
+	ERR_SP_COLOR_FIELDS,
+	ERR_SP_COLOR_VALUES
 }	t_pars_errors;
 
 /*PARSING*/
@@ -175,9 +194,11 @@ float	ft_atof(char *str);
 t_scene	parsing(int argc, char **argv);
 int		check_file_existence(char *str);
 int		check_file_extension(char *str);
+int		check_unique_identifier(t_pars *parsing, char *str);
 int		parse_ambience(t_scene *scene);
 int		parse_camera(t_scene *scene);
 int		parse_light(t_scene *scene);
+int		parse_sphere(t_scene *scene);
 
 // PARSING -- INITS
 void	init_parsing(t_pars *parsing);
@@ -195,6 +216,7 @@ void	errors_parsing(t_pars *pars);
 void	ambience_errors(t_pars *parsing);
 void	camera_errors(t_pars *parsing);
 void	light_errors(t_pars *parsing);
+void	sphere_errors(t_pars *parsing);
 
 // FREE
 void	free_parsing_and_exit(t_pars *parsing);
@@ -205,6 +227,7 @@ int		array_length(char **array);
 int		only_numbers_and_newline(char *str);
 int		only_numbers_dec_pt_and_newline(char *str);
 int		only_numbers_single_signs_and_dec_pt(char *str);
+int		only_numbers_and_dec_pt(char *str);
 int		ft_strchr_index(char *str, char c);
 
 #endif
