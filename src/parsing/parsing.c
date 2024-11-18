@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 19:42:32 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:50:12 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ int	check_single_element(t_scene *scene)
 		scene->pars.error_code = parse_light(scene);
 	else if (!ft_strcmp(scene->pars.elem_data[0], "sp"))
 		scene->pars.error_code = parse_sphere(scene);
-	// else if (!ft_strcmp(parsing->elem_data[0], "pl"))
-	// 	parse_plane(parsing);
+	else if (!ft_strcmp(scene->pars.elem_data[0], "pl"))
+		scene->pars.error_code = parse_plane(scene);
 	// else if (!ft_strcmp(parsing->elem_data[0], "cy"))
 	// 	parse_cylinder(parsing);
+	else if (!ft_strcmp(scene->pars.elem_data[0], "\n"))
+		scene->pars.error_code = 0;
 	else
 		scene->pars.error_code = ERR_INVALID_IDENTIFIER;
 	return (scene->pars.error_code);

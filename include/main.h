@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/18 19:42:23 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 20:01:41 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,17 @@ range of a float.\n"
 float.\n"
 # define ERR_MSG_SP_COLOR_FIELDS "Error\nNeed 3 sphere color values.\n"
 # define ERR_MSG_SP_COLOR_VALUES "Error\nSphere color values must be between \
+0 and 255.\n"
+# define ERR_MSG_PL_FIELDS "Error\nPlane must have 4 fields.\n"
+# define ERR_MSG_PL_COOR_FIELDS "Error\nNeed 3 plane coordinate values.\n"
+# define ERR_MSG_PL_COOR_VALUES "Error\nPlane coordinates must be within the \
+range of a float.\n"
+# define ERR_MSG_PL_VECTOR_FIELDS "Error\nNeed 3 plane orientation vector \
+values.\n"
+# define ERR_MSG_PL_VECTOR_VALUES "Error\nPlane orientation vector values \
+must be between -1 and 1.\n"
+# define ERR_MSG_PL_COLOR_FIELDS "Error\nNeed 3 plane color values.\n"
+# define ERR_MSG_PL_COLOR_VALUES "Error\nPlane color values must be between \
 0 and 255.\n"
 
 typedef struct s_pars
@@ -186,7 +197,14 @@ typedef enum e_pars_errors
 	ERR_SP_COOR_VALUES,
 	ERR_SP_DM,
 	ERR_SP_COLOR_FIELDS,
-	ERR_SP_COLOR_VALUES
+	ERR_SP_COLOR_VALUES,
+	ERR_PL_FIELDS,
+	ERR_PL_COOR_FIELDS,
+	ERR_PL_COOR_VALUES,
+	ERR_PL_VECTOR_FIELDS,
+	ERR_PL_VECTOR_VALUES,
+	ERR_PL_COLOR_FIELDS,
+	ERR_PL_COLOR_VALUES
 }	t_pars_errors;
 
 /*PARSING*/
@@ -199,6 +217,7 @@ int		parse_ambience(t_scene *scene);
 int		parse_camera(t_scene *scene);
 int		parse_light(t_scene *scene);
 int		parse_sphere(t_scene *scene);
+int		parse_plane(t_scene *scene);
 
 // PARSING -- INITS
 void	init_parsing(t_pars *parsing);
@@ -217,6 +236,7 @@ void	ambience_errors(t_pars *parsing);
 void	camera_errors(t_pars *parsing);
 void	light_errors(t_pars *parsing);
 void	sphere_errors(t_pars *parsing);
+void	plane_errors(t_pars *parsing);
 
 // FREE
 void	free_parsing_and_exit(t_pars *parsing);

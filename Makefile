@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/18 19:42:46 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/11/18 19:50:58 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/parsing/parse_camera.c \
 				$(SRCS_DIR)/parsing/parse_light.c \
 				$(SRCS_DIR)/parsing/parse_sphere.c \
+				$(SRCS_DIR)/parsing/parse_plane.c \
 				$(SRCS_DIR)/parsing/errors_elements.c \
 				$(SRCS_DIR)/parsing/errors_unique_elements.c \
 				$(SRCS_DIR)/parsing/errors.c \

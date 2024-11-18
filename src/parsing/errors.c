@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 19:23:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 20:01:27 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@ void	errors_parsing(t_pars *parsing)
 		light_errors(parsing);
 	else if (parsing->error_code >= 24 && parsing->error_code <= 29)
 		sphere_errors(parsing);
+	else if (parsing->error_code >= 30 && parsing->error_code <= 36)
+		plane_errors(parsing);
 	free_parsing_and_exit(parsing);
 }
