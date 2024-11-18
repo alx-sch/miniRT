@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 16:16:10 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:13:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	check_elements(t_scene *scene)
 {
 	scene->pars.elem_data = ft_split(scene->pars.element, ' ');
 	if (!scene->pars.elem_data)
-		return (4);
+		return (ERR_MEM_ALLOC);
 	if (check_unique_identifier(&scene->pars))
-		return (5);
+		return (ERR_UNIQUE_ELEM);
 	scene->pars.error_code = check_single_element(scene);
 	if (scene->pars.error_code != 0)
 		return (scene->pars.error_code);
@@ -84,7 +84,7 @@ int	file_line_by_line(t_scene *scene, char *str)
 	scene->pars.fd = open(str, O_RDONLY);
 	scene->pars.element = get_next_line(scene->pars.fd);
 	if (!scene->pars.element)
-		scene->pars.error_code = 6;
+		scene->pars.error_code = ERR_MEM_ALLOC;
 	while (scene->pars.element)
 	{
 		scene->pars.error_code = check_elements(scene);
@@ -100,18 +100,19 @@ int	file_line_by_line(t_scene *scene, char *str)
 	return (scene->pars.error_code);
 }
 
-void	parsing(int argc, char **argv)
+t_scene	parsing(int argc, char **argv)
 {
 	t_scene	scene;
 
 	init_scene(&scene);
 	if (argc != 2)
-		errors_file(1);
+		errors_file(ERR_USAGE);
 	if (check_file_extension(argv[1]))
-		errors_file(2);
+		errors_file(ERR_FILE_EXTENSION);
 	if (check_file_existence(argv[1]))
-		errors_file(3);
+		errors_file(ERR_FILE_ACCESS);
 	file_line_by_line(&scene, argv[1]);
 	if (scene.pars.error_code != 0)
 		errors_parsing(&scene.pars);
+	return (scene);
 }
