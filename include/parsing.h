@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 18:19:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:37:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef enum e_pars_errors
 	ERR_UNIQUE_ELEM,
 	ERR_INVALID_IDENTIFIER,
 	ERR_FILE_EMPTY,
+	ERR_MISSING_IDENTIFIER,
 	ERR_AMB_FIELDS,
 	ERR_AMB_LIGHT,
 	ERR_AMB_COLOR_FIELDS,
@@ -136,6 +137,8 @@ typedef enum e_pars_errors
 The following are allowed:\n[A] Ambience\n[C] Camera\n[L] Light\n[sp] Sphere\n\
 [pl] Plane\n[cy] Cylinder\n"
 # define ERR_MSG_FILE_EMPTY "Error\n.rt-file can't be empty.\n"
+# define ERR_MSG_MISSING_IDENTIFIER "Error\nMissing either ambience, camera or \
+light. Must be ONE of each.\n"
 # define ERR_MSG_AMB_FIELDS "Error\nAmbient light must have 3 fields.\n"
 # define ERR_MSG_AMB_LIGHT "Error\nAmbient light must be between 0.0 and 1.0.\n"
 # define ERR_MSG_AMB_COLOR_FIELDS "Error\nNeed 3 ambient color values.\n"

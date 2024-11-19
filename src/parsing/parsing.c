@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 17:38:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:40:32 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ int	file_line_by_line(t_scene *scene, char *str)
 	return (scene->pars.error_code);
 }
 
+int	all_necessary_identifiers(t_pars *pars)
+{
+	if (pars->a_found && pars->c_found && pars->l_found)
+		return (1);
+	return (0);
+}
+
 /*Checks that the file that's passed as argument to the program is valid input.
 Both the file itself, but also its content. See more of what is 
 looked for in 'parsing.h'.*/
@@ -71,5 +78,7 @@ t_scene	parsing(int argc, char **argv)
 	file_line_by_line(&scene, argv[1]);
 	if (scene.pars.error_code != 0)
 		errors_parsing(&scene.pars);
+	if (!all_necessary_identifiers(&scene.pars))
+		errors_file(ERR_MISSING_IDENTIFIER);
 	return (scene);
 }

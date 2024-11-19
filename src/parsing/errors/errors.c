@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:44:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:41:47 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	errors_file(int error_code)
 		ft_putstr_fd(ERR_MSG_FILE_EXTENSION, 2);
 	else if (error_code == ERR_FILE_ACCESS)
 		perror(ERR_MSG_FILE_ACCESS);
+	else if (error_code == ERR_MISSING_IDENTIFIER)
+		ft_putstr_fd(ERR_MSG_MISSING_IDENTIFIER, 2);
 	ft_putstr_fd(COLOR_RESET, 2);
 	exit(error_code);
 }
@@ -42,17 +44,17 @@ void	errors_parsing(t_pars *parsing)
 	ft_putstr_fd(COLOR_RED, 2);
 	if (parsing->error_code >= 4 && parsing->error_code <= 7)
 		non_element_errors(parsing);
-	else if (parsing->error_code >= 8 && parsing->error_code <= 11)
+	else if (parsing->error_code >= 9 && parsing->error_code <= 12)
 		ambience_errors(parsing);
-	else if (parsing->error_code >= 12 && parsing->error_code <= 17)
+	else if (parsing->error_code >= 13 && parsing->error_code <= 18)
 		camera_errors(parsing);
-	else if (parsing->error_code >= 18 && parsing->error_code <= 23)
+	else if (parsing->error_code >= 19 && parsing->error_code <= 24)
 		light_errors(parsing);
-	else if (parsing->error_code >= 24 && parsing->error_code <= 29)
+	else if (parsing->error_code >= 25 && parsing->error_code <= 30)
 		sphere_errors(parsing);
-	else if (parsing->error_code >= 30 && parsing->error_code <= 36)
+	else if (parsing->error_code >= 31 && parsing->error_code <= 37)
 		plane_errors(parsing);
-	else if (parsing->error_code >= 37 && parsing->error_code <= 45)
+	else if (parsing->error_code >= 38 && parsing->error_code <= 46)
 		cylinder_errors(parsing);
 	ft_putstr_fd(COLOR_RESET, 2);
 	free_parsing_and_exit(parsing);
