@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/18 20:01:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:09:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,21 @@ values.\n"
 must be between -1 and 1.\n"
 # define ERR_MSG_PL_COLOR_FIELDS "Error\nNeed 3 plane color values.\n"
 # define ERR_MSG_PL_COLOR_VALUES "Error\nPlane color values must be between \
+0 and 255.\n"
+# define ERR_MSG_CY_FIELDS "Error\nCylinder must have 6 fields.\n"
+# define ERR_MSG_CY_COOR_FIELDS "Error\nNeed 3 cylinder coordinate values.\n"
+# define ERR_MSG_CY_COOR_VALUES "Error\nSphere coordinates must be within the \
+range of a float.\n"
+# define ERR_MSG_CY_VECTOR_FIELDS "Error\nNeed 3 cylinder orientation vector \
+values.\n"
+# define ERR_MSG_CY_VECTOR_VALUES "Error\nCylinder orientation vector values \
+must be between -1 and 1.\n"
+# define ERR_MSG_CY_DM "Error\nCylinder diameter must be within the range of a \
+float.\n"
+# define ERR_MSG_CY_HEIGHT "Error\nCylinder height must be within the range \
+of a float.\n"
+# define ERR_MSG_CY_COLOR_FIELDS "Error\nNeed 3 cylinder color values.\n"
+# define ERR_MSG_CY_COLOR_VALUES "Error\nCylinder color values must be between \
 0 and 255.\n"
 
 typedef struct s_pars
@@ -204,7 +219,16 @@ typedef enum e_pars_errors
 	ERR_PL_VECTOR_FIELDS,
 	ERR_PL_VECTOR_VALUES,
 	ERR_PL_COLOR_FIELDS,
-	ERR_PL_COLOR_VALUES
+	ERR_PL_COLOR_VALUES,
+	ERR_CY_FIELDS,
+	ERR_CY_COOR_FIELDS,
+	ERR_CY_COOR_VALUES,
+	ERR_CY_VECTOR_FIELDS,
+	ERR_CY_VECTOR_VALUES,
+	ERR_CY_DM,
+	ERR_CY_HEIGHT,
+	ERR_CY_COLOR_FIELDS,
+	ERR_CY_COLOR_VALUES
 }	t_pars_errors;
 
 /*PARSING*/
@@ -218,6 +242,7 @@ int		parse_camera(t_scene *scene);
 int		parse_light(t_scene *scene);
 int		parse_sphere(t_scene *scene);
 int		parse_plane(t_scene *scene);
+int		parse_cylinder(t_scene *scene);
 
 // PARSING -- INITS
 void	init_parsing(t_pars *parsing);
@@ -237,6 +262,7 @@ void	camera_errors(t_pars *parsing);
 void	light_errors(t_pars *parsing);
 void	sphere_errors(t_pars *parsing);
 void	plane_errors(t_pars *parsing);
+void	cylinder_errors(t_pars *parsing);
 
 // FREE
 void	free_parsing_and_exit(t_pars *parsing);

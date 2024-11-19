@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_unique_element.c                             :+:      :+:    :+:   */
+/*   check_unique_identifier.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:41:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 19:42:00 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:14:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_nonunique_identifier(char *str)
 
 int	check_unique_identifier(t_pars *parsing, char *str)
 {
-	if (is_nonunique_identifier(str))
+	if (!str || is_nonunique_identifier(str))
 		return (0);
 	if (!ft_strcmp(str, "A") || !ft_strcmp(str, "A\n"))
 	{

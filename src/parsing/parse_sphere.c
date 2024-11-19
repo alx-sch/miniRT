@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 19:47:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:52:40 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ static int	sphere_coordinates(t_scene *scene)
 	return (0);
 }
 
+static int	set_rgb_value_sp(char *input_value, t_scene *scene, int rgb)
+{
+	int	value;
+
+	value = ft_atoi(input_value);
+	if (value < 0 || value > 255)
+		return (1);
+	if (rgb == 0)
+		scene->sp.color_r = value;
+	else if (rgb == 1)
+		scene->sp.color_g = value;
+	else if (rgb == 2)
+		scene->sp.color_b = value;
+	return (0);
+}
+
 static int	sphere_color(t_scene *scene, char **rgb)
 {
 	int		value;
@@ -47,18 +63,12 @@ static int	sphere_color(t_scene *scene, char **rgb)
 	if (!only_numbers_and_newline(rgb[0]) || !only_numbers_and_newline(rgb[1])
 		|| !only_numbers_and_newline(rgb[2]))
 		return (ERR_SP_COLOR_VALUES);
-	value = ft_atoi(rgb[0]);
-	if (value < 0 || value > 255)
+	if (set_rgb_value_sp(rgb[0], scene, 0) != 0)
 		return (ERR_SP_COLOR_VALUES);
-	scene->sp.color_r = value;
-	value = ft_atoi(rgb[1]);
-	if (value < 0 || value > 255)
+	if (set_rgb_value_sp(rgb[1], scene, 1) != 0)
 		return (ERR_SP_COLOR_VALUES);
-	scene->sp.color_g = value;
-	value = ft_atoi(rgb[2]);
-	if (value < 0 || value > 255)
+	if (set_rgb_value_sp(rgb[2], scene, 2) != 0)
 		return (ERR_SP_COLOR_VALUES);
-	scene->sp.color_b = value;
 	return (0);
 }
 
