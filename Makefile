@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/19 16:54:01 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/11/19 17:53:51 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS :=			$(SRCS_DIR)/free/free_array.c \
 				$(SRCS_DIR)/parsing/init/init_scene.c \
 				$(SRCS_DIR)/parsing/init/init_elements.c \
 				$(SRCS_DIR)/parsing/init/init_unique_elements.c \
+				$(SRCS_DIR)/parsing/parse_each_element/correct_amt_of_fields.c \
 				$(SRCS_DIR)/parsing/parse_each_element/parse_ambience.c \
 				$(SRCS_DIR)/parsing/parse_each_element/parse_camera.c \
 				$(SRCS_DIR)/parsing/parse_each_element/parse_light.c \

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:41:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:14:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:22:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int	is_nonunique_identifier(char *str)
 {
-	if (!ft_strcmp(str, "sp") || !ft_strcmp(str, "pl") || !ft_strcmp(str, "cy"))
+	if (!ft_strcmp(str, "sp") || !ft_strcmp(str, "sp\n")
+		|| !ft_strcmp(str, "pl") || !ft_strcmp(str, "pl\n")
+		|| !ft_strcmp(str, "cy") || !ft_strcmp(str, "cy\n"))
 		return (1);
 	return (0);
 }

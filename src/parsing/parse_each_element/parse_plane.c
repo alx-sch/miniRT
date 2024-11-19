@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:37:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:11:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	plane_color(t_scene *scene, char **rgb)
 	int		value;
 
 	value = 0;
-	if (array_length(rgb) != 3)
+	if (array_length(rgb) != 3 || rgb[2][0] == '\n')
 		return (ERR_PL_COLOR_FIELDS);
 	if (!only_numbers_and_newline(rgb[0]) || !only_numbers_and_newline(rgb[1])
 		|| !only_numbers_and_newline(rgb[2]))
@@ -106,7 +106,7 @@ int	parse_plane(t_scene *scene)
 	char	**rgb;
 
 	rgb = NULL;
-	if (array_length(scene->pars.elem_data) != 4)
+	if (!correct_amt_of_fields(scene->pars.elem_data, 4))
 		return (ERR_PL_FIELDS);
 	scene->pars.error_code = plane_coordinates(scene);
 	if (scene->pars.error_code != 0)

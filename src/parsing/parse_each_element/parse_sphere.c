@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:37:46 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:11:49 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	sphere_color(t_scene *scene, char **rgb)
 	int		value;
 
 	value = 0;
-	if (array_length(rgb) != 3)
+	if (array_length(rgb) != 3 || rgb[2][0] == '\n')
 		return (ERR_SP_COLOR_FIELDS);
 	if (!only_numbers_and_newline(rgb[0]) || !only_numbers_and_newline(rgb[1])
 		|| !only_numbers_and_newline(rgb[2]))
@@ -85,7 +85,7 @@ int	parse_sphere(t_scene *scene)
 	char	**rgb;
 
 	rgb = NULL;
-	if (array_length(scene->pars.elem_data) != 4)
+	if (!correct_amt_of_fields(scene->pars.elem_data, 4))
 		return (ERR_SP_FIELDS);
 	scene->pars.error_code = sphere_coordinates(scene);
 	if (scene->pars.error_code != 0)

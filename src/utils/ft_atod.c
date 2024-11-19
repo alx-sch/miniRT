@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:05:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:36:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:16:12 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*A helper function to extract the non-fractional decimals of the number.*/
 static int	get_decimals_before_dec_pt(char *str, int i)
 {
 	char	*decimal_str;
@@ -23,6 +24,9 @@ static int	get_decimals_before_dec_pt(char *str, int i)
 	return (dec_res);
 }
 
+/*Converts from ascii to double.
+Returns the converted number upon success.
+Returns -1 if a non-numerical character is encountered, so be careful here.*/
 double	ft_atod(char *str)
 {
 	int		i;

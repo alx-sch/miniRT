@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:45:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:36:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:10:26 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	parse_ambience(t_scene *scene)
 {
 	char	**rgb;
 
-	if (array_length(scene->pars.elem_data) != 3)
+	if (!correct_amt_of_fields(scene->pars.elem_data, 3))
 		return (ERR_AMB_FIELDS);
 	scene->amb.light = ft_atod(scene->pars.elem_data[1]);
 	if (scene->amb.light < 0.0 || scene->amb.light > 1.0)
@@ -49,7 +49,7 @@ int	parse_ambience(t_scene *scene)
 	rgb = ft_split(scene->pars.elem_data[2], ',');
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
-	if (array_length(rgb) != 3)
+	if (array_length(rgb) != 3 || rgb[2][0] == '\n')
 		scene->pars.error_code = ERR_AMB_COLOR_FIELDS;
 	if (ambience_rgb(scene, rgb))
 		scene->pars.error_code = ERR_AMB_COLOR_VALUES;

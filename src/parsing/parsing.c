@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:48:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:38:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	file_line_by_line(t_scene *scene, char *str)
 	scene->pars.fd = open(str, O_RDONLY);
 	scene->pars.element = get_next_line(scene->pars.fd);
 	if (!scene->pars.element)
-		scene->pars.error_code = ERR_MEM_ALLOC;
+		scene->pars.error_code = ERR_FILE_EMPTY;
 	while (scene->pars.element)
 	{
 		scene->pars.error_code = file_one_line(scene);
@@ -54,6 +54,9 @@ int	file_line_by_line(t_scene *scene, char *str)
 	return (scene->pars.error_code);
 }
 
+/*Checks that the file that's passed as argument to the program is valid input.
+Both the file itself, but also its content. See more of what is 
+looked for in 'parsing.h'.*/
 t_scene	parsing(int argc, char **argv)
 {
 	t_scene	scene;
@@ -61,10 +64,10 @@ t_scene	parsing(int argc, char **argv)
 	init_scene(&scene);
 	if (argc != 2)
 		errors_file(ERR_USAGE);
-	if (check_file_extension(argv[1]))
-		errors_file(ERR_FILE_EXTENSION);
 	if (check_file_existence(argv[1]))
 		errors_file(ERR_FILE_ACCESS);
+	if (check_file_extension(argv[1]))
+		errors_file(ERR_FILE_EXTENSION);
 	file_line_by_line(&scene, argv[1]);
 	if (scene.pars.error_code != 0)
 		errors_parsing(&scene.pars);

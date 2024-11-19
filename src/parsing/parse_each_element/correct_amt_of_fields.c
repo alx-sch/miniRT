@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_index.c                                  :+:      :+:    :+:   */
+/*   correct_amt_of_fields.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 17:58:59 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 17:16:50 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/11/19 17:47:53 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/11/19 18:17:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-/*Searches a string for a char c, returns the index where it was found, 
-if not found it returns -1.*/
-int	ft_strchr_index(char *str, char c)
+int	correct_amt_of_fields(char **arr, int expected_len)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	while (str[i] != '\0')
+	len = array_length(arr);
+	if (!ft_strcmp(arr[len - 1], "\n"))
 	{
-		if (str[i] == c)
-			return (i);
-		i++;
+		if (len - 1 == expected_len)
+			return (1);
+		else
+			return (0);
 	}
-	return (-1);
+	else if (len != expected_len)
+		return (0);
+	return (1);
 }

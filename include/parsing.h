@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 17:12:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:19:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ values.\n"
 must be between -1 and 1.\n"
 # define ERR_MSG_CAM_FIELD_OF_VIEW "Error\nCamera's horizontal field of view \
 must be a number between 0 and 180.\n"
-# define ERR_MSG_LIGHT_FIELDS "Error\nLight field must have 4 fields.\n"
+# define ERR_MSG_LIGHT_FIELDS "Error\nLight field must have 3 or 4 fields.\n"
 # define ERR_MSG_LIGHT_COOR_FIELDS "Error\nNeed 3 light coordinate values.\n"
 # define ERR_MSG_LIGHT_COOR_VALUES "Error\nLight coordinates must be within \
 the range of a double\n"
@@ -318,6 +318,7 @@ void	init_plane(t_pl *pl);
 void	init_cylinder(t_cy *cy);
 
 // PARSING -- PARSE EACH ELEMENT
+int		correct_amt_of_fields(char **arr, int expected_len);
 int		parse_ambience(t_scene *scene);
 int		parse_camera(t_scene *scene);
 int		parse_light(t_scene *scene);

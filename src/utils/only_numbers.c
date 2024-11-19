@@ -6,12 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:57:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 19:33:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:18:47 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Searches a string to see if it only consists of numbers, dec point and '\n'.
+Returns 1 if there were only numbers, dec point and '\n'.
+Returns 0 if something else was encountered.*/
 int	only_numbers_dec_pt_and_newline(char *str)
 {
 	int	i;
@@ -26,6 +29,9 @@ int	only_numbers_dec_pt_and_newline(char *str)
 	return (1);
 }
 
+/*Searches a string to see if it only consists of numbers and '\n'.
+Returns 1 if there were only numbers and '\n'.
+Returns 0 if something else was encountered.*/
 int	only_numbers_and_newline(char *str)
 {
 	int	i;
@@ -40,6 +46,10 @@ int	only_numbers_and_newline(char *str)
 	return (1);
 }
 
+/*Searches a string to see if it only consists of numbers, '-', '+' and decimal 
+point.
+Returns 1 if there were only numbers, '+', '-' and a decimal point.
+Returns 0 if something else was encountered.*/
 int	only_numbers_single_signs_and_dec_pt(char *str)
 {
 	int	i;
@@ -58,6 +68,9 @@ int	only_numbers_single_signs_and_dec_pt(char *str)
 	return (1);
 }
 
+/*Searches a string to see if it only consists of numbers and decimal point.
+Returns 1 if there were only numbers and a decimal point.
+Returns 0 if something else was encountered.*/
 int	only_numbers_and_dec_pt(char *str)
 {
 	int	i;

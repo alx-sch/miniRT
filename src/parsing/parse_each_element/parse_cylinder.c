@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:37:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:11:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	cylinder_color(t_scene *scene, char **rgb)
 	int		value;
 
 	value = 0;
-	if (array_length(rgb) != 3)
+	if (array_length(rgb) != 3 || rgb[2][0] == '\n')
 		return (ERR_CY_COLOR_FIELDS);
 	if (!only_numbers_and_newline(rgb[0]) || !only_numbers_and_newline(rgb[1])
 		|| !only_numbers_and_newline(rgb[2]))
@@ -105,7 +105,7 @@ int	parse_cylinder(t_scene *scene)
 {
 	char	**rgb;
 
-	if (array_length(scene->pars.elem_data) != 6)
+	if (!correct_amt_of_fields(scene->pars.elem_data, 6))
 		return (ERR_CY_FIELDS);
 	scene->pars.error_code = cylinder_coordinates(scene);
 	if (scene->pars.error_code != 0)

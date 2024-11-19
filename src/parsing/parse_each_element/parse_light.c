@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:37:25 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:11:30 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,21 @@ static int	light_coordinates(t_scene *scene)
 
 static int	light_brightness(t_scene *scene)
 {
+	char	*sub;
+
 	if (!only_numbers_dec_pt_and_newline(scene->pars.elem_data[2]))
 		return (ERR_LIGHT_BRIGHTNESS);
-	scene->light.bright = ft_atod(scene->pars.elem_data[2]);
+	if (ft_strchr(scene->pars.elem_data[2], '\n'))
+	{
+		sub = ft_substr(scene->pars.elem_data[2], 0, \
+		ft_strchr_index(scene->pars.elem_data[2], '\n'));
+		if (!sub)
+			return (ERR_MEM_ALLOC);
+		scene->light.bright = ft_atod(sub);
+		free(sub);
+	}
+	else
+		scene->light.bright = ft_atod(scene->pars.elem_data[2]);
 	if (scene->light.bright < 0 || scene->light.bright > 1)
 		return (ERR_LIGHT_BRIGHTNESS);
 	return (0);
@@ -68,7 +80,7 @@ static int	light_color(t_scene *scene, char **rgb)
 	int		value;
 
 	value = 0;
-	if (array_length(rgb) != 3)
+	if (array_length(rgb) != 3 || rgb[2][0] == '\n')
 		return (ERR_LIGHT_COLOR_FIELDS);
 	if (!only_numbers_and_newline(rgb[0]) || !only_numbers_and_newline(rgb[1])
 		|| !only_numbers_and_newline(rgb[2]))
@@ -89,7 +101,8 @@ int	parse_light(t_scene *scene)
 
 	rgb = NULL;
 	arr_len = array_length(scene->pars.elem_data);
-	if (arr_len != 3 && arr_len != 4)
+	if (!correct_amt_of_fields(scene->pars.elem_data, 3)
+		&& !correct_amt_of_fields(scene->pars.elem_data, 4))
 		return (ERR_LIGHT_FIELDS);
 	scene->pars.error_code = light_coordinates(scene);
 	if (scene->pars.error_code != 0)
@@ -97,7 +110,7 @@ int	parse_light(t_scene *scene)
 	scene->pars.error_code = light_brightness(scene);
 	if (scene->pars.error_code != 0)
 		return (scene->pars.error_code);
-	if (arr_len == 4)
+	if (arr_len == 4 && scene->pars.elem_data[3][0] != '\n')
 	{
 		rgb = ft_split(scene->pars.elem_data[3], ',');
 		if (!rgb)
