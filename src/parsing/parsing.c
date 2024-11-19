@@ -6,40 +6,17 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:00:17 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:48:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	check_single_element(t_scene *scene)
-{
-	if (!scene->pars.elem_data[0])
-		scene->pars.error_code = 0;
-	else if (!ft_strcmp(scene->pars.elem_data[0], "A"))
-		scene->pars.error_code = parse_ambience(scene);
-	else if (!ft_strcmp(scene->pars.elem_data[0], "C"))
-		scene->pars.error_code = parse_camera(scene);
-	else if (!ft_strcmp(scene->pars.elem_data[0], "L"))
-		scene->pars.error_code = parse_light(scene);
-	else if (!ft_strcmp(scene->pars.elem_data[0], "sp"))
-		scene->pars.error_code = parse_sphere(scene);
-	else if (!ft_strcmp(scene->pars.elem_data[0], "pl"))
-		scene->pars.error_code = parse_plane(scene);
-	else if (!ft_strcmp(scene->pars.elem_data[0], "cy"))
-		scene->pars.error_code = parse_cylinder(scene);
-	else if (!ft_strcmp(scene->pars.elem_data[0], "\n"))
-		scene->pars.error_code = 0;
-	else
-		scene->pars.error_code = ERR_INVALID_IDENTIFIER;
-	return (scene->pars.error_code);
-}
-
 /*Takes ONE line (one element), and uses ft_split to split it by spaces.
 Calls check_unique_identifier to see that there are no duplicates of the
 uppercase objects, and then makes a proper check for each field of the
 element, by calling check_single_element.*/
-int	check_elements(t_scene *scene)
+int	file_one_line(t_scene *scene)
 {
 	scene->pars.elem_data = ft_split(scene->pars.element, ' ');
 	if (!scene->pars.elem_data)
@@ -64,7 +41,7 @@ int	file_line_by_line(t_scene *scene, char *str)
 		scene->pars.error_code = ERR_MEM_ALLOC;
 	while (scene->pars.element)
 	{
-		scene->pars.error_code = check_elements(scene);
+		scene->pars.error_code = file_one_line(scene);
 		if (scene->pars.error_code != 0)
 		{
 			get_next_line(-1);

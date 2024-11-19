@@ -6,35 +6,36 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/19 16:00:48 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/11/19 16:54:01 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			miniRT
 
 SRCS_DIR :=		src
-SRCS :=			$(SRCS_DIR)/main.c \
-				$(SRCS_DIR)/parsing/check_file.c \
-				$(SRCS_DIR)/parsing/check_unique_identifier.c \
-				$(SRCS_DIR)/parsing/parse_ambience.c \
-				$(SRCS_DIR)/parsing/parse_camera.c \
-				$(SRCS_DIR)/parsing/parse_light.c \
-				$(SRCS_DIR)/parsing/parse_sphere.c \
-				$(SRCS_DIR)/parsing/parse_plane.c \
-				$(SRCS_DIR)/parsing/parse_cylinder.c \
-				$(SRCS_DIR)/parsing/errors_elements.c \
-				$(SRCS_DIR)/parsing/errors_unique_elements.c \
-				$(SRCS_DIR)/parsing/errors.c \
-				$(SRCS_DIR)/parsing/ft_atof.c \
-				$(SRCS_DIR)/parsing/init_scene.c \
-				$(SRCS_DIR)/parsing/init_elements.c \
-				$(SRCS_DIR)/parsing/init_unique_elements.c \
-				$(SRCS_DIR)/parsing/parsing.c \
-				$(SRCS_DIR)/free/free_array.c \
+SRCS :=			$(SRCS_DIR)/free/free_array.c \
 				$(SRCS_DIR)/free/free_parsing.c \
+				$(SRCS_DIR)/parsing/errors/errors_elements.c \
+				$(SRCS_DIR)/parsing/errors/errors_unique_elements.c \
+				$(SRCS_DIR)/parsing/errors/errors.c \
+				$(SRCS_DIR)/parsing/init/init_scene.c \
+				$(SRCS_DIR)/parsing/init/init_elements.c \
+				$(SRCS_DIR)/parsing/init/init_unique_elements.c \
+				$(SRCS_DIR)/parsing/parse_each_element/parse_ambience.c \
+				$(SRCS_DIR)/parsing/parse_each_element/parse_camera.c \
+				$(SRCS_DIR)/parsing/parse_each_element/parse_light.c \
+				$(SRCS_DIR)/parsing/parse_each_element/parse_sphere.c \
+				$(SRCS_DIR)/parsing/parse_each_element/parse_plane.c \
+				$(SRCS_DIR)/parsing/parse_each_element/parse_cylinder.c \
+				$(SRCS_DIR)/parsing/parse_file/check_file.c \
+				$(SRCS_DIR)/parsing/parse_file/check_single_element.c \
+				$(SRCS_DIR)/parsing/parse_file/check_unique_identifier.c \
+				$(SRCS_DIR)/parsing/parsing.c \
 				$(SRCS_DIR)/utils/array_length.c \
+				$(SRCS_DIR)/utils/ft_atod.c \
+				$(SRCS_DIR)/utils/ft_strchr_index.c \
 				$(SRCS_DIR)/utils/only_numbers.c \
-				$(SRCS_DIR)/utils/ft_strchr_index.c
+				$(SRCS_DIR)/main.c
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 15:52:40 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:37:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	sphere_coordinates(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_SP_COOR_VALUES);
 	}
-	scene->sp.x = ft_atof(coords[0]);
-	scene->sp.y = ft_atof(coords[1]);
-	scene->sp.z = ft_atof(coords[2]);
+	scene->sp.x = ft_atod(coords[0]);
+	scene->sp.y = ft_atod(coords[1]);
+	scene->sp.z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	return (0);
 }
@@ -76,7 +76,7 @@ static int	sphere_diameter(t_scene *scene)
 {
 	if (!only_numbers_and_dec_pt(scene->pars.elem_data[2]))
 		return (ERR_SP_DM);
-	scene->sp.dm = ft_atof(scene->pars.elem_data[2]);
+	scene->sp.dm = ft_atod(scene->pars.elem_data[2]);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/19 16:09:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:00:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,261 +19,34 @@
 # include <stdlib.h>	// for malloc(), free(), exit()
 # include <fcntl.h>		// for open()
 # include "libft.h"
+# include "parsing.h"
 
-// CUSTOM ERROR MESSAGES
-# define ERR_MSG_USAGE "Error\nUsage: ./miniRT <scene.rt>\n"
-# define ERR_MSG_FILE_EXTENSION "Error\nFile extension must be of type '.rt'.\n"
-# define ERR_MSG_FILE_ACCESS "Error\nCan't access scene description file"
-# define ERR_MSG_MEM_ALLOC "Error\nMemory allocation failure.\n"
-# define ERR_MSG_UNIQUE_ELEM "Error\nAmbience, camera and light source can only\
- occure once. It must be written as a single 'A', 'C' or 'L'.\n"
-# define ERR_MSG_INVALID_IDENTIFIER "Error\nInvalid identifier found. \
-The following are allowed:\n[A] Ambience\n[C] Camera\n[L] Light\n[sp] Sphere\n\
-[pl] Plane\n[cy] Cylinder\n"
-# define ERR_MSG_FILE_EMPTY "Error\n.rt-file can't be empty.\n"
-# define ERR_MSG_AMB_FIELDS "Error\nAmbient light must have 3 fields.\n"
-# define ERR_MSG_AMB_LIGHT "Error\nAmbient light must be between 0.0 and 1.0.\n"
-# define ERR_MSG_AMB_COLOR_FIELDS "Error\nNeed 3 ambient color values.\n"
-# define ERR_MSG_AMB_COLOR_VALUES "Error\nAmbient color values must be between \
-0 and 255.\n"
-# define ERR_MSG_CAM_FIELDS "Error\nCamera must have 4 fields.\n"
-# define ERR_MSG_CAM_COOR_FIELDS "Error\nNeed 3 camera coordinate values.\n"
-# define ERR_MSG_CAM_COOR_VALUES "Error\nCamera coordinates must be within the \
-range of a float.\n"
-# define ERR_MSG_CAM_VECTOR_FIELDS "Error\nNeed 3 camera orientation vector \
-values.\n"
-# define ERR_MSG_CAM_VECTOR_VALUES "Error\nCamera orientation vector values \
-must be between -1 and 1.\n"
-# define ERR_MSG_CAM_FIELD_OF_VIEW "Error\nCamera's horizontal field of view \
-must be a number between 0 and 180.\n"
-# define ERR_MSG_LIGHT_FIELDS "Error\nLight field must have 4 fields.\n"
-# define ERR_MSG_LIGHT_COOR_FIELDS "Error\nNeed 3 light coordinate values.\n"
-# define ERR_MSG_LIGHT_COOR_VALUES "Error\nLight coordinates must be within \
-the range of a float\n"
-# define ERR_MSG_LIGHT_BRIGHTNESS "Error\nLight brightness must be between 0 \
-and 1.\n"
-# define ERR_MSG_LIGHT_COLOR_FIELDS "Error\nNeed 3 light color values.\n"
-# define ERR_MSG_LIGHT_COLOR_VALUES "Error\nLight color values must be between \
-0 and 255.\n"
-# define ERR_MSG_SP_FIELDS "Error\nSphere must have 4 fields.\n"
-# define ERR_MSG_SP_COOR_FIELDS "Error\nNeed 3 sphere coordinate values.\n"
-# define ERR_MSG_SP_COOR_VALUES "Error\nSphere coordinates must be within the \
-range of a float.\n"
-# define ERR_MSG_SP_DM "Error\nSphere diameter must be within the range of a \
-float.\n"
-# define ERR_MSG_SP_COLOR_FIELDS "Error\nNeed 3 sphere color values.\n"
-# define ERR_MSG_SP_COLOR_VALUES "Error\nSphere color values must be between \
-0 and 255.\n"
-# define ERR_MSG_PL_FIELDS "Error\nPlane must have 4 fields.\n"
-# define ERR_MSG_PL_COOR_FIELDS "Error\nNeed 3 plane coordinate values.\n"
-# define ERR_MSG_PL_COOR_VALUES "Error\nPlane coordinates must be within the \
-range of a float.\n"
-# define ERR_MSG_PL_VECTOR_FIELDS "Error\nNeed 3 plane orientation vector \
-values.\n"
-# define ERR_MSG_PL_VECTOR_VALUES "Error\nPlane orientation vector values \
-must be between -1 and 1.\n"
-# define ERR_MSG_PL_COLOR_FIELDS "Error\nNeed 3 plane color values.\n"
-# define ERR_MSG_PL_COLOR_VALUES "Error\nPlane color values must be between \
-0 and 255.\n"
-# define ERR_MSG_CY_FIELDS "Error\nCylinder must have 6 fields.\n"
-# define ERR_MSG_CY_COOR_FIELDS "Error\nNeed 3 cylinder coordinate values.\n"
-# define ERR_MSG_CY_COOR_VALUES "Error\nSphere coordinates must be within the \
-range of a float.\n"
-# define ERR_MSG_CY_VECTOR_FIELDS "Error\nNeed 3 cylinder orientation vector \
-values.\n"
-# define ERR_MSG_CY_VECTOR_VALUES "Error\nCylinder orientation vector values \
-must be between -1 and 1.\n"
-# define ERR_MSG_CY_DM "Error\nCylinder diameter must be within the range of a \
-float.\n"
-# define ERR_MSG_CY_HEIGHT "Error\nCylinder height must be within the range \
-of a float.\n"
-# define ERR_MSG_CY_COLOR_FIELDS "Error\nNeed 3 cylinder color values.\n"
-# define ERR_MSG_CY_COLOR_VALUES "Error\nCylinder color values must be between \
-0 and 255.\n"
+// COLORS
+# define COLOR_RED		"\033[31m"
+# define COLOR_GREEN	"\033[32m"
+# define COLOR_YELLOW	"\033[33m"
+# define COLOR_BLUE		"\033[34m"
+# define COLOR_MAGENTA	"\033[35m"
+# define COLOR_CYAN		"\033[36m"
+# define COLOR_WHITE	"\033[37m"
+# define COLOR_BLACK	"\033[30m"
+# define COLOR_RESET	"\033[0m"
 
-typedef struct s_pars
-{
-	int		a_found;
-	int		c_found;
-	int		l_found;
-	int		fd;
-	int		error_code;
-	char	*element;
-	char	**elem_data;
-}	t_pars;
+/*
+	GENERAL
+*/
 
-typedef struct s_ambience
-{
-	float			light;
-	unsigned char	color_r;
-	unsigned char	color_g;
-	unsigned char	color_b;
-}	t_amb;
-
-typedef struct s_camera
-{
-	float			x;
-	float			y;
-	float			z;
-	float			vec_x;
-	float			vec_y;
-	float			vec_z;
-	unsigned char	field;
-}	t_cam;
-
-typedef struct s_light
-{
-	float			x;
-	float			y;
-	float			z;
-	float			bright;
-	unsigned char	color_r;
-	unsigned char	color_g;
-	unsigned char	color_b;
-}	t_light;
-
-typedef struct s_sp
-{
-	float			x;
-	float			y;
-	float			z;
-	float			dm;
-	unsigned char	color_r;
-	unsigned char	color_g;
-	unsigned char	color_b;
-}	t_sp;
-
-typedef struct s_pl
-{
-	float			x;
-	float			y;
-	float			z;
-	float			vec_x;
-	float			vec_y;
-	float			vec_z;
-	unsigned char	color_r;
-	unsigned char	color_g;
-	unsigned char	color_b;
-}	t_pl;
-
-typedef struct s_cy
-{
-	float			x;
-	float			y;
-	float			z;
-	float			vec_x;
-	float			vec_y;
-	float			vec_z;
-	float			dm;
-	float			height;
-	unsigned char	color_r;
-	unsigned char	color_g;
-	unsigned char	color_b;
-}	t_cy;
-
-typedef struct s_scene
-{
-	t_pars			pars;
-	t_amb			amb;
-	t_cam			cam;
-	t_light			light;
-	t_sp			sp;
-	t_pl			pl;
-	t_cy			cy;
-}	t_scene;
-
-typedef enum e_pars_errors
-{
-	ERR_USAGE = 1,
-	ERR_FILE_EXTENSION,
-	ERR_FILE_ACCESS,
-	ERR_MEM_ALLOC,
-	ERR_UNIQUE_ELEM,
-	ERR_INVALID_IDENTIFIER,
-	ERR_FILE_EMPTY,
-	ERR_AMB_FIELDS,
-	ERR_AMB_LIGHT,
-	ERR_AMB_COLOR_FIELDS,
-	ERR_AMB_COLOR_VALUES,
-	ERR_CAM_FIELDS,
-	ERR_CAM_COOR_FIELDS,
-	ERR_CAM_COOR_VALUES,
-	ERR_CAM_VECTOR_FIELDS,
-	ERR_CAM_VECTOR_VALUES,
-	ERR_CAM_FIELD_OF_VIEW,
-	ERR_LIGHT_FIELDS,
-	ERR_LIGHT_COOR_FIELDS,
-	ERR_LIGHT_COOR_VALUES,
-	ERR_LIGHT_BRIGHTNESS,
-	ERR_LIGHT_COLOR_FIELDS,
-	ERR_LIGHT_COLOR_VALUES,
-	ERR_SP_FIELDS,
-	ERR_SP_COOR_FIELDS,
-	ERR_SP_COOR_VALUES,
-	ERR_SP_DM,
-	ERR_SP_COLOR_FIELDS,
-	ERR_SP_COLOR_VALUES,
-	ERR_PL_FIELDS,
-	ERR_PL_COOR_FIELDS,
-	ERR_PL_COOR_VALUES,
-	ERR_PL_VECTOR_FIELDS,
-	ERR_PL_VECTOR_VALUES,
-	ERR_PL_COLOR_FIELDS,
-	ERR_PL_COLOR_VALUES,
-	ERR_CY_FIELDS,
-	ERR_CY_COOR_FIELDS,
-	ERR_CY_COOR_VALUES,
-	ERR_CY_VECTOR_FIELDS,
-	ERR_CY_VECTOR_VALUES,
-	ERR_CY_DM,
-	ERR_CY_HEIGHT,
-	ERR_CY_COLOR_FIELDS,
-	ERR_CY_COLOR_VALUES
-}	t_pars_errors;
-
-/*PARSING*/
-float	ft_atof(char *str);
-t_scene	parsing(int argc, char **argv);
-int		check_file_existence(char *str);
-int		check_file_extension(char *str);
-int		check_unique_identifier(t_pars *parsing, char *str);
-int		parse_ambience(t_scene *scene);
-int		parse_camera(t_scene *scene);
-int		parse_light(t_scene *scene);
-int		parse_sphere(t_scene *scene);
-int		parse_plane(t_scene *scene);
-int		parse_cylinder(t_scene *scene);
-
-// PARSING -- INITS
-void	init_parsing(t_pars *parsing);
-void	init_scene(t_scene *scene);
-void	init_ambience(t_amb *amb);
-void	init_camera(t_cam *cam);
-void	init_light(t_light *light);
-void	init_sphere(t_sp *sp);
-void	init_plane(t_pl *pl);
-void	init_cylinder(t_cy *cy);
-
-// PARSING -- ERRORS
-void	errors_file(int error_code);
-void	errors_parsing(t_pars *pars);
-void	ambience_errors(t_pars *parsing);
-void	camera_errors(t_pars *parsing);
-void	light_errors(t_pars *parsing);
-void	sphere_errors(t_pars *parsing);
-void	plane_errors(t_pars *parsing);
-void	cylinder_errors(t_pars *parsing);
-
-// FREE
+// GENERAL --FREE
 void	free_parsing_and_exit(t_pars *parsing);
 int		ft_freearray(char **arr);
 
-// UTILS
+// GENERAL -- UTILS
 int		array_length(char **array);
+double	ft_atod(char *str);
+int		ft_strchr_index(char *str, char c);
 int		only_numbers_and_newline(char *str);
 int		only_numbers_dec_pt_and_newline(char *str);
 int		only_numbers_single_signs_and_dec_pt(char *str);
 int		only_numbers_and_dec_pt(char *str);
-int		ft_strchr_index(char *str, char c);
 
 #endif

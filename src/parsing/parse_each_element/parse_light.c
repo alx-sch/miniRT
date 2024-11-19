@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:20:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:37:25 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	light_coordinates(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_LIGHT_COOR_VALUES);
 	}
-	scene->light.x = ft_atof(coords[0]);
-	scene->light.y = ft_atof(coords[1]);
-	scene->light.z = ft_atof(coords[2]);
+	scene->light.x = ft_atod(coords[0]);
+	scene->light.y = ft_atod(coords[1]);
+	scene->light.z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	return (0);
 }
@@ -41,7 +41,7 @@ static int	light_brightness(t_scene *scene)
 {
 	if (!only_numbers_dec_pt_and_newline(scene->pars.elem_data[2]))
 		return (ERR_LIGHT_BRIGHTNESS);
-	scene->light.bright = ft_atof(scene->pars.elem_data[2]);
+	scene->light.bright = ft_atod(scene->pars.elem_data[2]);
 	if (scene->light.bright < 0 || scene->light.bright > 1)
 		return (ERR_LIGHT_BRIGHTNESS);
 	return (0);

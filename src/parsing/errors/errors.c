@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:12:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:44:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	errors_file(int error_code)
 {
+	ft_putstr_fd(COLOR_RED, 2);
 	if (error_code == ERR_USAGE)
 		ft_putstr_fd(ERR_MSG_USAGE, 2);
 	else if (error_code == ERR_FILE_EXTENSION)
 		ft_putstr_fd(ERR_MSG_FILE_EXTENSION, 2);
 	else if (error_code == ERR_FILE_ACCESS)
 		perror(ERR_MSG_FILE_ACCESS);
+	ft_putstr_fd(COLOR_RESET, 2);
 	exit(error_code);
 }
 
@@ -37,6 +39,7 @@ static void	non_element_errors(t_pars *parsing)
 
 void	errors_parsing(t_pars *parsing)
 {
+	ft_putstr_fd(COLOR_RED, 2);
 	if (parsing->error_code >= 4 && parsing->error_code <= 7)
 		non_element_errors(parsing);
 	else if (parsing->error_code >= 8 && parsing->error_code <= 11)
@@ -51,5 +54,6 @@ void	errors_parsing(t_pars *parsing)
 		plane_errors(parsing);
 	else if (parsing->error_code >= 37 && parsing->error_code <= 45)
 		cylinder_errors(parsing);
+	ft_putstr_fd(COLOR_RESET, 2);
 	free_parsing_and_exit(parsing);
 }

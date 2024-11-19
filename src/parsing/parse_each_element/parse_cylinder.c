@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:25:50 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:37:12 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	cylinder_coordinates(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_CY_COOR_VALUES);
 	}
-	scene->cy.x = ft_atof(coords[0]);
-	scene->cy.y = ft_atof(coords[1]);
-	scene->cy.z = ft_atof(coords[2]);
+	scene->cy.x = ft_atod(coords[0]);
+	scene->cy.y = ft_atod(coords[1]);
+	scene->cy.z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	return (0);
 }
@@ -55,9 +55,9 @@ static int	cylinder_orientation_vector(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_CY_VECTOR_VALUES);
 	}
-	scene->cy.vec_x = ft_atof(coords[0]);
-	scene->cy.vec_y = ft_atof(coords[1]);
-	scene->cy.vec_z = ft_atof(coords[2]);
+	scene->cy.vec_x = ft_atod(coords[0]);
+	scene->cy.vec_y = ft_atod(coords[1]);
+	scene->cy.vec_z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	if (scene->cy.vec_x < -1 || scene->cy.vec_x > 1
 		|| scene->cy.vec_y < -1 || scene->cy.vec_y > 1
@@ -115,10 +115,10 @@ int	parse_cylinder(t_scene *scene)
 		return (scene->pars.error_code);
 	if (!only_numbers_and_dec_pt(scene->pars.elem_data[3]))
 		return (ERR_CY_DM);
-	scene->cy.dm = ft_atof(scene->pars.elem_data[3]);
+	scene->cy.dm = ft_atod(scene->pars.elem_data[3]);
 	if (!only_numbers_and_dec_pt(scene->pars.elem_data[4]))
 		return (ERR_CY_HEIGHT);
-	scene->cy.height = ft_atof(scene->pars.elem_data[4]);
+	scene->cy.height = ft_atod(scene->pars.elem_data[4]);
 	rgb = ft_split(scene->pars.elem_data[5], ',');
 	if (!rgb)
 		return (ERR_MEM_ALLOC);

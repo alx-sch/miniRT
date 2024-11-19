@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 15:50:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:37:39 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	plane_coordinates(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_PL_COOR_VALUES);
 	}
-	scene->pl.x = ft_atof(coords[0]);
-	scene->pl.y = ft_atof(coords[1]);
-	scene->pl.z = ft_atof(coords[2]);
+	scene->pl.x = ft_atod(coords[0]);
+	scene->pl.y = ft_atod(coords[1]);
+	scene->pl.z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	return (0);
 }
@@ -55,9 +55,9 @@ static int	plane_orientation_vector(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_PL_VECTOR_VALUES);
 	}
-	scene->pl.vec_x = ft_atof(coords[0]);
-	scene->pl.vec_y = ft_atof(coords[1]);
-	scene->pl.vec_z = ft_atof(coords[2]);
+	scene->pl.vec_x = ft_atod(coords[0]);
+	scene->pl.vec_y = ft_atod(coords[1]);
+	scene->pl.vec_z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	if (scene->pl.vec_x < -1 || scene->pl.vec_x > 1
 		|| scene->pl.vec_y < -1 || scene->pl.vec_y > 1

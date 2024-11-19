@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 18:17:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:37:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	camera_coordinates(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_CAM_COOR_VALUES);
 	}
-	scene->cam.x = ft_atof(coords[0]);
-	scene->cam.y = ft_atof(coords[1]);
-	scene->cam.z = ft_atof(coords[2]);
+	scene->cam.x = ft_atod(coords[0]);
+	scene->cam.y = ft_atod(coords[1]);
+	scene->cam.z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	return (0);
 }
@@ -55,9 +55,9 @@ static int	camera_orientation_vector(t_scene *scene)
 		ft_freearray(coords);
 		return (ERR_CAM_VECTOR_VALUES);
 	}
-	scene->cam.vec_x = ft_atof(coords[0]);
-	scene->cam.vec_y = ft_atof(coords[1]);
-	scene->cam.vec_z = ft_atof(coords[2]);
+	scene->cam.vec_x = ft_atod(coords[0]);
+	scene->cam.vec_y = ft_atod(coords[1]);
+	scene->cam.vec_z = ft_atod(coords[2]);
 	ft_freearray(coords);
 	if (scene->cam.vec_x < -1 || scene->cam.vec_x > 1
 		|| scene->cam.vec_y < -1 || scene->cam.vec_y > 1

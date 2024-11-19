@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atof.c                                          :+:      :+:    :+:   */
+/*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:05:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/13 17:59:10 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:36:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static int	get_decimals_before_dec_pt(char *str, int i)
 	return (dec_res);
 }
 
-float	ft_atof(char *str)
+double	ft_atod(char *str)
 {
 	int		i;
 	int		dec_res;
-	float	fract_res;
-	float	power;
+	double	fract_res;
+	double	power;
 
 	if (!only_numbers_single_signs_and_dec_pt(str))
 		return (-1);
