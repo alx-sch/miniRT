@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 17:52:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 22:53:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>		// for strerror()
 # include <stdlib.h>		// for malloc(), free(), exit()
 # include <errno.h>			// for errno
-# include <math.h>			// for math functions, e.g. sqrt()
+# include <math.h>			// for math functions, expr/ , e.g. sqrt(), INFINITY
 
 // X11 library headers
 # include <X11/keysym.h>	// Macros for key symbols, e.g. XK_Escape
@@ -29,7 +29,7 @@
 # include "libft.h"			// libft
 # include "mlx.h"			// mlx
 # include "errors.h"		// Error messages and formatting styles
-# include "structs.h"		// Data structs, e.g. 't_rt'
+# include "types.h"			// Typedefs, data structs, e.g. 't_rt'
 # include "colors.h"
 
 //#############

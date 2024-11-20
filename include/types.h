@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 17:15:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 23:14:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-Defines the data structures used in the raytracer program.
+Defines the types and data structures used in the raytracer program.
 */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+# include "libft.h"	// for 't_list' definition
 
 //#######
 //# MLX #
@@ -173,22 +175,6 @@ typedef union u_object_data
 
 typedef struct s_scene_object_node	t_obj_node; // Forward declaration
 
-/**
-Linked list node to represent a single object in the scene.
-
-Each `s_scene_object` node represents an object in the 3D scene. It contains
-the following information:
- - int `id`:			A unique identifier
- - t_obj_data *`obj`:	A pointer holding the object data.
- - t_scene_obj *`next`:	A pointer to the next object in the linked list.
-*/
-typedef struct s_scene_object_node
-{
-	int				id;
-	t_obj_data		*obj;
-	t_obj_node		*next;
-}	t_obj_node;
-
 //#########
 //# SCENE #
 //#########
@@ -233,14 +219,14 @@ Structure representing the entire scene.
 - t_ambi_light `ambient_light`:	The ambient light in the scene.
 - t_light `light`:				The light source in the scene.
 - t_cam `cam`:					The camera in the scene.
-- t_obj_node `objs`:			Linked list of objects in the scene.
+- t_list `objs`:				Linked list of objects in the scene.
 */
 typedef struct s_scene
 {
 	t_ambi_light	ambi_light;
 	t_light			light;
 	t_cam			cam;
-	t_obj_node		*objs;
+	t_list			*objs;
 }	t_scene;
 
 //################
@@ -261,41 +247,41 @@ viewport's size.
 - double cote_bc:  Length of the side between vertices B and C.
 - double cote_ca:  Length of the side between vertices C and A.
 */
-typedef struct s_trigo
-{
-	double			angle_a;
-	double			angle_b;
-	double			angle_c;
-	double			rad_a;
-	double			rad_b;
-	double			rad_c;
-	double			cote_ab;
-	double			cote_bc;
-	double			cote_ca;
-}	t_trigo;
+// typedef struct s_trigo
+// {
+// 	double			angle_a;
+// 	double			angle_b;
+// 	double			angle_c;
+// 	double			rad_a;
+// 	double			rad_b;
+// 	double			rad_c;
+// 	double			cote_ab;
+// 	double			cote_bc;
+// 	double			cote_ca;
+// }	t_trigo;
 
 /**
 Viewport: Rectangular area of the screen where the scene is projected.
 Defines the portion of the scene that is visible to the camera and maps the 3D
 scene to the 2D coordinates of the screen / image.
  */
-typedef struct s_viewport
-{
-	t_trigo			trigo;
-	double			min_x;
-	double			max_x;
-	double			min_y;
-	double			max_y;
-	double			width;
-	double			height;
-	double			***points;
-	double			hypothenuse;
-	double			aigu;
-	double			win_ratio;
-	t_vec3			local_right;
-	t_vec3			local_up;
-	t_vec3			local_down;
-}	t_viewport;
+// typedef struct s_viewport
+// {
+// 	t_trigo			trigo;
+// 	double			min_x;
+// 	double			max_x;
+// 	double			min_y;
+// 	double			max_y;
+// 	double			width;
+// 	double			height;
+// 	double			***points;
+// 	double			hypothenuse;
+// 	double			aigu;
+// 	double			win_ratio;
+// 	t_vec3			local_right;
+// 	t_vec3			local_up;
+// 	t_vec3			local_down;
+// }	t_viewport;
 
 //####################
 //# MAIN DATA STRUCT #

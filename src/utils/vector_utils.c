@@ -6,23 +6,19 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:35:34 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 17:52:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 23:22:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-double	vec_length_squared(t_vec3 *vec)
-{
-	return (sqrt(vec->x) + sqrt(vec->y) + sqrt(vec->z));
-}
+/**
+Function to subtract two vectors.
+ @param v1 	The first vector.
+ @param v2 	The second vector.
 
-double	vec_length(t_vec3 *vec)
-{
-	return (sqrt(vec_length_squared(vec)));
-}
-
-// Function to subtract two vectors
+ @return 	The result of the subtraction of the two vectors (v1 - v2).
+*/
 t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
 {
 	t_vec3	result;
@@ -33,13 +29,28 @@ t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
 	return (result);
 }
 
-// Function to dot two vectors
-double vec3_dot(t_vec3 v1, t_vec3 v2)
+/**
+Function to dot two vectors.
+ @param v1 	The first vector.
+ @param v2 	The second vector.
+
+ @return 	The dot product of the two vectors.
+*/
+double	vec3_dot(t_vec3 v1, t_vec3 v2)
 {
-    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	double	result;
+
+	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	return (result);
 }
 
-// Function to multiply a vector by a scalar
+/**
+Function to multiply a vector by a scalar.
+ @param v		The vector to scale.
+ @param scalar 	The scalar value to multiply the vector by.
+
+ @return 		The scaled vector.
+*/
 t_vec3	vec3_scale(t_vec3 v, double scalar)
 {
 	t_vec3	result;
@@ -47,7 +58,6 @@ t_vec3	vec3_scale(t_vec3 v, double scalar)
 	result.x = v.x * scalar;
 	result.y = v.y * scalar;
 	result.z = v.z * scalar;
-
 	return (result);
 }
 
@@ -102,9 +112,10 @@ void	render_scene(t_rt *rt, int bg_color)
     int x, y;
     t_vec3 ray_origin;
     t_vec3 ray_dir;
-    double t;
-    int hit;
+    double t, closest_t;
     int pixel_color;
+    t_list *current_obj;
+    t_obj_data *obj_data;
 
     // Loop through each pixel
     for (y = 0; y < WINDOW_H; y++)
@@ -118,21 +129,33 @@ void	render_scene(t_rt *rt, int bg_color)
 
             ray_dir = compute_ray_direction(x, y, rt->scene.cam, WINDOW_W, WINDOW_H);
 
-            // Check for intersection with the sphere
-            hit = ray_intersect_sphere(ray_origin, ray_dir, &rt->scene.objs->obj->sp, &t);
-            if (hit)
+            // Initialize hit to false and pixel color to background color
+            pixel_color = bg_color;
+            closest_t = INFINITY;
+
+            // Iterate over all objects in the scene
+            current_obj = rt->scene.objs;
+            while (current_obj != NULL)
             {
-                // If a hit occurs, color the pixel based on the sphere's color
-                pixel_color = color_to_hex(rt->scene.objs->obj->sp.color);
-            }
-            else
-            {
-                // No hit, so color the pixel with the background color
-                pixel_color = bg_color;
+                obj_data = (t_obj_data *)current_obj->content;
+                if (obj_data->sp.object_type == SPHERE)
+                {
+                    // Check for intersection with the sphere
+                    if (ray_intersect_sphere(ray_origin, ray_dir, &obj_data->sp, &t))
+                    {
+                        // If a hit occurs and it's closer than the previous hit, update the pixel color
+                        if (t < closest_t)
+                        {
+                            closest_t = t;
+                            pixel_color = color_to_hex(obj_data->sp.color);
+                        }
+                    }
+                }
+                current_obj = current_obj->next;
             }
 
-           // Set pixel color using the set_pixel_color function
-			set_pixel_color(&rt->mlx.img, x, y, pixel_color);
+            // Set pixel color using the set_pixel_color function
+            set_pixel_color(&rt->mlx.img, x, y, pixel_color);
         }
     }
 }

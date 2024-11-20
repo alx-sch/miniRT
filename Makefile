@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/20 17:24:35 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/20 22:15:32 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
 				$(HDRS_DIR)/colors.h \
 				$(HDRS_DIR)/errors.h \
-				$(HDRS_DIR)/structs.h
+				$(HDRS_DIR)/types.h
 
 #############
 # LIBRARIES #

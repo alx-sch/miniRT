@@ -6,19 +6,20 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 18:03:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 23:09:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
 /**
-Function to create a simple scene with a single sphere.
+Function to create a simple scene with a three sphere.
 Takes a pointer to t_rt, which includes both mlx and scene.
 */
 void	create_simple_scene(t_rt *rt)
 {
-	t_obj_node	*sphere_node;
+	t_list		*obj_node;
+	t_obj_data	*sphere_data;
 
 	// Set up ambient light
 	rt->scene.ambi_light.ratio = 0.1;  // Low ambient light
@@ -41,24 +42,77 @@ void	create_simple_scene(t_rt *rt)
 	rt->scene.cam.orientation.z = 1.0;  // Looking down the Z-axis
 	rt->scene.cam.fov = 90.0;  // Field of view
 
-	// Set up a single sphere object
-	sphere_node = malloc(sizeof(t_obj_node));
-	sphere_node->id = 1;  // Unique ID for the object
+	// Set up a single sphere object (front)
+	sphere_data = malloc(sizeof(t_obj_data));
+    if (!sphere_data)
+        return;
 
 	// Create the sphere data
-	sphere_node->obj = malloc(sizeof(t_obj_data));
-	sphere_node->obj->sp.object_type = SPHERE;
-	sphere_node->obj->sp.center.x = 0.0;
-	sphere_node->obj->sp.center.y = 0.0;
-	sphere_node->obj->sp.center.z = 0.0;
-	sphere_node->obj->sp.radius = 2.0;  // Radius of the sphere
-	sphere_node->obj->sp.color.r = 255;
-	sphere_node->obj->sp.color.g = 0;
-	sphere_node->obj->sp.color.b = 0;  // Red sphere
+	sphere_data->sp.object_type = SPHERE;
+	sphere_data->sp.center.x = 0.0;
+	sphere_data->sp.center.y = 0.0;
+	sphere_data->sp.center.z = 0.0;
+	sphere_data->sp.radius = 2.0;  // Radius of the sphere
+	sphere_data->sp.color.r = 255;
+	sphere_data->sp.color.g = 0;
+	sphere_data->sp.color.b = 0;  // Red sphere
 
-	// Link the sphere node into the scene (as the first object)
-	sphere_node->next = NULL;
-	rt->scene.objs = sphere_node;
+
+	// Create a new list node with the sphere data
+	obj_node = ft_lstnew(sphere_data);
+	if (!obj_node)
+	{
+		free(sphere_data);  // Clean up if node creation fails
+		return;  // Handle memory allocation failure
+	}
+
+	ft_lstadd_front(&rt->scene.objs, obj_node);
+
+	// Set up the second sphere object (blue, behind the red one)
+    sphere_data = malloc(sizeof(t_obj_data));
+    if (!sphere_data)
+        return;
+
+    sphere_data->sp.object_type = SPHERE;
+    sphere_data->sp.center.x = 1.5;
+    sphere_data->sp.center.y = 1.5;
+    sphere_data->sp.center.z = 1.5;  // Positioned behind the red sphere
+    sphere_data->sp.radius = 2.75;  // Radius of the sphere
+    sphere_data->sp.color.r = 0;
+    sphere_data->sp.color.g = 0;
+    sphere_data->sp.color.b = 255;  // Blue sphere
+
+    obj_node = ft_lstnew(sphere_data);
+    if (!obj_node)
+    {
+        free(sphere_data);  // Clean up if node creation fails
+        return;  // Handle memory allocation failure
+    }
+
+    ft_lstadd_front(&rt->scene.objs, obj_node);
+
+	// Set up the second sphere object (blue, behind the red one)
+    sphere_data = malloc(sizeof(t_obj_data));
+    if (!sphere_data)
+        return;
+
+    sphere_data->sp.object_type = SPHERE;
+    sphere_data->sp.center.x = 0.5;
+    sphere_data->sp.center.y = 1;
+    sphere_data->sp.center.z = -0.5;  // Positioned behind the red sphere
+    sphere_data->sp.radius = 1.5;  // Radius of the sphere
+    sphere_data->sp.color.r = 0;
+    sphere_data->sp.color.g = 255;
+    sphere_data->sp.color.b = 0;  // Blue sphere
+
+    obj_node = ft_lstnew(sphere_data);
+    if (!obj_node)
+    {
+        free(sphere_data);  // Clean up if node creation fails
+        return;  // Handle memory allocation failure
+    }
+
+    ft_lstadd_front(&rt->scene.objs, obj_node);
 }
 
 int	main(void)
