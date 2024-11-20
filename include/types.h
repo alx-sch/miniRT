@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 15:50:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:22:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ typedef union u_object_data
 	t_cylinder	cy;
 }	t_obj_data;
 
-typedef struct s_scene_object	t_scene_obj; // Forward declaration
+typedef struct s_scene_object_node	t_obj_node; // Forward declaration
 
 /**
 Linked list node to represent a single object in the scene.
@@ -182,16 +182,67 @@ the following information:
  - t_obj_data *`obj`:	A pointer holding the object data.
  - t_scene_obj *`next`:	A pointer to the next object in the linked list.
 */
-typedef struct s_scene_object
+typedef struct s_scene_object_node
 {
 	int				id;
 	t_obj_data		*obj;
-	t_scene_obj		*next;
-}	t_scene_obj;
+	t_obj_node		*next;
+}	t_obj_node;
 
-//########
-//# XXXX #
-//########
+//#########
+//# SCENE #
+//#########
+
+/**
+Structure representing the ambient light in the scene.
+- double `ratio`:	The ratio of the ambient lightning [0.0-1.0]
+- t_color `color`:	The color of the ambient light.
+ */
+typedef struct s_ambi_light
+{
+	double		ratio;
+	t_color		color;
+}	t_ambi_light;
+
+/**
+Structure representing a light source in the scene.
+- t_vec3 `position`:	The position of the light source.
+- double `ratio`:		The ratio of the light brightness [0.0-1.0]
+*/
+typedef struct s_light
+{
+	t_vec3		position;
+	double		ratio;
+}	t_light;
+
+/**
+Structure representing the camera in the scene.
+- t_vec3 `position`:		The position of the camera.
+- t_vec3 `orientation`:		The orientation of the camera.
+- double `fov`:				The field of view of the camera [0, 180].
+*/
+typedef struct s_camera
+{
+	t_vec3		position;
+	t_vec3		orientation;
+	double		fov;
+}	t_cam;
+
+/**
+Structure representing the entire scene.
+- t_ambi_light `ambient_light`:	The ambient light in the scene.
+- t_light `light`:				The light source in the scene.
+- t_cam `cam`:					The camera in the scene.
+- t_obj_node `objs`:			Linked list of objects in the scene.
+*/
+typedef struct s_scene
+{
+	t_ambi_light	ambi_light;
+	t_light			light;
+	t_cam			cam;
+	t_obj_node		*objs;
+}	t_scene;
+
 
 
 
