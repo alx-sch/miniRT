@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:59 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/14 14:39:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/19 15:56:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ to NULL for the window, image, and display (connection to X11 display server).
 */
 static void	cleanup_mlx(t_rt *rt)
 {
-	if (rt->mlx.mlx)
+	if (rt->mlx.mlx_ptr)
 	{
-		if (rt->mlx.win)
-			(void)mlx_destroy_window(rt->mlx.mlx, rt->mlx.win);
-		if (rt->mlx.img.img)
-			(void)mlx_destroy_image(rt->mlx.mlx, rt->mlx.img.img);
-		(void)mlx_destroy_display(rt->mlx.mlx);
-		free(rt->mlx.mlx);
-		rt->mlx.win = NULL;
-		rt->mlx.img.img = NULL;
-		rt->mlx.img.data = NULL;
-		rt->mlx.mlx = NULL;
+		if (rt->mlx.win_ptr)
+			(void)mlx_destroy_window(rt->mlx.mlx_ptr, rt->mlx.win_ptr);
+		if (rt->mlx.img.img_ptr)
+			(void)mlx_destroy_image(rt->mlx.mlx_ptr, rt->mlx.img.img_ptr);
+		(void)mlx_destroy_display(rt->mlx.mlx_ptr);
+		free(rt->mlx.mlx_ptr);
+		rt->mlx.win_ptr = NULL;
+		rt->mlx.img.img_ptr = NULL;
+		rt->mlx.img.data_ptr = NULL;
+		rt->mlx.mlx_ptr = NULL;
 	}
 }
 

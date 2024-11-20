@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/15 13:04:14 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/20 17:24:35 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ WINDOW_H ?=		900						# Default window height
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/initialization.c \
-				$(SRCS_DIR)/event_handlers.c \
+				$(SRCS_DIR)/event_handling.c \
+				$(SRCS_DIR)/utils/mlx_utils.c \
+				$(SRCS_DIR)/utils/vector_utils.c \
 				$(SRCS_DIR)/utils/error_exit.c \
 				$(SRCS_DIR)/utils/cleanup.c
 
@@ -37,8 +39,9 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)		# Each o. file has a correspo
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
+				$(HDRS_DIR)/colors.h \
 				$(HDRS_DIR)/errors.h \
-				$(HDRS_DIR)/types.h
+				$(HDRS_DIR)/structs.h
 
 #############
 # LIBRARIES #
