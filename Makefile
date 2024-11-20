@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/15 17:20:02 by aschenk          ###   ########.fr        #
+#    Updated: 2024/11/20 17:24:35 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/initialization.c \
 				$(SRCS_DIR)/event_handling.c \
 				$(SRCS_DIR)/utils/mlx_utils.c \
+				$(SRCS_DIR)/utils/vector_utils.c \
 				$(SRCS_DIR)/utils/error_exit.c \
 				$(SRCS_DIR)/utils/cleanup.c
 
@@ -40,7 +41,7 @@ HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
 				$(HDRS_DIR)/colors.h \
 				$(HDRS_DIR)/errors.h \
-				$(HDRS_DIR)/types.h
+				$(HDRS_DIR)/structs.h
 
 #############
 # LIBRARIES #

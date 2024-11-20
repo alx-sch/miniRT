@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:23:53 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 15:22:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 18:03:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,42 +95,5 @@ void	fill_image(t_rt *rt, int color)
 			row++;
 		}
 		col++;
-	}
-}
-
-// JUST FOR TESTING
-void	draw_colored_pixels(t_rt *rt, int color)
-{
-	int	x;
-	int	y;
-
-	for (y = 10; y < 20; y++)
-	{
-		for (x = 10; x < 20; x++)
-			set_pixel_color(&rt->mlx.img, x, y, color);
-	}
-
-	for (y = 30; y < 40; y++)
-	{
-		for (x = 10; x < 20; x++)
-			set_pixel_color(&rt->mlx.img, x, y, color);
-	}
-
-	for (y = 50; y < 60; y++)
-	{
-		for (x = 10; x < 20; x++)
-			set_pixel_color(&rt->mlx.img, x, y, color);
-	}
-
-	for (y = 70; y < 80; y++)
-	{
-		for (x = 10; x < 20; x++)
-			set_pixel_color(&rt->mlx.img, x, y, color);
-	}
-
-	for (y = 90; y < 100; y++)
-	{
-		for (x = 10; x < 20; x++)
-			set_pixel_color(&rt->mlx.img, x, y, color);
 	}
 }

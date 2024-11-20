@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 16:22:44 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 17:15:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-Defines custom types and data structures.
+Defines the data structures used in the raytracer program.
 */
 
 #ifndef TYPES_H
@@ -243,8 +243,9 @@ typedef struct s_scene
 	t_obj_node		*objs;
 }	t_scene;
 
-
-
+//################
+//# TRIGONOMETRY #
+//################
 
 /**
 Data structure holding trigonometric properties.
@@ -307,7 +308,7 @@ Data structure holding all raytracing-related data.
 typedef struct s_rt
 {
 	t_mlx	mlx;
-	// Add more fields here
+	t_scene	scene;
 }	t_rt;
 
 #endif
