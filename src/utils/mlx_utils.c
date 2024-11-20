@@ -6,11 +6,30 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:23:53 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/15 17:08:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:22:01 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+/**
+Converts an RGB color to its hexadecimal representation.
+
+This function takes a `t_color` structure containing the red, green, and blue
+components of a color (each in the range [0-255]) and combines them into a single
+integer in the format `0xRRGGBB`.
+
+ @param color 	The color struct containing the red, green, and blue components.
+
+ @return		An integer representing the color in hexadecimal format.
+*/
+int	color_to_hex(t_color color)
+{
+	int	hex;
+
+	hex = (color.r << 16) | (color.g << 8) | color.b;
+	return (hex);
+}
 
 /**
 Sets the color of a pixel at a specified position within the image buffer.
@@ -44,7 +63,7 @@ void	set_pixel_color(t_img *img, int x, int y, int color)
 	int	pixel_index;
 
 	pixel_index = (y * WINDOW_W) + x;
-	img->data[pixel_index] = color;
+	img->data_ptr[pixel_index] = color;
 }
 
 /**
@@ -76,5 +95,42 @@ void	fill_image(t_rt *rt, int color)
 			row++;
 		}
 		col++;
+	}
+}
+
+// JUST FOR TESTING
+void	draw_colored_pixels(t_rt *rt, int color)
+{
+	int	x;
+	int	y;
+
+	for (y = 10; y < 20; y++)
+	{
+		for (x = 10; x < 20; x++)
+			set_pixel_color(&rt->mlx.img, x, y, color);
+	}
+
+	for (y = 30; y < 40; y++)
+	{
+		for (x = 10; x < 20; x++)
+			set_pixel_color(&rt->mlx.img, x, y, color);
+	}
+
+	for (y = 50; y < 60; y++)
+	{
+		for (x = 10; x < 20; x++)
+			set_pixel_color(&rt->mlx.img, x, y, color);
+	}
+
+	for (y = 70; y < 80; y++)
+	{
+		for (x = 10; x < 20; x++)
+			set_pixel_color(&rt->mlx.img, x, y, color);
+	}
+
+	for (y = 90; y < 100; y++)
+	{
+		for (x = 10; x < 20; x++)
+			set_pixel_color(&rt->mlx.img, x, y, color);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/15 16:53:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:50:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,27 @@ Defines custom types and data structures.
 /*
 Data structure holding image info, incl. dimensions, pixel data, color, and
 endianess.
-- void *`img`:	Pointer to image object. Used when manipulating image as a
-				whole, e.g. loading into memory or passing to redering ftcs.
-- int *`data`:	Pointer to the start of image data -> raw pixel information.
-				Used in operations reading/modifying individual pixels, such
-				as setting the color. int values represent whole pixels.
-- int `bpp`:		Number of bits used to represent each pixel, holds the color.
-- int `size_line`:	Length of each line in the image in bytes,
+- void *`img_prt`:	Pointer to image object. Used when manipulating image as a
+					whole, e.g. loading into memory or passing to redering ftcs.
+- int *`data_ptr`:	Pointer to the start of image data -> raw pixel information.
+					Used in operations reading/modifying individual pixels, such
+					as setting the color. int values represent whole pixels.
+- int `bits_per_pixel`:	Number of bits used to represent each pixel,
+						holds the color.
+- int `line_size`:	Length of each line in the image in bytes,
 					indicating the number of bytes needed to store a single
 					row of pixels in the image.
-- int `endian`:	Endianness refers to the byte order in which data types are
-				stored in memory (either big or little endian; left to right
-				and right to left, respectively). Used to determine how to
-				interpret image data ('img' and 'data' members).
+- int `endian`:		Endianness refers to the byte order in which data types are
+					stored in memory (either big or little endian; left to right
+					and right to left, respectively). Used to determine how to
+					interpret image data ('img' and 'data' members).
 */
 typedef struct s_img
 {
-	void	*img;
-	int		*data;
-	int		bpp;
-	int		size_line;
+	void	*img_ptr;
+	int		*data_ptr;
+	int		bits_per_pixel;
+	int		line_size;
 	int		endian;
 }	t_img;
 
@@ -55,20 +56,20 @@ Data structure holding MiniLibX components for rendering the raytracer output.
 */
 typedef struct s_mlx
 {
-	void	*mlx;
-	void	*win;
+	void	*mlx_ptr;
+	void	*win_ptr;
 	t_img	img;
 }	t_mlx;
 
-//#######
-//# XXXX #
-//#######
+//#################
+//# UTILS STRCUTS #
+//#################
 
-/*
-Data structure representing a 3D vector.
-- double `x`:		The x-coordinate of the vector.
-- double `y`:		The y-coordinate of the vector.
-- double `z`:		The z-coordinate of the vector.
+/**
+Structure representing a 3D vector or a point.
+- double `x`:		The x-coordinate/-component of the vector.
+- double `y`:		The y-coordinate/-component of the vector.
+- double `z`:		The z-coordinate/-component of the vector.
 */
 typedef struct s_vec3
 {
@@ -76,6 +77,123 @@ typedef struct s_vec3
 	double	y;
 	double	z;
 }	t_vec3;
+
+/**
+Structure representing a color in RGB format:
+- int `r`: The red component of the color [0-255].
+- int `g`: The green component of the color [0-255].
+- int `b`: The blue component of the color [0-255].
+*/
+typedef struct s_color
+{
+	int		r;
+	int		g;
+	int		b;
+}	t_color;
+
+//###########
+//# OBJECTS #
+//###########
+
+/**
+Enumeration representing different types of 3D objects.
+*/
+typedef enum e_object_type
+{
+	PLANE,
+	SPHERE,
+	CYLINDER
+}	t_obj_type;
+
+/**
+Structure representing a plane in 3D space:
+ - t_object `object_type`:	The object type (always `PLANE`).
+ - t_vec3 `point_in_plane`:	A point that lies on the plane.
+ - t_vec3 `orientation`:	A normalized vector representing the plane's normal.
+ - t_color `color`:			The color of the plane.
+ */
+typedef struct s_plane
+{
+	t_obj_type	object_type;
+	t_vec3		point_in_plane;
+	t_vec3		orientation;
+	t_color		color;
+}	t_plane;
+
+/**
+Structure representing a sphere in 3D space.
+ - t_object `object_type`:	The object type (always `SPHERE`).
+ - t_vec3 `center`:			The center point of the sphere.
+ - double `radius`:			The radius of the sphere.
+ - t_color `color`:			The color of the sphere.
+*/
+typedef struct s_sphere
+{
+	t_obj_type	object_type;
+	t_vec3		center;
+	double		radius;
+	t_color		color;
+}	t_sphere;
+
+/**
+Structure representing a cylinder in 3D space:
+ - t_object `object_type`:	The object type (always `CYLINDER`).
+ - t_vec3 `center`:			The center of the cylinder's base.
+ - t_vec3 `orientation`:	A normalized vector representing the cylinder's axis.
+ - double `radius`:			The radius of the cylinder.
+ - double `height`:			The height of the cylinder.
+ - t_color `color`:			The color of the cylinder.
+*/
+typedef struct s_cylinder
+{
+	t_obj_type	object_type;
+	t_vec3		center;
+	t_vec3		orientation;
+	double		radius;
+	double		height;
+	t_color		color;
+
+}	t_cylinder;
+
+/**
+Union to store different types of geometric objects.
+
+Allows a single data structure to hold one of the following object types
+at a time:
+ - t_sphere `sp`:		Represents a sphere object in the scene.
+ - t_plane `pl`:		Represents a plane object in the scene.
+ - t_cylinder `cy`:		Represents a cylinder object in the scene.
+*/
+typedef union u_object_data
+{
+	t_sphere	sp;
+	t_plane		pl;
+	t_cylinder	cy;
+}	t_obj_data;
+
+typedef struct s_scene_object	t_scene_obj; // Forward declaration
+
+/**
+Linked list node to represent a single object in the scene.
+
+Each `s_scene_object` node represents an object in the 3D scene. It contains
+the following information:
+ - int `id`:			A unique identifier
+ - t_obj_data *`obj`:	A pointer holding the object data.
+ - t_scene_obj *`next`:	A pointer to the next object in the linked list.
+*/
+typedef struct s_scene_object
+{
+	int				id;
+	t_obj_data		*obj;
+	t_scene_obj		*next;
+}	t_scene_obj;
+
+//########
+//# XXXX #
+//########
+
+
 
 /**
 Data structure holding trigonometric properties.
@@ -102,14 +220,14 @@ typedef struct s_trigo
 	double			cote_ab;
 	double			cote_bc;
 	double			cote_ca;
-}					t_trigo;
+}	t_trigo;
 
 /**
 Viewport: Rectangular area of the screen where the scene is projected.
 Defines the portion of the scene that is visible to the camera and maps the 3D
 scene to the 2D coordinates of the screen / image.
  */
-typedef struct s_vp
+typedef struct s_viewport
 {
 	t_trigo			trigo;
 	double			min_x;
@@ -125,7 +243,7 @@ typedef struct s_vp
 	t_vec3			local_right;
 	t_vec3			local_up;
 	t_vec3			local_down;
-}					t_vp;
+}	t_viewport;
 
 //####################
 //# MAIN DATA STRUCT #

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/15 17:17:10 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:39:51 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>		// for strerror()
 # include <stdlib.h>		// for malloc(), free(), exit()
 # include <errno.h>			// for errno
+# include <math.h>			// for math functions, e.g. sqrt()
 
 // X11 library headers
 # include <X11/keysym.h>	// Macros for key symbols, e.g. XK_Escape
@@ -60,6 +61,7 @@ void	cleanup_error_exit(char *msg, t_rt *rt);
 // utils/mlx_utils.c
 
 void	set_pixel_color(t_img *img, int x, int y, int color);
-void	fill_image(t_rt *rt, int color);
+void	fill_image(t_rt *rt, int color); // TESTING ONLY
+void	draw_colored_pixels(t_rt *rt, int color); // TESTING ONLY
 
 #endif

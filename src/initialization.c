@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:36:36 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/15 16:58:34 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/19 15:55:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,23 @@ Initializes the MiniLibX components required for graphic rendering:
 void	init_mlx(t_rt *rt)
 {
 	errno = 0;
-	rt->mlx.mlx = mlx_init();
-	if (!rt->mlx.mlx)
+	rt->mlx.mlx_ptr = mlx_init();
+	if (!rt->mlx.mlx_ptr)
 		cleanup_error_exit("mlx_init() failed", rt);
 	errno = 0;
-	rt->mlx.win = mlx_new_window(rt->mlx.mlx, WINDOW_W, WINDOW_H, WINDOW_TITLE);
-	if (!rt->mlx.win)
+	rt->mlx.win_ptr = mlx_new_window(rt->mlx.mlx_ptr, WINDOW_W, WINDOW_H,
+		WINDOW_TITLE);
+	if (!rt->mlx.win_ptr)
 		cleanup_error_exit("mlx_new_window() failed", rt);
 	errno = 0;
-	rt->mlx.img.img = mlx_new_image(rt->mlx.mlx, WINDOW_W, WINDOW_H);
-	if (!rt->mlx.img.img)
+	rt->mlx.img.img_ptr = mlx_new_image(rt->mlx.mlx_ptr, WINDOW_W, WINDOW_H);
+	if (!rt->mlx.img.img_ptr)
 		cleanup_error_exit("mlx_new_image() failed", rt);
 	errno = 0;
-	rt->mlx.img.data = (int *)mlx_get_data_addr(rt->mlx.img.img,
-			&rt->mlx.img.bpp, &rt->mlx.img.size_line, &rt->mlx.img.endian);
-	if (!rt->mlx.img.data)
+	rt->mlx.img.data_ptr = (int *)mlx_get_data_addr(rt->mlx.img.img_ptr,
+			&rt->mlx.img.bits_per_pixel, &rt->mlx.img.line_size,
+			&rt->mlx.img.endian);
+	if (!rt->mlx.img.data_ptr)
 		cleanup_error_exit("mlx_get_data_addr() failed", rt);
 	errno = 0;
 }

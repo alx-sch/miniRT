@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:24:44 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/15 17:19:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/19 15:55:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ The event loop runs indefinitely until the program is terminated.
 */
 void	start_event_loop(t_rt *rt)
 {
-	(void)mlx_key_hook(rt->mlx.win, &handle_keypress, rt);
-	(void)mlx_hook(rt->mlx.win, DestroyNotify, 0, &handle_window_close, rt);
-	(void)mlx_loop(rt->mlx.mlx);
+	(void)mlx_key_hook(rt->mlx.win_ptr, &handle_keypress, rt);
+	(void)mlx_hook(rt->mlx.win_ptr, DestroyNotify, 0, &handle_window_close, rt);
+	(void)mlx_loop(rt->mlx.mlx_ptr);
 }
