@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 23:09:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/22 17:23:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	create_simple_scene(t_rt *rt)
 
 	// Set up a single sphere object (front)
 	sphere_data = malloc(sizeof(t_obj_data));
-    if (!sphere_data)
-        return;
+	if (!sphere_data)
+		return;
 
 	// Create the sphere data
 	sphere_data->sp.object_type = SPHERE;

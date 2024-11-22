@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 22:53:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/22 18:34:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ void	cleanup(t_rt **rt_ptr);
 // utils/error_exit.c
 
 void	cleanup_error_exit(char *msg, t_rt *rt);
+
+// utils/vector_utils.c
+
+t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
+double	vec3_dot(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_scale(t_vec3 v, double scalar);
 
 // utils/mlx_utils.c
 
