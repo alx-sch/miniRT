@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:30:04 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/22 20:25:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/22 20:29:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,50 +25,50 @@ The discriminant D = `b^2 - 4ac` tells us:
 
  @details
  Ray equation:
-`P(t) = ray_origin + t * ray_dir`, where:
- - 	`P(t)` is the position of a point on the ray at a distance `t` from
- 	the origin (3d vector).
--	`ray_origin` is the origin of the ray (3d vector).
--	`t` is the scaling factor for the direction vector; it's the distance
- 	from origin to the point on the ray if the direction vector is normalized.
--	`ray_dir` is the direction of the ray (3d vector).
+	`P(t) = ray_origin + t * ray_dir`, where:
+- `P(t)` is the position of a point on the ray at a distance `t` from
+  the origin (3d vector).
+- `ray_origin` is the origin of the ray (3d vector).
+- `t` is the scaling factor for the direction vector; it's the distance
+  from origin to the point on the ray if the direction vector is normalized.
+- `ray_dir` is the direction of the ray (3d vector).
 
 Sphere equation:
-`||P-C||^2 = r^2`, where:
- - `P` is a point on the sphere (3d vector).
- - `C` is the center of the sphere (3d vector).
- - ||P-C||  is the distance between the point P and the center C.
- - `r` is the radius of the sphere.
+	`||P-C||^2 = r^2`, where:
+- `P` is a point on the sphere (3d vector).
+- `C` is the center of the sphere (3d vector).
+- ||P-C||  is the distance between the point P and the center C.
+- `r` is the radius of the sphere.
 
 Substitute the ray equation into the sphere equation:
-`||ray_origin + t * ray_dir - C||^2 = r^2`, where:
- - `t` is the unknown variable.
- - `ray_origin` and `ray_dir` are known.
- - `C` is the center of the sphere (known).
- - `r` is the radius of the sphere (known).
+	`||ray_origin + t * ray_dir - C||^2 = r^2`, where:
+- `t` is the unknown variable.
+- `ray_origin` and `ray_dir` are known.
+- `C` is the center of the sphere (known).
+- `r` is the radius of the sphere (known).
 
- Let `oc = ray_origin - C` (oc is a vector).
- `||oc + t * ray_dir||^2 = r^2`
+Let `oc = ray_origin - C` (oc is a vector).
+	`||oc + t * ray_dir||^2 = r^2`
 
- Expand the equation:
- `(oc + t * ray_dir) . (oc + t * ray_dir) = r^2`, where:
- - `.` denotes the dot product.
+Expand the equation:
+	`(oc + t * ray_dir) . (oc + t * ray_dir) = r^2`, where:
+- `.` denotes the dot product.
 
- Using the dot product:
- `(oc . oc) + 2t(oc . ray_dir) + t^2(ray_dir . ray_dir) = r^2`
+Using the dot product:
+	`(oc . oc) + 2t(oc . ray_dir) + t^2(ray_dir . ray_dir) = r^2`
 
- Simplify the equation:
+Simplify the equation:
+	`||oc||^2 + 2t(oc . ray_dir) + t^2(ray_dir . ray_dir) = r^2`
 - `oc . oc = ||oc||^2`, squared distance from the origin to the sphere's center.
--> `||oc||^2 + 2t(oc . ray_dir) + t^2(ray_dir . ray_dir) = r^2`
 
 Rearrange the into a quadratic equation (ax^2 + bx + c = 0):
-`(ray_dir . ray_dir)t^2 + 2(oc . ray_dir)t + ||oc||^2 - r^2 = 0`, where:
- - `a = ray_dir . ray_dir = ||ray_dir||^2`
- - `b = 2(oc . ray_dir)`
- - `c = ||oc||^2 - r^2`
+	`(ray_dir . ray_dir)t^2 + 2(oc . ray_dir)t + ||oc||^2 - r^2 = 0`, where:
+- `a = ray_dir . ray_dir = ||ray_dir||^2`
+- `b = 2(oc . ray_dir)`
+- `c = ||oc||^2 - r^2`
 
 The quadratic formula is used to solve the equation:
-t = (-b ± sqrt(b^2 - 4ac)) / 2a
+	t = (-b ± sqrt(b^2 - 4ac)) / 2a
 
  @param a 	The coefficient of the quadratic term.
  @param b 	The coefficient of the linear term.
