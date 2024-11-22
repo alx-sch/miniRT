@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:46:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 18:25:52 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:58:48 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	check_single_element(t_scene *scene)
 	if (!type_id)
 		scene->pars.error_code = 0;
 	else if (!ft_strcmp(type_id, "A") || !ft_strcmp(type_id, "A\n"))
-		scene->pars.error_code = parse_ambience(scene);
+		scene->pars.error_code = parse_and_set_ambience(scene);
 	else if (!ft_strcmp(type_id, "C") || !ft_strcmp(type_id, "C\n"))
-		scene->pars.error_code = parse_camera(scene);
+		scene->pars.error_code = parse_and_set_camera(scene);
 	else if (!ft_strcmp(type_id, "L") || !ft_strcmp(type_id, "L\n"))
-		scene->pars.error_code = parse_light(scene);
+		scene->pars.error_code = parse_and_set_light(scene);
 	else if (!ft_strcmp(type_id, "sp") || !ft_strcmp(type_id, "sp\n"))
 		scene->pars.error_code = parse_sphere(scene);
 	else if (!ft_strcmp(type_id, "pl") || !ft_strcmp(type_id, "pl\n"))

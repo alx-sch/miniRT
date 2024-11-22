@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 18:37:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:48:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,9 @@ typedef struct s_pars
 	int		error_code;
 	char	*element;
 	char	**elem_data;
+	int		sp_count;
+	int		cy_count;
+	int		pl_count;
 }	t_pars;
 
 typedef struct s_ambience
@@ -289,9 +292,12 @@ typedef struct s_scene
 	t_amb			amb;
 	t_cam			cam;
 	t_light			light;
-	t_sp			sp;
-	t_pl			pl;
-	t_cy			cy;
+	t_sp			*sp;
+	t_pl			*pl;
+	t_cy			*cy;
+	int				tot_sp;
+	int				tot_cy;
+	int				tot_pl;
 }	t_scene;
 
 /*
@@ -302,13 +308,13 @@ t_scene	parsing(int argc, char **argv);
 
 // PARSING -- ERRORS
 void	errors_file(int error_code);
-void	errors_parsing(t_pars *pars);
+void	errors_parsing(t_scene *scene, t_pars *pars);
 void	ambience_errors(t_pars *parsing);
 void	camera_errors(t_pars *parsing);
 void	light_errors(t_pars *parsing);
-void	sphere_errors(t_pars *parsing);
-void	plane_errors(t_pars *parsing);
-void	cylinder_errors(t_pars *parsing);
+void	sphere_errors(t_pars *parsing, int count);
+void	plane_errors(t_pars *parsing, int count);
+void	cylinder_errors(t_pars *parsing, int count);
 
 // PARSING -- INITS
 void	init_parsing(t_pars *parsing);
@@ -322,17 +328,23 @@ void	init_cylinder(t_cy *cy);
 
 // PARSING -- PARSE EACH ELEMENT
 int		correct_amt_of_fields(char **arr, int expected_len);
-int		parse_ambience(t_scene *scene);
-int		parse_camera(t_scene *scene);
-int		parse_light(t_scene *scene);
+int		parse_and_set_ambience(t_scene *scene);
+int		parse_and_set_camera(t_scene *scene);
+int		parse_and_set_light(t_scene *scene);
 int		parse_sphere(t_scene *scene);
 int		parse_plane(t_scene *scene);
 int		parse_cylinder(t_scene *scene);
+
+// PARSING -- SET EACH ELEMENT
+int		set_cylinder(t_scene *scene, t_cy *cy);
+int		set_plane(t_scene *scene, t_pl *pl);
+int		set_sphere(t_scene *scene, t_sp *sp);
 
 // PARSING -- PARSE FILE
 int		check_file_existence(char *str);
 int		check_file_extension(char *str);
 int		check_unique_identifier(t_pars *parsing, char *str);
 int		check_single_element(t_scene *scene);
+int		set_single_element(t_scene *scene);
 
 #endif

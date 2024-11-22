@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 18:41:47 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:47:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	non_element_errors(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_FILE_EMPTY, 2);
 }
 
-void	errors_parsing(t_pars *parsing)
+void	errors_parsing(t_scene *scene, t_pars *parsing)
 {
 	ft_putstr_fd(COLOR_RED, 2);
 	if (parsing->error_code >= 4 && parsing->error_code <= 7)
@@ -51,11 +51,11 @@ void	errors_parsing(t_pars *parsing)
 	else if (parsing->error_code >= 19 && parsing->error_code <= 24)
 		light_errors(parsing);
 	else if (parsing->error_code >= 25 && parsing->error_code <= 30)
-		sphere_errors(parsing);
+		sphere_errors(parsing, scene->tot_sp);
 	else if (parsing->error_code >= 31 && parsing->error_code <= 37)
-		plane_errors(parsing);
+		plane_errors(parsing, scene->tot_pl);
 	else if (parsing->error_code >= 38 && parsing->error_code <= 46)
-		cylinder_errors(parsing);
+		cylinder_errors(parsing, scene->tot_cy);
 	ft_putstr_fd(COLOR_RESET, 2);
-	free_parsing_and_exit(parsing);
+	free_scene_and_exit(scene);
 }

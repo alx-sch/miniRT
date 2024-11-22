@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 17:55:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:27:36 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	camera_field_of_view(t_scene *scene)
 	return (0);
 }
 
-int	parse_camera(t_scene *scene)
+int	parse_and_set_camera(t_scene *scene)
 {
 	if (!correct_amt_of_fields(scene->pars.elem_data, 4))
 		return (ERR_CAM_FIELDS);

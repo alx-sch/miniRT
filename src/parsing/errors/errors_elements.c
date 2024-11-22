@@ -6,13 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:00:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 16:09:27 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:52:56 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	cylinder_errors(t_pars *parsing)
+void	cylinder_errors(t_pars *parsing, int count)
 {
 	if (parsing->error_code == ERR_CY_FIELDS)
 		ft_putstr_fd(ERR_MSG_CY_FIELDS, 2);
@@ -32,9 +32,10 @@ void	cylinder_errors(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_CY_COLOR_FIELDS, 2);
 	else if (parsing->error_code == ERR_CY_COLOR_VALUES)
 		ft_putstr_fd(ERR_MSG_CY_COLOR_VALUES, 2);
+	printf("Cylinder number: %d\n", count);
 }
 
-void	plane_errors(t_pars *parsing)
+void	plane_errors(t_pars *parsing, int count)
 {
 	if (parsing->error_code == ERR_PL_FIELDS)
 		ft_putstr_fd(ERR_MSG_PL_FIELDS, 2);
@@ -50,9 +51,10 @@ void	plane_errors(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_PL_COLOR_FIELDS, 2);
 	else if (parsing->error_code == ERR_PL_COLOR_VALUES)
 		ft_putstr_fd(ERR_MSG_PL_COLOR_VALUES, 2);
+	printf("Plane number: %d\n", count);
 }
 
-void	sphere_errors(t_pars *parsing)
+void	sphere_errors(t_pars *parsing, int count)
 {
 	if (parsing->error_code == ERR_SP_FIELDS)
 		ft_putstr_fd(ERR_MSG_SP_FIELDS, 2);
@@ -66,4 +68,5 @@ void	sphere_errors(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_SP_COLOR_FIELDS, 2);
 	else if (parsing->error_code == ERR_SP_COLOR_VALUES)
 		ft_putstr_fd(ERR_MSG_SP_COLOR_VALUES, 2);
+	printf("Sphere number: %d\n", count);
 }

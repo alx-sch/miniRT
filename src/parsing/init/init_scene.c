@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:58:28 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 17:33:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:19:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	init_parsing(t_pars *parsing)
 	parsing->error_code = 0;
 	parsing->elem_data = NULL;
 	parsing->element = NULL;
+	parsing->cy_count = 0;
+	parsing->pl_count = 0;
+	parsing->sp_count = 0;
 }
 
 void	init_scene(t_scene *scene)
@@ -29,7 +32,10 @@ void	init_scene(t_scene *scene)
 	init_ambience(&scene->amb);
 	init_camera(&scene->cam);
 	init_light(&scene->light);
-	init_sphere(&scene->sp);
-	init_plane(&scene->pl);
-	init_cylinder(&scene->cy);
+	scene->sp = NULL;
+	scene->pl = NULL;
+	scene->cy = NULL;
+	scene->tot_cy = 0;
+	scene->tot_pl = 0;
+	scene->tot_sp = 0;
 }

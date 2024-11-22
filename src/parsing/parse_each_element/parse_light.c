@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 18:11:30 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:27:28 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	light_color(t_scene *scene, char **rgb)
 	return (0);
 }
 
-int	parse_light(t_scene *scene)
+int	parse_and_set_light(t_scene *scene)
 {
 	int		arr_len;
 	char	**rgb;

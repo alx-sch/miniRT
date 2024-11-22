@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/19 17:00:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:26:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@
 */
 
 // GENERAL --FREE
-void	free_parsing_and_exit(t_pars *parsing);
+void	free_parsing(t_pars *parsing);
 int		ft_freearray(char **arr);
+void	free_scene_and_exit(t_scene *scene);
+void	free_scene(t_scene *scene);
 
 // GENERAL -- UTILS
 int		array_length(char **array);

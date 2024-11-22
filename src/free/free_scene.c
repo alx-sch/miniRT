@@ -1,23 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/22 15:56:58 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/11/22 15:17:45 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/11/22 15:27:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	main(int argc, char **argv)
+void	free_scene(t_scene *scene)
 {
-	t_scene	scene;
+	if (scene)
+	{
+		if (scene->pl)
+			free(scene->pl);
+		if (scene->cy)
+			free(scene->cy);
+		if (scene->sp)
+			free(scene->sp);
+	}
+}
 
-	scene = parsing(argc, argv);
-	printf("miniRT!\n");
-	free_scene(&scene);
-	return (0);
+void	free_scene_and_exit(t_scene *scene)
+{
+	if (scene)
+	{
+		free_parsing(&scene->pars);
+		if (scene->pl)
+			free(scene->pl);
+		if (scene->cy)
+			free(scene->cy);
+		if (scene->sp)
+			free(scene->sp);
+	}
+	exit(scene->pars.error_code);
 }

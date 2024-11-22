@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/19 17:53:51 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/11/22 15:24:00 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME :=			miniRT
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/free/free_array.c \
 				$(SRCS_DIR)/free/free_parsing.c \
+				$(SRCS_DIR)/free/free_scene.c \
 				$(SRCS_DIR)/parsing/errors/errors_elements.c \
 				$(SRCS_DIR)/parsing/errors/errors_unique_elements.c \
 				$(SRCS_DIR)/parsing/errors/errors.c \
@@ -31,6 +32,10 @@ SRCS :=			$(SRCS_DIR)/free/free_array.c \
 				$(SRCS_DIR)/parsing/parse_file/check_file.c \
 				$(SRCS_DIR)/parsing/parse_file/check_single_element.c \
 				$(SRCS_DIR)/parsing/parse_file/check_unique_identifier.c \
+				$(SRCS_DIR)/parsing/parse_file/set_single_element.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_cylinder.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_plane.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_sphere.c \
 				$(SRCS_DIR)/parsing/parsing.c \
 				$(SRCS_DIR)/utils/array_length.c \
 				$(SRCS_DIR)/utils/ft_atod.c \

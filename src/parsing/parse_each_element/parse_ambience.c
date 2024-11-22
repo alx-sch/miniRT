@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:45:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 18:10:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:27:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	ambience_rgb(t_scene *scene, char **rgb)
 	return (0);
 }
 
-int	parse_ambience(t_scene *scene)
+int	parse_and_set_ambience(t_scene *scene)
 {
 	char	**rgb;
 
