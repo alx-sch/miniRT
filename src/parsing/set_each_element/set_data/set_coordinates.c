@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   set_coordinates.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/25 17:10:51 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/11/25 16:52:33 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/11/25 16:57:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	main(int argc, char **argv)
+int	set_coordinates(char *input_coords, double *x, double *y, double *z)
 {
-	t_scene	scene;
+	char	**coords;
 
-	scene = parse_and_set_objects(argc, argv);
-	printf("miniRT!\n");
-	free_scene(&scene);
+	coords = ft_split(input_coords, ',');
+	if (!coords)
+		return (ERR_MEM_ALLOC);
+	*x = ft_atod(coords[0]);
+	*y = ft_atod(coords[1]);
+	*z = ft_atod(coords[2]);
+	ft_freearray(coords);
 	return (0);
 }

@@ -6,11 +6,36 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:22:32 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 17:32:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:24:36 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+int	allocate_nonunique_elements(t_scene *scene)
+{
+	int	i;
+
+	i = 0;
+	scene->pl = malloc(sizeof(t_pl) * scene->tot_pl);
+	if (!scene->pl)
+		return (1);
+	while (i < scene->tot_pl)
+		init_plane(&scene->pl[i++]);
+	i = 0;
+	scene->sp = malloc(sizeof(t_sp) * scene->tot_sp + 1);
+	if (!scene->sp)
+		return (1);
+	while (i < scene->tot_sp)
+		init_sphere(&scene->sp[i++]);
+	i = 0;
+	scene->cy = malloc(sizeof(t_cy) * scene->tot_cy + 1);
+	if (!scene->cy)
+		return (1);
+	while (i < scene->tot_cy)
+		init_cylinder(&scene->cy[i++]);
+	return (0);
+}
 
 void	init_sphere(t_sp *sp)
 {

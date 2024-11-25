@@ -6,11 +6,18 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:41:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 18:22:59 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:27:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+int	all_necessary_identifiers(t_pars *pars)
+{
+	if (pars->a_found && pars->c_found && pars->l_found)
+		return (1);
+	return (0);
+}
 
 static int	is_nonunique_identifier(char *str)
 {

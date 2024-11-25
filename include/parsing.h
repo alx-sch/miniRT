@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/22 15:48:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:28:39 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,7 @@ typedef struct s_scene
 	FUNCTIONS -- PARSING
 */
 
-t_scene	parsing(int argc, char **argv);
+t_scene	parse_and_set_objects(int argc, char **argv);
 
 // PARSING -- ERRORS
 void	errors_file(int error_code);
@@ -315,6 +315,7 @@ void	light_errors(t_pars *parsing);
 void	sphere_errors(t_pars *parsing, int count);
 void	plane_errors(t_pars *parsing, int count);
 void	cylinder_errors(t_pars *parsing, int count);
+int		set_error_and_return(char **arr, int *parsing_error, int error_code);
 
 // PARSING -- INITS
 void	init_parsing(t_pars *parsing);
@@ -325,6 +326,7 @@ void	init_light(t_light *light);
 void	init_sphere(t_sp *sp);
 void	init_plane(t_pl *pl);
 void	init_cylinder(t_cy *cy);
+int		allocate_nonunique_elements(t_scene *scene);
 
 // PARSING -- PARSE EACH ELEMENT
 int		correct_amt_of_fields(char **arr, int expected_len);
@@ -334,13 +336,24 @@ int		parse_and_set_light(t_scene *scene);
 int		parse_sphere(t_scene *scene);
 int		parse_plane(t_scene *scene);
 int		parse_cylinder(t_scene *scene);
+int		check_coordinates(char *input_coords, int *parsing_error, \
+int error_code);
+int		check_orientation_vector(char *input_coords, int *parsing_error, \
+int error_code);
+int		check_color(char **rgb, int *parsing_error, int error_code);
 
 // PARSING -- SET EACH ELEMENT
 int		set_cylinder(t_scene *scene, t_cy *cy);
 int		set_plane(t_scene *scene, t_pl *pl);
 int		set_sphere(t_scene *scene, t_sp *sp);
+int		set_coordinates(char *input_coords, double *x, double *y, double *z);
+int		set_orientation_vector(char *input_coords, double *x, double *y, \
+double *z);
+void	set_color(char **rgb, unsigned char *r, unsigned char *g, \
+unsigned char *b);
 
 // PARSING -- PARSE FILE
+int		all_necessary_identifiers(t_pars *pars);
 int		check_file_existence(char *str);
 int		check_file_extension(char *str);
 int		check_unique_identifier(t_pars *parsing, char *str);

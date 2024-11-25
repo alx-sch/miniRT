@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/22 15:23:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:28:56 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,42 +60,26 @@ int	file_line_by_line(t_scene *scene, char *str, int parse)
 	return (scene->pars.error_code);
 }
 
-int	all_necessary_identifiers(t_pars *pars)
+static void	parsing(t_scene *scene, char *file)
 {
-	if (pars->a_found && pars->c_found && pars->l_found)
-		return (1);
-	return (0);
+	file_line_by_line(scene, file, 1);
+	if (scene->pars.error_code != 0)
+		errors_parsing(scene, &scene->pars);
+	if (!all_necessary_identifiers(&scene->pars))
+		errors_file(ERR_MISSING_IDENTIFIER);
+	if (allocate_nonunique_elements(scene) != 0)
+		errors_parsing(scene, &scene->pars);
 }
 
-static int	allocate_nonunique_elements(t_scene *scene)
+static void	set_nonunique_elements(t_scene *scene, char *file)
 {
-	int	i;
-
-	i = 0;
-	scene->pl = malloc(sizeof(t_pl) * scene->tot_pl);
-	if (!scene->pl)
-		return (1);
-	while (i < scene->tot_pl)
-		init_plane(&scene->pl[i++]);
-	i = 0;
-	scene->sp = malloc(sizeof(t_sp) * scene->tot_sp + 1);
-	if (!scene->sp)
-		return (1);
-	while (i < scene->tot_sp)
-		init_sphere(&scene->sp[i++]);
-	i = 0;
-	scene->cy = malloc(sizeof(t_cy) * scene->tot_cy + 1);
-	if (!scene->cy)
-		return (1);
-	while (i < scene->tot_cy)
-		init_cylinder(&scene->cy[i++]);
-	return (0);
+	file_line_by_line(scene, file, 0);
 }
 
 /*Checks that the file that's passed as argument to the program is valid input.
 Both the file itself, but also its content. See more of what is 
 looked for in 'parsing.h'.*/
-t_scene	parsing(int argc, char **argv)
+t_scene	parse_and_set_objects(int argc, char **argv)
 {
 	t_scene	scene;
 
@@ -106,14 +90,8 @@ t_scene	parsing(int argc, char **argv)
 		errors_file(ERR_FILE_ACCESS);
 	if (check_file_extension(argv[1]))
 		errors_file(ERR_FILE_EXTENSION);
-	file_line_by_line(&scene, argv[1], 1);
-	if (scene.pars.error_code != 0)
-		errors_parsing(&scene, &scene.pars);
-	if (!all_necessary_identifiers(&scene.pars))
-		errors_file(ERR_MISSING_IDENTIFIER);
-	if (allocate_nonunique_elements(&scene) != 0)
-		errors_parsing(&scene, &scene.pars);
-	file_line_by_line(&scene, argv[1], 0);
+	parsing(&scene, argv[1]);
+	set_nonunique_elements(&scene, argv[1]);
 	if (scene.pars.error_code != 0)
 		errors_parsing(&scene, &scene.pars);
 	return (scene);
