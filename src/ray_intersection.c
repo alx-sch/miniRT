@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:30:04 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/22 20:29:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/25 16:44:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,66 @@
 
 /**
 Calculates the discriminant of a quadratic equation `ax^2 + bx + c = 0`, which
-solves into x = (-b ± sqrt(b^2 - 4ac)) / 2a.
+solves into `x = (-b ± sqrt(b^2 - 4ac)) / 2a`.
 
-The discriminant D = `b^2 - 4ac` tells us:
-- if D > 0, there are two real roots (the ray intersects the sphere at two
+The discriminant `D = b^2 - 4ac` tells us:
+- if `D > 0`, there are two real roots (the ray intersects the sphere at two
   points).
-- if D = 0, there is one real root (the ray is tangent to the sphere, touching
+- if `D = 0`, there is one real root (the ray is tangent to the sphere, touching
   it at one point).
-- if D < 0, there are no real roots (the ray does not intersect the sphere).
+- if `D < 0`, there are no real roots (the ray does not intersect the sphere).
+
+ @param a 	The coefficient of the quadratic term in quadratic equation.
+ @param b 	The coefficient of the linear term in quadratic equation.
+ @param c 	The constant term in quadratic equation.
+
+ @return 	The discriminant of the quadratic equation.
 
  @details
  Ray equation:
 	`P(t) = ray_origin + t * ray_dir`, where:
+- `t` is the scaling factor for the direction vector; if the direction vector
+  is normalized, `t` is the distance from origin to the point on the ray.
 - `P(t)` is the position of a point on the ray at a distance `t` from
   the origin (3d vector).
 - `ray_origin` is the origin of the ray (3d vector).
-- `t` is the scaling factor for the direction vector; it's the distance
-  from origin to the point on the ray if the direction vector is normalized.
 - `ray_dir` is the direction of the ray (3d vector).
 
 Sphere equation:
 	`||P-C||^2 = r^2`, where:
-- `P` is a point on the sphere (3d vector).
+- `P` is a point on the sphere's surface (3d vector).
 - `C` is the center of the sphere (3d vector).
 - ||P-C||  is the distance between the point P and the center C.
 - `r` is the radius of the sphere.
 
-Substitute the ray equation into the sphere equation:
+Substitute the ray equation into the sphere equation (ray-sphere intersection):
 	`||ray_origin + t * ray_dir - C||^2 = r^2`, where:
 - `t` is the unknown variable.
-- `ray_origin` and `ray_dir` are known.
+- `ray_origin` is the origin of the ray (known).
+- `ray_dir` is the direction of the ray (known).
 - `C` is the center of the sphere (known).
 - `r` is the radius of the sphere (known).
 
 Let `oc = ray_origin - C` (oc is a vector).
 	`||oc + t * ray_dir||^2 = r^2`
 
-Expand the equation:
+Expand the equation (`∣∣v∣∣^2 = v⋅v`):
 	`(oc + t * ray_dir) . (oc + t * ray_dir) = r^2`, where:
-- `.` denotes the dot product.
+- `.` is the dot product.
 
-Using the dot product:
+Using the dot product (`(a+b)⋅(a+b) = a⋅a + 2(a⋅b) + b⋅b)`:
 	`(oc . oc) + 2t(oc . ray_dir) + t^2(ray_dir . ray_dir) = r^2`
 
-Simplify the equation:
-	`||oc||^2 + 2t(oc . ray_dir) + t^2(ray_dir . ray_dir) = r^2`
-- `oc . oc = ||oc||^2`, squared distance from the origin to the sphere's center.
-
 Rearrange the into a quadratic equation (ax^2 + bx + c = 0):
-	`(ray_dir . ray_dir)t^2 + 2(oc . ray_dir)t + ||oc||^2 - r^2 = 0`, where:
+	`(ray_dir . ray_dir)t^2 + 2(oc . ray_dir)t + (oc . oc) - r^2 = 0`, where:
 - `a = ray_dir . ray_dir = ||ray_dir||^2`
 - `b = 2(oc . ray_dir)`
-- `c = ||oc||^2 - r^2`
+- `c = (oc . oc) - r^2 = ||oc||^2 - r^2`
 
 The quadratic formula is used to solve the equation:
-	t = (-b ± sqrt(b^2 - 4ac)) / 2a
-
- @param a 	The coefficient of the quadratic term.
- @param b 	The coefficient of the linear term.
- @param c 	The constant term.
-
- @return 	The discriminant of the quadratic equation.
+	`t = (-b ± sqrt(b^2 - 4ac)) / 2a`
+(for the derivation of the quadratic formula, see:
+https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/
 */
 double	calculate_discriminant(double a, double b, double c)
 {
@@ -84,26 +83,105 @@ double	calculate_discriminant(double a, double b, double c)
 	return (discriminant);
 }
 
-// Function to solve the quadratic equation for the smaller root
-// Parameters: a, b, discriminant - quadratic coefficients and discriminant value
-// Returns: The smaller root (t value) of the quadratic equation
-double calculate_smaller_root(double a, double b, double discriminant) {
-    return (-b - sqrt(discriminant)) / (2.0 * a);
+/**
+Calculates the smaller root of a quadratic equation
+`x = (-b ± sqrt(b^2 - 4ac)) / 2a`. This smaller root corresponds to the first
+intersection point of a ray with a sphere (point closer to the ray's origin).
+
+ @param a 							The coefficient of the quadratic term.
+ @param b 							The coefficient of the linear term.
+ @param discriminant 		The discriminant of the quadratic equation (`b^2 - 4ac`).
+
+ @return 								The smaller root (`t` value) of the quadratic equation.
+
+ @details
+In ray-sphere intersection calculations, the quadratic equation is derived from:
+  `||ray_origin + t * ray_dir - C||^2 = r^2`, where:
+- `ray_origin` is the starting point of the ray.
+- `ray_dir` is the direction of the ray.
+- `C` is the center of the sphere.
+- `r` is the radius of the sphere.
+
+The solutions `t` are the distances along the ray to the intersection points:
+- The smaller root (`t1 = (-b - sqrt(D)) / (2a)`) is the first
+  (closest) intersection.
+- The larger root (`t2 = (-b + sqrt(D)) / (2a)`) is the second
+  farther) intersection.
+- (D is the discriminant `b^2 - 4ac`).
+
+**Considerations:**
+- If `t1 > 0`, it is the valid intersection point in front of the ray's origin.
+- If `t1 = 0`, the ray is tangent to the sphere.
+- If `t1 < 0` and `t2 > 0`, the ray originates inside the sphere, and `t2` is
+  the valid exit point.
+- If both roots are negative, there is no intersection (sphere not visible).
+*/
+double	calculate_smaller_root(double a, double b, double discriminant)
+{
+	double	t1;
+
+	t1 = (-b - sqrt(discriminant)) / (2.0 * a);
+	return (t1);
 }
 
-// Function to find the intersection of a ray with a sphere
-int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, double *t)
-{
-	t_vec3 oc = vec3_sub(ray_origin, sphere->center);
-	double a = vec3_dot(ray_dir, ray_dir);
-	double b = 2.0 * vec3_dot(oc, ray_dir);
-	double c = vec3_dot(oc, oc) - (sphere->radius * sphere->radius);
-	double discriminant = calculate_discriminant(a, b, c);
+/**
+Calculates the larger root of a quadratic equation
+`x = (-b ± sqrt(b^2 - 4ac)) / 2a`. This larger root corresponds to the second
+intersection point of a ray with a sphere (point closer to the ray's origin), OR
+the exit point if the ray originates inside the sphere.
 
-	if (discriminant > 0)
+ @param a 							The coefficient of the quadratic term.
+ @param b 							The coefficient of the linear term.
+ @param discriminant 		The discriminant of the quadratic equation (`b^2 - 4ac`).
+
+ @return 								The larger root (`t` value) of the quadratic equation.
+
+ @details
+ See `calculate_smaller_root()`.
+*/
+double	calculate_larger_root(double a, double b, double discriminant)
+{
+	double	t1;
+
+	t1 = (-b + sqrt(discriminant)) / (2.0 * a);
+	return (t1);
+}
+
+/**
+Function to find the intersection of a ray with a sphere
+
+ @param ray_origin 	The starting point of the ray (3D vector).
+ @param ray_dir 		The direction vector of the ray (assumed to be normalized).
+ @param sphere 			Pointer to the sphere structure (contains center and radius).
+ @param t 					Pointer to store the distance to the first intersection
+										point (if found).
+
+ @return 						`1` if an intersection is found (and t is set to the
+										intersection distance);
+										`0` if there is no intersection.
+
+ @note 							`a = vec3_dot(ray_dir, ray_dir)` is 1.0 if the ray direction
+                    vector is normalized.
+*/
+int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
+		double	*t)
+{
+	t_vec3	oc;
+	double	b;
+	double	c;
+	double	discriminant;
+
+	oc = vec3_sub(ray_origin, sphere->center);
+	b = 2.0 * vec3_dot(oc, ray_dir);
+	c = vec3_dot(oc, oc) - (sphere->radius * sphere->radius);
+	discriminant = calculate_discriminant(1.0, b, c);
+	if (discriminant >= 0.0)
 	{
-		*t = calculate_smaller_root(a, b, discriminant);;
-		if (*t > 0)
+		*t = calculate_smaller_root(1.0, b, discriminant);
+		if (*t >= 0.0)
+			return (1);
+		*t = calculate_larger_root(1.0, b, discriminant);
+		if (*t >= 0.0)
 			return (1);
 	}
 	return (0);

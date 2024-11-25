@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/22 17:23:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/25 13:49:57 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	create_simple_scene(t_rt *rt)
 
 	// Create the sphere data
 	sphere_data->sp.object_type = SPHERE;
-	sphere_data->sp.center.x = 0.0;
-	sphere_data->sp.center.y = 0.0;
-	sphere_data->sp.center.z = 0.0;
+	sphere_data->sp.center.x = 1.0;
+	sphere_data->sp.center.y = 1.0;
+	sphere_data->sp.center.z = -5.0;
 	sphere_data->sp.radius = 2.0;  // Radius of the sphere
 	sphere_data->sp.color.r = 255;
 	sphere_data->sp.color.g = 0;
