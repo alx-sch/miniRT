@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/22 18:34:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/25 18:48:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ void	init_mlx(t_rt *rt);
 
 void	start_event_loop(t_rt *rt);
 
+// ray.c
+
+int		ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir,
+			t_sphere *sphere, double *t);
+int		ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
+			double *t);
+t_vec3	compute_ray_direction(int x, int y, t_cam cam);
+
 // utils/cleanup.c
 
 void	cleanup(t_rt **rt_ptr);
@@ -63,6 +71,7 @@ void	cleanup_error_exit(char *msg, t_rt *rt);
 t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
 double	vec3_dot(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_scale(t_vec3 v, double scalar);
+t_vec3	vec3_norm(t_vec3 v);
 
 // utils/mlx_utils.c
 

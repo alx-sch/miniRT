@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/25 13:49:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/25 19:03:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ Takes a pointer to t_rt, which includes both mlx and scene.
 void	create_simple_scene(t_rt *rt)
 {
 	t_list		*obj_node;
-	t_obj_data	*sphere_data;
+	t_obj_data	*obj_data;
 
 	// Set up ambient light
 	rt->scene.ambi_light.ratio = 0.1;  // Low ambient light
@@ -43,75 +43,99 @@ void	create_simple_scene(t_rt *rt)
 	rt->scene.cam.fov = 90.0;  // Field of view
 
 	// Set up a single sphere object (front)
-	sphere_data = malloc(sizeof(t_obj_data));
-	if (!sphere_data)
+	obj_data = malloc(sizeof(t_obj_data));
+	if (!obj_data)
 		return;
 
 	// Create the sphere data
-	sphere_data->sp.object_type = SPHERE;
-	sphere_data->sp.center.x = 1.0;
-	sphere_data->sp.center.y = 1.0;
-	sphere_data->sp.center.z = -5.0;
-	sphere_data->sp.radius = 2.0;  // Radius of the sphere
-	sphere_data->sp.color.r = 255;
-	sphere_data->sp.color.g = 0;
-	sphere_data->sp.color.b = 0;  // Red sphere
+	obj_data->sp.object_type = SPHERE;
+	obj_data->sp.center.x = 1.0;
+	obj_data->sp.center.y = 0.0;
+	obj_data->sp.center.z = 0.0;
+	obj_data->sp.radius = 2.0;  // Radius of the sphere
+	obj_data->sp.color.r = 255;
+	obj_data->sp.color.g = 0;
+	obj_data->sp.color.b = 0;  // Red sphere
 
 
 	// Create a new list node with the sphere data
-	obj_node = ft_lstnew(sphere_data);
+	obj_node = ft_lstnew(obj_data);
 	if (!obj_node)
 	{
-		free(sphere_data);  // Clean up if node creation fails
+		free(obj_data);  // Clean up if node creation fails
 		return;  // Handle memory allocation failure
 	}
 
 	ft_lstadd_front(&rt->scene.objs, obj_node);
 
 	// Set up the second sphere object (blue, behind the red one)
-    sphere_data = malloc(sizeof(t_obj_data));
-    if (!sphere_data)
+    obj_data = malloc(sizeof(t_obj_data));
+    if (!obj_data)
         return;
 
-    sphere_data->sp.object_type = SPHERE;
-    sphere_data->sp.center.x = 1.5;
-    sphere_data->sp.center.y = 1.5;
-    sphere_data->sp.center.z = 1.5;  // Positioned behind the red sphere
-    sphere_data->sp.radius = 2.75;  // Radius of the sphere
-    sphere_data->sp.color.r = 0;
-    sphere_data->sp.color.g = 0;
-    sphere_data->sp.color.b = 255;  // Blue sphere
+    obj_data->sp.object_type = SPHERE;
+    obj_data->sp.center.x = 1.5;
+    obj_data->sp.center.y = 1.5;
+    obj_data->sp.center.z = 1.5;  // Positioned behind the red sphere
+    obj_data->sp.radius = 2.75;  // Radius of the sphere
+    obj_data->sp.color.r = 0;
+    obj_data->sp.color.g = 0;
+    obj_data->sp.color.b = 255;  // Blue sphere
 
-    obj_node = ft_lstnew(sphere_data);
+    obj_node = ft_lstnew(obj_data);
     if (!obj_node)
     {
-        free(sphere_data);  // Clean up if node creation fails
+        free(obj_data);  // Clean up if node creation fails
         return;  // Handle memory allocation failure
     }
 
     ft_lstadd_front(&rt->scene.objs, obj_node);
 
 	// Set up the second sphere object (blue, behind the red one)
-    sphere_data = malloc(sizeof(t_obj_data));
-    if (!sphere_data)
+    obj_data = malloc(sizeof(t_obj_data));
+    if (!obj_data)
         return;
 
-    sphere_data->sp.object_type = SPHERE;
-    sphere_data->sp.center.x = 0.5;
-    sphere_data->sp.center.y = 1;
-    sphere_data->sp.center.z = -0.5;  // Positioned behind the red sphere
-    sphere_data->sp.radius = 1.5;  // Radius of the sphere
-    sphere_data->sp.color.r = 0;
-    sphere_data->sp.color.g = 255;
-    sphere_data->sp.color.b = 0;  // Blue sphere
+    obj_data->sp.object_type = SPHERE;
+    obj_data->sp.center.x = 0.5;
+    obj_data->sp.center.y = 1;
+    obj_data->sp.center.z = -0.5;  // Positioned behind the red sphere
+    obj_data->sp.radius = 1.5;  // Radius of the sphere
+    obj_data->sp.color.r = 0;
+    obj_data->sp.color.g = 255;
+    obj_data->sp.color.b = 0;  // Blue sphere
 
-    obj_node = ft_lstnew(sphere_data);
+    obj_node = ft_lstnew(obj_data);
     if (!obj_node)
     {
-        free(sphere_data);  // Clean up if node creation fails
+        free(obj_data);  // Clean up if node creation fails
         return;  // Handle memory allocation failure
     }
 
+    ft_lstadd_front(&rt->scene.objs, obj_node);
+
+	// Set up the floor plane (horizontal plane)
+    obj_data = malloc(sizeof(t_obj_data));
+    if (!obj_data)
+        return;
+
+    obj_data->pl.object_type = PLANE;
+    obj_data->pl.point_in_plane.x = 0.0;
+    obj_data->pl.point_in_plane.y = 0.0;  // Positioned below the spheres
+    obj_data->pl.point_in_plane.z = 0.0;  // Parallel to XZ plane
+    obj_data->pl.orientation.x = 0.0;
+    obj_data->pl.orientation.y = 1.0;  // Normal facing upwards
+    obj_data->pl.orientation.z = 0.0;
+    obj_data->pl.color.r = 200;  // Light grey plane
+    obj_data->pl.color.g = 200;
+    obj_data->pl.color.b = 200;
+
+    obj_node = ft_lstnew(obj_data);
+    if (!obj_node)
+    {
+        free(obj_data);
+        return;
+    }
     ft_lstadd_front(&rt->scene.objs, obj_node);
 }
 
@@ -129,7 +153,7 @@ int	main(void)
 	init_mlx(rt);
 	create_simple_scene(rt);
 
-	render_scene(rt, YELLOW); // render a simple scene without shadows, lighting considerations etc.
+	render_scene(rt, BLACK); // render a simple scene without shadows, lighting considerations etc.
 
 	//fill_image(rt, RED); // just for testing to see if image shown in window
 
