@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 11:55:49 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 18:50:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/12 17:57:32 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <stddef.h> // size_t
 # include <stdint.h> // SIZE_MAX
 # include <stdarg.h> // variadic fcts
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+# ifndef FD_SIZE
+#  define FD_SIZE 1
+# endif
 
 /*
 Used in libft functions for list manipulation.

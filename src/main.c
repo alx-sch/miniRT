@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/14 23:59:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/26 17:39:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ void	run_mlx(t_rt *rt)
 	(void)mlx_loop(rt->mlx.mlx);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_rt	*rt;
+	t_scene	scene;
 
-	// check args / .rt file
+	scene = parse_and_set_objects(argc, argv);
 	rt = malloc(sizeof(t_rt));
 	if (!rt)
 		cleanup_error_exit(ERR_MALLOC, NULL);
+	free_scene(&scene);
 	// populate scene info into data struct (parse file)
 	init_mlx(rt);
 	run_mlx(rt);
