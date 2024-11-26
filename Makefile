@@ -6,7 +6,11 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/11/26 17:37:05 by nholbroo         ###   ########.fr        #
+=======
+#    Updated: 2024/11/20 17:24:35 by aschenk          ###   ########.fr        #
+>>>>>>> 5e8eca2afb7bbbb8de7b2ac09da4fe00886653cf
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,8 +76,9 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)		# Each o. file has a correspo
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
+				$(HDRS_DIR)/colors.h \
 				$(HDRS_DIR)/errors.h \
-				$(HDRS_DIR)/types.h
+				$(HDRS_DIR)/structs.h
 
 #############
 # LIBRARIES #

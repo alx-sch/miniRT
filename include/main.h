@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/26 17:41:11 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:44:48 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@
 # include <string.h>		// for strerror()
 # include <stdlib.h>		// for malloc(), free(), exit()
 # include <errno.h>			// for errno
-# include <fcntl.h>			// for open()
-# include <math.h> 			// for math functions
-
+# include <math.h>			// for math functions, e.g. sqrt()
 
 // X11 library headers
 # include <X11/keysym.h>	// Macros for key symbols, e.g. XK_Escape
@@ -31,7 +29,8 @@
 # include "libft.h"			// libft
 # include "mlx.h"			// mlx
 # include "errors.h"		// Error messages and formatting styles
-# include "types.h"			// All custom types and data structs, e.g. 't_rt'
+# include "structs.h"		// Data structs, e.g. 't_rt'
+# include "colors.h"
 # include "parsing.h"		// Parsing header file
 
 //#############
@@ -50,8 +49,7 @@ void	init_mlx(t_rt *rt);
 
 // event_handlers.c
 
-int		handle_keypress(int keycode, t_rt *rt);
-int		handle_window_close(t_rt *rt);
+void	start_event_loop(t_rt *rt);
 
 // utils/cleanup.c
 
@@ -90,5 +88,14 @@ int		only_numbers_and_newline(char *str);
 int		only_numbers_dec_pt_and_newline(char *str);
 int		only_numbers_single_signs_and_dec_pt(char *str);
 int		only_numbers_and_dec_pt(char *str);
+// utils/mlx_utils.c
+
+int		color_to_hex(t_color color);
+void	set_pixel_color(t_img *img, int x, int y, int color);
+void	fill_image(t_rt *rt, int color); // TESTING ONLY
+void	draw_colored_pixels(t_rt *rt, int color); // TESTING ONLY
+
+void	render_scene(t_rt *rt, int bg_color);
+
 
 #endif
