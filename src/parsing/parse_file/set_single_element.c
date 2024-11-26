@@ -6,12 +6,22 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:32:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/22 15:17:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:18:07 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*
+Sets the values of the current type identifier, ONLY for nonunique
+elements --> cylinder, plane and sphere. They have already been validated
+at this point, so the values are simply getting stored.
+If the current identifier is NOT cy, pl or sp -- it will be ignored.
+@param type_id The first field of each element, the type
+identifier, like 'pl', 'sp', etc.
+@param scene->pars.error_code A variable in the parsing struct that stores
+an error code. If the error code is not 0, the program will print an error
+message and exit.*/
 int	set_single_element(t_scene *scene)
 {
 	char	*type_id;

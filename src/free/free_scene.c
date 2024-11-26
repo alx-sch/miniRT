@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:17:45 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/22 15:27:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:47:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Frees the scene struct.*/
 void	free_scene(t_scene *scene)
 {
 	if (scene)
@@ -25,6 +26,8 @@ void	free_scene(t_scene *scene)
 	}
 }
 
+/*Frees the scene struct, the parsing struct within the scene struct, and 
+exits with correct error code.*/
 void	free_scene_and_exit(t_scene *scene)
 {
 	if (scene)

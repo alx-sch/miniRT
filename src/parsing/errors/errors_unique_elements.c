@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:45:05 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/22 15:34:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:49:09 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Prints out a parsing related error message for an ambience object.*/
 void	ambience_errors(t_pars *parsing)
 {
 	if (parsing->error_code == ERR_AMB_FIELDS)
@@ -24,6 +25,7 @@ void	ambience_errors(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_AMB_COLOR_VALUES, 2);
 }
 
+/*Prints out a parsing related error message for a camera object.*/
 void	camera_errors(t_pars *parsing)
 {
 	if (parsing->error_code == ERR_CAM_FIELDS)
@@ -36,10 +38,13 @@ void	camera_errors(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_CAM_VECTOR_FIELDS, 2);
 	else if (parsing->error_code == ERR_CAM_VECTOR_VALUES)
 		ft_putstr_fd(ERR_MSG_CAM_VECTOR_VALUES, 2);
+	else if (parsing->error_code == ERR_CAM_VECTOR_NORM)
+		ft_putstr_fd(ERR_MSG_CAM_VECTOR_NORM, 2);
 	else if (parsing->error_code == ERR_CAM_FIELD_OF_VIEW)
 		ft_putstr_fd(ERR_MSG_CAM_FIELD_OF_VIEW, 2);
 }
 
+/*Prints out a parsing related error message for a light object.*/
 void	light_errors(t_pars *parsing)
 {
 	if (parsing->error_code == ERR_LIGHT_FIELDS)

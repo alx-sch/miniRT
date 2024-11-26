@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 18:28:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:24:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ int	file_line_by_line(t_scene *scene, char *str, int parse)
 	return (scene->pars.error_code);
 }
 
+/*Parses through the .rt-file, to check that all input is valid.
+Sets the ambience, camera and light values to the input values,
+but NOT the cylinders, spheres and planes.
+Exits program with an error code and prints error message upon error.*/
 static void	parsing(t_scene *scene, char *file)
 {
 	file_line_by_line(scene, file, 1);
@@ -71,6 +75,8 @@ static void	parsing(t_scene *scene, char *file)
 		errors_parsing(scene, &scene->pars);
 }
 
+/*After everything has been parsed, the values of the nonunique-elements 
+(cylinder, plane and sphere) are saved in the t_scene struct.*/
 static void	set_nonunique_elements(t_scene *scene, char *file)
 {
 	file_line_by_line(scene, file, 0);
@@ -78,7 +84,9 @@ static void	set_nonunique_elements(t_scene *scene, char *file)
 
 /*Checks that the file that's passed as argument to the program is valid input.
 Both the file itself, but also its content. See more of what is 
-looked for in 'parsing.h'.*/
+looked for in 'parsing.h'.
+Prints an error message, and exits with a set error code upon error.
+Returns the t_scene struct upon success.*/
 t_scene	parse_and_set_objects(int argc, char **argv)
 {
 	t_scene	scene;

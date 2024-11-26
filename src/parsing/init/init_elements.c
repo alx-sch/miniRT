@@ -6,12 +6,14 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:22:32 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 18:24:36 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:52:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Allocates memory for an n amount of nonunique elements (sphere, plane and
+cylinder). Returns 0 upon success, or returns 1 if mem allocation failed.*/
 int	allocate_nonunique_elements(t_scene *scene)
 {
 	int	i;
@@ -37,6 +39,7 @@ int	allocate_nonunique_elements(t_scene *scene)
 	return (0);
 }
 
+/*Initializes all values of the t_sp struct to 0.*/
 void	init_sphere(t_sp *sp)
 {
 	sp->x = 0;
@@ -48,6 +51,7 @@ void	init_sphere(t_sp *sp)
 	sp->color_b = 0;
 }
 
+/*Initializes all values of the t_pl struct to 0.*/
 void	init_plane(t_pl *pl)
 {
 	pl->x = 0;
@@ -61,6 +65,7 @@ void	init_plane(t_pl *pl)
 	pl->color_b = 0;
 }
 
+/*Initializes all values of the t_cy struct to 0.*/
 void	init_cylinder(t_cy *cy)
 {
 	cy->x = 0;

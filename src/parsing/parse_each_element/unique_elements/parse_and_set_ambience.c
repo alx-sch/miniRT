@@ -6,12 +6,17 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:45:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 18:23:43 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:07:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Parses and sets an ambience object.
+1. Checks if there's a correct amount of fields (3).
+2. Checks if the light brightness is valid (between 0 and 1).
+3. Checks if the color values are valid.
+Sets all values and returns 0 upon success, and an error code upon error.*/
 int	parse_and_set_ambience(t_scene *scene)
 {
 	char	**rgb;

@@ -6,12 +6,19 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 17:15:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:21:13 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Sets a sphere object.
+1. Sets the input coordinates.
+2. Sets the input diameter.
+3. Sets the input color values.
+Also keeps track of the count, so that the next time the function is called,
+it will store the input in the next instance of the object.
+Returns 0 upon success, and an error code upon memory allocation error.*/
 int	set_sphere(t_scene *scene, t_sp *sp)
 {
 	char	**rgb;

@@ -6,12 +6,23 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 17:51:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:22:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Parses a cylinder object.
+1. Checks if there's a correct amount of fields (6).
+2. Checks if the coordinates are valid.
+3. Checks if the orientation vector is valid.
+4. Checks if the diameter is valid.
+5. Checks if the height is valid.
+6. Checks if the color values are valid.
+Also keeps track of the count, ultimately storing the total count (how
+many occurences of the object), to be able to allocate memory correctly
+later on.
+Returns 0 upon success, and an error code upon error.*/
 int	parse_cylinder(t_scene *scene)
 {
 	char	**rgb;

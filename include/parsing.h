@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 18:28:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:31:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 	1. The file is of type ".rt".
 	2. The file exists/can be accessed.
 	3. The unique elements - like 'A', 'C' and 'L' only occure once in the file.
-	4. Checks that the type identifier exists.
-	5. Every single element aligns with the expected requirements.
+	4. Checks that all the type identifiers exist.
+	5. Checks that the necessary identifiers (ambience, camera and light) are
+	all present.
+	6. Every single element aligns with the expected requirements.
 	These are as following:
 
 		Ambient lightning:
@@ -69,60 +71,77 @@
 		
 	The program will show a descriptive error message and exit with an error code,
 	depending on what the issue was.
+
+	The main structure of the parsing is as follows:
+	1. Checks file related errors -- like file permissions, existence etc.
+	2. When all the identifiers are being parsed, it will check all the lines
+	of the file, but ONLY ambience, camera and light will be SET to the input
+	values. The nonunique elements (cylinders, spheres, planes) will only
+	be validated, but not checked.
+	3. The reason for this, is that they are all getting stored in arrays
+	of nonunique elements, and the total count of each object is required before
+	any assignation happens.
+	4. So after everything is validated, the nonunique elements will all
+	ultimately be set to their appropriate values.
+	5. When parsing is done, the t_scene struct will contain all the values
+	from the .rt-file.
 */
 
 /*
 	ERROR CODES -- PARSING
 */
-typedef enum e_pars_errors
+enum e_pars_errors
 {
 	ERR_USAGE = 1,
-	ERR_FILE_EXTENSION,
-	ERR_FILE_ACCESS,
-	ERR_MEM_ALLOC,
-	ERR_UNIQUE_ELEM,
-	ERR_INVALID_IDENTIFIER,
-	ERR_FILE_EMPTY,
-	ERR_MISSING_IDENTIFIER,
-	ERR_AMB_FIELDS,
-	ERR_AMB_LIGHT,
-	ERR_AMB_COLOR_FIELDS,
-	ERR_AMB_COLOR_VALUES,
-	ERR_CAM_FIELDS,
-	ERR_CAM_COOR_FIELDS,
-	ERR_CAM_COOR_VALUES,
-	ERR_CAM_VECTOR_FIELDS,
-	ERR_CAM_VECTOR_VALUES,
-	ERR_CAM_FIELD_OF_VIEW,
-	ERR_LIGHT_FIELDS,
-	ERR_LIGHT_COOR_FIELDS,
-	ERR_LIGHT_COOR_VALUES,
-	ERR_LIGHT_BRIGHTNESS,
-	ERR_LIGHT_COLOR_FIELDS,
-	ERR_LIGHT_COLOR_VALUES,
-	ERR_SP_FIELDS,
-	ERR_SP_COOR_FIELDS,
-	ERR_SP_COOR_VALUES,
-	ERR_SP_DM,
-	ERR_SP_COLOR_FIELDS,
-	ERR_SP_COLOR_VALUES,
-	ERR_PL_FIELDS,
-	ERR_PL_COOR_FIELDS,
-	ERR_PL_COOR_VALUES,
-	ERR_PL_VECTOR_FIELDS,
-	ERR_PL_VECTOR_VALUES,
-	ERR_PL_COLOR_FIELDS,
-	ERR_PL_COLOR_VALUES,
-	ERR_CY_FIELDS,
-	ERR_CY_COOR_FIELDS,
-	ERR_CY_COOR_VALUES,
-	ERR_CY_VECTOR_FIELDS,
-	ERR_CY_VECTOR_VALUES,
-	ERR_CY_DM,
-	ERR_CY_HEIGHT,
-	ERR_CY_COLOR_FIELDS,
-	ERR_CY_COLOR_VALUES
-}	t_pars_errors;
+	ERR_FILE_EXTENSION = 2,
+	ERR_FILE_ACCESS = 3,
+	ERR_MEM_ALLOC = 4,
+	ERR_UNIQUE_ELEM = 5,
+	ERR_INVALID_IDENTIFIER = 6,
+	ERR_FILE_EMPTY = 7,
+	ERR_MISSING_IDENTIFIER = 8,
+	ERR_AMB_FIELDS = 9,
+	ERR_AMB_LIGHT = 10,
+	ERR_AMB_COLOR_FIELDS = 11,
+	ERR_AMB_COLOR_VALUES = 12,
+	ERR_CAM_FIELDS = 13,
+	ERR_CAM_COOR_FIELDS = 14,
+	ERR_CAM_COOR_VALUES = 15,
+	ERR_CAM_VECTOR_FIELDS = 16,
+	ERR_CAM_VECTOR_VALUES = 17,
+	ERR_CAM_VECTOR_NORM = 18,
+	ERR_CAM_FIELD_OF_VIEW = 19,
+	ERR_LIGHT_FIELDS = 20,
+	ERR_LIGHT_COOR_FIELDS = 21,
+	ERR_LIGHT_COOR_VALUES = 22,
+	ERR_LIGHT_BRIGHTNESS = 23,
+	ERR_LIGHT_COLOR_FIELDS = 24,
+	ERR_LIGHT_COLOR_VALUES = 25,
+	ERR_SP_FIELDS = 26,
+	ERR_SP_COOR_FIELDS = 27,
+	ERR_SP_COOR_VALUES = 28,
+	ERR_SP_DM = 29,
+	ERR_SP_COLOR_FIELDS = 30,
+	ERR_SP_COLOR_VALUES = 31,
+	ERR_PL_FIELDS = 32,
+	ERR_PL_COOR_FIELDS = 33,
+	ERR_PL_COOR_VALUES = 34,
+	ERR_PL_VECTOR_FIELDS = 35,
+	ERR_PL_VECTOR_VALUES = 36,
+	ERR_PL_VECTOR_NORM = 37,
+	ERR_PL_COLOR_FIELDS = 38,
+	ERR_PL_COLOR_VALUES = 39,
+	ERR_CY_FIELDS = 40,
+	ERR_CY_COOR_FIELDS = 41,
+	ERR_CY_COOR_VALUES = 42,
+	ERR_CY_VECTOR_FIELDS = 43,
+	ERR_CY_VECTOR_VALUES = 44,
+	ERR_CY_VECTOR_NORM = 45,
+	ERR_CY_DM = 46,
+	ERR_CY_HEIGHT = 47,
+	ERR_CY_COLOR_FIELDS = 48,
+	ERR_CY_COLOR_VALUES = 49
+};
 
 /*
 	ERROR MESSAGES -- PARSING
@@ -152,6 +171,8 @@ range of a double.\n"
 values.\n"
 # define ERR_MSG_CAM_VECTOR_VALUES "Error\nCamera orientation vector values \
 must be between -1 and 1.\n"
+# define ERR_MSG_CAM_VECTOR_NORM "Error\nCamera orientation vector is not \
+normalized.\n"
 # define ERR_MSG_CAM_FIELD_OF_VIEW "Error\nCamera's horizontal field of view \
 must be a number between 0 and 180.\n"
 # define ERR_MSG_LIGHT_FIELDS "Error\nLight field must have 3 or 4 fields.\n"
@@ -180,6 +201,8 @@ range of a double.\n"
 values.\n"
 # define ERR_MSG_PL_VECTOR_VALUES "Error\nPlane orientation vector values \
 must be between -1 and 1.\n"
+# define ERR_MSG_PL_VECTOR_NORM "Error\nPlane orientation vector is not \
+normalized.\n"
 # define ERR_MSG_PL_COLOR_FIELDS "Error\nNeed 3 plane color values.\n"
 # define ERR_MSG_PL_COLOR_VALUES "Error\nPlane color values must be between \
 0 and 255.\n"
@@ -191,6 +214,8 @@ range of a double.\n"
 values.\n"
 # define ERR_MSG_CY_VECTOR_VALUES "Error\nCylinder orientation vector values \
 must be between -1 and 1.\n"
+# define ERR_MSG_CY_VECTOR_NORM "Error\nCylinder orientation vector is not \
+normalized.\n"
 # define ERR_MSG_CY_DM "Error\nCylinder diameter must be within the range of a \
 double.\n"
 # define ERR_MSG_CY_HEIGHT "Error\nCylinder height must be within the range \
@@ -315,7 +340,7 @@ void	light_errors(t_pars *parsing);
 void	sphere_errors(t_pars *parsing, int count);
 void	plane_errors(t_pars *parsing, int count);
 void	cylinder_errors(t_pars *parsing, int count);
-int		set_error_and_return(char **arr, int *parsing_error, int error_code);
+int		set_error_and_return(char **arr, int **parsing_error, int error_code);
 
 // PARSING -- INITS
 void	init_parsing(t_pars *parsing);

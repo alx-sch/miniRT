@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:09:59 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/18 17:13:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:52:54 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Initializes all values of the t_amb struct to 0.*/
 void	init_ambience(t_amb *amb)
 {
 	amb->light = 0;
@@ -20,6 +21,7 @@ void	init_ambience(t_amb *amb)
 	amb->color_b = 0;
 }
 
+/*Initializes all values of the t_cam struct to 0.*/
 void	init_camera(t_cam *cam)
 {
 	cam->x = 0;
@@ -31,6 +33,7 @@ void	init_camera(t_cam *cam)
 	cam->field = 0;
 }
 
+/*Initializes all values of the t_light struct to 0.*/
 void	init_light(t_light *light)
 {
 	light->x = 0;

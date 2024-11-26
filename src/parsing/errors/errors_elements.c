@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:00:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/22 15:52:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:48:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Prints out a parsing related error message for a cylinder object.*/
 void	cylinder_errors(t_pars *parsing, int count)
 {
 	if (parsing->error_code == ERR_CY_FIELDS)
@@ -24,6 +25,8 @@ void	cylinder_errors(t_pars *parsing, int count)
 		ft_putstr_fd(ERR_MSG_CY_VECTOR_FIELDS, 2);
 	else if (parsing->error_code == ERR_CY_VECTOR_VALUES)
 		ft_putstr_fd(ERR_MSG_CY_VECTOR_VALUES, 2);
+	else if (parsing->error_code == ERR_CY_VECTOR_NORM)
+		ft_putstr_fd(ERR_MSG_CY_VECTOR_NORM, 2);
 	else if (parsing->error_code == ERR_CY_DM)
 		ft_putstr_fd(ERR_MSG_CY_DM, 2);
 	else if (parsing->error_code == ERR_CY_HEIGHT)
@@ -35,6 +38,7 @@ void	cylinder_errors(t_pars *parsing, int count)
 	printf("Cylinder number: %d\n", count);
 }
 
+/*Prints out a parsing related error message for a plane object.*/
 void	plane_errors(t_pars *parsing, int count)
 {
 	if (parsing->error_code == ERR_PL_FIELDS)
@@ -47,6 +51,8 @@ void	plane_errors(t_pars *parsing, int count)
 		ft_putstr_fd(ERR_MSG_PL_VECTOR_FIELDS, 2);
 	else if (parsing->error_code == ERR_PL_VECTOR_VALUES)
 		ft_putstr_fd(ERR_MSG_PL_VECTOR_VALUES, 2);
+	else if (parsing->error_code == ERR_PL_VECTOR_NORM)
+		ft_putstr_fd(ERR_MSG_PL_VECTOR_NORM, 2);
 	else if (parsing->error_code == ERR_PL_COLOR_FIELDS)
 		ft_putstr_fd(ERR_MSG_PL_COLOR_FIELDS, 2);
 	else if (parsing->error_code == ERR_PL_COLOR_VALUES)
@@ -54,6 +60,7 @@ void	plane_errors(t_pars *parsing, int count)
 	printf("Plane number: %d\n", count);
 }
 
+/*Prints out a parsing related error message for a sphere object.*/
 void	sphere_errors(t_pars *parsing, int count)
 {
 	if (parsing->error_code == ERR_SP_FIELDS)

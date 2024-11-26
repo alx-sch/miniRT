@@ -6,12 +6,19 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 17:14:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:20:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Sets a plane object.
+1. Sets the input coordinates.
+2. Sets the input orientation vector.
+3. Sets the input color values.
+Also keeps track of the count, so that the next time the function is called,
+it will store the input in the next instance of the object.
+Returns 0 upon success, and an error code upon memory allocation error.*/
 int	set_plane(t_scene *scene, t_pl *pl)
 {
 	char	**rgb;

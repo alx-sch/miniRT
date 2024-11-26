@@ -6,12 +6,21 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 18:17:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:22:09 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Parses a sphere object.
+1. Checks if there's a correct amount of fields (4).
+2. Checks if the coordinates are valid.
+3. Checks if the diameter is valid.
+4. Checks if the color values are valid.
+Also keeps track of the count, ultimately storing the total count (how
+many occurences of the object), to be able to allocate memory correctly
+later on.
+Returns 0 upon success, and an error code upon error.*/
 int	parse_sphere(t_scene *scene)
 {
 	char	**rgb;

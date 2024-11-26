@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/22 15:26:50 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:38:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>	// for strerror()
 # include <stdlib.h>	// for malloc(), free(), exit()
 # include <fcntl.h>		// for open()
+# include <math.h> 		// for math functions
 # include "libft.h"
 # include "parsing.h"
 

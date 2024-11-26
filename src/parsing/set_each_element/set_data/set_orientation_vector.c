@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:57:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 16:59:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:18:48 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Sets the orientation vector of an object.*/
 int	set_orientation_vector(char *input_coords, double *x, double *y, double *z)
 {
 	char	**coords;

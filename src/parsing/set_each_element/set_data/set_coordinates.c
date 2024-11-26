@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:52:33 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 16:57:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:18:36 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Sets the coordinate values of an object.*/
 int	set_coordinates(char *input_coords, double *x, double *y, double *z)
 {
 	char	**coords;

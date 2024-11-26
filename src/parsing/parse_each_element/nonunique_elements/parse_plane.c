@@ -6,12 +6,21 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 18:17:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:22:06 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/*Parses a plane object.
+1. Checks if there's a correct amount of fields (4).
+2. Checks if the coordinates are valid.
+3. Checks if the orientation vector is valid.
+4. Checks if the color values are valid.
+Also keeps track of the count, ultimately storing the total count (how
+many occurences of the object), to be able to allocate memory correctly
+later on.
+Returns 0 upon success, and an error code upon error.*/
 int	parse_plane(t_scene *scene)
 {
 	char	**rgb;

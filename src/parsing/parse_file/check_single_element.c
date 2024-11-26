@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:46:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/25 17:16:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:16:28 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 /*
 Checks the current type identifier, and checks if everything is correct,
 depending on the type. If the line is empty, it ignores it.
+For unique identifiers -> ambience, camera and light -- it will both
+be checked and the values will be saved.
+For nonunique identifiers -> cylinder, plane and sphere -- it will only
+be checked and the values will not be saved.
 @param type_id The first field of each element, the type
 identifier, like 'A', 'sp', etc.
 @param scene->pars.error_code A variable in the parsing struct that stores
