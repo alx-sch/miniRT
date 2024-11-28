@@ -34,20 +34,20 @@ P(t) = \text{ray-origin} + t \times \text{ray-dir}
 $$
 
 Where:
-- **P(t):**  
+- **$P(t)$:**  
     The point on the ray at distance \(t\) from the ray's origin.  
     It represents a location along the path defined by the ray, calculated by moving from the ray's starting point in the direction of the ray's direction vector.
 
-- **ray-origin:**  
+- **$\text{ray-origin}$:**  
     The starting point of the ray, represented as a 3D vector.  
     This point marks the location where the ray begins its journey through space (camera).
 
-- **ray-dir:**  
+-  **$\text{ray-dir}$:**  
     The normalized direction vector of the ray.  
     A normalized vector has a magnitude (or length) of 1, ensuring that the scalar \(t\) directly corresponds to the distance traveled along the ray.  
     The direction vector defines the ray's path, indicating the direction in which the ray travels.
 
-- **t:**  
+- **$t$:**  
     A scalar value indicating the distance along the ray.  
     It scales the direction vector, determining how far along the ray the point \( P(t) \) is. When the direction vector is normalized, the value of \(t\) directly represents the magnitude of the distance from the ray’s origin.
 
@@ -56,29 +56,86 @@ Where:
 To find the intersection of a ray with a plane, we use the plane equation:
 
 $$
-\text{plane-normal} \cdot (P(t) - \text{plane-point}) = 0
+(P - P_0) \cdot \text{plane-normal} = 0
 $$
 
 Where:
-- **plane-normal:**  
+- **$P$:**   
+    Is any point on the plane.
+- **$P_0$**  
+    Is a known point on the plane 
+- **$\text{plane-normal}$:**  
     The normal vector of the plane, which is perpendicular to the surface.
-- **plane-point:**  
-    Any point on the plane.
 
 Substitute the ray equation ' $P(t) = \text{ray-origin} + t \times \text{ray-dir}$ ' into the plane equation:
 
 $$
-\text{plane-normal} \cdot (\text{ray-origin} + t \times \text{ray-dir} - \text{plane-point}) = 0
+(\text{ray-origin} + t \times \text{ray-dir} - P_0) \cdot \text{plane-normal}  = 0
 $$
 
-Simplify this expression to find *t*:
+Rearrange terms:
 
 $$
-t = \frac{\text{plane-normal} \cdot (\text{plane-point} - \text{ray-origin})}{\text{plane-normal} \cdot \text{ray-dir}}
+(\text{ray-origin} - P_0) \cdot \text{plane-normal} + t \times (\text{ray-dir} \cdot \text{plane-normal}) = 0
 $$
 
-- *t* will be **positive** if the denominator ' $\text{plane-normal} \cdot \text{ray-dir}$ ' is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
-- *t* will be **negative** if the denominator ' $\text{plane-normal} \cdot \text{ray-dir}$ ' is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
-- If the denominator ' $\text{plane-normal} \cdot \text{ray-dir}$ ' is zero  (t is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+Solve for *t*:
 
-Since we only consider the **field of view (FOV) frustum**, which is in front of the camera, it suffices to check if the denominator ' $\text{plane-normal} \cdot \text{ray-dir} > 0$ ' to determine if the ray intersects the plane **in the scene**.
+$$
+t = \frac{(P_0 - \text{ray-origin}) \cdot \text{plane-normal}}{\text{ray-dir} \cdot \text{plane-normal}}
+$$
+
+- *t* will be **positive** if the denominator ' $\text{ray-dir} \cdot \text{plane-normal}$ ' is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
+- *t* will be **negative** if the denominator ' $\text{ray-dir} \cdot \text{plane-normal}$ ' is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
+- If the denominator ' $\text{ray-dir} \cdot \text{plane-normal}$ ' is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+
+Since we only consider the **field of view (FOV) frustum**, which is in front of the camera, it suffices to check if the denominator ' $\text{ray-dir} \cdot \text{plane-normal} > 0$ ' to determine if the ray intersects the plane **in the scene**.
+
+### Sphere Intersection
+
+To find where a ray intersects a sphere, we start with the general equation of the sphere:
+
+$$
+\left( P(t) - \text{sphere-center} \right) \cdot \left( P(t) - \text{sphere-center} \right) = r^2
+$$
+
+Where:
+- **sphere-center:**  
+    The center of the sphere in 3D space, represented as a vector.
+  
+- **r:**  
+    The radius of the sphere.
+
+- **\( $\cdot$ \):**  
+    The dot product between two vectors.
+
+Now, substitute the ray equation ' $P(t) = \text{ray-origin} + t \times \text{ray-dir}$ ' into the sphere equation:
+
+$$
+\left( \text{ray-origin} + t \times \text{ray-dir} - \text{sphere-center} \right) \cdot \left( \text{ray-origin} + t \times \text{ray-dir} - \text{sphere-center} \right) = r^2
+$$
+
+Expanding this gives you a quadratic equation of the form:
+
+$$
+At^2 + Bt + C = 0
+$$
+
+Where:
+- **A:**  
+    The coefficient of \( t^2 \), which comes from the dot product of the direction vector with itself.
+- **B:**  
+    The coefficient of \( t \), which is derived from the ray’s origin and direction in relation to the sphere’s center.
+- **C:**  
+    The constant term, which is related to the distance between the ray's origin and the sphere’s center.
+
+You can solve this quadratic equation using the quadratic formula:
+
+$$
+t = \frac{-B \pm \sqrt{B^2 - 4AC}}{2A}
+$$
+
+- If the discriminant \( (B^2 - 4AC) \) is **positive**, there are **two intersections**.
+- If the discriminant is **zero**, there is **one intersection** (the ray is tangent to the sphere).
+- If the discriminant is **negative**, there are **no intersections**.
+
