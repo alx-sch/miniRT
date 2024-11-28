@@ -156,8 +156,7 @@ Where:
     - If the discriminant is **zero**, there is **one real solution**, indicating a tangent (one point of intersection).
     - If the discriminant is **negative**, there are **no real solutions**, meaning the ray does not intersect the object.
 
-For a detailed derivation of the quadratic formula, please refer to:  
-[ChiliMath Quadratic Formula Derivation](https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/)
+For a detailed derivation of the quadratic formula, please refer to [ChiliMath Quadratic Formula Derivation](https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/).
 
 
 ### Sphere Intersection
