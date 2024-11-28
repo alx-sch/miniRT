@@ -25,7 +25,7 @@
 
 This section explains the mathematical approach to detecting intersections between rays and various geometric objects.
 
-### Ray Equation
+#### Ray Equation
 
 A ray is represented as:
 
