@@ -95,15 +95,15 @@ Since we only consider the **field of view (FOV) frustum**, which is in front of
 /**
 Function to find the intersection of a ray with a plane.
 
- @param ray_origin 	The starting point of the ray (3D vector).
+ @param ray_origin	The starting point of the ray (3D vector).
  @param ray_dir 	The normalized direction vector of the ray..
  @param plane 		Pointer to the plane structure.
- @param t 			A pointer to store the distance to the intersection point
- 					(if found).
+ @param t 		A pointer to store the distance to the intersection point
+			(if found).
 
- @return 			`1` if an intersection is found (and t is set to the
-					intersection distance);
-					`0` if there is no intersection within the FOV.
+ @return 		`1` if an intersection is found (and t is set to the
+			intersection distance);
+			`0` if there is no intersection within the FOV.
 
  @note
 Due to floating-point precision limitations, directly comparing a vector's length
