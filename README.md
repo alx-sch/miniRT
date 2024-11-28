@@ -29,10 +29,24 @@ This section explains the mathematical approach to detecting intersections betwe
 
 A ray is represented as:
 
-![Ray Equation](http://latex.codecogs.com/png.latex?P(t)%20=%20\text{ray\_origin}%20+%20t%20\times%20\text{ray\_dir})
+$$
+P(t) = \text{ray-origin} + t \times \text{ray-dir}
+$$
 
+Where:
+- **P(t):**  
+    The point on the ray at distance \(t\) from the ray's origin.  
+    It represents a location along the path defined by the ray, calculated by moving from the ray's starting point in the direction of the ray's direction vector.
 
-- **\( P(t) \)**: Point on the ray at distance \( t \)
-- **ray_origin**: Starting point of the ray
-- **ray_dir**: Normalized direction vector of the ray
-- **\( t \)**: Scalar value indicating the distance along the ray
+- **ray-origin:**  
+    The starting point of the ray, represented as a 3D vector.  
+    This point marks the location where the ray begins its journey through space (camera).
+
+- **ray-dir:**  
+    The normalized direction vector of the ray.  
+    A normalized vector has a magnitude (or length) of 1, ensuring that the scalar \(t\) directly corresponds to the distance traveled along the ray.  
+    The direction vector defines the ray's path, indicating the direction in which the ray travels.
+
+- **t:**  
+    A scalar value indicating the distance along the ray.  
+    It scales the direction vector, determining how far along the ray the point \( P(t) \) is. When the direction vector is normalized, the value of \( t \) directly represents the magnitude of the distance from the ray’s origin.
