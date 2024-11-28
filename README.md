@@ -25,7 +25,7 @@
 
 This section explains the mathematical approach to detecting intersections between rays and various geometric objects.
 
-#### Ray Equation
+### Ray Equation
 
 A ray is represented as:
 
@@ -49,4 +49,36 @@ Where:
 
 - **t:**  
     A scalar value indicating the distance along the ray.  
-    It scales the direction vector, determining how far along the ray the point \( P(t) \) is. When the direction vector is normalized, the value of \( t \) directly represents the magnitude of the distance from the ray’s origin.
+    It scales the direction vector, determining how far along the ray the point \( P(t) \) is. When the direction vector is normalized, the value of \(t\) directly represents the magnitude of the distance from the ray’s origin.
+
+### Plane Intersection
+
+To find the intersection of a ray with a plane, we use the plane equation:
+
+$$
+\text{plane-normal} \cdot (P(t) - \text{plane-point}) = 0
+$$
+
+Where:
+- **plane-normal:**  
+    The normal vector of the plane, which is perpendicular to the surface.
+- **plane-point:**  
+    Any point on the plane.
+
+Substitute the ray equation ' $P(t) = \text{ray-origin} + t \times \text{ray-dir}$ ' into the plane equation:
+
+$$
+\text{plane-normal} \cdot (\text{ray-origin} + t \times \text{ray-dir} - \text{plane-point}) = 0
+$$
+
+Simplify this expression to find *t*:
+
+$$
+t = \frac{\text{plane-normal} \cdot (\text{plane-point} - \text{ray-origin})}{\text{plane-normal} \cdot \text{ray-dir}}
+$$
+
+- *t* will be **positive** if the denominator ' $\text{plane-normal} \cdot \text{ray-dir}$ ' is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
+- *t* will be **negative** if the denominator ' $\text{plane-normal} \cdot \text{ray-dir}$ ' is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
+- If the denominator ' $\text{plane-normal} \cdot \text{ray-dir}$ ' is zero  (t is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+
+Since we only consider the **field of view (FOV) frustum**, which is in front of the camera, it suffices to check if the denominator ' $\text{plane-normal} \cdot \text{ray-dir} > 0$ ' to determine if the ray intersects the plane **in the scene**.
