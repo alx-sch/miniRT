@@ -20,3 +20,19 @@
 - The camera has a frustum that defines what it can see (a 3D pyramid-like shape).
 - The near plane is the closest part of the frustum to the camera, and it's like a window through which the camera views the 3D world (until the far plane).
 - The viewport is the 2D version of that window (the near plane) where the 3D world gets projected and displayed on the screen.
+
+## Ray-Object Intersection
+
+This section explains the mathematical approach to detecting intersections between rays and various geometric objects.
+
+### Ray Equation
+
+A ray is represented as:
+
+![Ray Equation](http://latex.codecogs.com/png.latex?P(t)%20=%20\text{ray\_origin}%20+%20t%20\times%20\text{ray\_dir})
+
+
+- **\( P(t) \)**: Point on the ray at distance \( t \)
+- **ray_origin**: Starting point of the ray
+- **ray_dir**: Normalized direction vector of the ray
+- **\( t \)**: Scalar value indicating the distance along the ray
