@@ -51,6 +51,29 @@ Where:
     A scalar value indicating the distance along the ray.  
     It scales the direction vector, determining how far along the ray the point \( P(t) \) is. When the direction vector is normalized, the value of \(t\) directly represents the magnitude of the distance from the ray’s origin.
 
+### Quadratic Equation
+
+Intersection calculations with geometric objects like spheres and cylinders are solved using **quadratic equations**. A quadratic equation has the general form:
+
+$$
+ax^2 + bx + c = 0
+$$
+
+Where:
+- **$a$, $b$, $c$:**    
+  The coefficients of the equation (quadratic, linear, and constant, respectively).
+- **$x$:**    
+  The unknown variable we are solving for (in our case, that's *t*, the distance between the camera and the object).
+
+`ax^2 + bx + c = 0`
+
+Where:
+- xx
+- xx
+- xx
+
+Which solves into  `x = (-b ± sqrt(b^2 - 4ac)) / 2a`.
+
 ### Plane Intersection
 
 To find the intersection of a ray with a plane, we use the plane equation:
