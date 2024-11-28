@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/25 19:09:12 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/28 19:00:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,36 +208,10 @@ Function to find the intersection of a ray with a plane.
 					`0` if there is no intersection within the FOV.
 
  @details
-Ray equation:
-	`P(t) = ray_origin + t * ray_dir`, where:
-- `t` is the scaling factor for the direction vector; if the direction vector
-  is normalized, `t` is the distance from origin to the point on the ray.
-- `P(t)` is the position of a point on the ray at a distance `t` from
-  the origin (3d vector).
-- `ray_origin` is the origin of the ray (3d vector).
-- `ray_dir` is the direction of the ray (3d vector).
+See details of the mathematically derived ray-plane intersection algorithm on
+https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
-The plane equation is given by:
-	`(P - P0) . N = 0`, where:
- - `P` is any point on the plane,
- - `P0` is a known point on the plane (point_in_plane),
- - `N` is the normal vector of the plane (orientation).
-
-Substitute the ray equation into the plane equation:
-	`(ray_origin + t * ray_dir - P0) . N = 0`
-
-Rearranging terms:
-	`(ray_origin - P0) . N + t * (ray_dir . N) = 0`
-
-Solving for `t`:
-	`t = (P0 - ray_origin) . N / (ray_dir . N)`, where
-- `t` is the distance from the ray origin to the intersection point.
-- `ray_dir . N` is the "denominator".
-
-If the 'denom == 0', the ray is parallel to the plane and no intersection
-is found (`t` is undefined / infinite).
-
- @note
+ @note 
 Due to floating-point precision limitations, directly comparing a vector's length
 to zero can be unreliable. The `fabs` function is used to calculate the absolute
 value of the denominator, and a small threshold (1e-6) ensures that we avoid
