@@ -89,7 +89,7 @@ $$
 - *t* will be **negative** if the denominator ' $\text{ray-dir} \cdot \text{plane-normal}$ ' is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
 - If the denominator ' $\text{ray-dir} \cdot \text{plane-normal}$ ' is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
 
-Since we only consider the **field of view (FOV) frustum**, which is in front of the camera, it suffices to check if the denominator ' $\text{ray-dir} \cdot \text{plane-normal} > 0$ ' to determine if the ray intersects the plane **in the scene**.
+In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
 ```C
 /**
