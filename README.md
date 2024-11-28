@@ -144,6 +144,21 @@ Where:
 - **$x$:**    
   The unknown variable we are solving for (in our case, that's *t*, the distance between the camera and the object).
 
+The general solution to a quadratic equation is given by the **quadratic formula**:
+
+$$
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+Where:
+- **$b² - 4ac$** is called the **discriminant**, and it determines the nature of the solutions:
+    - If the discriminant is **positive**, there are **two real solutions**, indicating two intersection points.
+    - If the discriminant is **zero**, there is **one real solution**, indicating a tangent (one point of intersection).
+    - If the discriminant is **negative**, there are **no real solutions**, meaning the ray does not intersect the object.
+
+For a detailed derivation of the quadratic formula, please refer to:  
+[ChiliMath Quadratic Formula Derivation](https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/)
+
 
 ### Sphere Intersection
 
