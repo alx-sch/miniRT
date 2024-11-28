@@ -91,6 +91,45 @@ $$
 
 Since we only consider the **field of view (FOV) frustum**, which is in front of the camera, it suffices to check if the denominator ' $\text{ray-dir} \cdot \text{plane-normal} > 0$ ' to determine if the ray intersects the plane **in the scene**.
 
+```C
+/**
+Function to find the intersection of a ray with a plane.
+
+ @param ray_origin 	The starting point of the ray (3D vector).
+ @param ray_dir 	The normalized direction vector of the ray..
+ @param plane 		Pointer to the plane structure.
+ @param t 			A pointer to store the distance to the intersection point
+ 					(if found).
+
+ @return 			`1` if an intersection is found (and t is set to the
+					intersection distance);
+					`0` if there is no intersection within the FOV.
+
+ @note
+Due to floating-point precision limitations, directly comparing a vector's length
+to zero can be unreliable. The `fabs` function is used to calculate the absolute
+value of the denominator, and a small threshold (1e-6) ensures that we avoid
+dividing by extremely small values, preventing inaccuracies or overflow errors.
+Values below this threshold are considered too close to zero to be valid.
+*/
+int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
+		double *t)
+{
+	double	denom;
+	t_vec3	difference;
+
+	denom = vec3_dot(ray_dir, plane->orientation);
+	if (fabs(denom) > 1e-6)
+	{
+		difference = vec3_sub(plane->point_in_plane, ray_origin);
+		*t = vec3_dot(difference, plane->orientation) / denom;
+		if (*t >= 0.0)
+			return (1);
+	}
+	return (0);
+}
+```
+
 ### Sphere Intersection
 
 To find where a ray intersects a sphere, we start with the general equation of the sphere:
