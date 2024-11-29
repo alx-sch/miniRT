@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/25 18:48:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/29 16:14:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,12 @@ t_vec3	vec3_norm(t_vec3 v);
 
 int		color_to_hex(t_color color);
 void	set_pixel_color(t_img *img, int x, int y, int color);
-void	fill_image(t_rt *rt, int color); // TESTING ONLY
-void	draw_colored_pixels(t_rt *rt, int color); // TESTING ONLY
+
+// utils/mlx_utils.c
+
+double	calculate_discriminant(double a, double b, double c);
+double	calculate_entry_distance(double a, double b, double discriminant);
+double	calculate_exit_distance(double a, double b, double discriminant);
 
 void	render_scene(t_rt *rt, int bg_color);
 

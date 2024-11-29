@@ -6,16 +6,16 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:42 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 23:18:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/29 16:23:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-This file contains a functionsfor terminating the program in a controlled manner
-whenever an error occurs (such as invalid user input, failed file opening,
-memory allocation errors, etc.). Before terminating the program, informative
-error messages are printed to stderr, and all dynamically allocated memory
-within the `rt` structure is deallocated.
+This file contains a functions for terminating the program in a controlled
+manner whenever an error occurs (such as invalid user input, failed file opening,
+memory allocation errors, etc.). Before terminating the program, error messages
+are printed to stderr, and all dynamically allocated memory within the `rt`
+structure is deallocated.
 */
 
 #include "main.h"

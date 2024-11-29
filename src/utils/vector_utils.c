@@ -6,9 +6,13 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:35:34 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/25 18:59:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/29 16:24:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+Utility functions for working with 3D vectors.
+*/
 
 #include "main.h"
 
