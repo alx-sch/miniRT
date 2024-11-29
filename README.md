@@ -144,12 +144,28 @@ Where:
 - **$a$, $b$, $c$:**    
   The coefficients of the equation (quadratic, linear, and constant, respectively).
 - **$x$:**    
-  The unknown variable we are solving for (in our case, that's *t*, the distance between the camera and the object).
+  The unknown variable we are solving for.
 
 The general solution to a quadratic equation is given by the **quadratic formula**:
 
 $$
 x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+For a detailed derivation of the quadratic formula, please refer to [ChiliMath Quadratic Formula Derivation](https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/).
+
+#### Quadratic Intersections in Ray Tracing
+
+In context of the miniRT project, calculating intersections with objects like **spheres** or **cylinders** involve solving a quadratic equation of the form
+
+$$
+at^2 + bt + c = 0
+$$
+
+which solves into
+
+$$
+t = \frac{-b \pm \sqrt{t^2 - 4ac}}{2a}
 $$
 
 Where:
@@ -158,7 +174,6 @@ Where:
     - If the discriminant is **zero**, there is **one real solution**, indicating a tangent (one point of intersection).
     - If the discriminant is **negative**, there are **no real solutions**, meaning the ray does not intersect the object.
 
-For a detailed derivation of the quadratic formula, please refer to [ChiliMath Quadratic Formula Derivation](https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/).
 
 
 ### Sphere Intersection
