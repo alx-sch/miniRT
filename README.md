@@ -96,7 +96,7 @@ In the function, we first check if the ray is not parallel to the plane (*t* exi
 Function to find the intersection of a ray with a plane.
 
  @param ray_origin	The starting point of the ray (3D vector).
- @param ray_dir 	The normalized direction vector of the ray..
+ @param ray_dir 	The normalized direction vector of the ray.
  @param plane 		Pointer to the plane structure.
  @param t 		A pointer to store the distance to the intersection point
 			(if found).
