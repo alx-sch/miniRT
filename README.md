@@ -143,7 +143,7 @@ $$
 Where:
 - **$x$:**    
   The unknown variable we are solving for.
-- **$a$, $b$, $c$:**
+- **$a$, $b$, $c$:**    
   The known coefficients of the equation (quadratic, linear, and constant, respectively).
 
 The general solution to a quadratic equation is given by the **quadratic formula**:
