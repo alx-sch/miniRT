@@ -226,45 +226,7 @@ $$
 t_2 = \frac{-b + \sqrt{b^2 - 4ac}}{2a}
 $$
 
-```C
-/**
-Calculates the distance to the entry point of a ray with an object using the
-quadratic equation `t1 = (-b - sqrt(b^2 - 4ac)) / 2a`.
-
- @param a 		The coefficient of the quadratic term.
- @param b 		The coefficient of the linear term.
- @param discriminant 	The discriminant of the quadratic equation (`b^2 - 4ac`).
-
- @return 		The smaller root solution (`t1` value) of the
-			quadratic equation.
-*/
-double	calculate_entry_distance(double a, double b, double discriminant)
-{
-	double	t1;
-
-	t1 = (-b - sqrt(discriminant)) / (2.0 * a);
-	return (t1);
-}
-
-/**
-Calculates the distance to the exit point of a ray with an object using the
-quadratic equation `x = (-b + sqrt(b^2 - 4ac)) / 2a`.
-
- @param a 		The coefficient of the quadratic term.
- @param b 		The coefficient of the linear term.
- @param discriminant 	The discriminant of the quadratic equation (`b^2 - 4ac`).
-
- @return 		The larger root solution (`t2` value) of the
-			quadratic equation.
-*/
-double	calculate_exit_distance(double a, double b, double discriminant)
-{
-	double	t2;
-
-	t2 = (-b + sqrt(discriminant)) / (2.0 * a);
-	return (t2);
-}
-```
+If $t_1 < 0$ and $t_2 >0$, this means the ray starts within the object and exits through $t_2$, the valid intersection point **in front of the camera**. $t_1$ is negative, as it's corresponds to the intersection point **behind the camera**, so it's invalid.
 
 ### Sphere Intersection
 
