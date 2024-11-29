@@ -56,7 +56,7 @@ Where:
 To find the intersection of a ray with a plane, we use the plane equation:
 
 $$
-(P - P_0) \cdot \text{plane-normal} = 0
+(P - P_0) \cdot n = 0
 $$
 
 Where:
@@ -64,25 +64,25 @@ Where:
     Is any point on the plane.
 - **$P_0$**  
     Is a known point on the plane 
-- **$\text{plane-normal}$:**  
+- **$n$:**  
     The normal vector of the plane, which is perpendicular to the surface.
 
 Substitute the ray equation ' $P(t) = \text{ray-origin} + t \times \text{ray-dir}$ ' into the plane equation:
 
 $$
-(\text{ray-origin} + t \times \text{ray-dir} - P_0) \cdot \text{plane-normal}  = 0
+(\text{ray-origin} + t \times \text{ray-dir} - P_0) \cdot n = 0
 $$
 
 Rearrange terms:
 
 $$
-(\text{ray-origin} - P_0) \cdot \text{plane-normal} + t \times (\text{ray-dir} \cdot \text{plane-normal}) = 0
+(\text{ray-origin} - P_0) \cdot n + t \times (\text{ray-dir} \cdot n) = 0
 $$
 
 Solve for *t*:
 
 $$
-t = \frac{(P_0 - \text{ray-origin}) \cdot \text{plane-normal}}{\text{ray-dir} \cdot \text{plane-normal}}
+t = \frac{(P_0 - \text{ray-origin}) \cdot n}{\text{ray-dir} \cdot n}
 $$
 
 - *t* will be **positive** if the denominator ' $\text{ray-dir} \cdot \text{plane-normal}$ ' is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
