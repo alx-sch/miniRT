@@ -226,7 +226,7 @@ $$
 t_2 = \frac{-b + \sqrt{b^2 - 4ac}}{2a}
 $$
 
-If $t_1 < 0$ and $t_2 >0$, the ray starts **within** the object, and the **valid intersection point** is $t_2$ (the exit point), which is **in front of the camera**. $t_1$ is negative, corresponding to an intersection **behind the camera**, making it invalid.
+If $t_1 < 0$ and $t_2 >0$, the ray starts **within** the object, and the valid intersection point is $t_2$ (the exit point), which is **in front of the camera**. $t_1$ is negative, corresponding to an intersection **behind the camera**, making it invalid.
 
 ### Sphere Intersection
 
