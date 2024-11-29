@@ -188,6 +188,43 @@ The term under the root is called the discrimant ( $Δ = b^2 - 4ac$ ), which det
 3. **Δ < 0**: No real solutions:
    - The ray does **not intersect** the object.
 
+```C
+/**
+Calculates the discriminant of a quadratic equation `ax^2 + bx + c = 0`, which
+solves into `x = (-b ± sqrt(b^2 - 4ac)) / 2a`.
+
+The discriminant `D = b^2 - 4ac` tells us:
+- if `D > 0`, there are two real roots (the ray intersects the object at two
+  points).
+- if `D = 0`, there is one real root (the ray is tangent to the object, touching
+  it at one point).
+- if `D < 0`, there are no real roots (the ray does not intersect the object).
+
+ @param a 	The coefficient of the quadratic term in quadratic equation.
+ @param b 	The coefficient of the linear term in quadratic equation.
+ @param c 	The constant term in quadratic equation.
+
+ @return 	The discriminant of the quadratic equation.
+*/
+double	calculate_discriminant(double a, double b, double c)
+{
+	double	discriminant;
+
+	discriminant = (b * b) - (4.0 * a * c);
+	return (discriminant);
+}
+```
+
+#### Special case: Camera Inside the Object
+
+$t_1$ and $t_2$, corresponding to the enter and exit point, are solved like this:
+
+$$
+t_1 = \frac{-b - \sqrt{b^2 - 4ac}}{2a}
+$$
+$$
+t_2 = \frac{-b + \sqrt{b^2 - 4ac}}{2a}
+$$
 
 
 ### Sphere Intersection
