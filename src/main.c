@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/28 16:12:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/29 10:43:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,9 @@ void	create_simple_scene(t_rt *rt)
     obj_data->pl.point_in_plane.x = 0.0;
     obj_data->pl.point_in_plane.y = 0.0;  // Positioned below the spheres
     obj_data->pl.point_in_plane.z = 0.0;  // Parallel to XZ plane
-    obj_data->pl.orientation.x = 0.0;
-    obj_data->pl.orientation.y = 1.0;  // Normal facing upwards
-    obj_data->pl.orientation.z = 0.0;
+    obj_data->pl.normal.x = 0.0;
+    obj_data->pl.normal.y = 1.0;  // Normal facing upwards
+    obj_data->pl.normal.z = 0.0;
     obj_data->pl.color.r = 200;  // Light grey plane
     obj_data->pl.color.g = 200;
     obj_data->pl.color.b = 200;

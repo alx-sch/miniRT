@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/28 19:00:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/29 10:58:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,12 +211,11 @@ Function to find the intersection of a ray with a plane.
 See details of the mathematically derived ray-plane intersection algorithm on
 https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
- @note 
-Due to floating-point precision limitations, directly comparing a vector's length
-to zero can be unreliable. The `fabs` function is used to calculate the absolute
-value of the denominator, and a small threshold (1e-6) ensures that we avoid
-dividing by extremely small values, preventing inaccuracies or overflow errors.
-Values below this threshold are considered too close to zero to be valid.
+ @note
+Due to floating-point precision limitations, directly comparing a dot product to zero
+can be unreliable. A small threshold (1e-6) is used to determine if the ray is parallel
+to the plane. Values below this threshold are considered too close to zero, indicating
+parallelism or preventing division by very small numbers, which could lead to inaccuracies.
 */
 int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
 		double *t)
@@ -224,11 +223,11 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
 	double	denom;
 	t_vec3	difference;
 
-	denom = vec3_dot(ray_dir, plane->orientation);
+	denom = vec3_dot(ray_dir, plane->normal);
 	if (fabs(denom) > 1e-6)
 	{
 		difference = vec3_sub(plane->point_in_plane, ray_origin);
-		*t = vec3_dot(difference, plane->orientation) / denom;
+		*t = vec3_dot(difference, plane->normal) / denom;
 		if (*t >= 0.0)
 			return (1);
 	}

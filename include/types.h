@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 23:14:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/11/29 10:43:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,15 @@ typedef enum e_object_type
 Structure representing a plane in 3D space:
  - t_object `object_type`:	The object type (always `PLANE`).
  - t_vec3 `point_in_plane`:	A point that lies on the plane.
- - t_vec3 `orientation`:	A normalized vector representing the plane's normal.
+ - t_vec3 `normal`:			A normalized vector representing the plane's normal,
+							which is perpendicular to the plane's surface.
  - t_color `color`:			The color of the plane.
  */
 typedef struct s_plane
 {
 	t_obj_type	object_type;
 	t_vec3		point_in_plane;
-	t_vec3		orientation;
+	t_vec3		normal;
 	t_color		color;
 }	t_plane;
 
