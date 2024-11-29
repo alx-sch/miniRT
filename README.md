@@ -170,7 +170,7 @@ $$
 
 Where:
 - **$t$:**    
-  The unknown variable representing the **distance from the ray's origin to the intersection points.
+  The unknown variable representing the **distance from the ray's origin** to the intersection points.
 - **$a$, $b$, $c$:**    
   Coefficients determined by the ray and object properties (e.g., direction vectors, centers, and radius).
 
