@@ -134,17 +134,17 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
 
 ### Quadratic Equation
 
-Intersection calculations with geometric objects like spheres and cylinders are solved using **quadratic equations**. A quadratic equation has the general form:
+Intersection calculations with geometric objects like spheres and cylinders can be solved using **quadratic equations**. A quadratic equation has the general form:
 
 $$
 ax^2 + bx + c = 0
 $$
 
 Where:
-- **$a$, $b$, $c$:**    
-  The coefficients of the equation (quadratic, linear, and constant, respectively).
 - **$x$:**    
   The unknown variable we are solving for.
+- **$a$, $b$, $c$:**    
+  Coefficients determined by the ray and object properties (e.g., direction vectors, centers, and radius).
 
 The general solution to a quadratic equation is given by the **quadratic formula**:
 
@@ -154,7 +154,7 @@ $$
 
 For a detailed derivation of the quadratic formula, please refer to [ChiliMath Quadratic Formula Derivation](https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/).
 
-#### Quadratic Intersections in Ray Tracing
+### Quadratic Intersections in Ray Tracing
 
 In context of the miniRT project, calculating intersections with objects like **spheres** or **cylinders** involve solving a quadratic equation of the form
 
@@ -169,10 +169,24 @@ t = \frac{-b \pm \sqrt{t^2 - 4ac}}{2a}
 $$
 
 Where:
-- **$b² - 4ac$** is called the **discriminant**, and it determines the nature of the solutions:
-    - If the discriminant is **positive**, there are **two real solutions**, indicating two intersection points.
-    - If the discriminant is **zero**, there is **one real solution**, indicating a tangent (one point of intersection).
-    - If the discriminant is **negative**, there are **no real solutions**, meaning the ray does not intersect the object.
+- **$t$:**    
+  The unknown variable representing the **distance from the ray's origin to the intersection points.
+- **$a$, $b$, $c$:**    
+  The coefficients of the equation (quadratic, linear, and constant, respectively).
+
+#### Role of the Discriminant (Δ):    
+
+The term under the root is called the discrimant ( $Δ = b² - 4ac$ ), which determines the nature of the solutions:
+
+1. **Δ > 0**: Two distinct real solutions ($t_1$ and $t_2$):
+   - The ray intersects the object at **two points**.
+   - These points correspond to **entering** and **exiting** the object.
+
+2. **Δ = 0**: One real solution ($t_1 = t_2$):
+   - The ray is **tangent** to the object, touching it at a **single point**.
+
+3. **Δ < 0**: No real solutions:
+   - The ray does **not intersect** the object.
 
 
 
