@@ -106,10 +106,11 @@ Function to find the intersection of a ray with a plane.
 			`0` if there is no intersection within the FOV.
 
  @note
-Due to floating-point precision limitations, directly comparing a dot product to zero 
-can be unreliable. A small threshold (1e-6) is used to determine if the ray is parallel 
-to the plane. Values below this threshold are considered too close to zero, indicating 
-parallelism or preventing division by very small numbers, which could lead to inaccuracies.
+Due to floating-point precision limitations, directly comparing a dot product
+to zero can be unreliable. A small threshold (1e-6) is used to determine if the
+ray is parallel to the plane. Values below this threshold are considered too
+close to zero, indicating parallelism or preventing division by very small
+numbers, which could lead to inaccuracies.
 */
 */
 int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
