@@ -101,9 +101,10 @@ Function to find the intersection of a ray with a plane.
  @param t 		A pointer to store the distance to the intersection point
 			(if found).
 
- @return 		`1` if an intersection is found (and t is set to the
-			intersection distance);
-			`0` if there is no intersection within the FOV.
+ @return 		`1` if an intersection is found in the FOV (and `t` is set
+			to the intersection distance);
+			`0` if there is no intersection within the FOV (ray is
+			parallel to the plane or intersection is behind the camera).
 
  @note
 Due to floating-point precision limitations, directly comparing a dot product
