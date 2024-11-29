@@ -217,7 +217,7 @@ double	calculate_discriminant(double a, double b, double c)
 
 #### Special case: Camera Inside the Object
 
-$t_1$ and $t_2$, corresponding to the enter and exit point, are solved like this:
+The intersection distances $t_1$ (entry) and $t_2$ (exit) are calculates as follows:   
 
 $$
 t_1 = \frac{-b - \sqrt{b^2 - 4ac}}{2a}
