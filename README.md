@@ -143,8 +143,8 @@ $$
 Where:
 - **$x$:**    
   The unknown variable we are solving for.
-- **$a$, $b$, $c$:**    
-  Coefficients determined by the ray and object properties (e.g., direction vectors, centers, and radius).
+- **$a$, $b$, $c$:**
+  The known coefficients of the equation (quadratic, linear, and constant, respectively).
 
 The general solution to a quadratic equation is given by the **quadratic formula**:
 
@@ -172,7 +172,7 @@ Where:
 - **$t$:**    
   The unknown variable representing the **distance from the ray's origin to the intersection points.
 - **$a$, $b$, $c$:**    
-  The coefficients of the equation (quadratic, linear, and constant, respectively).
+  Coefficients determined by the ray and object properties (e.g., direction vectors, centers, and radius).
 
 #### Role of the Discriminant (Δ):    
 
