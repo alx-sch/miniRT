@@ -106,11 +106,11 @@ Function to find the intersection of a ray with a plane.
 			`0` if there is no intersection within the FOV.
 
  @note
-Due to floating-point precision limitations, directly comparing a vector's length
-to zero can be unreliable. The `fabs` function is used to calculate the absolute
-value of the denominator, and a small threshold (1e-6) ensures that we avoid
-dividing by extremely small values, preventing inaccuracies or overflow errors.
-Values below this threshold are considered too close to zero to be valid.
+Due to floating-point precision limitations, directly comparing a dot product to zero 
+can be unreliable. A small threshold (1e-6) is used to determine if the ray is parallel 
+to the plane. Values below this threshold are considered too close to zero, indicating 
+parallelism or preventing division by very small numbers, which could lead to inaccuracies.
+*/
 */
 int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
 		double *t)
