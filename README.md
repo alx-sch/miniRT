@@ -118,11 +118,11 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
 	double	denom;
 	t_vec3	difference;
 
-	denom = vec3_dot(ray_dir, plane->orientation);
+	denom = vec3_dot(ray_dir, plane->normal);
 	if (fabs(denom) > 1e-6)
 	{
 		difference = vec3_sub(plane->point_in_plane, ray_origin);
-		*t = vec3_dot(difference, plane->orientation) / denom;
+		*t = vec3_dot(difference, plane->normal) / denom;
 		if (*t >= 0.0)
 			return (1);
 	}
