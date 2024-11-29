@@ -165,7 +165,7 @@ $$
 which solves into
 
 $$
-t = \frac{-b \pm \sqrt{t^2 - 4ac}}{2a}
+t = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 $$
 
 Where:
@@ -176,7 +176,7 @@ Where:
 
 #### Role of the Discriminant (Δ):    
 
-The term under the root is called the discrimant ( $Δ = b_2 - 4ac$ ), which determines the nature of the solutions:
+The term under the root is called the discrimant ( $Δ = b^2 - 4ac$ ), which determines the nature of the solutions:
 
 1. **Δ > 0**: Two distinct real solutions ($t_1$ and $t_2$):
    - The ray intersects the object at **two points**.
