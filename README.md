@@ -30,7 +30,7 @@ This section explains the mathematical approach to detecting intersections betwe
 A ray is represented as:
 
 $$
-\vec{P}(t) = \vec{O} + t \times \vec{D}
+\vec{P}(t) = \vec{O} + t \vec{D}
 $$
 
 Where:
@@ -66,16 +66,16 @@ Where:
 - **$n$:**  
     The normal vector of the plane, which is perpendicular to the surface.
 
-Substitute the ray equation ' $P(t) = \vec{O} + t \times \vec{D}$ ' into the plane equation:
+Substitute the ray equation ' $P(t) = \vec{O} + t \vec{D}$ ' into the plane equation:
 
 $$
-(\vec{O} + t \times \vec{D} - \vec{P_0}) \cdot n = 0
+(\vec{O} + t \vec{D} - \vec{P_0}) \cdot n = 0
 $$
 
 Rearrange terms:
 
 $$
-(\vec{O} - \vec{P_0}) \cdot n + t \times (\vec{D} \cdot n) = 0
+(\vec{O} - \vec{P_0}) \cdot n + t (\vec{D} \cdot n) = 0
 $$
 
 Solve for *t*:
@@ -245,10 +245,20 @@ Where:
 - **$r$:**  
     The radius of the sphere.
 
-Now, substitute the ray equation ' $\vec{P}(t) = \vec{O} + t \times \vec{D}$ ' into the sphere equation:
+Now, substitute the ray equation ' $\vec{P}(t) = \vec{O} + t \vec{D}$ ' into the sphere equation:
 
 $$
-\left(\vec{O} + t \times \vec{D} - \vec{C} \right) \cdot \left( \vec{O} + t \times \vec{D} - \vec{C} \right) = r^2
+\left(\vec{O} + t \vec{D} - \vec{C} \right) \cdot \left( \vec{O} + t \vec{D} - \vec{C} \right) = r^2
 $$
 
-xxxx
+Let $\vec{OC} = \vec{O} - \vec{C}$, the vector from the sphere center to the ray origin. The equation becomes:
+
+$$
+\left(\vec{OC} + t \vec{D} \right) \cdot \left( \vec{OC} + t \vec{D} \right) = r^2
+$$
+
+Expand the dot product:
+
+$$
+\left( \vec{OC} \cdot \vec{OC} \right) + 2t \left( \vec{OC} \cdot \vec{D} \right) + t^2 \left( \vec{D} \cdot \vec{D} \right) = r^2
+$$
