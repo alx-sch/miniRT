@@ -269,7 +269,7 @@ $$
 t^2 +  2t \left( \vec{OC} \cdot \vec{D} \right) + \left( \vec{OC} \cdot \vec{OC} \right) - r^2 = 0
 $$
 
-As explained above, this solves into:
+As explained [above](https://github.com/Busedame/miniRT/blob/main/README.md#quadratic-intersections-in-ray-tracing), this solves into:
 
 $$
 t = \frac{-b \pm \sqrt{b^2 - 4c}}{2}
