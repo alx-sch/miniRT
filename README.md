@@ -281,7 +281,7 @@ Where the coefficients are:
 - **$b = 2(\vec{OC} \cdot \vec{D}$)**
 - **$c = \left( \vec{OC} \cdot \vec{OC} \right) - r^2$**
 
-The following function first checks if there are any real solutions for $t$ (is the discriminate > 0?).
+The following function first checks if there are any real solutions for $t$ (discriminate >= 0).
 If so, the intersection distances are calculated.
 ```C
 /**
