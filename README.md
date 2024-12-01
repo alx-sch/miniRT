@@ -246,36 +246,10 @@ Where:
 - **r:**  
     The radius of the sphere.
 
-- **\( $\cdot$ \):**  
-    The dot product between two vectors.
-
 Now, substitute the ray equation ' $P(t) = \text{ray-origin} + t \times \text{ray-dir}$ ' into the sphere equation:
 
 $$
 \left( \text{ray-origin} + t \times \text{ray-dir} - \text{sphere-center} \right) \cdot \left( \text{ray-origin} + t \times \text{ray-dir} - \text{sphere-center} \right) = r^2
 $$
 
-Expanding this gives you a quadratic equation of the form:
-
-$$
-At^2 + Bt + C = 0
-$$
-
-Where:
-- **A:**  
-    The coefficient of \( t^2 \), which comes from the dot product of the direction vector with itself.
-- **B:**  
-    The coefficient of \( t \), which is derived from the ray’s origin and direction in relation to the sphere’s center.
-- **C:**  
-    The constant term, which is related to the distance between the ray's origin and the sphere’s center.
-
-You can solve this quadratic equation using the quadratic formula:
-
-$$
-t = \frac{-B \pm \sqrt{B^2 - 4AC}}{2A}
-$$
-
-- If the discriminant \( (B^2 - 4AC) \) is **positive**, there are **two intersections**.
-- If the discriminant is **zero**, there is **one intersection** (the ray is tangent to the sphere).
-- If the discriminant is **negative**, there are **no intersections**.
-
+xxxx
