@@ -262,3 +262,69 @@ Expand the dot product:
 $$
 \left( \vec{OC} \cdot \vec{OC} \right) + 2t \left( \vec{OC} \cdot \vec{D} \right) + t^2 \left( \vec{D} \cdot \vec{D} \right) = r^2
 $$
+
+Since $\vec{D}$ is normalized ($\|\|\vec{D}\|\| =  \vec{D} \cdot \vec{D} = 1$), the equation simplifies into an quadratic equation: 
+
+$$
+t^2 +  2t \left( \vec{OC} \cdot \vec{D} \right) + \left( \vec{OC} \cdot \vec{OC} \right) - r^2 = 0
+$$
+
+As explained above, this solves into:
+
+$$
+t = \frac{-b \pm \sqrt{b^2 - 4c}}{2}
+$$
+
+Where the coefficients are:
+
+- **$a = 1$**
+- **$b = 2(\vec{OC} \cdot \vec{D}$)**
+- **$c = \left( \vec{OC} \cdot \vec{OC} \right) - r^2$**
+
+The following function first checks if there are any real solutions for $t$ (is the discriminate > 0?).
+If so, the intersection distances are calculated.
+```C
+/**
+Function to find the intersection of a ray with a sphere.
+
+ @param ray_origin 	The starting point of the ray (3D vector).
+ @param ray_dir 	The direction vector of the ray (assumed to be normalized).
+ @param sphere 		Pointer to the sphere structure (contains center and radius).
+ @param t 			Pointer to store the distance to the first intersection
+					point (if found); could be the enter or exit point (if the
+					ray is inside the sphere).
+
+ @return 			`1` if an intersection is found (and t is set to the
+					intersection distance);
+					`0` if there is no intersection.
+
+ @note 				`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
+					vector is normalized.
+*/
+int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
+		double	*t)
+{
+	t_vec3	oc;
+	double	b;
+	double	c;
+	double	discriminant;
+
+	oc = vec3_sub(ray_origin, sphere->center);
+	b = 2.0 * vec3_dot(oc, ray_dir);
+	c = vec3_dot(oc, oc) - (sphere->radius * sphere->radius);
+	discriminant = calculate_discriminant(1.0, b, c);
+	if (discriminant >= 0.0)
+	{
+		*t = calculate_entry_distance(1.0, b, discriminant);
+		if (*t >= 0.0)
+			return (1);
+		*t = calculate_exit_distance(1.0, b, discriminant);
+		if (*t >= 0.0)
+			return (1);
+	}
+	return (0);
+}
+```
+
+
+
