@@ -30,22 +30,21 @@ This section explains the mathematical approach to detecting intersections betwe
 A ray is represented as:
 
 $$
-P(t) = \text{ray-origin} + t \times \text{ray-dir}
+\vec{P}(t) = \vec{O} + t \times \vec{D}
 $$
 
 Where:
-- **$P(t)$:**  
+- **$\vec{P}(t)$:**  
     The point on the ray at distance \(t\) from the ray's origin.  
     It represents a location along the path defined by the ray, calculated by moving from the ray's starting point in the direction of the ray's direction vector.
 
-- **$\text{ray-origin}$:**  
-    The starting point of the ray, represented as a 3D vector.  
+- **$\vec{O}$:**  
+    The ray's origin, represented as a 3D vector.  
     This point marks the location where the ray begins its journey through space (camera).
 
--  **$\text{ray-dir}$:**  
+-  **$\vec{D}$:**  
     The normalized direction vector of the ray.  
     A normalized vector has a magnitude (or length) of 1, ensuring that the scalar \(t\) directly corresponds to the distance traveled along the ray.  
-    The direction vector defines the ray's path, indicating the direction in which the ray travels.
 
 - **$t$:**  
     A scalar value indicating the distance along the ray.  
@@ -56,38 +55,38 @@ Where:
 To find the intersection of a ray with a plane, we use the plane equation:
 
 $$
-(P - P_0) \cdot n = 0
+(\vec{P} - \vec{P_0}) \cdot n = 0
 $$
 
 Where:
-- **$P$:**   
+- **$\vec{P}$:**   
     Is any point on the plane.
-- **$P_0$**  
+- **$\vec{P_0}$**  
     Is a known point on the plane 
 - **$n$:**  
     The normal vector of the plane, which is perpendicular to the surface.
 
-Substitute the ray equation ' $P(t) = \text{ray-origin} + t \times \text{ray-dir}$ ' into the plane equation:
+Substitute the ray equation ' $P(t) = \vec{O} + t \times \vec{D}$ ' into the plane equation:
 
 $$
-(\text{ray-origin} + t \times \text{ray-dir} - P_0) \cdot n = 0
+(\vec{O} + t \times \vec{D} - \vec{P_0}) \cdot n = 0
 $$
 
 Rearrange terms:
 
 $$
-(\text{ray-origin} - P_0) \cdot n + t \times (\text{ray-dir} \cdot n) = 0
+(\vec{O} - \vec{P_0}) \cdot n + t \times (\vec{D} \cdot n) = 0
 $$
 
 Solve for *t*:
 
 $$
-t = \frac{(P_0 - \text{ray-origin}) \cdot n}{\text{ray-dir} \cdot n}
+t = \frac{(P_0 - \vec{O}) \cdot n}{\vec{D} \cdot n}
 $$
 
-- *t* will be **positive** if the denominator ' $\text{ray-dir} \cdot n$ ' is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
-- *t* will be **negative** if the denominator ' $\text{ray-dir} \cdot n$ ' is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
-- If the denominator ' $\text{ray-dir} \cdot n$ ' is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+- *t* will be **positive** if the denominator ' $\vec{D} \cdot n$ ' is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
+- *t* will be **negative** if the denominator ' $\vec{D} \cdot n$ ' is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
+- If the denominator ' $\vec{D} \cdot n$ ' is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
 
 In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
@@ -233,23 +232,23 @@ If $t_1 < 0$ and $t_2 >0$, the ray starts **within** the object, and the valid i
 To find where a ray intersects a sphere, we start with the general equation of the sphere:
 
 $$
-\|\|  P - \text{sphere-center} \|\|^2= \left( P - \text{sphere-center} \right) \cdot \left( P - \text{sphere-center} \right) = r^2
+\|\| \vec{P} - \vec{C} \|\|^2= \left( P - \vec{C} \right) \cdot \left(\vec{P} - \vec{C} \right) = r^2
 $$
 
 Where:
-- **$P$:**   
+- **$\vec{P}$:**   
     Is any point on the sphere's surface (3D vector).
   
-- **sphere-center:**  
+- **\vec{C}:**  
     The center of the sphere (3D vector).
   
 - **r:**  
     The radius of the sphere.
 
-Now, substitute the ray equation ' $P(t) = \text{ray-origin} + t \times \text{ray-dir}$ ' into the sphere equation:
+Now, substitute the ray equation ' $\vec{P}(t) = \vec{O} + t \times \vec{D}$ ' into the sphere equation:
 
 $$
-\left( \text{ray-origin} + t \times \text{ray-dir} - \text{sphere-center} \right) \cdot \left( \text{ray-origin} + t \times \text{ray-dir} - \text{sphere-center} \right) = r^2
+\left(\vec{O} + t \times \vec{D} - \vec{C} \right) \cdot \left( \vec{O} + t \times \vec{D} - \vec{C} \right) = r^2
 $$
 
 xxxx
