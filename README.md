@@ -233,12 +233,15 @@ If $t_1 < 0$ and $t_2 >0$, the ray starts **within** the object, and the valid i
 To find where a ray intersects a sphere, we start with the general equation of the sphere:
 
 $$
-\left( P(t) - \text{sphere-center} \right) \cdot \left( P(t) - \text{sphere-center} \right) = r^2
+||P - \text{sphere-center||^2= \left( P - \text{sphere-center} \right) \cdot \left( P - \text{sphere-center} \right) = r^2
 $$
 
 Where:
+- **$P$:**   
+    Is any point on the sphere's surface (3D vector).
+  
 - **sphere-center:**  
-    The center of the sphere in 3D space, represented as a vector.
+    The center of the sphere (3D vector).
   
 - **r:**  
     The radius of the sphere.
