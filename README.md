@@ -290,16 +290,16 @@ Function to find the intersection of a ray with a sphere.
  @param ray_origin 	The starting point of the ray (3D vector).
  @param ray_dir 	The direction vector of the ray (assumed to be normalized).
  @param sphere 		Pointer to the sphere structure (contains center and radius).
- @param t 			Pointer to store the distance to the first intersection
-					point (if found); could be the enter or exit point (if the
-					ray is inside the sphere).
+ @param t 		Pointer to store the distance to the first intersection
+			point (if found); could be the enter or exit point (if the
+			ray is inside the sphere).
 
- @return 			`1` if an intersection is found (and t is set to the
-					intersection distance);
-					`0` if there is no intersection.
+ @return 		`1` if an intersection is found (and t is set to the
+			intersection distance);
+			`0` if there is no intersection.
 
- @note 				`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
-					vector is normalized.
+ @note 			`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
+			vector is normalized.
 */
 int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 		double	*t)
