@@ -367,7 +367,7 @@ $$
 z(t) = O_z + tD_z
 $$
 
-Subsituting this into the cylinder equation results in:
+Substituting this into the cylinder equation results in:
 
 $$
 ((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - ((O_x + tD_x, O_y + tD_y, O_z + tD_z) \cdot U)^2 = r^2
@@ -379,31 +379,30 @@ $$
 ((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - (\text{axis-dot-oc} + t(\text{axis-dot-ray}))^2 = r^2
 $$
 
-Expanding each squared term of the first part of the equation gives
+Expanding each squared term of the **first part** of the equation gives
 
 $$
-(O_x + tD_x - C_x)^2 = O^2_x + 2tO_xD_x + t^2D^2_x - 2tC_xD_x + C^2_x
+(O_x + tD_x - C_x)^2 = O^2_x + 2tO_xD_x + t^2D^2_x - 2tC_xD_x − 2O_x​C_x​ + C^2_x
 $$
 $$
-(O_y + tD_y - C_y)^2 = O^2_y + 2tO_yD_y + t^2D^2_y - 2tC_yD_y + C^2_y
+(O_y + tD_y - C_y)^2 = O^2_y + 2tO_yD_y + t^2D^2_y - 2tC_yD_y − 2O_y​C_y + C^2_y
 $$
 $$
-(O_z + tD_z - C_z)^2 = O^2_z + 2tO_zD_z + t^2D^2_z - 2tC_zD_z + C^2_z
+(O_z + tD_z - C_z)^2 = O^2_z + 2tO_zD_z + t^2D^2_z - 2tC_zD_z − 2O_xC_z + C^2_z
 $$
 
-Expanding the squared terms of the second part of the equation gives:
+Expanding the squared terms of the **second part** of the equation gives:
 
 $$
 \text{axis-dot-oc}^2 + 2t(\text{axis-dot-oc} \cdot \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2
 $$
 
-Grouping all this into a quadratic form give:
+Grouping all this into a quadratic form give the following coefficients ($at^2+bt+c=0$):
 
-- $t^2$ term (quadratic term):
-  
-$$
-t^2(D^2_x + D^2_y + D^2_z - \text{axis-dot-ray}^2) = t^2(\vec{D} \cdot \vec{D} - \text{axis-dot-ray}^2) 
-$$
+- $a = D^2_x + D^2_y + D^2_z - \text{axis-dot-ray}^2 = \vec{D} \cdot \vec{D} - \text{axis-dot-ray}^2$
+
+- $b = (O_x - C_x)D_x + (O_y - C_y)D_y + (O_z - C_z)D_z - \text{axis-dot-oc} \times \text{axis-dot-ray} = \vec{OC} \cdot \vec{D} - \text{axis-dot-oc} \times \text{axis-dot-ray}$
+
 
 
 
