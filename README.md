@@ -335,7 +335,7 @@ $$
 
 Where $(x,y,z)$ represents any point on the cylinder’s surface, and $(x,y,z) \cdot \vec{U}$ is the dot product that measures how much of the position vector (from the center of the cylinder) lies along the cylinder's axis.
 
-- If the position vector $(x,y,z)$ is aligned with the axis vector \vec{U}, the dot product is large, indicating the point is far along the axis.
+- If the position vector $(x,y,z)$ is aligned with the axis vector $\vec{U}$, the dot product is large, indicating the point is far along the axis.
 - If the position vector is perpendicular to the axis, the dot product is zero, meaning the point lies in the plane perpendicular to the axis (same cross-section as the center).
 - If the position vector is in the opposite direction of the axis, the dot product is negative, indicating the point is on the opposite side of the axis.
 
