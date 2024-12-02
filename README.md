@@ -325,7 +325,7 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 	return (0);
 }
 ```
-### Cylinder Intersection (Side)
+### Cylinder Intersection
 
 For a cylinder in 3D space, the general equation with a given center at $(C_x, C_y, C_z)$, radius $r$, and a normalized orientation vector $\vec{U}$, the equation for a cylinder is:
 
