@@ -408,8 +408,34 @@ Grouping all this into a quadratic form give the following coefficients ($at^2+b
 The following function calculates the intersection of a ray with a cylinder using the above derivations. 
 
 ```C
+/**
+Function to calculate the coefficients of the quadratic equation for
+the intersection of a ray with a cylinder.
+
+ @param cyl 		Pointer to the cylinder structure.
+ @param ray_dir 	The normalized direction vector of the ray.
+ @param oc 		The vector from the ray origin to the cylinder center.
+
+ @return		None. The function modifies the cylinder's `quadratic`
+			structure to store the calculated coefficients and the
+			discriminante.
+*/
 static void	compute_cylinder_quadratic_coefficients(t_cylinder *cyl,
-				t_vec3 ray_dir, t_vec3 oc);
+			t_vec3 ray_dir, t_vec3 oc)
+{
+	double	axis_dot_ray;
+	double	axis_dot_oc;
+
+	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
+	axis_dot_oc = vec3_dot(oc, cyl->orientation);
+	cyl->quadratic.a = vec3_dot(ray_dir, ray_dir)
+		- pow(axis_dot_ray, 2);
+	cyl->quadratic.b = 2 * (vec3_dot(oc, ray_dir) - axis_dot_oc * axis_dot_ray);
+	cyl->quadratic.c = vec3_dot(oc, oc) - pow(axis_dot_oc, 2)
+		- pow(cyl->radius, 2);
+	cyl->quadratic.discriminant = calculate_discriminant(cyl->quadratic.a,
+			cyl->quadratic.b, cyl->quadratic.c);
+}
 
 /**
 Function to find the intersection of a ray with a cylinder.
@@ -448,35 +474,6 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 	if (*t >= 0.0)
 		return (1);
 	return (0);
-}
-
-/**
-Function to calculate the coefficients of the quadratic equation for
-the intersection of a ray with a cylinder.
-
- @param cyl 		Pointer to the cylinder structure.
- @param ray_dir 	The normalized direction vector of the ray.
- @param oc 		The vector from the ray origin to the cylinder center.
-
- @return		None. The function modifies the cylinder's `quadratic`
-			structure to store the calculated coefficients and the
-			discriminante.
-*/
-static void	compute_cylinder_quadratic_coefficients(t_cylinder *cyl,
-			t_vec3 ray_dir, t_vec3 oc)
-{
-	double	axis_dot_ray;
-	double	axis_dot_oc;
-
-	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
-	axis_dot_oc = vec3_dot(oc, cyl->orientation);
-	cyl->quadratic.a = vec3_dot(ray_dir, ray_dir)
-		- pow(axis_dot_ray, 2);
-	cyl->quadratic.b = 2 * (vec3_dot(oc, ray_dir) - axis_dot_oc * axis_dot_ray);
-	cyl->quadratic.c = vec3_dot(oc, oc) - pow(axis_dot_oc, 2)
-		- pow(cyl->radius, 2);
-	cyl->quadratic.discriminant = calculate_discriminant(cyl->quadratic.a,
-			cyl->quadratic.b, cyl->quadratic.c);
 }
 ```
 Please note that this function calculates the intersection of a ray with an infinite cylinder, ignoring the cylinder's height and end caps. It only detects intersections with the cylinder's lateral surface.
