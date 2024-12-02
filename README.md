@@ -405,3 +405,78 @@ Grouping all this into a quadratic form give the following coefficients ($at^2+b
 
 - $c = (\vec{O} - \vec{C})^2 - \text{axis-dot-oc}^2 - r^2  = \vec{OC} \cdot \vec{OC} - \text{axis-dot-oc}^2 - r^2$
 
+The following function calculates the intersection of a ray with a cylinder using the above derivations. 
+
+```C
+static void	compute_cylinder_quadratic_coefficients(t_cylinder *cyl,
+				t_vec3 ray_dir, t_vec3 oc);
+
+/**
+Function to find the intersection of a ray with a cylinder.
+
+ @param ray_origin 	The starting point of the ray.
+ @param ray_dir 	The direction vector of the ray (assumed to be normalized).
+ @param cylinder 	Pointer to the cylinder structure.
+ @param t 		Pointer to store the distance to the first intersection
+			point (if found); could be the enter or exit point (if the
+			ray starts inside the cylibder).
+
+ @return            	`1` if an intersection is found (and `t` is set to the
+			intersection distance);
+			`0` if there is no intersection.
+
+ @note
+This function does not take into account:
+- The height bounds of the cylinder
+- Intersection with the cylinder's end caps
+*/
+int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
+		t_cylinder *cylinder, double *t)
+{
+	t_vec3	oc;
+
+	oc = vec3_sub(ray_origin, cylinder->center);
+	compute_cylinder_quadratic_coefficients(cylinder, ray_dir, oc);
+	if (cylinder->quadratic.discriminant < 0)
+		return (0);
+	*t = calculate_entry_distance(cylinder->quadratic.a, cylinder->quadratic.b,
+			cylinder->quadratic.discriminant);
+	if (*t >= 0.0)
+		return (1);
+	*t = calculate_exit_distance(cylinder->quadratic.a, cylinder->quadratic.b,
+			cylinder->quadratic.discriminant);
+	if (*t >= 0.0)
+		return (1);
+	return (0);
+}
+
+/**
+Function to calculate the coefficients of the quadratic equation for
+the intersection of a ray with a cylinder.
+
+ @param cyl 		Pointer to the cylinder structure.
+ @param ray_dir 	The normalized direction vector of the ray.
+ @param oc 		The vector from the ray origin to the cylinder center.
+
+ @return		None. The function modifies the cylinder's `quadratic`
+			structure to store the calculated coefficients and the
+			discriminante.
+*/
+static void	compute_cylinder_quadratic_coefficients(t_cylinder *cyl,
+			t_vec3 ray_dir, t_vec3 oc)
+{
+	double	axis_dot_ray;
+	double	axis_dot_oc;
+
+	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
+	axis_dot_oc = vec3_dot(oc, cyl->orientation);
+	cyl->quadratic.a = vec3_dot(ray_dir, ray_dir)
+		- pow(axis_dot_ray, 2);
+	cyl->quadratic.b = 2 * (vec3_dot(oc, ray_dir) - axis_dot_oc * axis_dot_ray);
+	cyl->quadratic.c = vec3_dot(oc, oc) - pow(axis_dot_oc, 2)
+		- pow(cyl->radius, 2);
+	cyl->quadratic.discriminant = calculate_discriminant(cyl->quadratic.a,
+			cyl->quadratic.b, cyl->quadratic.c);
+}
+```
+
