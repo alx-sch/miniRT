@@ -327,6 +327,19 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 ```
 ### Cylinder Intersection (Side)
 
+For a cylinder in 3D space, the general equation with a given center at $(C_x, C_y, C_z)$, radius $r$, and a normalized orientation vector $\vec{U}$, the equation for a cylinder is:
+
+$$    
+((x - C_x)^2 + (z - C_y)^2 + (z - C_z)^2) - ((x, y, z) \cdot \vec{U})^2 = r^2
+$$
+
+Where $(x,y,z)$ represents any point on the cylinder’s surface, and $(x,y,z) \cdot \vec{U}$ is the dot product that measures how much of the position vector (from the center of the cylinder) lies along the cylinder's axis.
+
+- If the position vector $(x,y,z)$ is aligned with the axis vector \vec{U}, the dot product is large, indicating the point is far along the axis.
+- If the position vector is perpendicular to the axis, the dot product is zero, meaning the point lies in the plane perpendicular to the axis (same cross-section as the center).
+- If the position vector is in the opposite direction of the axis, the dot product is negative, indicating the point is on the opposite side of the axis.
+
+
 The cylinder is described as an infinitely long cylinder aligned along the **y-axis**, with its circular cross-section in the $xz$-plane. The general equation for such a cylinder, given its center at $(C_x, C_z)$ in the $xz$-plane and radius $r$, is:
 
 $$    
