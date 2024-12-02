@@ -451,10 +451,9 @@ Function to find the intersection of a ray with a cylinder.
 			intersection distance);
 			`0` if there is no intersection.
 
- @note
-This function does not take into account:
-- The height bounds of the cylinder
-- Intersection with the cylinder's end caps
+ @note 			This function does not take into account:
+			- The height bounds of the cylinder
+			- Intersection with the cylinder's end caps
 */
 int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 		t_cylinder *cylinder, double *t)
