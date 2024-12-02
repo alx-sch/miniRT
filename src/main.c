@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/29 10:43:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/02 20:33:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	create_simple_scene(t_rt *rt)
     obj_data->sp.center.y = 0.0;
     obj_data->sp.center.z = 0.0;
     obj_data->sp.radius = 2.0;  // Radius of the sphere
-    obj_data->sp.color.r = 255;
+    obj_data->sp.color.r = 200;
     obj_data->sp.color.g = 0;
-    obj_data->sp.color.b = 0;  // Red sphere
+    obj_data->sp.color.b = 200;  // Red sphere
 
     // Create a new list node with the sphere data
     obj_node = ft_lstnew(obj_data);
@@ -71,29 +71,33 @@ void	create_simple_scene(t_rt *rt)
 
     ft_lstadd_front(&rt->scene.objs, obj_node);
 
-    // Set up the second sphere object (blue, behind the red one)
+    // Set up the cylinder object (blue, replacing the second sphere)
     obj_data = malloc(sizeof(t_obj_data));
     if (!obj_data)
     {
-        perror("Failed to allocate memory for obj_data");
-        return;
+     perror("Failed to allocate memory for obj_data");
+     return;
     }
 
-    obj_data->sp.object_type = SPHERE;
-    obj_data->sp.center.x = 1.5;
-    obj_data->sp.center.y = 1.5;
-    obj_data->sp.center.z = 1.5;  // Positioned behind the red sphere
-    obj_data->sp.radius = 2.75;  // Radius of the sphere
-    obj_data->sp.color.r = 0;
-    obj_data->sp.color.g = 0;
-    obj_data->sp.color.b = 255;  // Blue sphere
+    obj_data->cy.object_type = CYLINDER;
+    obj_data->cy.center.x = 0.0;  // Shift closer to the camera
+    obj_data->cy.center.y = 1.0;
+    obj_data->cy.center.z = -0.50;
+    obj_data->cy.orientation.x = 0.0;
+    obj_data->cy.orientation.y = 1.0;  // Aligned along Y-axis
+    obj_data->cy.orientation.z = 0.0;
+    obj_data->cy.radius = 1.0;  // Radius of the cylinder
+    obj_data->cy.height = 4.0;  // Height of the cylinder
+    obj_data->cy.color.r = 255;
+    obj_data->cy.color.g = 0;
+    obj_data->cy.color.b = 0;  // Blue cylinder
 
     obj_node = ft_lstnew(obj_data);
     if (!obj_node)
     {
         free(obj_data);  // Clean up if node creation fails
-        perror("Failed to create list node for sphere");
-        return;  // Handle memory allocation failure
+        perror("Failed to create list node for cylinder");
+        return;
     }
 
     ft_lstadd_front(&rt->scene.objs, obj_node);
@@ -153,6 +157,35 @@ void	create_simple_scene(t_rt *rt)
     }
     ft_lstadd_front(&rt->scene.objs, obj_node);
 
+    obj_data = malloc(sizeof(t_obj_data));
+    if (!obj_data)
+    {
+        perror("Failed to allocate memory for obj_data");
+        return;
+    }
+
+    obj_data->cy.object_type = CYLINDER;
+    obj_data->cy.center.x = 0.0;  // Centered in front of the camera
+    obj_data->cy.center.y = 0.0;
+    obj_data->cy.center.z = 0.0;  // Position along Z-axis for better view
+    obj_data->cy.orientation.x = 0.0;
+    obj_data->cy.orientation.y = 0.0;
+    obj_data->cy.orientation.z = 1.0;  // Oriented along Z-axis
+    obj_data->cy.radius = 3.5;  // Large enough for the camera to see through
+    obj_data->cy.height = 3.0;  // Long enough to encompass the FOV
+    obj_data->cy.color.r = 100;
+    obj_data->cy.color.g = 100;
+    obj_data->cy.color.b = 255;  // Light blue cylinder interior
+
+    obj_node = ft_lstnew(obj_data);
+    if (!obj_node)
+    {
+        free(obj_data);
+        perror("Failed to create list node for cylinder");
+        return;
+    }
+    ft_lstadd_front(&rt->scene.objs, obj_node);
+
     printf("Scene created\n");
 }
 
@@ -160,10 +193,9 @@ int	main(void)
 {
 	t_rt	*rt;
 
-	rt = malloc(sizeof(t_rt));
+	rt = ft_calloc(1, sizeof(t_rt));
 	if (!rt)
 		cleanup_error_exit(ERR_MALLOC, NULL);
-	ft_memset(rt, 0, sizeof(t_rt)); // initialize all fields to 0 or NULL
 
 	//check args / .rt file
 	//populate scene info into data struct (parse file)

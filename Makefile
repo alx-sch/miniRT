@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/29 16:17:05 by aschenk          ###   ########.fr        #
+#    Updated: 2024/12/02 20:01:28 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,13 +29,15 @@ SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/initialization.c \
 				$(SRCS_DIR)/event_handling.c \
-				$(SRCS_DIR)/ray.c \
-				$(SRCS_DIR)/ray_intersection.c \
-				$(SRCS_DIR)/utils/pixel_utils.c \
-				$(SRCS_DIR)/utils/vector_utils.c \
-				$(SRCS_DIR)/utils/quadratic_utils.c \
-				$(SRCS_DIR)/utils/error_exit.c \
-				$(SRCS_DIR)/utils/cleanup.c
+				$(SRCS_DIR)/ray_plane_intersection.c \
+				$(SRCS_DIR)/ray_sphere_intersection.c \
+				$(SRCS_DIR)/ray_cylinder_intersection.c \
+				$(SRCS_DIR)/render.c \
+				$(SRCS_DIR)/utils/0_quadratic_utils.c \
+				$(SRCS_DIR)/utils/1_vector_utils.c \
+				$(SRCS_DIR)/utils/2_pixel_utils.c \
+				$(SRCS_DIR)/utils/3_cleanup.c \
+				$(SRCS_DIR)/utils/4_error_exit.c \
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)		# Each o. file has a corresponding c. file

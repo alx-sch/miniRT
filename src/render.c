@@ -1,110 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.c                                              :+:      :+:    :+:   */
+/*   ray_intersection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/29 16:12:06 by aschenk          ###   ########.fr       */
+/*   Created: 2024/11/22 18:30:04 by aschenk           #+#    #+#             */
+/*   Updated: 2024/12/02 15:22:14 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-// IN FILE:
-
-int		ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir,
-			t_sphere *sphere, double *t);
-t_vec3	compute_ray_direction(int x, int y, t_cam cam);
-
-
 /**
-Function to find the intersection of a ray with a sphere.
-
- @param ray_origin 	The starting point of the ray (3D vector).
- @param ray_dir 	The direction vector of the ray (assumed to be normalized).
- @param sphere 		Pointer to the sphere structure (contains center and radius).
- @param t 			Pointer to store the distance to the first intersection
-					point (if found); could be the enter or exit point (if the
-					ray is inside the sphere).
-
- @return 			`1` if an intersection is found (and t is set to the
-					intersection distance);
-					`0` if there is no intersection.
-
- @note 				`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
-					vector is normalized.
+Assuming orientation is a normalized forward vector (e.g., camera facing direction)
+ou could implement your own rotation logic or use a matrix to rotate vec by orientation.
+This is a simplified version using a rotation matrix, depending on your camera's coordinate system.
 */
-int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
-		double	*t)
+void rotate_vector_by_orientation(t_vec3 *vec, t_vec3 orientation)
 {
-	t_vec3	oc;
-	double	b;
-	double	c;
-	double	discriminant;
+    // Assuming 'orientation' is the camera's forward vector (normalized)
+    double pitch = asin(orientation.y);  // Pitch = arcsin(orientation.y)
+    double yaw = atan2(orientation.x, orientation.z);  // Yaw = atan2(x, z)
 
-	oc = vec3_sub(ray_origin, sphere->center);
-	b = 2.0 * vec3_dot(oc, ray_dir);
-	c = vec3_dot(oc, oc) - (sphere->radius * sphere->radius);
-	discriminant = calculate_discriminant(1.0, b, c);
-	if (discriminant >= 0.0)
-	{
-		*t = calculate_entry_distance(1.0, b, discriminant);
-		if (*t >= 0.0)
-			return (1);
-		*t = calculate_exit_distance(1.0, b, discriminant);
-		if (*t >= 0.0)
-			return (1);
-	}
-	return (0);
+    // Rotation matrix components for pitch and yaw
+    double cos_pitch = cos(pitch);
+    double sin_pitch = sin(pitch);
+    double cos_yaw = cos(yaw);
+    double sin_yaw = sin(yaw);
+
+    // Apply the rotation matrix
+    double x_new = vec->x * cos_yaw - vec->z * sin_yaw;
+    double y_new = vec->x * sin_pitch * sin_yaw + vec->y * cos_pitch - vec->z * sin_pitch * cos_yaw;
+    double z_new = vec->x * cos_pitch * sin_yaw + vec->y * sin_pitch * cos_yaw + vec->z * cos_pitch * cos_yaw;
+
+    // Update the original vector with the rotated result
+    vec->x = x_new;
+    vec->y = y_new;
+    vec->z = z_new;
 }
 
-/**
-Function to find the intersection of a ray with a plane.
-
- @param ray_origin 	The starting point of the ray (3D vector).
- @param ray_dir 	The normalized direction vector of the ray.
- @param plane 		Pointer to the plane structure.
- @param t 			A pointer to store the distance to the intersection point
- 					(if found).
-
- @return 			`1` if an intersection is found in the FOV (and `t` is set
- 					to the intersection distance);
-					`0` if there is no intersection within the FOV (ray is
-					parallel to the plane or intersection is behind the camera).
-
- @details
-See details of the mathematically derived ray-plane intersection algorithm on
-https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
-
- @note
-Due to floating-point precision limitations, directly comparing a dot product
-to zero can be unreliable. A small threshold (1e-6) is used to determine if the
-ray is parallel to the plane. Values below this threshold are considered too
-close to zero, indicating parallelism or preventing division by very small
-numbers, which could lead to inaccuracies.
-*/
-int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
-		double *t)
-{
-	double	denom;
-	t_vec3	difference;
-
-	denom = vec3_dot(ray_dir, plane->normal);
-	if (fabs(denom) > 1e-6)
-	{
-		difference = vec3_sub(plane->point_in_plane, ray_origin);
-		*t = vec3_dot(difference, plane->normal) / denom;
-		if (*t >= 0.0)
-			return (1);
-	}
-	return (0);
-}
-
-//############
-//# CYLINDER #
-//############
 
 /**
 Function to compute the ray direction for a given pixel in a camera's view,
@@ -221,5 +156,90 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	ray_dir.x = norm_x;
 	ray_dir.y = norm_y;
 	ray_dir.z = 1.0;
+	rotate_vector_by_orientation(&ray_dir, cam.orientation);
 	return (vec3_norm(ray_dir));
+}
+
+void render_scene(t_rt *rt, int bg_color)
+{
+    int x, y;
+    t_vec3 ray_origin;
+    t_vec3 ray_dir;
+    double t, closest_t;
+    int pixel_color;
+    t_list *current_obj;
+    t_obj_data *obj_data;
+
+    // Loop through each pixel
+    for (y = 0; y < WINDOW_H; y++)
+    {
+        for (x = 0; x < WINDOW_W; x++)
+        {
+            // Compute the direction of the ray for this pixel
+            ray_origin.x = rt->scene.cam.position.x;
+            ray_origin.y = rt->scene.cam.position.y;
+            ray_origin.z = rt->scene.cam.position.z;
+
+            ray_dir = compute_ray_direction(x, y, rt->scene.cam);
+
+            // Initialize hit to false and pixel color to background color
+            pixel_color = bg_color;
+            closest_t = INFINITY;
+
+            // Iterate over all objects in the scene
+            current_obj = rt->scene.objs;
+            while (current_obj != NULL)
+            {
+                obj_data = (t_obj_data *)current_obj->content;
+
+                // Check for intersection with plane
+                if (obj_data->pl.object_type == PLANE)
+                {
+                    if (ray_intersect_plane(ray_origin, ray_dir, &obj_data->pl, &t))
+                    {
+                        // If a hit occurs and it's closer than the previous hit, update the pixel color
+                        if (t < closest_t)
+                        {
+                            closest_t = t;
+                            pixel_color = color_to_hex(obj_data->pl.color);
+                        }
+                    }
+                }
+
+                // Check for intersection with sphere
+                if (obj_data->sp.object_type == SPHERE)
+                {
+                    if (ray_intersect_sphere(ray_origin, ray_dir, &obj_data->sp, &t))
+                    {
+                        // If a hit occurs and it's closer than the previous hit, update the pixel color
+                        if (t < closest_t)
+                        {
+                            closest_t = t;
+                            pixel_color = color_to_hex(obj_data->sp.color);
+                        }
+                    }
+                }
+
+                // Check for intersection with sphere
+                if (obj_data->cy.object_type == CYLINDER)
+                {
+                    if (ray_intersect_cylinder(ray_origin, ray_dir, &obj_data->cy, &t))
+                    {
+                        // If a hit occurs and it's closer than the previous hit, update the pixel color
+                        if (t < closest_t)
+                        {
+                            closest_t = t;
+                            pixel_color = color_to_hex(obj_data->cy.color);
+                        }
+                    }
+                }
+
+                // Move to the next object in the scene
+                current_obj = current_obj->next;
+            }
+
+            // Set pixel color using the set_pixel_color function
+            set_pixel_color(&rt->mlx.img, x, y, pixel_color);
+        }
+    }
 }

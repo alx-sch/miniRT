@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/29 10:43:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/02 19:31:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,21 @@ typedef struct s_sphere
 }	t_sphere;
 
 /**
+Structure representing a quadratic equation in the form `ax^2 + bx + c = 0`.
+- double `a`:				The coefficient of the quadratic term.
+- double `b`:				The coefficient of the linear term.
+- double `c`:				The constant term.
+- double `discriminant`:	The discriminant of the quadratic equation.
+*/
+typedef struct s_quadratic
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+}	t_quadratic;
+
+/**
 Structure representing a cylinder in 3D space:
  - t_object `object_type`:	The object type (always `CYLINDER`).
  - t_vec3 `center`:			The center of the cylinder's base.
@@ -146,6 +161,8 @@ Structure representing a cylinder in 3D space:
  - double `radius`:			The radius of the cylinder.
  - double `height`:			The height of the cylinder.
  - t_color `color`:			The color of the cylinder.
+ - t_quadratic `quadratic`:	Quadratic equation coefficients for ray-cylinder
+ 							intersection.
 */
 typedef struct s_cylinder
 {
@@ -155,6 +172,7 @@ typedef struct s_cylinder
 	double		radius;
 	double		height;
 	t_color		color;
+	t_quadratic	quadratic;
 
 }	t_cylinder;
 

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/29 16:14:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/02 20:26:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int		ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir,
 			t_sphere *sphere, double *t);
 int		ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
 			double *t);
-t_vec3	compute_ray_direction(int x, int y, t_cam cam);
+int		ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
+			t_cylinder *cylinder, double *t);
 
 // utils/cleanup.c
 
@@ -66,11 +67,12 @@ void	cleanup(t_rt **rt_ptr);
 
 void	cleanup_error_exit(char *msg, t_rt *rt);
 
-// utils/vector_utils.c
+// utils/1_vector_utils.c
 
+t_vec3	vec3_add(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_mult(t_vec3 v, double scalar);
 double	vec3_dot(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_scale(t_vec3 v, double scalar);
 t_vec3	vec3_norm(t_vec3 v);
 
 // utils/mlx_utils.c
