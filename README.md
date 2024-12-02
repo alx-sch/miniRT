@@ -175,7 +175,7 @@ Where:
 
 #### Role of the Discriminant (Δ):    
 
-The term under the root is called the discrimant ( $Δ = b^2 - 4ac$ ), which determines the nature of the solutions:
+The term under the root is called the discriminant ( $Δ = b^2 - 4ac$ ), which determines the nature of the solutions:
 
 1. **Δ > 0**: Two distinct real solutions ($t_1$ and $t_2$):
    - The ray intersects the object at **two points**.
@@ -313,15 +313,14 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 	b = 2.0 * vec3_dot(oc, ray_dir);
 	c = vec3_dot(oc, oc) - (sphere->radius * sphere->radius);
 	discriminant = calculate_discriminant(1.0, b, c);
-	if (discriminant >= 0.0)
-	{
-		*t = calculate_entry_distance(1.0, b, discriminant);
-		if (*t >= 0.0)
-			return (1);
-		*t = calculate_exit_distance(1.0, b, discriminant);
-		if (*t >= 0.0)
-			return (1);
-	}
+	if (discriminant < 0.0)
+		return (0);
+	*t = calculate_entry_distance(1.0, b, discriminant);
+	if (*t >= 0.0)
+		return (1);
+	*t = calculate_exit_distance(1.0, b, discriminant);
+	if (*t >= 0.0)
+		return (1);
 	return (0);
 }
 ```
