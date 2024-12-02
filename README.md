@@ -330,30 +330,23 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 For a cylinder with a given center at $(C_x, C_y, C_z)$, radius $r$, and a normalized orientation vector $\vec{U}$, the general equation is:
 
 $$    
-((x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2) - ((x, y, z) \cdot \vec{U})^2 = r^2
+(x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 - ((x, y, z) \cdot \vec{U})^2 = r^2
 $$
 
 Where $(x,y,z)$ represents any point on the cylinder’s surface, and $(x,y,z) \cdot \vec{U}$ is the dot product that measures how much of the position vector (from the center of the cylinder) lies along the cylinder's axis.
 
-- If the position vector $(x,y,z)$ is aligned with the axis vector $\vec{U}$, the dot product is large, indicating the point is far along the axis.
-- If the position vector is perpendicular to the axis, the dot product is zero, meaning the point lies in the plane perpendicular to the axis (same cross-section as the center).
-- If the position vector is in the opposite direction of the axis, the dot product is negative, indicating the point is on the opposite side of the axis.
-
-To simplify, we first translate the cylinder's center to the ray's origin in a new vector $\vec{OC} = \vec{O} - \vec{C}$.
-
-Now for the projection, we compute the dot products of the ray direction and the vector from the ray’s origin to the cylinder center with the cylinder’s orientation vector:
-
-$$    
-\text{axis-dot-ray} = \vec{D} \cdot \vec{U}
-$$
-
-This gives how much of the ray’s direction aligns with the cylinder’s axis. It’s important for determining the ray's motion along the cylinder’s axis.
+This equation is equivalent to:
 
 $$
-\text{axis-dot-oc} = \vec{OC} \cdot \vec{U}
+\|\| \vec{P} |\|^2 - (\vec{P} \cdot \vec{U})^2 = r^2
 $$
 
-This gives how much of the vector from the ray’s origin to the cylinder’s center aligns with the cylinder’s axis. It helps determine the starting position relative to the axis of the cylinder.
+Here
+- $\|\| \vec{P} |\|^2 = (P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2$ is the squared distance of $\vec{P}$ from the center.
+- $(\vec{P} \cdot \vec{U})^2$ removes the squared distance contribution along the axis.
+
+This leaves only the perpendicular distance from the axis, ensuring that any point on the cylinder's surface satisfies the condition of being at a fixed radial distance 
+$r$ from the axis, independent of the cylinder's center.
 
 The parametric form of the [ray equation](https://github.com/Busedame/miniRT/blob/main/README.md#ray-equation) is:
 
@@ -373,7 +366,21 @@ $$
 ((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - ((O_x + tD_x, O_y + tD_y, O_z + tD_z) \cdot U)^2 = r^2
 $$
 
-Using the dot products as defined above gives the following:
+Now for the projection, we compute the dot products of the ray direction and the vector from the ray’s origin to the cylinder center with the cylinder’s orientation vector:
+
+$$    
+\text{axis-dot-ray} = \vec{D} \cdot \vec{U}
+$$
+
+This gives how much of the ray’s direction aligns with the cylinder’s axis. It’s important for determining the ray's motion along the cylinder’s axis.
+
+$$
+\text{axis-dot-oc} = \vec{OC} \cdot \vec{U}
+$$
+
+This gives how much of the vector from the ray’s origin to the cylinder’s center aligns with the cylinder’s axis. It helps determine the starting position relative to the axis of the cylinder.
+
+Using these dot products as substitutions in the ray-cylinder-intersection equation results in:
 
 $$
 ((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - (\text{axis-dot-oc} + t(\text{axis-dot-ray}))^2 = r^2
