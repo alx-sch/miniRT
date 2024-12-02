@@ -475,6 +475,6 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 	return (0);
 }
 ```
-Please note that this function calculates the intersection of a ray with an infinite cylinder, ignoring the cylinder's height and end caps. It only detects intersections with the cylinder's lateral surface.
+Please note that this function calculates the intersection of a ray with an infinite cylinder, not yet considering the cylinder's height and end caps. So far, it only detects intersections with the cylinder's lateral surface.
 
 [...] INCLUDE PICTURE [...]
