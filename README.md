@@ -330,7 +330,7 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 For a cylinder in 3D space, the general equation with a given center at $(C_x, C_y, C_z)$, radius $r$, and a normalized orientation vector $\vec{U}$, the equation for a cylinder is:
 
 $$    
-((x - C_x)^2 + (z - C_y)^2 + (z - C_z)^2) - ((x, y, z) \cdot \vec{U})^2 = r^2
+((x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2) - ((x, y, z) \cdot \vec{U})^2 = r^2
 $$
 
 Where $(x,y,z)$ represents any point on the cylinder’s surface, and $(x,y,z) \cdot \vec{U}$ is the dot product that measures how much of the position vector (from the center of the cylinder) lies along the cylinder's axis.
@@ -339,11 +339,79 @@ Where $(x,y,z)$ represents any point on the cylinder’s surface, and $(x,y,z) \
 - If the position vector is perpendicular to the axis, the dot product is zero, meaning the point lies in the plane perpendicular to the axis (same cross-section as the center).
 - If the position vector is in the opposite direction of the axis, the dot product is negative, indicating the point is on the opposite side of the axis.
 
+To simplify, we first translate the cylinder's center to the ray's origin in a new vector $\vec{OC} = \vec{O} - \vec{C}$.
+
+Now for the projection, we compute the dot products of the ray direction and the vector from the ray’s origin to the cylinder center with the cylinder’s orientation vector:
+
+$$    
+\text{axis-dot-ray} = \vec{D} \cdot \vec{U}
+$$
+
+This gives how much of the ray’s direction aligns with the cylinder’s axis. It’s important for determining the ray's motion along the cylinder’s axis.
+
+$$
+\text{axis-dot-oc} = \vec{OC} \cdot \vec{U}
+$$
+
+This gives how much of the vector from the ray’s origin to the cylinder’s center aligns with the cylinder’s axis. It helps determine the starting position relative to the axis of the cylinder.
+
+The parametric form of the [ray equation](https://github.com/Busedame/miniRT/blob/main/README.md#ray-equation) is:
+
+$$
+x(t) = O_x + tD_x
+$$
+$$
+y(t) = O_y + tD_y
+$$
+$$
+z(t) = O_z + tD_z
+$$
+
+Subsituting this into the cylinder equation results in:
+
+$$
+((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - ((O_x + tD_x, O_y + tD_y, O_z + tD_z) \cdot U)^2 = r^2
+$$
+
+Using the dot products as defined above gives the following:
+
+$$
+((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - (\text{axis-dot-oc} + t(\text{axis-dot-ray}))^2 = r^2
+$$
+
+Expanding each squared term of the first part of the equation gives
+
+$$
+(O_x + tD_x - C_x)^2 = O^2_x + 2tO_xD_x + t^2D^2_x - 2tC_xD_x + C^2_x
+$$
+$$
+(O_y + tD_y - C_y)^2 = O^2_y + 2tO_yD_y + t^2D^2_y - 2tC_yD_y + C^2_y
+$$
+$$
+(O_z + tD_z - C_z)^2 = O^2_z + 2tO_zD_z + t^2D^2_z - 2tC_zD_z + C^2_z
+$$
+
+Expanding the squared terms of the second part of the equation gives:
+
+$$
+\text{axis-dot-oc}^2 + 2t(\text{axis-dot-ray} \cdot \text{axis-dot-oc}) + t^2(\text{axis-dot-ray})^2
+$$
+
+Grouping all this into a quadratic form give:
+
+- $t^2$ term (quadratic term):
+  
+$$
+t^2(D^2_x + D^2_y + D^2_z - \text{axis-dot-ray}^2) = t^2(\vec{D} \cdot \vec{D} - \text{axis-dot-ray}^2) 
+$$
+
+
+
 
 The cylinder is described as an infinitely long cylinder aligned along the **y-axis**, with its circular cross-section in the $xz$-plane. The general equation for such a cylinder, given its center at $(C_x, C_z)$ in the $xz$-plane and radius $r$, is:
 
 $$    
-(x - C_x)^2 + (z - C_z)^2 = r^2
+(\text{axis-dot-ray} + t(\text{axis-dot-oc}))^2
 $$    
 
 For simplicity, let'stranslate the cylinder’s center to the origin in the $xz$-plane. After translation, the cylinder's equation simplifies to:
