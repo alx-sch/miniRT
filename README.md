@@ -394,7 +394,7 @@ $$
 Expanding the squared terms of the second part of the equation gives:
 
 $$
-\text{axis-dot-oc}^2 + 2t(\text{axis-dot-ray} \cdot \text{axis-dot-oc}) + t^2(\text{axis-dot-ray})^2
+\text{axis-dot-oc}^2 + 2t(\text{axis-dot-oc} \cdot \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2
 $$
 
 Grouping all this into a quadratic form give:
