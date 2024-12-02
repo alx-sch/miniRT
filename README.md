@@ -382,13 +382,13 @@ $$
 Expanding each squared term of the **first part** of the equation gives
 
 $$
-(O_x + tD_x - C_x)^2 = O^2_x + 2tO_xD_x + t^2D^2_x - 2tC_xD_x − 2O_x​C_x​ + C^2_x
+(O_x + tD_x - C_x)^2 = O^2_x + 2tO_xD_x + t^2D^2_x - 2tC_xD_x − 2O_xC_x + C^2_x
 $$
 $$
-(O_y + tD_y - C_y)^2 = O^2_y + 2tO_yD_y + t^2D^2_y - 2tC_yD_y − 2O_y​C_y + C^2_y
+(O_y + tD_y - C_y)^2 = O^2_y + 2tO_yD_y + t^2D^2_y - 2tC_yD_y − 2O_yC_y + C^2_y
 $$
 $$
-(O_z + tD_z - C_z)^2 = O^2_z + 2tO_zD_z + t^2D^2_z - 2tC_zD_z − 2O_xC_z + C^2_z
+(O_z + tD_z - C_z)^2 = O^2_z + 2tO_zD_z + t^2D^2_z - 2tC_zD_z − 2O_zC_z + C^2_z
 $$
 
 Expanding the squared terms of the **second part** of the equation gives:
