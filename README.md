@@ -404,7 +404,7 @@ $$
 \text{axis-dot-oc}^2 + 2t(\text{axis-dot-oc} \times \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2
 $$
 
-Grouping all this into a quadratic form give the following coefficients ($at^2+bt+c=0$):
+Grouping all this into a quadratic form ($at^2+bt+c=0$) gives the following coefficients:
 
 - $a = D^2_x + D^2_y + D^2_z - \text{axis-dot-ray}^2 = \vec{D} \cdot \vec{D} - \text{axis-dot-ray}^2$
 
