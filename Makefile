@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/12/02 21:37:47 by aschenk          ###   ########.fr        #
+#    Updated: 2024/12/02 21:39:17 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,10 @@ SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/initialization.c \
 				$(SRCS_DIR)/event_handling.c \
-				$(SRCS_DIR)/ray.c \
-				$(SRCS_DIR)/ray_intersection.c \
+				$(SRCS_DIR)/ray_plane_intersection.c \
+				$(SRCS_DIR)/ray_sphere_intersection.c \
+				$(SRCS_DIR)/ray_cylinder_intersection.c \
+				$(SRCS_DIR)/render.c \
 				$(SRCS_DIR)/utils/0_vector_utils.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \
 				$(SRCS_DIR)/utils/2_pixel_utils.c \
