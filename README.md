@@ -325,7 +325,60 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 	return (0);
 }
 ```
-### Cylinder Intersection
+### Cylinder Intersection (Side)
 
+The cylinder is described as an infinitely long cylinder aligned along the **y-axis**, with its circular cross-section in the $xz$-plane. The general equation for such a cylinder, given its center at $(C_x, C_z)$ in the $xz$-plane and radius $r$, is:
 
+$$    
+(x - C_x)^2 + (z - C_z)^2 = r^2
+$$    
+
+For simplicity, let'stranslate the cylinder’s center to the origin in the $xz$-plane. After translation, the cylinder's equation simplifies to:
+
+$$    
+x^2 + z^2 = r^2
+$$
+
+This makes it easier to solve the intersection with the ray without having to account for the center offsets in the $x$- and $z$-directions.
+
+The $x$- and $z$-coordinates of the ray at a distance $t$ from it's origin are:
+
+$$    
+x(t) = O_x + tD_x
+$$
+$$
+z(t) = O_z + tD_z
+$$
+
+$y(t)$ won't affect the cylinder intersection and is thus not regarded here.
+
+Now, substitute the ray's parametric equations for $x(t)$ and $z(t)$ into the simplified cylinder equation $x^2 + z^2 = r^2$:
+
+$$    
+(O_x + tD_x)^2 + (O_z + tD_z)^2 = r^2
+$$
+
+Expanding the squared terms results in:
+
+$$    
+(O^2_x + 2tO_xD_x + t^2D^2_x) + (O^2_z + 2tO_zD_z + t^2D^2_z) = r^2
+$$
+
+Simplify the terms:
+
+$$    
+O^2_x + O^2_z + t(2O_xD_x + 2O_zD_z) + t^2(D^2_x + D^2_z) = r^2
+$$
+
+And rearrange into the [quadratic equation](https://github.com/Busedame/miniRT/blob/main/README.md#quadratic-intersections-in-ray-tracing):
+
+$$    
+t^2(D^2_x + D^2_z) + t(2O_xD_x + 2O_zD_z) + (O^2_x + O^2_z - r^2) = 0
+$$
+
+Where the quadratic coefficients are: 
+
+- $a = D^2_x + D^2_z$
+- $b = 2O_xD_x + 2O_zD_z$
+- $c = O^2_x + O^2_z - r^2$
 
