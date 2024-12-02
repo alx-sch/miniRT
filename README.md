@@ -408,7 +408,7 @@ Grouping all this into a quadratic form ($at^2+bt+c=0$) gives the following coef
 
 - $a = D^2_x + D^2_y + D^2_z - \text{axis-dot-ray}^2 = \vec{D} \cdot \vec{D} - \text{axis-dot-ray}^2$
 
-- $b = 2((O_x - C_x)D_x + (O_y - C_y)D_y + (O_z - C_z)D_z - \text{axis-dot-oc} \times \text{axis-dot-ray}) = 2(\vec{OC} \cdot \vec{D} - \text{axis-dot-oc} \times \text{axis-dot-ray})$
+- $b = 2( (O_x - C_x)D_x + (O_y - C_y)D_y + (O_z - C_z)D_z - \text{axis-dot-oc} \times \text{axis-dot-ray} ) = 2( \vec{OC} \cdot \vec{D} - \text{axis-dot-oc} \times \text{axis-dot-ray} )$
 
 - $c = (\vec{O} - \vec{C})^2 - \text{axis-dot-oc}^2 - r^2  = \vec{OC} \cdot \vec{OC} - \text{axis-dot-oc}^2 - r^2$
 
