@@ -479,6 +479,6 @@ static void	compute_cylinder_quadratic_coefficients(t_cylinder *cyl,
 			cyl->quadratic.b, cyl->quadratic.c);
 }
 ```
-
 Please note that this function calculates the intersection of a ray with an infinite cylinder, ignoring the cylinder's height and end caps. It only detects intersections with the cylinder's lateral surface.
 
+[...] INCLUDE PICTURE [...]
