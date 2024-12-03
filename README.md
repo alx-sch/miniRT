@@ -509,6 +509,13 @@ $$
 \text{Projection Length} = \vec{V} \cdot \vec{U}
 $$
 
+4. Compare the projection length to the height bounds:      
+   The cylinder's height is split symmetrically around its center. If the projection length satisfies the condition below, then the intersection point is within the height bounds of the cylinder. Otherwise, it is outside the cylinder's finite height.
+
+$$
+-\frac{h}{2} \leq \text{Projection Length} \leq \frac{h}{2}
+$$
+
 ```C
 /**
 Function to check whether a given intersection point on an infinite cylinder
