@@ -487,7 +487,29 @@ Please note that this function calculates the intersection of a ray with an infi
 
 #### Handling the Cylinder's Height
 
-XXX
+To account for the height boundaries of the cylinder, follow these steps:
+
+1. Find the intersection point:    
+   Use the ray equation with the calculated intersection distance $t$:
+   
+$$
+\vec{P}(t) = \vec{O} + t \vec{D}
+$$
+
+2. Compute a vector to the cylinder's center:
+
+$$
+\vec{V} = \vec{P} - \vec{C}
+$$
+
+3. Project this vector onto the cylinder's axis:       
+   Find the component of \vec{V} along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point:
+
+$$
+\text{Projection Length} = \vec{V} \cdot \vec{A}
+$$
+
+where \vec{A} is the normalized orientation vector representing the cylinder's axis.
 
 #### Accounting for End Caps
 
