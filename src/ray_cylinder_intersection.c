@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/02 21:42:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:39:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,17 @@ the intersection of a ray with a cylinder.
 					discriminante.
 */
 static void	compute_cylinder_quadratic_coefficients(t_cylinder *cyl,
-			t_vec3 ray_dir, t_vec3 oc)
+			t_vec3 ray_dir)
 {
 	double	axis_dot_ray;
-	double	axis_dot_oc;
 
 	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
-	axis_dot_oc = vec3_dot(oc, cyl->orientation);
-	cyl->quadratic.a = vec3_dot(ray_dir, ray_dir)
-		- pow(axis_dot_ray, 2);
-	cyl->quadratic.b = 2 * (vec3_dot(oc, ray_dir) - axis_dot_oc * axis_dot_ray);
-	cyl->quadratic.c = vec3_dot(oc, oc) - pow(axis_dot_oc, 2)
-		- pow(cyl->radius, 2);
-	cyl->quadratic.discriminant = calculate_discriminant(cyl->quadratic.a,
-			cyl->quadratic.b, cyl->quadratic.c);
+	cyl->ixd.a = vec3_dot(ray_dir, ray_dir)
+		- (axis_dot_ray * axis_dot_ray);
+	cyl->ixd.b = 2 * (vec3_dot(cyl->ixd.oc, ray_dir)
+			- (cyl->ixd.axis_dot_oc * axis_dot_ray));
+	cyl->ixd.discriminant = calculate_discriminant(cyl->ixd.a, cyl->ixd.b,
+			cyl->ixd.c);
 }
 
 // /**
@@ -92,20 +89,23 @@ static int	check_cylinder_height(t_vec3 ray_origin, t_vec3 ray_dir, double t,
 int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 		t_cylinder *cylinder, double *t)
 {
-	t_vec3	oc;
-
-	oc = vec3_sub(ray_origin, cylinder->center);
-	compute_cylinder_quadratic_coefficients(cylinder, ray_dir, oc);
-	if (cylinder->quadratic.discriminant < 0)
+	compute_cylinder_quadratic_coefficients(cylinder, ray_dir);
+	if (cylinder->ixd.discriminant < 0)
 		return (0);
-	*t = calculate_entry_distance(cylinder->quadratic.a, cylinder->quadratic.b,
-			cylinder->quadratic.discriminant);
+	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b,
+			cylinder->ixd.discriminant);
 	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	{
+		//print_ray_cylinder_intersection(ray_origin, ray_dir, cylinder, *t);
 		return (1);
-	*t = calculate_exit_distance(cylinder->quadratic.a, cylinder->quadratic.b,
-			cylinder->quadratic.discriminant);
+	}
+	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b,
+			cylinder->ixd.discriminant);
 	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	{
+		//print_ray_cylinder_intersection(ray_origin, ray_dir, cylinder, *t);
 		return (1);
+	}
 	return (0);
 }
 

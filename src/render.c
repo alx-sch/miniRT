@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/02 21:40:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 12:58:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void render_scene(t_rt *rt, int bg_color)
                 // Check for intersection with plane
                 if (obj_data->pl.object_type == PLANE)
                 {
-                    if (ray_intersect_plane(ray_origin, ray_dir, &obj_data->pl, &t))
+                    if (ray_intersect_plane(ray_dir, &obj_data->pl, &t))
                     {
                         // If a hit occurs and it's closer than the previous hit, update the pixel color
                         if (t < closest_t)
@@ -213,7 +213,7 @@ void render_scene(t_rt *rt, int bg_color)
                 // Check for intersection with sphere
                 if (obj_data->sp.object_type == SPHERE)
                 {
-                    if (ray_intersect_sphere(ray_origin, ray_dir, &obj_data->sp, &t))
+                    if (ray_intersect_sphere(ray_dir, &obj_data->sp, &t))
                     {
                         // If a hit occurs and it's closer than the previous hit, update the pixel color
                         if (t < closest_t)

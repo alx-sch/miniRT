@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/02 19:31:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:32:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,30 @@ typedef enum e_object_type
 }	t_obj_type;
 
 /**
+Structure storing (precomputed) data for ray-object intersection calculations.
+- double `a`:				Coefficient of the quadratic term.
+- double `b`:				Coefficient of the linear term.
+- double `c`:				Constant term of the quadratic equation.
+- double `discriminant`:	Discriminant used to determine intersection validity.
+- t_vec3 `difference`:		Vector difference between relevant object and
+							ray points (used for plane intersections).
+- t_vec3 `oc`:				Vector from the object's center to the ray origin.
+- double `axis_dot_oc`:		Dot product between the object's axis vector and `oc`,
+							(used in cylinder intersections).
+*/
+typedef struct s_intersection_data
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	t_vec3	difference;
+	t_vec3	oc;
+	double	axis_dot_oc;
+}	t_ixd;
+
+
+/**
 Structure representing a plane in 3D space:
  - t_object `object_type`:	The object type (always `PLANE`).
  - t_vec3 `point_in_plane`:	A point that lies on the plane.
@@ -121,6 +145,7 @@ typedef struct s_plane
 	t_vec3		point_in_plane;
 	t_vec3		normal;
 	t_color		color;
+	t_ixd		ixd;
 }	t_plane;
 
 /**
@@ -136,22 +161,8 @@ typedef struct s_sphere
 	t_vec3		center;
 	double		radius;
 	t_color		color;
+	t_ixd		ixd;
 }	t_sphere;
-
-/**
-Structure representing a quadratic equation in the form `ax^2 + bx + c = 0`.
-- double `a`:				The coefficient of the quadratic term.
-- double `b`:				The coefficient of the linear term.
-- double `c`:				The constant term.
-- double `discriminant`:	The discriminant of the quadratic equation.
-*/
-typedef struct s_quadratic
-{
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
-}	t_quadratic;
 
 /**
 Structure representing a cylinder in 3D space:
@@ -170,10 +181,10 @@ typedef struct s_cylinder
 	t_vec3		center;
 	t_vec3		orientation;
 	double		radius;
+	double		radius_sqrd;
 	double		height;
 	t_color		color;
-	t_quadratic	quadratic;
-
+	t_ixd		ixd;
 }	t_cylinder;
 
 /**

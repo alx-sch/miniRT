@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/02 20:33:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:41:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	create_simple_scene(t_rt *rt)
     obj_data->sp.color.r = 200;
     obj_data->sp.color.g = 0;
     obj_data->sp.color.b = 200;  // Red sphere
+    // Intialize constant values
+    obj_data->sp.ixd.oc = vec3_sub(rt->scene.cam.position, obj_data->sp.center);
+    obj_data->sp.ixd.c = vec3_dot(obj_data->sp.ixd.oc, obj_data->sp.ixd.oc) - (obj_data->sp.radius * obj_data->sp.radius);
 
     // Create a new list node with the sphere data
     obj_node = ft_lstnew(obj_data);
@@ -87,10 +90,18 @@ void	create_simple_scene(t_rt *rt)
     obj_data->cy.orientation.y = 1.0;  // Aligned along Y-axis
     obj_data->cy.orientation.z = 0.0;
     obj_data->cy.radius = 1.0;  // Radius of the cylinder
+    obj_data->cy.radius_sqrd = obj_data->cy.radius * obj_data->cy.radius;
     obj_data->cy.height = 4.0;  // Height of the cylinder
     obj_data->cy.color.r = 255;
     obj_data->cy.color.g = 0;
     obj_data->cy.color.b = 0;  // Blue cylinder
+
+    // Initialize the quadratic coefficients that are constant (not dependent on the ray)
+    obj_data->cy.ixd.oc = vec3_sub(rt->scene.cam.position, obj_data->cy.center);
+    obj_data->cy.ixd.axis_dot_oc = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.orientation);
+    obj_data->cy.ixd.c = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.ixd.oc)
+        - (obj_data->cy.ixd.axis_dot_oc * obj_data->cy.ixd.axis_dot_oc)
+        - obj_data->cy.radius_sqrd;
 
     obj_node = ft_lstnew(obj_data);
     if (!obj_node)
@@ -118,6 +129,9 @@ void	create_simple_scene(t_rt *rt)
     obj_data->sp.color.r = 0;
     obj_data->sp.color.g = 255;
     obj_data->sp.color.b = 0;  // Green sphere
+    // Initialie constant values
+    obj_data->sp.ixd.oc = vec3_sub(rt->scene.cam.position, obj_data->sp.center);
+    obj_data->sp.ixd.c = vec3_dot(obj_data->sp.ixd.oc, obj_data->sp.ixd.oc) - (obj_data->sp.radius * obj_data->sp.radius);
 
     obj_node = ft_lstnew(obj_data);
     if (!obj_node)
@@ -147,6 +161,8 @@ void	create_simple_scene(t_rt *rt)
     obj_data->pl.color.r = 200;  // Light grey plane
     obj_data->pl.color.g = 200;
     obj_data->pl.color.b = 200;
+    // Initalize constant plane values
+    obj_data->pl.ixd.difference = vec3_sub(obj_data->pl.point_in_plane, rt->scene.cam.position);
 
     obj_node = ft_lstnew(obj_data);
     if (!obj_node)
@@ -172,10 +188,18 @@ void	create_simple_scene(t_rt *rt)
     obj_data->cy.orientation.y = 0.0;
     obj_data->cy.orientation.z = 1.0;  // Oriented along Z-axis
     obj_data->cy.radius = 3.5;  // Large enough for the camera to see through
+    obj_data->cy.radius_sqrd = obj_data->cy.radius * obj_data->cy.radius;
     obj_data->cy.height = 3.0;  // Long enough to encompass the FOV
     obj_data->cy.color.r = 100;
     obj_data->cy.color.g = 100;
     obj_data->cy.color.b = 255;  // Light blue cylinder interior
+
+    // Initialize the quadratic coefficients that are constant (not dependent on the ray)
+    obj_data->cy.ixd.oc = vec3_sub(rt->scene.cam.position, obj_data->cy.center);
+    obj_data->cy.ixd.axis_dot_oc = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.orientation);
+    obj_data->cy.ixd.c = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.ixd.oc)
+        - (obj_data->cy.ixd.axis_dot_oc * obj_data->cy.ixd.axis_dot_oc)
+        - obj_data->cy.radius_sqrd;
 
     obj_node = ft_lstnew(obj_data);
     if (!obj_node)

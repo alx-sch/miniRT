@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/02 20:44:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:40:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ TBD
 
 // IN FILE:
 
-int		ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir,
-			t_sphere *sphere, double *t);
+int		ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t);
 
 /**
 Function to find the intersection of a ray with a sphere.
@@ -38,24 +37,17 @@ Function to find the intersection of a ray with a sphere.
  @note 				`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
 					vector is normalized.
 */
-int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
-		double	*t)
+int	ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t)
 {
-	t_vec3	oc;
-	double	b;
-	double	c;
-	double	discriminant;
-
-	oc = vec3_sub(ray_origin, sphere->center);
-	b = 2.0 * vec3_dot(oc, ray_dir);
-	c = vec3_dot(oc, oc) - (sphere->radius * sphere->radius);
-	discriminant = calculate_discriminant(1.0, b, c);
-	if (discriminant < 0.0)
+	sphere->ixd.b = 2.0 * vec3_dot(sphere->ixd.oc, ray_dir);
+	sphere->ixd.discriminant = calculate_discriminant(1.0, sphere->ixd.b,
+			sphere->ixd.c);
+	if (sphere->ixd.discriminant < 0.0)
 		return (0);
-	*t = calculate_entry_distance(1.0, b, discriminant);
+	*t = calculate_entry_distance(1.0, sphere->ixd.b, sphere->ixd.discriminant);
 	if (*t >= 0.0)
 		return (1);
-	*t = calculate_exit_distance(1.0, b, discriminant);
+	*t = calculate_exit_distance(1.0, sphere->ixd.b, sphere->ixd.discriminant);
 	if (*t >= 0.0)
 		return (1);
 	return (0);

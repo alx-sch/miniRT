@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/02 20:01:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:39:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ TBD
 
 // IN FILE:
 
-int		ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
+int		ray_intersect_plane(t_vec3 ray_dir, t_plane *plane,
 			double *t);
 
 /**
@@ -46,17 +46,15 @@ ray is parallel to the plane. Values below this threshold are considered too
 close to zero, indicating parallelism or preventing division by very small
 numbers, which could lead to inaccuracies.
 */
-int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
+int	ray_intersect_plane(t_vec3 ray_dir, t_plane *plane,
 		double *t)
 {
 	double	denom;
-	t_vec3	difference;
 
 	denom = vec3_dot(ray_dir, plane->normal);
 	if (fabs(denom) > 1e-6)
 	{
-		difference = vec3_sub(plane->point_in_plane, ray_origin);
-		*t = vec3_dot(difference, plane->normal) / denom;
+		*t = vec3_dot(plane->ixd.difference, plane->normal) / denom;
 		if (*t >= 0.0)
 			return (1);
 	}
