@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/03 13:39:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 21:33:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ Function to find the intersection of a ray with a plane.
  @return 			`1` if an intersection is found in the FOV (and `t` is set
  					to the intersection distance);
 					`0` if there is no intersection within the FOV (ray is
-					parallel to the plane or intersection is behind the camera).
+					parallel to the plane or intersection behind the camera).
 
  @details
 See details of the mathematically derived ray-plane intersection algorithm on

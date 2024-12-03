@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/03 13:41:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 16:54:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,9 +223,9 @@ int	main(void)
 
 	//check args / .rt file
 	//populate scene info into data struct (parse file)
+    create_simple_scene(rt);
 
 	init_mlx(rt);
-	create_simple_scene(rt);
 
 	render_scene(rt, BLACK); // render a simple scene without shadows, lighting considerations etc.
 

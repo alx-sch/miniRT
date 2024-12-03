@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/03 13:40:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 21:52:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ Function to find the intersection of a ray with a sphere.
 
  @param ray_origin 	The starting point of the ray (3D vector).
  @param ray_dir 	The direction vector of the ray (assumed to be normalized).
- @param sphere 		Pointer to the sphere structure (contains center and radius).
+ @param sphere 		Pointer to the sphere structure.
  @param t 			Pointer to store the distance to the first intersection
-					point (if found); could be the enter or exit point (if the
-					ray starts inside the sphere).
+					point (if found); could be the entry or exit point (if the
+					ray starts inside the object).
 
  @return 			`1` if an intersection is found (and t is set to the
 					intersection distance);
