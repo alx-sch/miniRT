@@ -496,4 +496,5 @@ XXX
 #### Intersection Constants
 
 In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., $\vec{OC}$, the quadratic coefficient $c$, and $\vec{OC} \cdot \vec{U}$). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed during object initialization rather than recalculated for every single ray (or pixel).    
+
 Precomputing these constants reduced my computation time by two-thirds for a simple scene (1x plane, 2x spheres, 2x cylinders). This improvement is especially noticeable when using memory-checking tools such as Valgrind.
