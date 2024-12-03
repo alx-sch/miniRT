@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/03 13:39:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/03 14:31:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int			ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 				t_cylinder *cylinder, double *t);
 
 /**
-Function to calculate the coefficients of the quadratic equation for
-the intersection of a ray with a cylinder.
+Function to calculate the coefficients of the quadratic equation and other
+variables for the intersection of a ray with a cylinder.
 
  @param cyl 		Pointer to the cylinder structure.
  @param ray_dir 	The normalized direction vector of the ray.
@@ -33,7 +33,7 @@ the intersection of a ray with a cylinder.
  					structure to store the calculated coefficients and the
 					discriminante.
 */
-static void	compute_cylinder_quadratic_coefficients(t_cylinder *cyl,
+static void	compute_cylinder_intersection_vars(t_cylinder *cyl,
 			t_vec3 ray_dir)
 {
 	double	axis_dot_ray;
@@ -89,62 +89,16 @@ static int	check_cylinder_height(t_vec3 ray_origin, t_vec3 ray_dir, double t,
 int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 		t_cylinder *cylinder, double *t)
 {
-	compute_cylinder_quadratic_coefficients(cylinder, ray_dir);
+	compute_cylinder_intersection_vars(cylinder, ray_dir);
 	if (cylinder->ixd.discriminant < 0)
 		return (0);
 	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b,
 			cylinder->ixd.discriminant);
 	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
-	{
-		//print_ray_cylinder_intersection(ray_origin, ray_dir, cylinder, *t);
 		return (1);
-	}
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b,
 			cylinder->ixd.discriminant);
 	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
-	{
-		//print_ray_cylinder_intersection(ray_origin, ray_dir, cylinder, *t);
 		return (1);
-	}
 	return (0);
 }
-
-
-/**
-Function to find the intersection of a ray with a cylinder.
-
- @param ray_origin 	The starting point of the ray.
- @param ray_dir 	The direction vector of the ray (assumed to be normalized).
- @param cylinder 	Pointer to the cylinder structure.
- @param t 			Pointer to store the distance to the first intersection
-					point (if found); could be the enter or exit point (if the
-					ray starts inside the cylibder).
-
- @return            `1` if an intersection is found (and `t` is set to the
-					intersection distance);
-					`0` if there is no intersection.
-
- @note
-This function does not take into account:
-- The height bounds of the cylinder
-- Intersection with the cylinder's end caps
-*/
-// int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-// 		t_cylinder *cylinder, double *t)
-// {
-// 	t_vec3	oc;
-
-// 	oc = vec3_sub(ray_origin, cylinder->center);
-// 	compute_cylinder_quadratic_coefficients(cylinder, ray_dir, oc);
-// 	if (cylinder->quadratic.discriminant < 0)
-// 		return (0);
-// 	*t = calculate_entry_distance(cylinder->quadratic.a, cylinder->quadratic.b,
-// 			cylinder->quadratic.discriminant);
-// 	if (*t >= 0.0)
-// 		return (1);
-// 	*t = calculate_exit_distance(cylinder->quadratic.a, cylinder->quadratic.b,
-// 			cylinder->quadratic.discriminant);
-// 	if (*t >= 0.0)
-// 		return (1);
-// 	return (0);
-// }
