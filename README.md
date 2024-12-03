@@ -568,10 +568,13 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 }
 
 ```
+[...] INCLUDE PICTURE [...]
 
 #### Accounting for End Caps
 
 XXX
+
+[...] INCLUDE PICTURE [...]
 
 #### Intersection Constants
 
