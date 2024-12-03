@@ -509,7 +509,7 @@ $$
 \text{Projection Length} = \vec{V} \cdot \vec{A}
 $$
 
-where \vec{A} is the normalized orientation vector representing the cylinder's axis.
+where $\vec{A}$ is the normalized orientation vector representing the cylinder's axis.
 
 #### Accounting for End Caps
 
