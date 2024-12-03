@@ -503,13 +503,11 @@ $$
 $$
 
 3. Project this vector onto the cylinder's axis:       
-   Find the component of $\vec{V}$ along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point:
+   Find the component of $\vec{V}$ along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point, where $\vec{U}$ is the normalized orientation vector representing the cylinder's axis:
 
 $$
 \text{Projection Length} = \vec{V} \cdot \vec{U}
 $$
-
-where $\vec{U}$ is the normalized orientation vector representing the cylinder's axis.
 
 ```C
 /**
