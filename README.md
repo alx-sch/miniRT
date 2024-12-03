@@ -326,7 +326,7 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 ```
 ### Cylinder Intersection
 
-For a cylinder with a given center at $(C_x, C_y, C_z)$, radius $r$, and a normalized orientation vector $\vec{U}$, the general equation is:
+For a cylinder with a given center at $(C_x, C_y, C_z)$, radius $r$, and a normalized orientation vector $\vec{U}$ (which represents its axis), the general equation is:
 
 $$    
 (x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 - ((x, y, z) \cdot \vec{U})^2 = r^2
@@ -506,10 +506,10 @@ $$
    Find the component of $\vec{V}$ along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point:
 
 $$
-\text{Projection Length} = \vec{V} \cdot \vec{A}
+\text{Projection Length} = \vec{V} \cdot \vec{U}
 $$
 
-where $\vec{A}$ is the normalized orientation vector representing the cylinder's axis.
+where $\vec{U}$ is the normalized orientation vector representing the cylinder's axis.
 
 #### Accounting for End Caps
 
