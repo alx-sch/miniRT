@@ -503,7 +503,7 @@ $$
 $$
 
 3. Project this vector onto the cylinder's axis:       
-   Find the component of \vec{V} along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point:
+   Find the component of $\vec{V}$ along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point:
 
 $$
 \text{Projection Length} = \vec{V} \cdot \vec{A}
