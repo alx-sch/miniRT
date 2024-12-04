@@ -483,7 +483,9 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 ```
 Please note that this function calculates the intersection of a ray with an infinite cylinder, not yet considering the cylinder's height and end caps. So far, it only detects intersections with the cylinder's lateral surface.
 
-[...] INCLUDE PICTURE [...]
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
+</p>
 
 #### Handling the Cylinder's Height
 
@@ -568,13 +570,17 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 }
 
 ```
-[...] INCLUDE PICTURE [...]
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
+</p>
 
 #### Accounting for End Caps
 
 XXX
 
-[...] INCLUDE PICTURE [...]
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
+</p>
 
 #### Intersection Constants
 
