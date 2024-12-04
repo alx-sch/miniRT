@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:25:44 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 18:39:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ lies within the cylinder's finite height bounds.
 						height bounds;
 						`0` otherwise.
 */
-static int	check_cylinder_height(t_vec3 ray_origin, t_vec3 ray_dir, double t,
-		t_cylinder *cylinder)
+static int	check_cylinder_height(t_vec3 ray_origin, t_vec3 ray_dir,
+		t_cylinder *cylinder, double t)
 {
 	t_vec3	intersection_point;
 	t_vec3	center_to_point;
@@ -78,6 +78,80 @@ static int	check_cylinder_height(t_vec3 ray_origin, t_vec3 ray_dir, double t,
 	half_height = cylinder->height / 2.0;
 	if (projection_length >= -half_height && projection_length <= half_height)
 		return (1);
+	return (0);
+}
+
+/**
+Function to check intersection with cylinder's top end cap.
+
+ @param ray_origin 		The origin of the ray.
+ @param ray_dir 		The normalized direction vector of the ray.
+ @param cylinder 		Pointer to the cylinder structure.
+ @param t 				Pointer to store the intersection distance if valid.
+
+ @return 				`1` if the ray intersects the cap within its radius;
+						`0` otherwise.
+*/
+int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
+		t_cylinder *cylinder, double *t)
+{
+	double	denom;
+	double	t_cap;
+	t_vec3	to_cap;
+	t_vec3	intersection_point;
+	t_vec3	difference;
+
+	denom = vec3_dot(ray_dir, cylinder->cap_top_normal);
+	if (fabs(denom) < 1e-6)
+		return (0);
+	to_cap = vec3_sub(cylinder->cap_top_center, ray_origin);
+	t_cap = vec3_dot(to_cap, cylinder->cap_top_normal) / denom;
+	if (t_cap < 0.0)
+		return (0);
+	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
+	difference = vec3_sub(intersection_point, cylinder->cap_top_center);
+	if (vec3_dot(difference, difference) <= cylinder->radius_sqrd)
+	{
+		*t = t_cap;
+		return (1);
+	}
+	return (0);
+}
+
+/**
+Function to check intersection with cylinder's bottom end cap.
+
+ @param ray_origin 		The origin of the ray.
+ @param ray_dir 		The normalized direction vector of the ray.
+ @param cylinder 		Pointer to the cylinder structure.
+ @param t 				Pointer to store the intersection distance if valid.
+
+ @return 				`1` if the ray intersects the cap within its radius;
+						`0` otherwise.
+*/
+int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
+		t_cylinder *cylinder, double *t)
+{
+	double	denom;
+	double	t_cap;
+	t_vec3	to_cap;
+	t_vec3	intersection_point;
+	t_vec3	difference;
+
+	denom = vec3_dot(ray_dir, cylinder->cap_bottom_normal);
+	if (fabs(denom) < 1e-6)
+		return (0);
+	to_cap = vec3_sub(cylinder->cap_bottom_center, ray_origin);
+	t_cap = vec3_dot(to_cap, cylinder->cap_bottom_normal) / denom;
+	if (t_cap < 0.0)
+		return (0);
+	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
+	difference = vec3_sub(intersection_point, cylinder->cap_bottom_center);
+	if (vec3_dot(difference, difference) <= cylinder->radius_sqrd)
+	{
+		*t = t_cap;
+		return (1);
+	}
 	return (0);
 }
 
@@ -99,16 +173,17 @@ and, if so, calculate the distance to the closest intersection point.
 int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 		t_cylinder *cylinder, double *t)
 {
+	(void)ray_origin;
 	compute_cylinder_intersection_vars(cylinder, ray_dir);
 	if (cylinder->ixd.discriminant < 0)
 		return (0);
 	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b,
 			cylinder->ixd.discriminant);
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, cylinder, *t))
 		return (1);
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b,
 			cylinder->ixd.discriminant);
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, cylinder, *t))
 		return (1);
 	return (0);
 }

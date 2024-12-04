@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/03 16:54:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 18:42:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ void	create_simple_scene(t_rt *rt)
     obj_data->cy.color.b = 0;  // Blue cylinder
 
     // Initialize the quadratic coefficients that are constant (not dependent on the ray)
+    obj_data->cy.cap_top_center = vec3_add(obj_data->cy.center, vec3_mult(obj_data->cy.orientation, obj_data->cy.height / 2.0));
+    obj_data->cy.cap_bottom_center = vec3_sub(obj_data->cy.center, vec3_mult(obj_data->cy.orientation, obj_data->cy.height / 2.0));
+
+    obj_data->cy.cap_top_normal = obj_data->cy.orientation;
+    obj_data->cy.cap_bottom_normal = vec3_mult(obj_data->cy.orientation, -1.0);
+
     obj_data->cy.ixd.oc = vec3_sub(rt->scene.cam.position, obj_data->cy.center);
     obj_data->cy.ixd.axis_dot_oc = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.orientation);
     obj_data->cy.ixd.c = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.ixd.oc)
@@ -195,6 +201,10 @@ void	create_simple_scene(t_rt *rt)
     obj_data->cy.color.b = 255;  // Light blue cylinder interior
 
     // Initialize the quadratic coefficients that are constant (not dependent on the ray)
+    obj_data->cy.cap_top_center = vec3_add(obj_data->cy.center, vec3_mult(obj_data->cy.orientation, obj_data->cy.height / 2.0));
+    obj_data->cy.cap_bottom_center = vec3_sub(obj_data->cy.center, vec3_mult(obj_data->cy.orientation, obj_data->cy.height / 2.0));
+    obj_data->cy.cap_top_normal = obj_data->cy.orientation;
+    obj_data->cy.cap_bottom_normal = vec3_mult(obj_data->cy.orientation, -1.0);
     obj_data->cy.ixd.oc = vec3_sub(rt->scene.cam.position, obj_data->cy.center);
     obj_data->cy.ixd.axis_dot_oc = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.orientation);
     obj_data->cy.ixd.c = vec3_dot(obj_data->cy.ixd.oc, obj_data->cy.ixd.oc)
@@ -216,15 +226,17 @@ void	create_simple_scene(t_rt *rt)
 int	main(int argc, char **argv)
 {
 	t_rt	*rt;
-	t_scene	scene;
+	//t_scene	scene;
 
 	rt = ft_calloc(1, sizeof(t_rt));
 	if (!rt)
 		cleanup_error_exit(ERR_MALLOC, NULL);
-  
-  scene = parse_and_set_objects(argc, argv);
 
-  create_simple_scene(rt);
+    (void)argc;
+    (void)argv;
+   // scene = parse_and_set_objects(argc, argv);
+
+    create_simple_scene(rt);
 
 	init_mlx(rt);
 
