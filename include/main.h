@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
 /*   Updated: 2024/12/04 09:42:48 by aschenk          ###   ########.fr       */
@@ -32,9 +32,10 @@ and declaring all function prototypes.
 
 // Custom headers
 # include "libft.h"			// libft
-# include "mlx.h"			// mlx
+# include "mlx.h"			  // mlx
 # include "errors.h"		// Error messages and formatting styles
 # include "types.h"			// Typedefs, data structs, e.g. 't_rt'
+# include "parsing.h"		// Parsing header file
 # include "colors.h"		// TEST ONLY NOT NEEDED IN FINAL PROJECT
 
 //#############
@@ -90,5 +91,26 @@ void	cleanup(t_rt **rt_ptr);
 // utils/4_error_exit.c
 
 void	cleanup_error_exit(char *msg, t_rt *rt);
+
+/*
+	PARSING
+*/
+
+// GENERAL --FREE
+
+void	free_parsing(t_pars *parsing);
+int		ft_freearray(char **arr);
+void	free_scene_and_exit(t_scene *scene);
+void	free_scene(t_scene *scene);
+
+// GENERAL -- UTILS
+
+int		array_length(char **array);
+double	ft_atod(char *str);
+int		ft_strchr_index(char *str, char c);
+int		only_numbers_and_newline(char *str);
+int		only_numbers_dec_pt_and_newline(char *str);
+int		only_numbers_single_signs_and_dec_pt(char *str);
+int		only_numbers_and_dec_pt(char *str);
 
 #endif

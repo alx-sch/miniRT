@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
 #    Updated: 2024/12/04 09:41:35 by aschenk          ###   ########.fr        #
@@ -38,6 +38,38 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/utils/2_pixel_utils.c \
 				$(SRCS_DIR)/utils/3_cleanup.c \
 				$(SRCS_DIR)/utils/4_error_exit.c \
+				$(SRCS_DIR)/parsing/errors/errors_elements.c \
+				$(SRCS_DIR)/parsing/errors/errors_unique_elements.c \
+				$(SRCS_DIR)/parsing/errors/errors.c \
+				$(SRCS_DIR)/parsing/errors/set_error_and_return.c \
+				$(SRCS_DIR)/parsing/init/init_scene.c \
+				$(SRCS_DIR)/parsing/init/init_elements.c \
+				$(SRCS_DIR)/parsing/init/init_unique_elements.c \
+				$(SRCS_DIR)/parsing/parse_each_element/check_data/check_color.c \
+				$(SRCS_DIR)/parsing/parse_each_element/check_data/check_coordinates.c \
+				$(SRCS_DIR)/parsing/parse_each_element/check_data/check_orientation_vector.c \
+				$(SRCS_DIR)/parsing/parse_each_element/check_data/correct_amt_of_fields.c \
+				$(SRCS_DIR)/parsing/parse_each_element/unique_elements/parse_and_set_ambience.c \
+				$(SRCS_DIR)/parsing/parse_each_element/unique_elements/parse_and_set_camera.c \
+				$(SRCS_DIR)/parsing/parse_each_element/unique_elements/parse_and_set_light.c \
+				$(SRCS_DIR)/parsing/parse_each_element/nonunique_elements/parse_sphere.c \
+				$(SRCS_DIR)/parsing/parse_each_element/nonunique_elements/parse_plane.c \
+				$(SRCS_DIR)/parsing/parse_each_element/nonunique_elements/parse_cylinder.c \
+				$(SRCS_DIR)/parsing/parse_file/check_file.c \
+				$(SRCS_DIR)/parsing/parse_file/check_single_element.c \
+				$(SRCS_DIR)/parsing/parse_file/check_identifiers.c \
+				$(SRCS_DIR)/parsing/parse_file/set_single_element.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_data/set_coordinates.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_data/set_color.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_data/set_orientation_vector.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_elements/set_cylinder.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_elements/set_plane.c \
+				$(SRCS_DIR)/parsing/set_each_element/set_elements/set_sphere.c \
+				$(SRCS_DIR)/parsing/parsing.c \
+				$(SRCS_DIR)/utils/array_length.c \
+				$(SRCS_DIR)/utils/ft_atod.c \
+				$(SRCS_DIR)/utils/ft_strchr_index.c \
+				$(SRCS_DIR)/utils/only_numbers.c
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)		# Each o. file has a corresponding c. file

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
 /*   Updated: 2024/12/03 16:54:46 by aschenk          ###   ########.fr       */
@@ -213,17 +213,18 @@ void	create_simple_scene(t_rt *rt)
     printf("Scene created\n");
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_rt	*rt;
+	t_scene	scene;
 
 	rt = ft_calloc(1, sizeof(t_rt));
 	if (!rt)
 		cleanup_error_exit(ERR_MALLOC, NULL);
+  
+  scene = parse_and_set_objects(argc, argv);
 
-	//check args / .rt file
-	//populate scene info into data struct (parse file)
-    create_simple_scene(rt);
+  create_simple_scene(rt);
 
 	init_mlx(rt);
 
