@@ -562,6 +562,20 @@ The blue and red cylinders in the following rendering are finite in height but h
 
 #### Accounting for End Caps
 
+To account for the cylinder's end caps, the goal is to check if a ray intersects the circular regions at the top or bottom of the cylinder. These regions can be treated as planes with finite radii. The steps to determine an intersection with a cap are as follows:
+
+1. **Represent the Cap as a Plane**:  
+   Each cap is a circular disk lying on a plane perpendicular to the cylinder's axis. The plane equation for a cap is:
+
+   $(\vec{P} - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
+
+
+   Here:  
+   - $\(\vec{C}_{\text{cap}}\)$ is the center of the cap (top or bottom).  
+   - $\(\vec{U}\)$ is the normalized orientation vector of the cylinder's axis.  
+   - $\(\vec{P}\)$ is a point on the plane (we will test for the ray-plane intersection).
+
+
 ```C
 /**
 Function to check intersection with the cylinder's cap (top or bottom).
