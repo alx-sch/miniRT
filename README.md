@@ -584,15 +584,18 @@ To account for the cylinder's end caps, the goal is to check if a ray intersects
    - $\(\vec{D}\)$ is the normalized direction vector of the ray
    - $\(t\)$ is the distance from $\(\vec{O}\)$ to the intersection point.
 
-   Simplify:    
+   Simplify:
+   
    $(\vec{O} - \vec{C}_{\text{cap}}) \cdot \vec{U} + t(\vec{D} \cdot \vec{U}) = 0$
 
-   Solve for $t$:    
+   Solve for $t$:
+   
    $t = \frac{(\vec{C}_{\text{cap}} - \vec{O}) \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
 
-3. **Check the intersection point against the cap's radius:**    
+4. **Check the intersection point against the cap's radius:**    
    Once $t$ is computed, the intersection point $\vec{P}(t)$ can be calculated using the ray equation.
-   The intersection point lies within the cap if the squared length of this vector is less than or equal to the squared radius of the cap:     
+   The intersection point lies within the cap if the squared length of this vector is less than or equal to the squared radius of the cap:
+   
    $\|\| \vec{P}(t) - \vec{C}_{\text{cap}}  \|\|^2 \leq r^2$
 
 ```C
