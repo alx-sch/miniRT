@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:42:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 17:35:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ and declaring all function prototypes.
 # include "mlx.h"			  // mlx
 # include "errors.h"		// Error messages and formatting styles
 # include "types.h"			// Typedefs, data structs, e.g. 't_rt'
-# include "parsing.h"		// Parsing header file
+//# include "parsing.h"		// Parsing header file
 # include "colors.h"		// TEST ONLY NOT NEEDED IN FINAL PROJECT
 
 //#############
@@ -61,6 +61,11 @@ void	start_event_loop(t_rt *rt);
 int		ray_intersect_plane(t_vec3 ray_dir, t_plane *plane, double *t);
 int		ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t);
 int		ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
+			t_cylinder *cylinder, double *t);
+
+int		ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
+			t_cylinder *cylinder, double *t);
+int		ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 			t_cylinder *cylinder, double *t);
 
 void	render_scene(t_rt *rt, int bg_color);
@@ -96,6 +101,7 @@ void	cleanup_error_exit(char *msg, t_rt *rt);
 	PARSING
 */
 
+/*
 // GENERAL --FREE
 
 void	free_parsing(t_pars *parsing);
@@ -112,5 +118,6 @@ int		only_numbers_and_newline(char *str);
 int		only_numbers_dec_pt_and_newline(char *str);
 int		only_numbers_single_signs_and_dec_pt(char *str);
 int		only_numbers_and_dec_pt(char *str);
+*/
 
 #endif

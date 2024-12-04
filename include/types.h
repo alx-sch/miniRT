@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:33:03 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 16:15:03 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,10 @@ typedef struct s_cylinder
 	double		radius;
 	double		radius_sqrd;
 	double		height;
+	t_vec3		cap_top_center;
+	t_vec3		cap_bottom_center;
+	t_vec3		cap_top_normal;
+	t_vec3		cap_bottom_normal;
 	t_color		color;
 	t_ixd		ixd;
 }	t_cylinder;
