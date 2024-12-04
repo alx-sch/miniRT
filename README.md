@@ -478,27 +478,27 @@ Please note that this function calculates the intersection of a ray with an infi
 
 To account for the height boundaries of the cylinder, follow these steps:
 
-1. Find the intersection point:    
+1. **Find the intersection point:**    
    Use the ray equation with the calculated intersection distance $t$:
    
 $$
 \vec{P}(t) = \vec{O} + t \vec{D}
 $$
 
-2. Compute a vector to the cylinder's center:
+2. **Compute a vector to the cylinder's center:**
 
 $$
 \vec{V} = \vec{P} - \vec{C}
 $$
 
-3. Project this vector onto the cylinder's axis:       
+3. **Project this vector onto the cylinder's axis:**       
    Find the component of $\vec{V}$ along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point, where $\vec{U}$ is the normalized orientation vector representing the cylinder's axis:
 
 $$
 \text{Projection Length} = \vec{V} \cdot \vec{U}
 $$
 
-4. Compare the projection length to the height bounds:      
+4. **Compare the projection length to the height bounds:**  
    The cylinder's height is split symmetrically around its center. If the projection length satisfies the condition below, then the intersection point is within the height bounds of the cylinder. Otherwise, it is outside the cylinder's finite height.
 
 $$
@@ -564,17 +564,36 @@ The blue and red cylinders in the following rendering are finite in height but h
 
 To account for the cylinder's end caps, the goal is to check if a ray intersects the circular regions at the top or bottom of the cylinder. These regions can be treated as planes with finite radii. The steps to determine an intersection with a cap are as follows:
 
-1. **Represent the Cap as a Plane**:  
+1. **Represent the cap as a plane**:  
    Each cap is a circular disk lying on a plane perpendicular to the cylinder's axis. The plane equation for a cap is:
 
    $(\vec{P} - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
-
 
    Here:  
    - $\(\vec{C}_{\text{cap}}\)$ is the center of the cap (top or bottom).  
    - $\(\vec{U}\)$ is the normalized orientation vector of the cylinder's axis.  
    - $\(\vec{P}\)$ is a point on the plane (we will test for the ray-plane intersection).
 
+2. **Find the ray-plane intersection:**     
+   Substitute the ray equation ($\vec{P}(t) = \vec{O} + t \vec{D}$) into the plane equation:
+
+   $((\vec{O} + t \vec{D}) - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
+
+   Where:
+   - $\(\vec{O}\)$ is the ray origin.  
+   - $\(\vec{D}\)$ is the normalized direction vector of the ray
+   - $\(t\)$ is the distance from $\(\vec{O}\)$ to the intersection point.
+
+   Simplify:    
+   $(\vec{O} - \vec{C}_{\text{cap}}) \cdot \vec{U} + t(\vec{D} \cdot \vec{U}) = 0$
+
+   Solve for $t$:    
+   $t = \frac{(\vec{C}_{\text{cap}} - \vec{O}) \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
+
+3. **Check the intersection point against the cap's radius:**    
+   Once $t$ is computed, the intersection point $\vec{P}(t)$ can be calculated using the ray equation.
+   The intersection point lies within the cap if the squared length of this vector is less than or equal to the squared radius of the cap:     
+   $\|\| \vec{P}(t) - \vec{C}_{\text{cap}}  \|\|^2 \leq r^2$
 
 ```C
 /**
