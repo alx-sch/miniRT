@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:24:44 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/19 15:55:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:15:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ static int	handle_window_close(t_rt *rt)
 }
 
 /**
-Sets up event hooks and starts the MiniLibX event loop.
+Sets up event hooks for and starts the MiniLibX event loop.
 
-This function sets up the necessary event hooks for handling key presses
-and window destruction events. It then starts the MiniLibX event loop,
-which waits for events and dispatches them to the appropriate handlers.
-The event loop runs indefinitely until the program is terminated.
+The event loop waits for and dispatches events (key presses and window close
+events) to the appropriate handlers. The loop runs indefinitely until the
+program is terminated.
 
  @param rt 	Pointer to the main structure of the program.
 */

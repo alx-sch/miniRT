@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*   2_pixel_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:23:53 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 18:03:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:18:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+Utility functions for working with pixels in the image buffer.
+*/
+
 #include "main.h"
+
+// IN FILE:
+
+int		color_to_hex(t_color color);
+void	set_pixel_color(t_img *img, int x, int y, int color);
 
 /**
 Converts an RGB color to its hexadecimal representation.
@@ -50,13 +59,11 @@ represented as an integer (typically in the RGB format, 4 bytes per pixel
  @param img 	Pointer to the image structure containing the image buffer.
  @param x 		The x-coordinate of the pixel.
  @param y 		The y-coordinate of the pixel.
- @param color 	The color value to set for the pixel.
+ @param color 	The color value to set for the pixel as a hexadecimal integer.
 
  @note 		Used as a more performative alternative to native `mlx_pixel_put()`.
 			Source:
 https://harm-smits.github.io/42docs/libs/minilibx/prototypes.html#util-functions
- @note 		It is the user's responsibility to ensure that the image buffer
-			is initialized and that the pixel position is within the image bounds.
 */
 void	set_pixel_color(t_img *img, int x, int y, int color)
 {
@@ -64,36 +71,4 @@ void	set_pixel_color(t_img *img, int x, int y, int color)
 
 	pixel_index = (y * WINDOW_W) + x;
 	img->data_ptr[pixel_index] = color;
-}
-
-/**
-Fills the entire image with a single color.
-
-This function iterates over every pixel in the image buffer (from top-left to
-bottom-righ) and sets each pixel to the specified color.
-
-- `i` and `j`: Loop variables that traverse the rows (vertical) and columns (horizontal) of the image, respectively.
-- `set_pixel_color`: This function is called for each pixel, setting the pixel color at the corresponding `(x, y)` position in the image.
-
- @param rt     Pointer to the runtime structure containing the image data and related information.
- @param color  The color value to fill the entire image with, typically represented as an integer in RGB format.
-
- @note       This function modifies the entire image buffer, filling it with the specified color.
-*/
-void	fill_image(t_rt *rt, int color)
-{
-	int	col;
-	int	row;
-
-	col = 0;
-	while (col < WINDOW_H)
-	{
-		row = 0;
-		while (row < WINDOW_W)
-		{
-			set_pixel_color(&rt->mlx.img, row, col, color);
-			row++;
-		}
-		col++;
-	}
 }

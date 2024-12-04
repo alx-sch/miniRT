@@ -6,11 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/11/26 17:37:05 by nholbroo         ###   ########.fr        #
-=======
-#    Updated: 2024/11/20 17:24:35 by aschenk          ###   ########.fr        #
->>>>>>> 5e8eca2afb7bbbb8de7b2ac09da4fe00886653cf
+#    Updated: 2024/12/04 09:41:35 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +28,16 @@ WINDOW_H ?=		900						# Default window height
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/initialization.c \
-				$(SRCS_DIR)/event_handlers.c \
-				$(SRCS_DIR)/free/free_array.c \
-				$(SRCS_DIR)/free/free_parsing.c \
-				$(SRCS_DIR)/free/free_scene.c \
+				$(SRCS_DIR)/event_handling.c \
+				$(SRCS_DIR)/ray_plane_intersection.c \
+				$(SRCS_DIR)/ray_sphere_intersection.c \
+				$(SRCS_DIR)/ray_cylinder_intersection.c \
+				$(SRCS_DIR)/render.c \
+				$(SRCS_DIR)/utils/0_vector_utils.c \
+				$(SRCS_DIR)/utils/1_quadratic_utils.c \
+				$(SRCS_DIR)/utils/2_pixel_utils.c \
+				$(SRCS_DIR)/utils/3_cleanup.c \
+				$(SRCS_DIR)/utils/4_error_exit.c \
 				$(SRCS_DIR)/parsing/errors/errors_elements.c \
 				$(SRCS_DIR)/parsing/errors/errors_unique_elements.c \
 				$(SRCS_DIR)/parsing/errors/errors.c \
@@ -64,8 +66,6 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/parsing/set_each_element/set_elements/set_plane.c \
 				$(SRCS_DIR)/parsing/set_each_element/set_elements/set_sphere.c \
 				$(SRCS_DIR)/parsing/parsing.c \
-				$(SRCS_DIR)/utils/error_exit.c \
-				$(SRCS_DIR)/utils/cleanup.c \
 				$(SRCS_DIR)/utils/array_length.c \
 				$(SRCS_DIR)/utils/ft_atod.c \
 				$(SRCS_DIR)/utils/ft_strchr_index.c \
@@ -78,7 +78,7 @@ HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
 				$(HDRS_DIR)/colors.h \
 				$(HDRS_DIR)/errors.h \
-				$(HDRS_DIR)/structs.h
+				$(HDRS_DIR)/types.h
 
 #############
 # LIBRARIES #

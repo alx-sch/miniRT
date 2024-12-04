@@ -6,9 +6,14 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/26 17:44:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/04 09:42:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+The primary inclusion point for the project, including all necessary libraries
+and declaring all function prototypes.
+*/
 
 #ifndef MAIN_H
 # define MAIN_H
@@ -19,7 +24,7 @@
 # include <string.h>		// for strerror()
 # include <stdlib.h>		// for malloc(), free(), exit()
 # include <errno.h>			// for errno
-# include <math.h>			// for math functions, e.g. sqrt()
+# include <math.h>			// for math functions, expr, e.g. sqrt(), INFINITY
 
 // X11 library headers
 # include <X11/keysym.h>	// Macros for key symbols, e.g. XK_Escape
@@ -27,11 +32,11 @@
 
 // Custom headers
 # include "libft.h"			// libft
-# include "mlx.h"			// mlx
+# include "mlx.h"			  // mlx
 # include "errors.h"		// Error messages and formatting styles
-# include "structs.h"		// Data structs, e.g. 't_rt'
-# include "colors.h"
+# include "types.h"			// Typedefs, data structs, e.g. 't_rt'
 # include "parsing.h"		// Parsing header file
+# include "colors.h"		// TEST ONLY NOT NEEDED IN FINAL PROJECT
 
 //#############
 //# CONSTANTS #
@@ -51,36 +56,55 @@ void	init_mlx(t_rt *rt);
 
 void	start_event_loop(t_rt *rt);
 
-// utils/cleanup.c
+// ray.c
+
+int		ray_intersect_plane(t_vec3 ray_dir, t_plane *plane, double *t);
+int		ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t);
+int		ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
+			t_cylinder *cylinder, double *t);
+
+void	render_scene(t_rt *rt, int bg_color);
+
+// utils/0_vector_utils.c
+
+t_vec3	vec3_add(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_mult(t_vec3 v, double scalar);
+double	vec3_dot(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_norm(t_vec3 v);
+
+// utils/1_quadratic_utils.c
+
+double	calculate_discriminant(double a, double b, double c);
+double	calculate_entry_distance(double a, double b, double discriminant);
+double	calculate_exit_distance(double a, double b, double discriminant);
+
+// utils/2_pixel_utils.c
+
+int		color_to_hex(t_color color);
+void	set_pixel_color(t_img *img, int x, int y, int color);
+
+// utils/3_cleanup.c
 
 void	cleanup(t_rt **rt_ptr);
 
-// utils/error_exit.c
+// utils/4_error_exit.c
 
 void	cleanup_error_exit(char *msg, t_rt *rt);
 
-// COLORS
-# define COLOR_RED		"\033[31m"
-# define COLOR_GREEN	"\033[32m"
-# define COLOR_YELLOW	"\033[33m"
-# define COLOR_BLUE		"\033[34m"
-# define COLOR_MAGENTA	"\033[35m"
-# define COLOR_CYAN		"\033[36m"
-# define COLOR_WHITE	"\033[37m"
-# define COLOR_BLACK	"\033[30m"
-# define COLOR_RESET	"\033[0m"
-
 /*
-	GENERAL
+	PARSING
 */
 
 // GENERAL --FREE
+
 void	free_parsing(t_pars *parsing);
 int		ft_freearray(char **arr);
 void	free_scene_and_exit(t_scene *scene);
 void	free_scene(t_scene *scene);
 
 // GENERAL -- UTILS
+
 int		array_length(char **array);
 double	ft_atod(char *str);
 int		ft_strchr_index(char *str, char c);
@@ -88,14 +112,5 @@ int		only_numbers_and_newline(char *str);
 int		only_numbers_dec_pt_and_newline(char *str);
 int		only_numbers_single_signs_and_dec_pt(char *str);
 int		only_numbers_and_dec_pt(char *str);
-// utils/mlx_utils.c
-
-int		color_to_hex(t_color color);
-void	set_pixel_color(t_img *img, int x, int y, int color);
-void	fill_image(t_rt *rt, int color); // TESTING ONLY
-void	draw_colored_pixels(t_rt *rt, int color); // TESTING ONLY
-
-void	render_scene(t_rt *rt, int bg_color);
-
 
 #endif

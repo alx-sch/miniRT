@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/20 17:15:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:33:03 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
-Defines the data structures used in the raytracer program.
+/*
+Defines the types and data structures used in the raytracer program.
 */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+# include "libft.h"	// for 't_list' definition
 
 //#######
 //# MLX #
@@ -106,18 +108,44 @@ typedef enum e_object_type
 }	t_obj_type;
 
 /**
+Structure storing (precomputed) data for ray-object intersection calculations.
+- double `a`:				Coefficient of the quadratic term.
+- double `b`:				Coefficient of the linear term.
+- double `c`:				Constant term of the quadratic equation.
+- double `discriminant`:	Discriminant used to determine intersection validity.
+- t_vec3 `difference`:		Vector difference between relevant object and
+							ray points (used for plane intersections).
+- t_vec3 `oc`:				Vector from the object's center to the ray origin.
+- double `axis_dot_oc`:		Dot product between the object's axis vector and `oc`,
+							(used in cylinder intersections).
+*/
+typedef struct s_intersection_data
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	t_vec3	difference;
+	t_vec3	oc;
+	double	axis_dot_oc;
+}	t_ixd;
+
+/**
 Structure representing a plane in 3D space:
  - t_object `object_type`:	The object type (always `PLANE`).
  - t_vec3 `point_in_plane`:	A point that lies on the plane.
- - t_vec3 `orientation`:	A normalized vector representing the plane's normal.
+ - t_vec3 `normal`:			A normalized vector representing the plane's normal,
+							which is perpendicular to the plane's surface.
  - t_color `color`:			The color of the plane.
- */
+ - t_ixd `ixd`:				Ray intersection data for the plane.
+*/
 typedef struct s_plane
 {
 	t_obj_type	object_type;
 	t_vec3		point_in_plane;
-	t_vec3		orientation;
+	t_vec3		normal;
 	t_color		color;
+	t_ixd		ixd;
 }	t_plane;
 
 /**
@@ -126,6 +154,7 @@ Structure representing a sphere in 3D space.
  - t_vec3 `center`:			The center point of the sphere.
  - double `radius`:			The radius of the sphere.
  - t_color `color`:			The color of the sphere.
+ - t_ixd `ixd`:				Ray intersection data for the sphere.
 */
 typedef struct s_sphere
 {
@@ -133,6 +162,7 @@ typedef struct s_sphere
 	t_vec3		center;
 	double		radius;
 	t_color		color;
+	t_ixd		ixd;
 }	t_sphere;
 
 /**
@@ -143,6 +173,7 @@ Structure representing a cylinder in 3D space:
  - double `radius`:			The radius of the cylinder.
  - double `height`:			The height of the cylinder.
  - t_color `color`:			The color of the cylinder.
+ - t_ixd `ixd`:				Ray intersection data for the cylinder.
 */
 typedef struct s_cylinder
 {
@@ -150,9 +181,10 @@ typedef struct s_cylinder
 	t_vec3		center;
 	t_vec3		orientation;
 	double		radius;
+	double		radius_sqrd;
 	double		height;
 	t_color		color;
-
+	t_ixd		ixd;
 }	t_cylinder;
 
 /**
@@ -173,22 +205,6 @@ typedef union u_object_data
 
 typedef struct s_scene_object_node	t_obj_node; // Forward declaration
 
-/**
-Linked list node to represent a single object in the scene.
-
-Each `s_scene_object` node represents an object in the 3D scene. It contains
-the following information:
- - int `id`:			A unique identifier
- - t_obj_data *`obj`:	A pointer holding the object data.
- - t_scene_obj *`next`:	A pointer to the next object in the linked list.
-*/
-typedef struct s_scene_object_node
-{
-	int				id;
-	t_obj_data		*obj;
-	t_obj_node		*next;
-}	t_obj_node;
-
 //#########
 //# SCENE #
 //#########
@@ -197,7 +213,7 @@ typedef struct s_scene_object_node
 Structure representing the ambient light in the scene.
 - double `ratio`:	The ratio of the ambient lightning [0.0-1.0]
 - t_color `color`:	The color of the ambient light.
- */
+*/
 typedef struct s_ambi_light
 {
 	double		ratio;
@@ -233,69 +249,15 @@ Structure representing the entire scene.
 - t_ambi_light `ambient_light`:	The ambient light in the scene.
 - t_light `light`:				The light source in the scene.
 - t_cam `cam`:					The camera in the scene.
-- t_obj_node `objs`:			Linked list of objects in the scene.
+- t_list `objs`:				Linked list of objects in the scene.
 */
 typedef struct s_scene
 {
 	t_ambi_light	ambi_light;
 	t_light			light;
 	t_cam			cam;
-	t_obj_node		*objs;
+	t_list			*objs;
 }	t_scene;
-
-//################
-//# TRIGONOMETRY #
-//################
-
-/**
-Data structure holding trigonometric properties.
-This is used to calculate the camera's field of view (FOV) and the
-viewport's size.
-- double angle_a:  Angle at vertex A in degrees (typically 90 degrees).
-- double angle_b:  Angle at vertex B in degrees (half of the camera's FOV).
-- double angle_c:  Angle at vertex C in degrees (calculated as 180 - angle_a - angle_b).
-- double rad_a:    Angle at vertex A in radians.
-- double rad_b:    Angle at vertex B in radians.
-- double rad_c:    Angle at vertex C in radians.
-- double cote_ab:  Length of the side between vertices A and B (typically 1 unit).
-- double cote_bc:  Length of the side between vertices B and C.
-- double cote_ca:  Length of the side between vertices C and A.
-*/
-typedef struct s_trigo
-{
-	double			angle_a;
-	double			angle_b;
-	double			angle_c;
-	double			rad_a;
-	double			rad_b;
-	double			rad_c;
-	double			cote_ab;
-	double			cote_bc;
-	double			cote_ca;
-}	t_trigo;
-
-/**
-Viewport: Rectangular area of the screen where the scene is projected.
-Defines the portion of the scene that is visible to the camera and maps the 3D
-scene to the 2D coordinates of the screen / image.
- */
-typedef struct s_viewport
-{
-	t_trigo			trigo;
-	double			min_x;
-	double			max_x;
-	double			min_y;
-	double			max_y;
-	double			width;
-	double			height;
-	double			***points;
-	double			hypothenuse;
-	double			aigu;
-	double			win_ratio;
-	t_vec3			local_right;
-	t_vec3			local_up;
-	t_vec3			local_down;
-}	t_viewport;
 
 //####################
 //# MAIN DATA STRUCT #
@@ -303,7 +265,8 @@ typedef struct s_viewport
 
 /**
 Data structure holding all raytracing-related data.
-- t_mlx `mlx`:	Struct with rendering context containing MiniLibX components.
+- t_mlx `mlx`:		Struct with rendering context containing MiniLibX components.
+- t_scene `scene`:	Struct with scene data, including objects, lights, and camera.
 */
 typedef struct s_rt
 {
