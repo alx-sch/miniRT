@@ -97,21 +97,18 @@ Function to find the intersection of a ray with a plane.
  @param ray_origin	The starting point of the ray (3D vector).
  @param ray_dir 	The normalized direction vector of the ray.
  @param plane 		Pointer to the plane structure.
- @param t 		A pointer to store the distance to the intersection point
-			(if found).
+ @param t 		A pointer to store the distance to the intersection point (if found).
 
- @return 		`1` if an intersection is found in the FOV (and `t` is set
-			to the intersection distance);
-			`0` if there is no intersection within the FOV (ray is
-			parallel to the plane or intersection behind the camera).
+ @return 		`1` if an intersection is found in the FOV (and `t` is set to the
+			intersection distance);
+			`0` if there is no intersection within the FOV (ray is parallel to the
+			plane or intersection behind the camera).
 
  @note
-Due to floating-point precision limitations, directly comparing a dot product
-to zero can be unreliable. A small threshold (1e-6) is used to determine if the
-ray is parallel to the plane. Values below this threshold are considered too
-close to zero, indicating parallelism or preventing division by very small
-numbers, which could lead to inaccuracies.
-*/
+Due to floating-point precision limitations, directly comparing a dot product to zero can be
+unreliable. A small threshold (1e-6) is used to determine if the ray is parallel to the plane.
+Values below this threshold are considered too close to zero, indicating parallelism or
+preventing division by very small numbers, which could lead to inaccuracies.
 */
 int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane,
 		double *t)
@@ -189,8 +186,8 @@ The term under the root is called the discriminant ( $Δ = b^2 - 4ac$ ), which d
 
 ```C
 /**
-Calculates the discriminant of a quadratic equation `ax^2 + bx + c = 0`, which
-solves into `x = (-b ± sqrt(b^2 - 4ac)) / 2a`.
+Calculates the discriminant of a quadratic equation `ax^2 + bx + c = 0`, which solves into
+`x = (-b ± sqrt(b^2 - 4ac)) / 2a`.
 
 The discriminant `D = b^2 - 4ac` tells us:
 - if `D > 0`, there are two real roots (the ray intersects the object at two
@@ -290,16 +287,14 @@ Function to find the intersection of a ray with a sphere.
  @param ray_origin 	The starting point of the ray (3D vector).
  @param ray_dir 	The direction vector of the ray (assumed to be normalized).
  @param sphere 		Pointer to the sphere structure (contains center and radius).
- @param t 		Pointer to store the distance to the first intersection
-			point (if found); could be the enter or exit point (if the
-			ray is inside the sphere).
+ @param t 		Pointer to store the distance to the first intersection point (if found);
+			could be the entry or exit point (if the ray is inside the sphere).
 
  @return 		`1` if an intersection is found (and t is set to the
 			intersection distance);
 			`0` if there is no intersection.
 
- @note 			`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
-			vector is normalized.
+ @note 			`a = (ray_dir . ray_dir)` is 1.0 if the ray direction vector is normalized.
 */
 int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere,
 		double	*t)
@@ -415,32 +410,27 @@ The following function calculates the intersection of a ray with a cylinder usin
 
 ```C
 /**
-Function to calculate the coefficients of the quadratic equation and other
-variables for the intersection of a ray with a cylinder.
+Function to calculate the coefficients of the quadratic equation and other variables
+for the intersection of a ray with a cylinder.
 
  @param cyl 		Pointer to the cylinder structure.
  @param ray_dir 	The normalized direction vector of the ray.
  @param oc 		The vector from the ray origin to the cylinder center.
 
- @return		None. The function modifies the cylinder's `quadratic`
-			structure to store the calculated coefficients and the
-			discriminante.
+ @return		None. The function modifies the cylinder's `ixd` structure
+			to store the calculated coefficients and the discriminante.
 */
-static void	compute_cylinder_intersection_vars(t_cylinder *cyl,
-			t_vec3 ray_dir, t_vec3 oc)
+static void	compute_cylinder_intersection_vars(t_cylinder *cyl, t_vec3 ray_dir, t_vec3 oc)
 {
 	double	axis_dot_ray;
 	double	axis_dot_oc;
 
 	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
 	axis_dot_oc = vec3_dot(oc, cyl->orientation);
-	cyl->ixd.a = vec3_dot(ray_dir, ray_dir)		// ixd: intersection data
-		- pow(axis_dot_ray, 2);
+	cyl->ixd.a = vec3_dot(ray_dir, ray_dir)	- pow(axis_dot_ray, 2);	// ixd: intersection data
 	cyl->ixd.b = 2 * (vec3_dot(oc, ray_dir) - axis_dot_oc * axis_dot_ray);
-	cyl->ixd.c = vec3_dot(oc, oc) - pow(axis_dot_oc, 2)
-		- pow(cyl->radius, 2);
-	cyl->ixd.discriminant = calculate_discriminant(cyl->ixd.a,
-			cyl->ixd.b, cyl->ixd.c);
+	cyl->ixd.c = vec3_dot(oc, oc) - pow(axis_dot_oc, 2) - pow(cyl->radius, 2);
+	cyl->ixd.discriminant = calculate_discriminant(cyl->ixd.a, cyl->ixd.b, cyl->ixd.c);
 }
 
 /**
@@ -449,9 +439,8 @@ Function to find the intersection of a ray with a cylinder.
  @param ray_origin 	The starting point of the ray.
  @param ray_dir 	The ray's direction vector (assumed to be normalized).
  @param cylinder 	Pointer to the cylinder structure.
- @param t 		Pointer to store the distance to the first intersection
-			point (if found); could be the entry or exit point (if the
-			ray starts inside the cylinder).
+ @param t 		Pointer to store the distance to the first intersection point (if found);
+			could be the entry or exit point (if the ray starts inside the cylinder).
 
  @return            	`1` if an intersection is found (and `t` is set to the
 			intersection distance);
@@ -470,12 +459,10 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 	compute_cylinder_intersection_vars(cylinder, ray_dir, oc);
 	if (cylinder->ixd.discriminant < 0)
 		return (0);
-	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b,
-			cylinder->ixd.discriminant);
+	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 	if (*t >= 0.0)
 		return (1);
-	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b,
-			cylinder->ixd.discriminant);
+	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 	if (*t >= 0.0)
 		return (1);
 	return (0);
@@ -491,27 +478,27 @@ Please note that this function calculates the intersection of a ray with an infi
 
 To account for the height boundaries of the cylinder, follow these steps:
 
-1. Find the intersection point:    
+1. **Find the intersection point:**    
    Use the ray equation with the calculated intersection distance $t$:
    
 $$
 \vec{P}(t) = \vec{O} + t \vec{D}
 $$
 
-2. Compute a vector to the cylinder's center:
+2. **Compute a vector to the cylinder's center:**
 
 $$
 \vec{V} = \vec{P} - \vec{C}
 $$
 
-3. Project this vector onto the cylinder's axis:       
+3. **Project this vector onto the cylinder's axis:**       
    Find the component of $\vec{V}$ along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point, where $\vec{U}$ is the normalized orientation vector representing the cylinder's axis:
 
 $$
 \text{Projection Length} = \vec{V} \cdot \vec{U}
 $$
 
-4. Compare the projection length to the height bounds:      
+4. **Compare the projection length to the height bounds:**  
    The cylinder's height is split symmetrically around its center. If the projection length satisfies the condition below, then the intersection point is within the height bounds of the cylinder. Otherwise, it is outside the cylinder's finite height.
 
 $$
@@ -520,8 +507,8 @@ $$
 
 ```C
 /**
-Function to check whether a given intersection point on an infinite cylinder
-lies within the cylinder's finite height bounds.
+Function to check whether a given intersection point on an infinite cylinder lies
+within the cylinder's finite height bounds.
 
  @param ray_origin 	The origin of the ray in 3D space.
  @param ray_dir 	The normalized direction vector of the ray.
@@ -549,8 +536,7 @@ static int	check_cylinder_height(t_vec3 ray_origin, t_vec3 ray_dir, double t,
 	return (0);
 }
 
-int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-		t_cylinder *cylinder, double *t)
+int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylinder, double *t)
 {
 	t_vec3	oc;
 
@@ -558,12 +544,10 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 	compute_cylinder_intersection_vars(cylinder, ray_dir, oc);
 	if (cylinder->ixd.discriminant < 0)
 		return (0);
-	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b,
-			cylinder->ixd.discriminant);
+	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
-	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b,
-			cylinder->ixd.discriminant);
+	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
 	return (0);
@@ -578,7 +562,93 @@ The blue and red cylinders in the following rendering are finite in height but h
 
 #### Accounting for End Caps
 
-XXX
+To account for the cylinder's end caps, the goal is to check if a ray intersects the circular regions at the top or bottom of the cylinder. These regions can be treated as planes with finite radii. The steps to determine an intersection with a cap are as follows:
+
+1. **Represent the cap as a plane**:  
+   Each cap is a circular disk lying on a plane perpendicular to the cylinder's axis. The plane equation for a cap is:
+
+   $(\vec{P} - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
+
+   Here:  
+   - $\(\vec{C}_{\text{cap}}\)$ is the center of the cap (top or bottom).  
+   - $\(\vec{U}\)$ is the normalized orientation vector of the cylinder's axis.  
+   - $\(\vec{P}\)$ is a point on the plane (we will test for the ray-plane intersection).
+
+2. **Find the ray-plane intersection:**     
+   Substitute the ray equation ($\vec{P}(t) = \vec{O} + t \vec{D}$) into the plane equation:
+
+   $((\vec{O} + t \vec{D}) - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
+
+   Where:
+   - $\(\vec{O}\)$ is the ray origin.  
+   - $\(\vec{D}\)$ is the normalized direction vector of the ray
+   - $\(t\)$ is the distance from $\(\vec{O}\)$ to the intersection point.
+
+   Simplify:
+   
+   $(\vec{O} - \vec{C}_{\text{cap}}) \cdot \vec{U} + t(\vec{D} \cdot \vec{U}) = 0$
+
+   Solve for $t$:
+   
+   $t = \frac{(\vec{C}_{\text{cap}} - \vec{O}) \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
+
+4. **Check the intersection point against the cap's radius:**    
+   Once $t$ is computed, the intersection point $\vec{P}(t)$ can be calculated using the ray equation.
+   The intersection point lies within the cap if the squared length of this vector is less than or equal to the squared radius of the cap:
+   
+   $\|\| \vec{P}(t) - \vec{C}_{\text{cap}}  \|\|^2 \leq r^2$
+
+```C
+/**
+Function to check intersection with the cylinder's cap (top or bottom).
+
+ @param ray_origin 	The origin of the ray.
+ @param ray_dir 	The normalized direction vector of the ray.
+ @param cylinder 	Pointer to the cylinder structure.
+ @param t 		Pointer to store the intersection distance if valid.
+ @param flag_top 	Flag to indicate whether the top or bottom cap is being checked
+			(`0`: bottom; otherwise: top).
+
+ @return 		`1` if the ray intersects the cap within its radius;
+			`0` otherwise.
+*/
+int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double *t, int flag_top)
+{
+	double	denom;
+	double	t_cap;
+	t_vec3	cap_center;
+	t_vec3	cap_normal;
+	t_vec3	to_cap;
+	t_vec3	intersection_point;
+	t_vec3	difference;
+
+	if (flag_top)
+	{
+		cap_center = vec3_add(cyl->center, vec3_mult(cyl->orientation, cyl->height / 2.0));
+		cap_normal = cyl->orientation;
+	}
+	else
+	{
+		cap_center = vec3_sub(cyl->center, vec3_mult(cyl->orientation, cyl->height / 2.0));
+		cap_normal = vec3_mult(cyl->orientation, -1.0);
+	}
+	denom = vec3_dot(ray_dir, cap_normal);
+	if (fabs(denom) < 1e-6)
+		return (0);
+	to_cap = vec3_sub(cap_center, ray_origin);
+	t_cap = vec3_dot(to_cap, cap_normal) / denom;
+	if (t_cap < 0.0)
+		return (0);
+	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
+	difference = vec3_sub(intersection_point, cap_center);
+	if (vec3_dot(difference, difference) <= (cyl->radius * cyl->radius))
+	{
+		*t = t_cap;
+		return (1);
+	}
+	return (0);
+}
+```
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
