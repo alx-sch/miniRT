@@ -481,7 +481,7 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 	return (0);
 }
 ```
-Please note that this function calculates the intersection of a ray with an infinite cylinder, not yet considering the cylinder's height and end caps. So far, it only detects intersections with the cylinder's lateral surface.
+Please note that this function calculates the intersection of a ray with an infinite cylinder, not yet considering the cylinder's height and end caps. So far, it only detects intersections with the cylinder's lateral surface (the blue and red objects in the rendering below are both infinite cylinders):
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
@@ -568,8 +568,10 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 		return (1);
 	return (0);
 }
-
 ```
+
+The blue and red cylinders in the following rendering are finite in height but have no caps:
+
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
 </p>
