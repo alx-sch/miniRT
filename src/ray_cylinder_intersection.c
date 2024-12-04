@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 18:39:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 22:22:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,15 @@ int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 {
 	double	denom;
 	double	t_cap;
-	t_vec3	to_cap;
+	t_vec3	to_cap_center;
 	t_vec3	intersection_point;
 	t_vec3	difference;
 
 	denom = vec3_dot(ray_dir, cylinder->cap_top_normal);
 	if (fabs(denom) < 1e-6)
 		return (0);
-	to_cap = vec3_sub(cylinder->cap_top_center, ray_origin);
-	t_cap = vec3_dot(to_cap, cylinder->cap_top_normal) / denom;
+	to_cap_center = vec3_sub(cylinder->cap_top_center, ray_origin);
+	t_cap = vec3_dot(to_cap_center, cylinder->cap_top_normal) / denom;
 	if (t_cap < 0.0)
 		return (0);
 	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
@@ -134,15 +134,15 @@ int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 {
 	double	denom;
 	double	t_cap;
-	t_vec3	to_cap;
+	t_vec3	to_cap_center;
 	t_vec3	intersection_point;
 	t_vec3	difference;
 
 	denom = vec3_dot(ray_dir, cylinder->cap_bottom_normal);
 	if (fabs(denom) < 1e-6)
 		return (0);
-	to_cap = vec3_sub(cylinder->cap_bottom_center, ray_origin);
-	t_cap = vec3_dot(to_cap, cylinder->cap_bottom_normal) / denom;
+	to_cap_center = vec3_sub(cylinder->cap_bottom_center, ray_origin);
+	t_cap = vec3_dot(to_cap_center, cylinder->cap_bottom_normal) / denom;
 	if (t_cap < 0.0)
 		return (0);
 	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
