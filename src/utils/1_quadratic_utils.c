@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quadratic_utils.c                                  :+:      :+:    :+:   */
+/*   1_quadratic_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 16:08:40 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/29 16:24:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:18:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
+/*
 Utility functions for working with quadratic equations. For more info on
 quadratic equations and the functions in this file, see the README:
 https://github.com/Busedame/miniRT/blob/main/README.md#quadratic-equation

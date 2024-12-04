@@ -6,11 +6,19 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:36:36 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/19 15:55:16 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:41:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+Initializes the MiniLibX components for graphic rendering.
+*/
+
 #include "main.h"
+
+// IN FILE:
+
+void	init_mlx(t_rt *rt);
 
 /**
 Initializes the MiniLibX components required for graphic rendering:
@@ -20,13 +28,13 @@ Initializes the MiniLibX components required for graphic rendering:
 
  @param rt 	Pointer to the main structure of the program.
 
- @note 	`WINDOW_W` and `WINDOW_H` are pre-compilation constants defined in
- 		Makefile. Adjust during compilation, e.g.
-		`make WINDOW_W=1920 WINDOW_H=1080`.
+ @note 		`WINDOW_W` and `WINDOW_H` are pre-compilation constants defined in
+ 			the Makefile. Adjust during compilation,
+			e.g. `make WINDOW_W=1920 WINDOW_H=1080`.
 
- @note 	Return of `mlx_get_data_addr()` is cast to `(int *)` in order to
-		access the image data as an array of integers (4 bytes per pixel) more
-		easily; e.g. `img->data[pixel_index] = color`.
+ @note 		Return of `mlx_get_data_addr()` is cast to `(int *)` in order to
+			access the image data as an array of integers (4 bytes per pixel)
+			more easily; e.g. `img->data[pixel_index] = color`.
 */
 void	init_mlx(t_rt *rt)
 {

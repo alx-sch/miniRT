@@ -6,12 +6,17 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/03 21:52:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:26:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-TBD
+This file contains functions to calculate the intersection of a ray with a
+sphere object in 3D space.
+
+See the README for more details on the mathematically derived ray-object
+intersection algorithms:
+https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 */
 
 #include "main.h"

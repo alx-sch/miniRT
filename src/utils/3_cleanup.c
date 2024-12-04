@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   4_cleanup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:59 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/29 16:23:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:18:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
+/*
 This file contains functions for deallocating memory, resetting pointers to
 NULL, and closing open file descriptors, ensuring proper cleanup after program
 execution or whenever the program terminates unexpectedly.

@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_exit.c                                       :+:      :+:    :+:   */
+/*   3_error_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:42 by aschenk           #+#    #+#             */
-/*   Updated: 2024/11/29 16:23:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:18:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
+/*
 This file contains a functions for terminating the program in a controlled
-manner whenever an error occurs (such as invalid user input, failed file opening,
-memory allocation errors, etc.). Before terminating the program, error messages
-are printed to stderr, and all dynamically allocated memory within the `rt`
-structure is deallocated.
+manner whenever an error occurs. Before terminating, an error message is
+printed to stderr and all allocated resources are freed.
 */
 
 #include "main.h"

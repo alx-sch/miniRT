@@ -6,20 +6,25 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/03 21:52:25 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/04 09:25:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
-TBD
+/*
+This file contains functions to calculate the intersection of a ray with a
+cylinder object in 3D space.
+
+See the README for more details on the mathematically derived ray-object
+intersection algorithms:
+https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 */
 
 #include "main.h"
 
 // IN FILE:
 
-int			ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-				t_cylinder *cylinder, double *t);
+int		ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
+			t_cylinder *cylinder, double *t);
 
 /**
 Function to calculate the coefficients of the quadratic equation and other
@@ -29,9 +34,9 @@ variables for the intersection of a ray with a cylinder.
  @param ray_dir 	The normalized direction vector of the ray.
  @param oc 			The vector from the ray origin to the cylinder center.
 
- @return			None. The function modifies the cylinder's `quadratic`
- 					structure to store the calculated coefficients and the
-					discriminante.
+ @return			None. The function modifies the cylinder's `ixd`
+ 					(intersection data) structure to store the calculated
+					coefficients and the discriminante.
 */
 static void	compute_cylinder_intersection_vars(t_cylinder *cyl, t_vec3 ray_dir)
 {
@@ -84,8 +89,8 @@ and, if so, calculate the distance to the closest intersection point.
  @param ray_dir 		The normalized direction vector of the ray.
  @param cylinder 		Pointer to the cylinder structure.
  @param t 				Pointer to store the distance to the first intersection
-						point (if found); could be the entry or exit point (if the
-						ray starts inside the object).
+						point (if found); could be the entry or exit point (if
+						the ray starts inside the object ).
 
  @return 				`1` if the ray intersects with the cylinder within its
  						finite height bounds;
