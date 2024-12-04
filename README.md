@@ -618,7 +618,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	double	t_cap;
 	t_vec3	cap_center;
 	t_vec3	cap_normal;
-	t_vec3	to_cap;
+	t_vec3	to_cap_center;
 	t_vec3	intersection_point;
 	t_vec3	difference;
 
@@ -635,8 +635,8 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	denom = vec3_dot(ray_dir, cap_normal);
 	if (fabs(denom) < 1e-6)
 		return (0);
-	to_cap = vec3_sub(cap_center, ray_origin);
-	t_cap = vec3_dot(to_cap, cap_normal) / denom;
+	to_cap_center = vec3_sub(cap_center, ray_origin);
+	t_cap = vec3_dot(to_cap_center, cap_normal) / denom;
 	if (t_cap < 0.0)
 		return (0);
 	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
