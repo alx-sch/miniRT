@@ -417,9 +417,8 @@ for the intersection of a ray with a cylinder.
  @param ray_dir 	The normalized direction vector of the ray.
  @param oc 		The vector from the ray origin to the cylinder center.
 
- @return		None. The function modifies the cylinder's `quadratic`
-			structure to store the calculated coefficients and the
-			discriminante.
+ @return		None. The function modifies the cylinder's `ixd` structure
+			to store the calculated coefficients and the discriminante.
 */
 static void	compute_cylinder_intersection_vars(t_cylinder *cyl, t_vec3 ray_dir, t_vec3 oc)
 {
