@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:35:34 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:18:14 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/05 07:05:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ t_vec3	vec3_norm(t_vec3 v);
 /**
 Function to add two 3D vectors.
 
- @param v1 The first vector.
- @param v2 The second vector.
+ @param v1 	The first vector.
+ @param v2 	The second vector.
 
- @return   The resulting vector after addition.
+ @return 	The resulting vector after addition.
 */
 t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
 {
@@ -39,7 +39,6 @@ t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
 	result.x = v1.x + v2.x;
 	result.y = v1.y + v2.y;
 	result.z = v1.z + v2.z;
-
 	return (result);
 }
 
@@ -60,14 +59,13 @@ t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
 	return (result);
 }
 
-
 /**
 Function to multiply a 3D vector by a scalar.
 
- @param v       The vector to be scaled.
- @param scalar  The scalar value to multiply the vector by.
+ @param v 		The vector to be scaled.
+ @param scalar 	The scalar value to multiply the vector by.
 
- @return        The resulting vector after scaling.
+ @return 		The resulting vector after scaling.
 */
 t_vec3	vec3_mult(t_vec3 v, double scalar)
 {

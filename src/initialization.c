@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:36:36 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:41:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/05 07:17:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_mlx(t_rt *rt)
 		cleanup_error_exit("mlx_init() failed", rt);
 	errno = 0;
 	rt->mlx.win_ptr = mlx_new_window(rt->mlx.mlx_ptr, WINDOW_W, WINDOW_H,
-		WINDOW_TITLE);
+			WINDOW_TITLE);
 	if (!rt->mlx.win_ptr)
 		cleanup_error_exit("mlx_new_window() failed", rt);
 	errno = 0;

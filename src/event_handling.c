@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:24:44 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:15:16 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/05 07:15:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ If the destruction signal is received (by clicking the 'x' button),
 the window is closed, all allocated memory is freed, and the program
 terminates successfully.
 
- @param rt 		Pointer to the main structure of the program.
+ @param rt 	Pointer to the main structure of the program.
 
- @return 		`0` on success (no specific action taken).
+ @return 	`0` on success (no specific action taken).
 */
 static int	handle_window_close(t_rt *rt)
 {

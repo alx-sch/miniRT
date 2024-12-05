@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:23:53 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:18:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/05 07:00:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ represented as an integer (typically in the RGB format, 4 bytes per pixel
  @param y 		The y-coordinate of the pixel.
  @param color 	The color value to set for the pixel as a hexadecimal integer.
 
- @note 		Used as a more performative alternative to native `mlx_pixel_put()`.
-			Source:
+ @note
+Used as a more performative alternative to native `mlx_pixel_put()`. Source:
 https://harm-smits.github.io/42docs/libs/minilibx/prototypes.html#util-functions
 */
 void	set_pixel_color(t_img *img, int x, int y, int color)
