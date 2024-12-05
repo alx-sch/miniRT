@@ -472,7 +472,7 @@ Please note that this function calculates the intersection of a ray with an infi
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
-<p align="center"><b>The blue and red objects are both infinite cylinders.</p>
+<p align="center">The blue and red objects are both infinite cylinders.</p>
 
 #### Handling the Cylinder's Height
 
@@ -555,7 +555,7 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 ```
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
-<p align="center"><b>The blue and red cylinders are finite in height but have no caps.</p>
+<p align="center">The blue and red cylinders are finite in height but have no caps.</p>
 
 #### Accounting for End Caps
 
@@ -649,10 +649,10 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
-<p align="center"><b>Looking at the end cap of the closed blue cylinder.</p>
+<p align="center">Looking at the end cap of the closed blue cylinder.</p>
 
 #### Intersection Constants
 
 In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., $\vec{OC}$, the quadratic coefficient $c$, and $\vec{OC} \cdot \vec{U}$). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed during object initialization rather than recalculated for every single ray (or pixel).    
 
-Precomputing these constants reduced my computation time by two-thirds for a simple scene (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~35 sec to ~12 sec.
+Precomputing these constants reduced my computation time by two-thirds for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~35 sec to ~12 sec.
