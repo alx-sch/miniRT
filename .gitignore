@@ -394,10 +394,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# repo files only used directly via GitHub.com
-.assets/
-.assets/*
-README.md
-
 # Codespace
 vgcore*
