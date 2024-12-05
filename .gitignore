@@ -396,6 +396,7 @@ FodyWeavers.xsd
 
 # repo files only used directly via GitHub.com
 .assets/
+.assets/*
 README.md
 
 # Codespace
