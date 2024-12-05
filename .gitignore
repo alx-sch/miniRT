@@ -377,6 +377,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # VS Code files for those working on multiple tools
+.vscode/
 .vscode/*
 *.code-workspace
 
@@ -393,9 +394,9 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Programs
-minishell_test
-minishell
+# repo files only used directly via GitHub.com
+.assets/
+README.md
 
 # Codespace
 vgcore*
