@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 16:15:03 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:56:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ Structure representing a color in RGB format:
 */
 typedef struct s_color
 {
-	int		r;
-	int		g;
-	int		b;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
 }	t_color;
 
 //###########
@@ -233,6 +233,7 @@ typedef struct s_light
 {
 	t_vec3		position;
 	double		ratio;
+	t_color		color;
 }	t_light;
 
 /**

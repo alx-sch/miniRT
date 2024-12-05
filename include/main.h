@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 17:35:55 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:55:13 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ and declaring all function prototypes.
 # include <stdlib.h>		// for malloc(), free(), exit()
 # include <errno.h>			// for errno
 # include <math.h>			// for math functions, expr, e.g. sqrt(), INFINITY
+# include <fcntl.h>			// for open() macros
 
 // X11 library headers
 # include <X11/keysym.h>	// Macros for key symbols, e.g. XK_Escape
@@ -35,7 +36,7 @@ and declaring all function prototypes.
 # include "mlx.h"			  // mlx
 # include "errors.h"		// Error messages and formatting styles
 # include "types.h"			// Typedefs, data structs, e.g. 't_rt'
-//# include "parsing.h"		// Parsing header file
+# include "parsing.h"		// Parsing header file
 # include "colors.h"		// TEST ONLY NOT NEEDED IN FINAL PROJECT
 
 //#############
@@ -101,13 +102,13 @@ void	cleanup_error_exit(char *msg, t_rt *rt);
 	PARSING
 */
 
-/*
+
 // GENERAL --FREE
 
 void	free_parsing(t_pars *parsing);
 int		ft_freearray(char **arr);
-void	free_scene_and_exit(t_scene *scene);
-void	free_scene(t_scene *scene);
+void	free_scene_and_exit(t_tmp_scene *scene);
+void	free_scene(t_tmp_scene *scene);
 
 // GENERAL -- UTILS
 
@@ -118,6 +119,5 @@ int		only_numbers_and_newline(char *str);
 int		only_numbers_dec_pt_and_newline(char *str);
 int		only_numbers_single_signs_and_dec_pt(char *str);
 int		only_numbers_and_dec_pt(char *str);
-*/
 
 #endif

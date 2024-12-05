@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/12/04 15:20:53 by aschenk          ###   ########.fr        #
+#    Updated: 2024/12/05 14:01:17 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,11 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \
 				$(SRCS_DIR)/utils/2_pixel_utils.c \
 				$(SRCS_DIR)/utils/3_cleanup.c \
-				$(SRCS_DIR)/utils/4_error_exit.c
-#				$(SRCS_DIR)/parsing/errors/errors_elements.c \
+				$(SRCS_DIR)/utils/4_error_exit.c \
+				$(SRCS_DIR)/free/free_array.c \
+				$(SRCS_DIR)/free/free_parsing.c \
+				$(SRCS_DIR)/free/free_scene.c \
+				$(SRCS_DIR)/parsing/errors/errors_elements.c \
 				$(SRCS_DIR)/parsing/errors/errors_unique_elements.c \
 				$(SRCS_DIR)/parsing/errors/errors.c \
 				$(SRCS_DIR)/parsing/errors/set_error_and_return.c \

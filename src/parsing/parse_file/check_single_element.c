@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:46:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 17:16:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:12:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ identifier, like 'A', 'sp', etc.
 @param scene->pars.error_code A variable in the parsing struct that stores
 an error code. If the error code is not 0, the program will print an error
 message and exit.*/
-int	check_single_element(t_scene *scene)
+int	check_single_element(t_tmp_scene *scene)
 {
 	char	*type_id;
 

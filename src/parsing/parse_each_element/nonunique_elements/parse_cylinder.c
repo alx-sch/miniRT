@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 17:22:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:30:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Also keeps track of the count, ultimately storing the total count (how
 many occurences of the object), to be able to allocate memory correctly
 later on.
 Returns 0 upon success, and an error code upon error.*/
-int	parse_cylinder(t_scene *scene)
+int	parse_cylinder(t_tmp_scene *scene)
 {
 	char	**rgb;
 

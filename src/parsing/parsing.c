@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 17:24:50 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:58:00 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 Calls check_unique_identifier to see that there are no duplicates of the
 uppercase objects, and then makes a proper check for each field of the
 element, by calling check_single_element.*/
-int	file_one_line(t_scene *scene, int parse)
+int	file_one_line(t_tmp_scene *scene, int parse)
 {
 	scene->pars.elem_data = ft_split(scene->pars.element, ' ');
 	if (!scene->pars.elem_data)
@@ -39,7 +39,7 @@ int	file_one_line(t_scene *scene, int parse)
 /*Uses get next line to get one line at a time (one element at a time). 
 Passes it to check_elements for each line. Returns 0 upon success, or 
 an error code indicating the issue upon error.*/
-int	file_line_by_line(t_scene *scene, char *str, int parse)
+int	file_line_by_line(t_tmp_scene *scene, char *str, int parse)
 {
 	scene->pars.fd = open(str, O_RDONLY);
 	scene->pars.element = get_next_line(scene->pars.fd);
@@ -64,7 +64,7 @@ int	file_line_by_line(t_scene *scene, char *str, int parse)
 Sets the ambience, camera and light values to the input values,
 but NOT the cylinders, spheres and planes.
 Exits program with an error code and prints error message upon error.*/
-static void	parsing(t_scene *scene, char *file)
+static void	parsing(t_tmp_scene *scene, char *file)
 {
 	file_line_by_line(scene, file, 1);
 	if (scene->pars.error_code != 0)
@@ -77,7 +77,7 @@ static void	parsing(t_scene *scene, char *file)
 
 /*After everything has been parsed, the values of the nonunique-elements 
 (cylinder, plane and sphere) are saved in the t_scene struct.*/
-static void	set_nonunique_elements(t_scene *scene, char *file)
+static void	set_nonunique_elements(t_tmp_scene *scene, char *file)
 {
 	file_line_by_line(scene, file, 0);
 }
@@ -87,9 +87,9 @@ Both the file itself, but also its content. See more of what is
 looked for in 'parsing.h'.
 Prints an error message, and exits with a set error code upon error.
 Returns the t_scene struct upon success.*/
-t_scene	parse_and_set_objects(int argc, char **argv)
+t_tmp_scene	parse_and_set_objects(int argc, char **argv)
 {
-	t_scene	scene;
+	t_tmp_scene	scene;
 
 	init_scene(&scene);
 	if (argc != 2)

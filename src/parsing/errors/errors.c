@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 16:50:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:53:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 file access or not enough object identifiers..*/
 void	errors_file(int error_code)
 {
-	ft_putstr_fd(COLOR_RED, 2);
+	ft_putstr_fd(ERR_COLOR, 2);
 	if (error_code == ERR_USAGE)
 		ft_putstr_fd(ERR_MSG_USAGE, 2);
 	else if (error_code == ERR_FILE_EXTENSION)
@@ -25,7 +25,7 @@ void	errors_file(int error_code)
 		perror(ERR_MSG_FILE_ACCESS);
 	else if (error_code == ERR_MISSING_IDENTIFIER)
 		ft_putstr_fd(ERR_MSG_MISSING_IDENTIFIER, 2);
-	ft_putstr_fd(COLOR_RESET, 2);
+	ft_putstr_fd(RESET, 2);
 	exit(error_code);
 }
 
@@ -43,9 +43,9 @@ static void	non_element_errors(t_pars *parsing)
 		ft_putstr_fd(ERR_MSG_FILE_EMPTY, 2);
 }
 
-void	errors_parsing(t_scene *scene, t_pars *parsing)
+void	errors_parsing(t_tmp_scene *scene, t_pars *parsing)
 {
-	ft_putstr_fd(COLOR_RED, 2);
+	ft_putstr_fd(ERR_COLOR, 2);
 	if (parsing->error_code >= 4 && parsing->error_code <= 8)
 		non_element_errors(parsing);
 	else if (parsing->error_code >= 9 && parsing->error_code <= 12)
@@ -60,6 +60,6 @@ void	errors_parsing(t_scene *scene, t_pars *parsing)
 		plane_errors(parsing, scene->tot_pl);
 	else if (parsing->error_code >= 40 && parsing->error_code <= 49)
 		cylinder_errors(parsing, scene->tot_cy);
-	ft_putstr_fd(COLOR_RESET, 2);
+	ft_putstr_fd(RESET, 2);
 	free_scene_and_exit(scene);
 }

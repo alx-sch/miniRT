@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 17:22:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:30:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ Also keeps track of the count, ultimately storing the total count (how
 many occurences of the object), to be able to allocate memory correctly
 later on.
 Returns 0 upon success, and an error code upon error.*/
-int	parse_sphere(t_scene *scene)
+int	parse_sphere(t_tmp_scene *scene)
 {
 	char	**rgb;
 

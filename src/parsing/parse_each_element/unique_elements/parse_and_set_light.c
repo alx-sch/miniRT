@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 17:11:19 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:57:32 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 Returns 0 if it is within the range.
 Returns an error code if it's too small or too big, if mem allocation
 failed, or if consists of anything else than number, '+', '-' or dec point..*/
-static int	light_brightness(t_scene *scene, int *parsing_error)
+static int	light_brightness(t_tmp_scene *scene, int *parsing_error)
 {
 	char	*sub;
 
@@ -29,12 +29,12 @@ static int	light_brightness(t_scene *scene, int *parsing_error)
 		ft_strchr_index(scene->pars.elem_data[2], '\n'));
 		if (!sub)
 			return (set_error_and_return(NULL, &parsing_error, ERR_MEM_ALLOC));
-		scene->light.bright = ft_atod(sub);
+		scene->light.ratio = ft_atod(sub);
 		free(sub);
 	}
 	else
-		scene->light.bright = ft_atod(scene->pars.elem_data[2]);
-	if (scene->light.bright < 0 || scene->light.bright > 1)
+		scene->light.ratio = ft_atod(scene->pars.elem_data[2]);
+	if (scene->light.ratio < 0 || scene->light.ratio > 1)
 		return (set_error_and_return(NULL, &parsing_error, \
 		ERR_LIGHT_BRIGHTNESS));
 	return (0);
@@ -44,7 +44,7 @@ static int	light_brightness(t_scene *scene, int *parsing_error)
 less than 255.
 Returns 0 and sets the value if it is within the range.
 Returns 1 if it's too small or too big.*/
-static int	set_rgb_value_light(char *input_value, t_scene *scene, int rgb)
+static int	set_rgb_value_light(char *input_value, t_tmp_scene *scene, int rgb)
 {
 	int	value;
 
@@ -52,11 +52,11 @@ static int	set_rgb_value_light(char *input_value, t_scene *scene, int rgb)
 	if (value < 0 || value > 255)
 		return (1);
 	if (rgb == 0)
-		scene->light.color_r = value;
+		scene->light.color.r = value;
 	else if (rgb == 1)
-		scene->light.color_g = value;
+		scene->light.color.g = value;
 	else if (rgb == 2)
-		scene->light.color_b = value;
+		scene->light.color.b = value;
 	return (0);
 }
 
@@ -66,7 +66,7 @@ static int	set_rgb_value_light(char *input_value, t_scene *scene, int rgb)
 number will be followed by a newline).
 3. Checks if they are all in range of 0 to 255.
 If an error occurs, a correct error code is set.*/
-static int	light_color(t_scene *scene, char **rgb)
+static int	light_color(t_tmp_scene *scene, char **rgb)
 {
 	int		value;
 
@@ -91,7 +91,7 @@ static int	light_color(t_scene *scene, char **rgb)
 3. Checks if the light brightness is valid (between 0 and 1).
 4. Checks if the color values are valid (only if there are 4 fields).
 Sets all values and returns 0 upon success, and an error code upon error.*/
-int	parse_and_set_light(t_scene *scene)
+int	parse_and_set_light(t_tmp_scene *scene)
 {
 	int		arr_len;
 	char	**rgb;

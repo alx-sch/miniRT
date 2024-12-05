@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:58:28 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 16:52:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:46:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	init_parsing(t_pars *parsing)
 }
 
 /*Initializes all values of the t_scene struct to 0.*/
-void	init_scene(t_scene *scene)
+void	init_scene(t_tmp_scene *scene)
 {
 	init_parsing(&scene->pars);
 	init_ambience(&scene->amb);
 	init_camera(&scene->cam);
 	init_light(&scene->light);
-	scene->sp = NULL;
-	scene->pl = NULL;
-	scene->cy = NULL;
+	scene->sphere = NULL;
+	scene->plane = NULL;
+	scene->cyl = NULL;
 	scene->tot_cy = 0;
 	scene->tot_pl = 0;
 	scene->tot_sp = 0;

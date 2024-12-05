@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 18:42:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:31:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,27 +225,25 @@ void	create_simple_scene(t_rt *rt)
 
 int	main(int argc, char **argv)
 {
-	t_rt	*rt;
-	//t_scene	scene;
+	t_rt		*rt;
+	t_tmp_scene	scene;
 
 	rt = ft_calloc(1, sizeof(t_rt));
 	if (!rt)
 		cleanup_error_exit(ERR_MALLOC, NULL);
+	scene = parse_and_set_objects(argc, argv);
+	free_scene(&scene);
+    // create_simple_scene(rt);
 
-    (void)argc;
-    (void)argv;
-   // scene = parse_and_set_objects(argc, argv);
+	// init_mlx(rt);
 
-    create_simple_scene(rt);
+	// render_scene(rt, BLACK); // render a simple scene without shadows, lighting considerations etc.
 
-	init_mlx(rt);
+	// //fill_image(rt, RED); // just for testing to see if image shown in window
 
-	render_scene(rt, BLACK); // render a simple scene without shadows, lighting considerations etc.
+	// mlx_put_image_to_window(rt->mlx.mlx_ptr, rt->mlx.win_ptr,
+	// 	rt->mlx.img.img_ptr, 0, 0);
 
-	//fill_image(rt, RED); // just for testing to see if image shown in window
-
-	mlx_put_image_to_window(rt->mlx.mlx_ptr, rt->mlx.win_ptr,
-		rt->mlx.img.img_ptr, 0, 0);
-
-	start_event_loop(rt);
+	// start_event_loop(rt);
+	free(rt);
 }
