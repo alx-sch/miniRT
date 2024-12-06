@@ -1,16 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_sphere.c                                     :+:      :+:    :+:   */
+/*   sp_parse_and_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/05 13:30:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:56:12 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+/*Stores all the data of the current sphere in the linked list of objects.*/
+int	set_sphere(t_scene *scene)
+{
+	t_obj_data	*obj_data;
+	char		**rgb;
+
+	obj_data = malloc(sizeof(t_obj_data));
+	if (!obj_data)
+		return (ERR_MEM_ALLOC);
+	obj_data->sp.object_type = SPHERE;
+	if (set_coordinates(scene->pars.elem_data[1], &obj_data->sp.center.x, \
+		&obj_data->sp.center.y, &obj_data->sp.center.z) != 0)
+		return (ERR_MEM_ALLOC);
+	obj_data->sp.radius = (ft_atod(scene->pars.elem_data[2]) / 2);
+	rgb = ft_split(scene->pars.elem_data[3], ',');
+	if (!rgb)
+		return (ERR_MEM_ALLOC);
+	set_color(rgb, &obj_data->sp.color.r, &obj_data->sp.color.g, \
+	&obj_data->sp.color.b);
+	obj_data->sp.ixd.oc = vec3_sub(scene->cam.position, obj_data->sp.center);
+	obj_data->sp.ixd.c = vec3_dot(obj_data->sp.ixd.oc, \
+	obj_data->sp.ixd.oc) - (obj_data->sp.radius * obj_data->sp.radius);
+	if (add_to_object_list(&scene, &obj_data) != 0)
+		return (ERR_MEM_ALLOC);
+	return (0);
+}
 
 /*Parses a sphere object.
 1. Checks if there's a correct amount of fields (4).
@@ -21,7 +48,7 @@ Also keeps track of the count, ultimately storing the total count (how
 many occurences of the object), to be able to allocate memory correctly
 later on.
 Returns 0 upon success, and an error code upon error.*/
-int	parse_sphere(t_tmp_scene *scene)
+int	parse_sphere(t_scene *scene)
 {
 	char	**rgb;
 
@@ -42,5 +69,5 @@ int	parse_sphere(t_tmp_scene *scene)
 		return (scene->pars.error_code);
 	}
 	ft_freearray(rgb);
-	return (0);
+	return (set_sphere(scene));
 }

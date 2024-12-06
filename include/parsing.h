@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/05 13:58:50 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:51:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,115 +225,14 @@ of a double.\n"
 0 and 255.\n"
 
 /*
-	STRUCTS -- PARSING
-*/
-
-typedef struct s_pars
-{
-	int		a_found;
-	int		c_found;
-	int		l_found;
-	int		fd;
-	int		error_code;
-	char	*element;
-	char	**elem_data;
-	int		sp_count;
-	int		cy_count;
-	int		pl_count;
-}	t_pars;
-
-// typedef struct s_ambience
-// {
-// 	double			light;
-// 	unsigned char	color_r;
-// 	unsigned char	color_g;
-// 	unsigned char	color_b;
-// }	t_amb;
-
-// typedef struct s_camera
-// {
-// 	double			x;
-// 	double			y;
-// 	double			z;
-// 	double			vec_x;
-// 	double			vec_y;
-// 	double			vec_z;
-// 	unsigned char	field;
-// }	t_cam;
-
-// typedef struct s_light
-// {
-// 	double			x;
-// 	double			y;
-// 	double			z;
-// 	double			bright;
-// 	unsigned char	color_r;
-// 	unsigned char	color_g;
-// 	unsigned char	color_b;
-// }	t_light;
-
-// typedef struct s_sp
-// {
-// 	double			x;
-// 	double			y;
-// 	double			z;
-// 	double			dm;
-// 	unsigned char	color_r;
-// 	unsigned char	color_g;
-// 	unsigned char	color_b;
-// }	t_sp;
-
-// typedef struct s_pl
-// {
-// 	double			x;
-// 	double			y;
-// 	double			z;
-// 	double			vec_x;
-// 	double			vec_y;
-// 	double			vec_z;
-// 	unsigned char	color_r;
-// 	unsigned char	color_g;
-// 	unsigned char	color_b;
-// }	t_pl;
-
-// typedef struct s_cy
-// {
-// 	double			x;
-// 	double			y;
-// 	double			z;
-// 	double			vec_x;
-// 	double			vec_y;
-// 	double			vec_z;
-// 	double			dm;
-// 	double			height;
-// 	unsigned char	color_r;
-// 	unsigned char	color_g;
-// 	unsigned char	color_b;
-// }	t_cy;
-
-typedef struct s_tmp_scene
-{
-	t_pars			pars;
-	t_ambi_light	amb;
-	t_cam			cam;
-	t_light			light;
-	t_cylinder		*cyl;
-	t_plane			*plane;
-	t_sphere		*sphere;
-	int				tot_sp;
-	int				tot_cy;
-	int				tot_pl;
-}	t_tmp_scene;
-
-/*
 	FUNCTIONS -- PARSING
 */
 
-t_tmp_scene	parse_and_set_objects(int argc, char **argv);
+void		parse_and_set_objects(t_rt *rt, int argc, char **argv);
 
 // PARSING -- ERRORS
-void		errors_file(int error_code);
-void		errors_parsing(t_tmp_scene *scene, t_pars *pars);
+void		errors_file(int error_code, t_rt *rt);
+void		errors_parsing(t_rt *rt, t_scene *scene, t_pars *pars);
 void		ambience_errors(t_pars *parsing);
 void		camera_errors(t_pars *parsing);
 void		light_errors(t_pars *parsing);
@@ -345,33 +244,27 @@ int error_code);
 
 // PARSING -- INITS
 void		init_parsing(t_pars *parsing);
-void		init_scene(t_tmp_scene *scene);
+void		init_scene(t_scene *scene);
 void		init_ambience(t_ambi_light *amb);
 void		init_camera(t_cam *cam);
 void		init_light(t_light *light);
-void		init_sphere(t_sphere *sp);
-void		init_plane(t_plane *pl);
-void		init_cylinder(t_cylinder *cy);
-int			allocate_nonunique_elements(t_tmp_scene *scene);
 
 // PARSING -- PARSE EACH ELEMENT
 int			correct_amt_of_fields(char **arr, int expected_len);
-int			parse_and_set_ambience(t_tmp_scene *scene);
-int			parse_and_set_camera(t_tmp_scene *scene);
-int			parse_and_set_light(t_tmp_scene *scene);
-int			parse_sphere(t_tmp_scene *scene);
-int			parse_plane(t_tmp_scene *scene);
-int			parse_cylinder(t_tmp_scene *scene);
+int			parse_and_set_ambience(t_scene *scene);
+int			parse_and_set_camera(t_scene *scene);
+int			parse_and_set_light(t_scene *scene);
+int			parse_sphere(t_scene *scene);
+int			parse_plane(t_scene *scene);
+int			parse_cylinder(t_scene *scene);
 int			check_coordinates(char *input_coords, int *parsing_error, \
 int error_code);
 int			check_orientation_vector(char *input_coords, int *parsing_error, \
 int error_code);
 int			check_color(char **rgb, int *parsing_error, int error_code);
+int			add_to_object_list(t_scene **scene, t_obj_data **obj_data);
 
 // PARSING -- SET EACH ELEMENT
-int			set_cylinder(t_tmp_scene *scene, t_cylinder *cy);
-int			set_plane(t_tmp_scene *scene, t_plane *pl);
-int			set_sphere(t_tmp_scene *scene, t_sphere *sp);
 int			set_coordinates(char *input_coords, double *x, double *y, \
 double *z);
 int			set_orientation_vector(char *input_coords, double *x, double *y, \
@@ -384,7 +277,6 @@ int			all_necessary_identifiers(t_pars *pars);
 int			check_file_existence(char *str);
 int			check_file_extension(char *str);
 int			check_unique_identifier(t_pars *parsing, char *str);
-int			check_single_element(t_tmp_scene *scene);
-int			set_single_element(t_tmp_scene *scene);
+int			check_and_set_single_element(t_scene *scene);
 
 #endif

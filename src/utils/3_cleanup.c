@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_cleanup.c                                        :+:      :+:    :+:   */
+/*   3_cleanup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:59 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:18:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/06 16:00:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	cleanup(t_rt **rt_ptr)
 	rt = *rt_ptr;
 	cleanup_mlx(rt);
 	ft_lstclear(&rt->scene.objs, del_token);
-	// Add more free calls here
 	free(rt);
 	*rt_ptr = NULL;
 }

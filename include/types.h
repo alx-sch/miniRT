@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/05 13:56:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:31:07 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,28 @@ typedef struct s_camera
 	double		fov;
 }	t_cam;
 
+/*
+Structure representing the parts needed for parsing.
+- int 'a_found', 'c_found' and 'l_found':
+Ambient light, camera and light are all unique objects, so these variables 
+indicate if they occure more than once.
+- int 'fd':				Used to store the file descriptor of the .rt-file.
+- int 'error_code':		Used to store the error code indicating the issue.
+- char *element:		Used to store a line from the rt-file, using gnl.
+- char **elem_data:		Used to store a line from the rt-file, separated by
+spaces.
+*/
+typedef struct s_pars
+{
+	int		a_found;
+	int		c_found;
+	int		l_found;
+	int		fd;
+	int		error_code;
+	char	*element;
+	char	**elem_data;
+}	t_pars;
+
 /**
 Structure representing the entire scene.
 - t_ambi_light `ambient_light`:	The ambient light in the scene.
@@ -258,10 +280,14 @@ Structure representing the entire scene.
 */
 typedef struct s_scene
 {
+	t_pars			pars;
 	t_ambi_light	ambi_light;
 	t_light			light;
 	t_cam			cam;
 	t_list			*objs;
+	int				tot_cyl;
+	int				tot_sp;
+	int				tot_pl;
 }	t_scene;
 
 //####################

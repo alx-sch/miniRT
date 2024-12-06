@@ -1,16 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_plane.c                                      :+:      :+:    :+:   */
+/*   pl_parse_and_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/05 13:30:10 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:56:22 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+/*Stores all the data of the current plane in the linked list of objects.*/
+int	set_plane(t_scene *scene)
+{
+	t_obj_data	*obj_data;
+	char		**rgb;
+
+	obj_data = malloc(sizeof(t_obj_data));
+	if (!obj_data)
+		return (ERR_MEM_ALLOC);
+	obj_data->sp.object_type = PLANE;
+	if (set_coordinates(scene->pars.elem_data[1], \
+	&obj_data->pl.point_in_plane.x, &obj_data->pl.point_in_plane.y, \
+	&obj_data->pl.point_in_plane.z) != 0)
+		return (ERR_MEM_ALLOC);
+	if (set_orientation_vector(scene->pars.elem_data[2], \
+		&obj_data->pl.normal.x, &obj_data->pl.normal.y, \
+		&obj_data->pl.normal.z))
+		return (ERR_MEM_ALLOC);
+	rgb = ft_split(scene->pars.elem_data[3], ',');
+	if (!rgb)
+		return (ERR_MEM_ALLOC);
+	set_color(rgb, &obj_data->pl.color.r, &obj_data->pl.color.g, \
+	&obj_data->pl.color.b);
+	obj_data->pl.ixd.difference = vec3_sub(obj_data->pl.point_in_plane, \
+		scene->cam.position);
+	if (add_to_object_list(&scene, &obj_data) != 0)
+		return (ERR_MEM_ALLOC);
+	return (0);
+}
 
 /*Parses a plane object.
 1. Checks if there's a correct amount of fields (4).
@@ -21,7 +51,7 @@ Also keeps track of the count, ultimately storing the total count (how
 many occurences of the object), to be able to allocate memory correctly
 later on.
 Returns 0 upon success, and an error code upon error.*/
-int	parse_plane(t_tmp_scene *scene)
+int	parse_plane(t_scene *scene)
 {
 	char	**rgb;
 
@@ -43,5 +73,5 @@ int	parse_plane(t_tmp_scene *scene)
 		return (scene->pars.error_code);
 	}
 	ft_freearray(rgb);
-	return (0);
+	return (set_plane(scene));
 }

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/05 13:55:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:36:54 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	cleanup_error_exit(char *msg, t_rt *rt);
 
 void	free_parsing(t_pars *parsing);
 int		ft_freearray(char **arr);
-void	free_scene_and_exit(t_tmp_scene *scene);
-void	free_scene(t_tmp_scene *scene);
+void	free_scene_and_exit(t_scene *scene, t_rt *rt);
+void	free_scene(t_scene *scene);
 
 // GENERAL -- UTILS
 
@@ -119,5 +119,6 @@ int		only_numbers_and_newline(char *str);
 int		only_numbers_dec_pt_and_newline(char *str);
 int		only_numbers_single_signs_and_dec_pt(char *str);
 int		only_numbers_and_dec_pt(char *str);
+char	**ft_split_by_spaces(const char *s);
 
 #endif

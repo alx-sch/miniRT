@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_color.c                                        :+:      :+:    :+:   */
+/*   add_to_object_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 17:00:45 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 17:18:27 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/12/06 14:17:16 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/12/06 15:55:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-/*Sets the color values of an object.*/
-void	set_color(char **rgb, unsigned char *r, unsigned char *g, \
-unsigned char *b)
+/*Adds an object to the linked list of objects.*/
+int	add_to_object_list(t_scene **scene, t_obj_data **obj_data)
 {
-	*r = ft_atoi(rgb[0]);
-	*g = ft_atoi(rgb[1]);
-	*b = ft_atoi(rgb[2]);
+	t_list	*obj_node;
+
+	obj_node = ft_lstnew(*obj_data);
+	if (!obj_node)
+	{
+		free(obj_data);
+		return (ERR_MEM_ALLOC);
+	}
+	ft_lstadd_back(&(*scene)->objs, obj_node);
+	return (0);
 }

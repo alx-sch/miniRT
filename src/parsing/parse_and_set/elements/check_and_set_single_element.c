@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_single_element.c                             :+:      :+:    :+:   */
+/*   check_and_set_single_element.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:46:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/05 13:12:05 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:55:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,14 @@
 /*
 Checks the current type identifier, and checks if everything is correct,
 depending on the type. If the line is empty, it ignores it.
-For unique identifiers -> ambience, camera and light -- it will both
-be checked and the values will be saved.
-For nonunique identifiers -> cylinder, plane and sphere -- it will only
-be checked and the values will not be saved.
+All identifiers will first be checked, and if everything is valid,
+the values will be saved.
 @param type_id The first field of each element, the type
 identifier, like 'A', 'sp', etc.
 @param scene->pars.error_code A variable in the parsing struct that stores
 an error code. If the error code is not 0, the program will print an error
 message and exit.*/
-int	check_single_element(t_tmp_scene *scene)
+int	check_and_set_single_element(t_scene *scene)
 {
 	char	*type_id;
 
