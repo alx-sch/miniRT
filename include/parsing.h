@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:51:43 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:25:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,16 @@
 
 	The main structure of the parsing is as follows:
 	1. Checks file related errors -- like file permissions, existence etc.
-	2. When all the identifiers are being parsed, it will check all the lines
-	of the file, but ONLY ambience, camera and light will be SET to the input
-	values. The nonunique elements (cylinders, spheres, planes) will only
-	be validated, but not checked.
-	3. The reason for this, is that they are all getting stored in arrays
-	of nonunique elements, and the total count of each object is required before
-	any assignation happens.
-	4. So after everything is validated, the nonunique elements will all
-	ultimately be set to their appropriate values.
-	5. When parsing is done, the t_scene struct will contain all the values
-	from the .rt-file.
+	2. Reads the file line by line, and splits each line into several fields
+	using ft_split_by_spaces.
+	3. Parses each single line, and if everything is valid, it stores all
+	values.
+		--> For unique elements, there are designated spots in the t_scene
+		struct.
+		--> For nonunique elements, an object node is added to the linked list 
+		of t_scene struct, which will ultimately contain all the objects.
+	4. If there are no errors after parsing is done - the t_scene will be
+	populated with all the data from the rt-file.
 */
 
 /*
@@ -228,55 +227,81 @@ of a double.\n"
 	FUNCTIONS -- PARSING
 */
 
+// parsing.c
 void		parse_and_set_objects(t_rt *rt, int argc, char **argv);
 
-// PARSING -- ERRORS
-void		errors_file(int error_code, t_rt *rt);
-void		errors_parsing(t_rt *rt, t_scene *scene, t_pars *pars);
-void		ambience_errors(t_pars *parsing);
-void		camera_errors(t_pars *parsing);
-void		light_errors(t_pars *parsing);
+// errors_elements.c
 void		sphere_errors(t_pars *parsing, int count);
 void		plane_errors(t_pars *parsing, int count);
 void		cylinder_errors(t_pars *parsing, int count);
+
+// errors_unique_elements.c
+void		ambience_errors(t_pars *parsing);
+void		camera_errors(t_pars *parsing);
+void		light_errors(t_pars *parsing);
+
+// errors.c
+void		errors_file(int error_code, t_rt *rt);
+void		errors_parsing(t_rt *rt, t_scene *scene, t_pars *pars);
+
+// set_error_and_return.c
 int			set_error_and_return(char **arr, int **parsing_error, \
 int error_code);
 
-// PARSING -- INITS
+// init_scene.c
 void		init_parsing(t_pars *parsing);
 void		init_scene(t_scene *scene);
+
+// init_unique_elements.c
 void		init_ambience(t_ambi_light *amb);
 void		init_camera(t_cam *cam);
 void		init_light(t_light *light);
 
-// PARSING -- PARSE EACH ELEMENT
+// check_color.c
+int			check_color(char **rgb, int *parsing_error, int error_code);
+
+// check_coordinates.c
+int			check_coordinates(char *input_coords, int *parsing_error, \
+int error_code);
+
+// check_file.c
+int			check_file_existence(char *str);
+int			check_file_extension(char *str);
+
+// check_identifiers.c
+int			all_necessary_identifiers(t_pars *pars);
+int			check_unique_identifier(t_pars *parsing, char *str);
+
+// check_orientation_vector.c
+int			check_orientation_vector(char *input_coords, int *parsing_error, \
+int error_code);
+
+// correct_amt_of_fields.c
 int			correct_amt_of_fields(char **arr, int expected_len);
+
+// add_to_object_list.c
+int			add_to_object_list(t_scene **scene, t_obj_data **obj_data);
+
+// check_and_set_single_element.c
+int			check_and_set_single_element(t_scene *scene);
+
+// Directory: src/parsing/parse_and_set/elements/check_and_set
+// Containing parsing and setting all values of each object.
 int			parse_and_set_ambience(t_scene *scene);
 int			parse_and_set_camera(t_scene *scene);
 int			parse_and_set_light(t_scene *scene);
 int			parse_sphere(t_scene *scene);
 int			parse_plane(t_scene *scene);
 int			parse_cylinder(t_scene *scene);
-int			check_coordinates(char *input_coords, int *parsing_error, \
-int error_code);
-int			check_orientation_vector(char *input_coords, int *parsing_error, \
-int error_code);
-int			check_color(char **rgb, int *parsing_error, int error_code);
-int			add_to_object_list(t_scene **scene, t_obj_data **obj_data);
 
-// PARSING -- SET EACH ELEMENT
+// Directory: src/parsing/parse_and_set/set_data
+// Containing three files with one function each - for setting coordinates,
+// orientation vector and color to the correct values.
 int			set_coordinates(char *input_coords, double *x, double *y, \
 double *z);
 int			set_orientation_vector(char *input_coords, double *x, double *y, \
 double *z);
 void		set_color(char **rgb, unsigned char *r, unsigned char *g, \
 unsigned char *b);
-
-// PARSING -- PARSE FILE
-int			all_necessary_identifiers(t_pars *pars);
-int			check_file_existence(char *str);
-int			check_file_extension(char *str);
-int			check_unique_identifier(t_pars *parsing, char *str);
-int			check_and_set_single_element(t_scene *scene);
 
 #endif
