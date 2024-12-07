@@ -555,7 +555,7 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 ```
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
-<p align="center">The blue and red cylinders are finite in height but have no caps.</p>
+<p align="center">The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</p>
 
 #### Accounting for End Caps
 
