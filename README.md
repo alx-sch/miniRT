@@ -649,20 +649,20 @@ Precomputing these constants reduced my computation time by two-thirds for the s
 
 ## Projection of 3D scene onto 2D Screen
 
-<div style="display: block;">
-<img width="600" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
-</div>
-
-<div style="display: block;">
-<img width="830" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-</div>
-
 ### The Geometry of Perspective Projection
 
 A camera can be thought of as having a **pinhole model**:
-- Rays originate from the camera's position (the "eye") and pass through a rectangular screen plane.
+- Rays originate from the camera's position (the "eye") and pass through a rectangular screen plane (the viewport).
 - The field of view (FOV) defines the angular range visible to the camera.
 - The view frustum is a truncated pyramid extending from the camera, with the rectangular screen as its base.
+
+<div align="center"">
+<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
+</div>
+
+<div align="center">
+<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
+</div>
 
 The **FOV** is the angle between the top and bottom edges of the view frustum (for vertical FOV) or between the left and right edges (for horizontal FOV).
 
