@@ -707,7 +707,7 @@ The direction of a ray corresponding to a pixel on the viewport is calculated us
 **Steps to Calculate Ray Direction:**
 
 1. **FOV Scaling Factor:**    
-   The tangent of half the horizontal FOV defines how much the view scales with distance.
+   The tangent of half the vertical FOV defines how much the view scales with distance.
    
 $$
 \text{scale} = \tan\left(\frac{\text{FOV}_v}{2}\right) \text{(converted into radians)}
@@ -721,8 +721,56 @@ $$
    We map these screen pixel positions (`x`, `y`) to a range of [-1, 1] so they are consistent and independent of the screen's resolution:
    - **Horizontal NDC Mapping:** `norm_x = (2.0 * (x + 0.5) / WINDOW_W) - 1.0` ensures that the leftmost pixel maps to `-1` and the rightmost pixel maps to `1`. The term `(x + 0.5)` ensures to center the mapping is at the pixel's center rather than at the pixel's edge (so the values for `norm_x` are close to but not exactly `-1` and `1`, differing by a small fraction).
    - **Vertical NDC Mapping:** `norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H))`, with the topmost pixel mapping to `1` and bottommost one mapping to `-1`. Similar to the horizontal case, `(y + 0.5)` ensures the mapping is centered on the pixel.
-   
-5. asas
 
-### Ray Direction
+3. **Aspect Ratio Adjustment:**    
+  The aspect ratio ensures that the spatial proportions of objects remain accurate across displays with different width-to-height ratios. Without this adjustment, objects might appear 
+  stretched or squished, especially on non-square screens. 
 
+   The aspect ratio is defined as `aspect_ratio = WINDOW_W / WINDOW_H`.
+  
+    In this implementation, the vertical FOV is used as the starting point for perspective projection calculations. This means that the vertical dimensions are already 
+  correctly scaled according to the screen height and FOV.   
+  
+    Thus, the aspect ratio is applied to the horizontal NDC calculation only: `norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio`
+  
+4. **Putting It All Together:**  
+   - Map pixel indices (`x`, `y`) to the normalized device coordinate range [-1, 1].
+   - Adjust horizontal values by the aspect ratio to maintain spatial proportions for non-square displays.
+   - Scale both normalized x and y values by the field of view's scaling factor derived from the tangent of half the vertical FOV.
+   - Normalize these values to ensure they map correctly to 3D space for ray calculations.
+
+```C
+/**
+Compute the direction vector of a ray passing through a given pixel in the camera's view.
+
+ @param x	The horizontal pixel coordinate on the screen.
+ @param y	The vertical pixel coordinate on the screen.
+ @param cam	The camera object containing the FOV in degrees.
+
+ @return	The normalized direction vector of the ray in camera space.
+*/
+t_vec3	compute_ray_direction(int x, int y, t_cam cam)
+{
+	double	scale;		// Scaling factor from the vertical FOV
+	double	aspect_ratio;	// Ratio of screen width to height
+	double	norm_x;		// Normalized x-coordinate in NDC
+	double	norm_y;		// Normalized y-coordinate in NDC
+	t_vec3	ray_dir;	// Ray direction vector
+
+	scale = tan((cam.fov / 2) * M_PI / 180.0);
+
+	aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
+
+	// Map pixel coordinates to normalized device coordinates (NDC)
+	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio * scale;
+	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * scale;
+
+	// Construct the direction vector in camera space
+	ray_dir.x = norm_x;
+	ray_dir.y = norm_y;
+	ray_dir.z = 1.0;	// Pointing forward in camera space.
+
+	 // Normalize the direction vector to ensure it has a unit length
+	return (vec3_norm(ray_dir));
+}
+```
