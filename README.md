@@ -667,11 +667,26 @@ A camera can be thought of as having a **pinhole model**:
 The **FOV** is the angle between the top and bottom edges of the view frustum (for vertical FOV) or between the left and right edges (for horizontal FOV).
 
 For vertical FOV ($\text{FOV}_v$):
-1. Imagine a right triangle formed by:
+- Imagine a right triangle formed by:
    - The center of the camera as the vertex.
    - A point on the top edge of the screen as one endpoint.
    - The center of the screen as the other endpoint.
-2. The angle between the screen center and the top edge of the frustum is $\frac{\text{FOV}_v}{2}$
+- The angle between the screen center and the top edge of the frustum is $\frac{\text{FOV}_v}{2}$.
+- From trigonometry, the tangent of an angle in a right triangle is defined as:
+
+$$
+\tan(\text{angle}) = \frac{\text{opposite}}{\text{adjacent}}
+$$
+
+- For $\frac{\text{FOV}_v}{2}$ this becomes:
+
+$$
+\tan\left(\frac{\text{FOV}_v}{2}\right) = \frac{\text{Half the Screen Height}}{\text{Distance to Screen}}
+$$
+
+<div align="center">
+<img width="350" alt="tan_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/tan_FOV.png">  
+</div>
 
 ### Ray Direction
 
