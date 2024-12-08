@@ -491,6 +491,10 @@ $$
 -\frac{h}{2} \leq \text{Projection Length} \leq \frac{h}{2}
 $$
 
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_cyl_height.png" alt="ray_cyl_height.png" width="350"/>
+</p>
+
 ```C
 /**
 Function to check whether a given intersection point on an infinite cylinder lies
