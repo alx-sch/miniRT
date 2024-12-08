@@ -668,7 +668,7 @@ The **FOV** is the angle between the top and bottom edges of the view frustum (f
 
 For vertical FOV ($\text{FOV}_v$):
 1. Imagine a right triangle formed by:
-   - The center of the camera ($\text{O}$) as the vertex.
+   - The center of the camera as the vertex.
    - A point on the top edge of the screen as one endpoint.
    - The center of the screen as the other endpoint.
 2. The angle between the screen center and the top edge of the frustum is $\frac{\text{FOV}_v}{2}$
