@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_and_set_light.c                              :+:      :+:    :+:   */
+/*   light_parse_and_set.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 12:57:17 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/08 17:29:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	light_brightness(t_scene *scene, int *parsing_error)
 	return (0);
 }
 
-/*Checks if the current value is greater than or equal to 0 or 
+/*Checks if the current value is greater than or equal to 0 or
 less than 255.
 Returns 0 and sets the value if it is within the range.
 Returns 1 if it's too small or too big.*/
@@ -68,9 +68,6 @@ number will be followed by a newline).
 If an error occurs, a correct error code is set.*/
 static int	light_color(t_scene *scene, char **rgb)
 {
-	int		value;
-
-	value = 0;
 	if (array_length(rgb) != 3 || rgb[2][0] == '\n')
 		return (ERR_LIGHT_COLOR_FIELDS);
 	if (!only_numbers_and_newline(rgb[0]) || !only_numbers_and_newline(rgb[1])
