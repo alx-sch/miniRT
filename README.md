@@ -651,10 +651,10 @@ Precomputing these constants reduced my computation time by two-thirds for the s
 
 ### The Geometry of Perspective Projection
 
-A camera can be thought of as having a **pinhole model**:
-- Rays originate from the camera's position (the "eye") and pass through a rectangular screen plane (the viewport).
-- The field of view (FOV) defines the angular range visible to the camera.
-- The view frustum is a truncated pyramid extending from the camera, with the rectangular screen as its base.
+A **pinhole camera model** can be used to describe how a 3D scene is projected onto a 2D screen (viewport). The pinhole model has the following properties
+- Rays originate from the camera's position (the "eye") and pass through a virtual screen plane (the viewport).
+- The **field of view (FOV)** defines the angular range visible to the camera, which determines the extent of the scene captured.
+- The **view frustum** is a truncated pyramid extending from the camera's position toward the viewport. The rectangular screen at the base of the frustum defines the visible scene.
 
 <div align="center"">
 <img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
@@ -664,29 +664,63 @@ A camera can be thought of as having a **pinhole model**:
 <img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
 </div>
 
-The **FOV** is the angle between the top and bottom edges of the view frustum (for vertical FOV) or between the left and right edges (for horizontal FOV).
+### Ray Direction Calculation
 
-For vertical FOV ($\text{FOV}_v$):
-- Imagine a right triangle formed by:
-   - The center of the camera as the vertex.
-   - A point on the top edge of the screen as one endpoint.
-   - The center of the screen as the other endpoint.
-- The angle between the screen center and the top edge of the frustum is $\frac{\text{FOV}_v}{2}$.
-- From trigonometry, the tangent of an angle in a right triangle is defined as:
+The **Field of View (FOV)** represents how much of the 3D scene is visible to the camera. Depending on the orientation of the camera, the FOV could be horizontal or vertical:
 
-$$
-\tan(\text{angle}) = \frac{\text{opposite}}{\text{adjacent}}
-$$
+- The vertical FOV ($\text{FOV}_v$) is the angle between the top and bottom edges of the view frustum.
+- The horizontal FOV ($\text{FOV}_h$) is the angle between the left and right edges of the view frustum.
 
-- For $\frac{\text{FOV}_v}{2}$ this becomes:
+Vertical FOV is often the most common in graphics programming, but horizontal FOV can also be defined depending on the viewport dimensions.
+
+To calculate how this FOV scales the projection from 3D space onto 2D screen space, we employ trigonometric functions, specifically the tangent function.
+
+### Geometric Relationship Using Tangent
+
+Imagine a right triangle formed by:
+1. The **camera's position** (the "eye") as the vertex.
+2. **A point on the top edge** of the screen as one endpoint.
+3. **The center of the screen** as the other endpoint.
+
+The angle between the screen's center and the top edge of the frustum corresponds to $\frac{\text{FOV}_v}{2}$.   
+
+Using $\tan(\text{angle}) = \frac{\text{opposite}}{\text{adjacent}}$, we can represent this relationship mathematically:
 
 $$
 \tan\left(\frac{\text{FOV}_v}{2}\right) = \frac{\text{Half the Screen Height}}{\text{Distance to Screen}}
 $$
 
-<div align="center">
-<img width="350" alt="tan_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/tan_FOV.png">  
-</div>
+<p align="center">
+	<img width="350" alt="tan_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/tan_FOV.png">  
+<p align="center"> </p>
+
+
+The tangent function defines the "scaling factor" that maps world-space distances to screen-space distances, ensuring that closer objects appear larger and distant objects appear smaller.   
+Changing the FOV changes $\tan\left(\frac{\text{FOV}_v}{2}\right)$, which directly affects the scaling. A wider FOV results in a smaller tangent value, making objects appear farther away (and vice versa).
+
+In C, trigonometric functions expect their input angles to be in radians, not degrees. Therefore, the FOV angle is converted using the formula $Radians = Degrees \times \frac{\pi}{180}$ in the function below
+
+### Ray Direction Calculation
+
+The direction of a ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
+
+**Steps to Calculate Ray Direction:**
+
+1. **FOV Scaling Factor:**    
+   The tangent of half the horizontal FOV defines how much the view scales with distance.
+   
+$$
+\text{scale} = \tan\left(\frac{\text{FOV}_v}{2}\right) \text{(converted into radians)}
+$$
+
+2. **Normalization of Pixel Coordinates:**    
+   When projecting a 3D scene from world space to a 2D viewport, we need to map the 2D pixel coordinates of the screen to a common mathematical range known as **normalized device 
+   coordinates (NDC)**. These coordinates range from -1 to 1 in both horizontal and vertical directions. This mapping allows the rendering process to operate independently of the actual 
+   screen resolution, making the projection consistent regardless of the screen size.
+
+   We map these screen pixel positions (`x`, `y`) to a range of [-1, 1] so they are consistent and independent of the screen's resolution:
+   
+5. asas
 
 ### Ray Direction
 
