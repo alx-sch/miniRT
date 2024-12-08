@@ -770,7 +770,7 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	ray_dir.y = norm_y;
 	ray_dir.z = 1.0;	// Pointing forward in camera space.
 
-	 // Normalize the direction vector to ensure it has a unit length
+        // Normalize the direction vector to ensure it has a unit length
 	return (vec3_norm(ray_dir));
 }
 ```
