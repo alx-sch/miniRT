@@ -7,20 +7,6 @@
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
 </p>
 
-## Projection of 3D scene onto 2D Screen
-
-<div style="display: block;">
-<img width="600" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
-</div>
-
-<div style="display: block;">
-<img width="830" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-</div>
-
-- The camera has a frustum that defines what it can see (a 3D pyramid-like shape).
-- The near plane is the closest part of the frustum to the camera, and it's like a window through which the camera views the 3D world (until the far plane).
-- The viewport is the 2D version of that window (the near plane) where the 3D world gets projected and displayed on the screen.
-
 ## Ray-Object Intersection
 
 This section explains the mathematical approach to detecting intersections between rays and various geometric objects.
@@ -656,3 +642,32 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., $\vec{OC}$, the quadratic coefficient $c$, and $\vec{OC} \cdot \vec{U}$). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
 
 Precomputing these constants reduced my computation time by two-thirds for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~35 sec to ~12 sec.
+
+## Projection of 3D scene onto 2D Screen
+
+<div style="display: block;">
+<img width="600" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
+</div>
+
+<div style="display: block;">
+<img width="830" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
+</div>
+
+### The Geometry of Perspective Projection
+
+A camera can be thought of as having a **pinhole model**:
+- Rays originate from the camera's position (the "eye") and pass through a rectangular screen plane.
+- The field of view (FOV) defines the angular range visible to the camera.
+- The view frustum is a truncated pyramid extending from the camera, with the rectangular screen as its base.
+
+The **FOV** is the angle between the top and bottom edges of the view frustum (for vertical FOV) or between the left and right edges (for horizontal FOV).
+
+For vertical FOV ($\text{FOV}_v$):
+1. Imagine a right triangle formed by:
+   - The center of the camera ($\text{O}$) as the vertex.
+   - A point on the top edge of the screen as one endpoint.
+   - The center of the screen as the other endpoint.
+2. The angle between the screen center and the top edge of the frustum is $\frac{\text{FOV}_v}{2}$
+
+### Ray Direction
+
