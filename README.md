@@ -748,6 +748,12 @@ Compute the direction vector of a ray passing through a given pixel in the camer
  @param cam	The camera object containing the FOV in degrees.
 
  @return	The normalized direction vector of the ray in camera space.
+
+ @note
+The z-component of the ray direction is set to 1.0 as a convention.
+This places the projection plane (screen) at z = 1.0 in camera space, which simplifies
+the perspective projection math. The vector is then normalized to ensure it has a unit length,
+making it independent of this initial choice for z.
 */
 t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 {
@@ -774,3 +780,7 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	return (vec3_norm(ray_dir));
 }
 ```
+
+### Handling Camera Orientation
+
+XXX
