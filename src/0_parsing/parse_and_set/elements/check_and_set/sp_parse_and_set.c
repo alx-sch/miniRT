@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 11:28:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 18:08:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	set_sphere(t_scene *scene)
 	obj_data->sp.ixd.oc) - (obj_data->sp.radius * obj_data->sp.radius);
 	if (add_to_object_list(&scene, &obj_data) != 0)
 		return (ERR_MEM_ALLOC);
+	obj_data->sp.hex_color = color_to_hex(obj_data->sp.color);
 	return (0);
 }
 

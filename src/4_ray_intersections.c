@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:21:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 18:26:05 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	check_plane_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	if (ray_intersect_plane(ray_dir, &obj_data->pl, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ixn_color = color_to_hex(obj_data->pl.color);
+		ixr->ixn_color = obj_data->pl.hex_color;
 	}
 }
 
@@ -75,7 +75,7 @@ static void	check_sphere_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	if (ray_intersect_sphere(ray_dir, &obj_data->sp, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ixn_color = color_to_hex(obj_data->sp.color);
+		ixr->ixn_color = obj_data->sp.hex_color;
 	}
 }
 
@@ -90,6 +90,12 @@ provided struct.
  @param ray_dir		The direction vector of the ray.
  @param obj_data	The object data containing the cylinder information.
  @param ixr			Pointer to the intersection struct to update.
+
+ @note
+The function avoids unnecessary checks by skipping the bottom cap test if the
+top cap is already marked as hit, and vice versa.
+This ensures that only one cap can be marked as hit per cylinder intersection
+check, as only one cap can be visible at a time in the rendering.
 */
 static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 		t_obj_data *obj_data, t_ixr *ixr)
@@ -100,19 +106,21 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 		&& t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ixn_color = color_to_hex(obj_data->cy.color);
+		ixr->ixn_color = obj_data->cy.hex_color;
 	}
-	if (ray_intersect_cap_top(ray_origin, ray_dir, &obj_data->cy, &t)
-		&& t < ixr->t_closest)
+	if (obj_data->cy.ixd.cap_hit != 2 && ray_intersect_cap_top(ray_origin,
+			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ixn_color = color_to_hex(obj_data->cy.color);
+		ixr->ixn_color = obj_data->cy.hex_color;
+		obj_data->cy.ixd.cap_hit = 1;
 	}
-	if (ray_intersect_cap_bottom(ray_origin, ray_dir, &obj_data->cy, &t)
-		&& t < ixr->t_closest)
+	if (obj_data->cy.ixd.cap_hit != 1 && ray_intersect_cap_bottom(ray_origin,
+			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ixn_color = color_to_hex(obj_data->cy.color);
+		ixr->ixn_color = obj_data->cy.hex_color;
+		obj_data->cy.ixd.cap_hit = 2;
 	}
 }
 
@@ -148,6 +156,6 @@ int	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
 		current_obj = current_obj->next;
 	}
 	if (ixr.ixn_color == -1)
-		ixr.ixn_color = color_to_hex(rt->scene.ambi_light.color);
+		ixr.ixn_color = rt->scene.ambi_light.hex_color;
 	return (ixr.ixn_color);
 }

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:20:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 19:38:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,6 @@ int		ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 			t_cylinder *cylinder, double *t);
 int		ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 			t_cylinder *cylinder, double *t);
-
-/**
-Function to calculate the coefficients of the quadratic equation and other
-variables for the intersection of a ray with a cylinder.
-
- @param cyl 		Pointer to the cylinder structure.
- @param ray_dir 	The normalized direction vector of the ray.
- @param oc 			The vector from the ray origin to the cylinder center.
-
- @return			None. The function modifies the cylinder's `ixd`
- 					(intersection data) structure to store the calculated
-					coefficients and the discriminante.
-*/
-static void	compute_cylinder_intersection_vars(t_cylinder *cyl, t_vec3 ray_dir)
-{
-	double	axis_dot_ray;
-
-	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
-	cyl->ixd.a = vec3_dot(ray_dir, ray_dir)
-		- (axis_dot_ray * axis_dot_ray);
-	cyl->ixd.b = 2 * (vec3_dot(cyl->ixd.oc, ray_dir)
-			- (cyl->ixd.axis_dot_oc * axis_dot_ray));
-	cyl->ixd.discriminant = calculate_discriminant(cyl->ixd.a, cyl->ixd.b,
-			cyl->ixd.c);
-}
 
 /**
 Function to check whether a given intersection point on an infinite cylinder
@@ -103,19 +78,25 @@ and, if so, calculate the distance to the closest intersection point.
 					`0` otherwise.
 */
 int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-		t_cylinder *cylinder, double *t)
+		t_cylinder *cyl, double *t)
 {
-	(void)ray_origin;
-	compute_cylinder_intersection_vars(cylinder, ray_dir);
-	if (cylinder->ixd.discriminant < 0)
+	double	axis_dot_ray;
+	double	a;
+	double	b;
+	double	discriminant;
+
+	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
+	a = vec3_dot(ray_dir, ray_dir) - (axis_dot_ray * axis_dot_ray);
+	b = 2 * (vec3_dot(cyl->ixd.oc, ray_dir)
+			- (cyl->ixd.axis_dot_oc * axis_dot_ray));
+	discriminant = calculate_discriminant(a, b, cyl->ixd.c);
+	if (discriminant < 0)
 		return (0);
-	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b,
-			cylinder->ixd.discriminant);
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, cylinder, *t))
+	*t = calculate_entry_distance(a, b, discriminant);
+	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, cyl, *t))
 		return (1);
-	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b,
-			cylinder->ixd.discriminant);
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, cylinder, *t))
+	*t = calculate_exit_distance(a, b, discriminant);
+	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, cyl, *t))
 		return (1);
 	return (0);
 }
@@ -136,15 +117,13 @@ int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 {
 	double	denom;
 	double	t_cap;
-	t_vec3	to_cap_center;
 	t_vec3	intersection_point;
 	t_vec3	difference;
 
 	denom = vec3_dot(ray_dir, cylinder->cap_top_normal);
 	if (fabs(denom) < 1e-6)
 		return (0);
-	to_cap_center = vec3_sub(cylinder->cap_top_center, ray_origin);
-	t_cap = vec3_dot(to_cap_center, cylinder->cap_top_normal) / denom;
+	t_cap = cylinder->ixd.dot_to_top / denom;
 	if (t_cap < 0.0)
 		return (0);
 	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
@@ -173,15 +152,13 @@ int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 {
 	double	denom;
 	double	t_cap;
-	t_vec3	to_cap_center;
 	t_vec3	intersection_point;
 	t_vec3	difference;
 
 	denom = vec3_dot(ray_dir, cylinder->cap_bottom_normal);
 	if (fabs(denom) < 1e-6)
 		return (0);
-	to_cap_center = vec3_sub(cylinder->cap_bottom_center, ray_origin);
-	t_cap = vec3_dot(to_cap_center, cylinder->cap_bottom_normal) / denom;
+	t_cap = cylinder->ixd.dot_to_bottom / denom;
 	if (t_cap < 0.0)
 		return (0);
 	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));

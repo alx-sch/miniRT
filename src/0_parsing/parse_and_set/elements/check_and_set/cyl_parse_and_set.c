@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 11:28:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 19:36:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ t_obj_data **obj_data)
 		(*obj_data)->cy.ixd.oc) - ((*obj_data)->cy.ixd.axis_dot_oc * \
 		(*obj_data)->cy.ixd.axis_dot_oc) \
 		- (*obj_data)->cy.radius_sqrd;
+	(*obj_data)->cy.ixd.cap_hit = 0;
+	(*obj_data)->cy.hex_color = color_to_hex((*obj_data)->cy.color);
+	(*obj_data)->cy.ixd.dot_to_top = vec3_dot(vec3_sub(
+				(*obj_data)->cy.cap_top_center, (*scene)->cam.pos),
+			(*obj_data)->cy.cap_top_normal);
+	(*obj_data)->cy.ixd.dot_to_bottom = vec3_dot(vec3_sub(
+				(*obj_data)->cy.cap_bottom_center, (*scene)->cam.pos),
+			(*obj_data)->cy.cap_bottom_normal);
 }
 
 /*Stores the radius and height of the cylinder in the linked list of objects.*/
