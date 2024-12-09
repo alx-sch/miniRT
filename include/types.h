@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 19:45:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 19:48:00 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,12 @@ intersection and improve performance.
 - t_vec3 `oc`:				Vector from the object's center to the ray origin.
 - double `axis_dot_oc`:		Dot product between the object's axis vector and `oc`,
 							(used in cylinder intersections).
-- t_vec3 `to_cap_center_top`:		Vector from the ray origin to the top cap
-									center (used in cylinder intersections).
-- t_vec3 `to_cap_center_bottom`:	Vector from the ray origin to the bottom cap
-									center (used in cylinder intersections).
+- double `dot_to_top`:		Dot product between the ray direction and the vector
+							from the ray origin to the top cap center (used in
+							cylinder cap intersections).
+- double `dot_to_bottom`:	Dot product between the ray direction and the vector
+							from the ray origin to the bottom cap center (used in
+							cylinder cap intersections).
 - int `cap_hit`:			Flag indicating if a cap was hit during cylinder
 							intersect. computing (default: 0, top: 1, bottom: 2).
 */
