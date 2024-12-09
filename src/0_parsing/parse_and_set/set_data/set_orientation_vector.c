@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_orientation_vector.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:57:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 17:18:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/08 17:53:01 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 int	set_orientation_vector(char *input_coords, double *x, double *y, double *z)
 {
 	char	**coords;
-	int		i;
 
-	i = 0;
 	coords = ft_split(input_coords, ',');
 	if (!coords)
 		return (ERR_MEM_ALLOC);

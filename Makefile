@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
+#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/12/06 16:01:19 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/12/09 01:50:18 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,49 +27,51 @@ WINDOW_H ?=		900						# Default window height
 
 SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
-				$(SRCS_DIR)/initialization.c \
-				$(SRCS_DIR)/event_handling.c \
-				$(SRCS_DIR)/ray_plane_intersection.c \
-				$(SRCS_DIR)/ray_sphere_intersection.c \
-				$(SRCS_DIR)/ray_cylinder_intersection.c \
-				$(SRCS_DIR)/render.c \
-				$(SRCS_DIR)/utils/0_vector_utils.c \
+				$(SRCS_DIR)/1_mlx_initialization.c \
+				$(SRCS_DIR)/2_event_handling.c \
+				$(SRCS_DIR)/3_ray_plane_intersection.c \
+				$(SRCS_DIR)/3_ray_sphere_intersection.c \
+				$(SRCS_DIR)/3_ray_cylinder_intersection.c \
+				$(SRCS_DIR)/4_render.c \
+				$(SRCS_DIR)/utils/0_vector_utils_1.c \
+				$(SRCS_DIR)/utils/0_vector_utils_2.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \
 				$(SRCS_DIR)/utils/2_pixel_utils.c \
 				$(SRCS_DIR)/utils/3_cleanup.c \
 				$(SRCS_DIR)/utils/4_error_exit.c \
-				$(SRCS_DIR)/free/free_array.c \
-				$(SRCS_DIR)/free/free_parsing.c \
-				$(SRCS_DIR)/free/free_scene.c \
-				$(SRCS_DIR)/parsing/errors/errors_elements.c \
-				$(SRCS_DIR)/parsing/errors/errors_unique_elements.c \
-				$(SRCS_DIR)/parsing/errors/errors.c \
-				$(SRCS_DIR)/parsing/errors/set_error_and_return.c \
-				$(SRCS_DIR)/parsing/init/init_scene.c \
-				$(SRCS_DIR)/parsing/init/init_unique_elements.c \
-				$(SRCS_DIR)/parsing/parse_and_set/check_data/check_color.c \
-				$(SRCS_DIR)/parsing/parse_and_set/check_data/check_coordinates.c \
-				$(SRCS_DIR)/parsing/parse_and_set/check_data/check_orientation_vector.c \
-				$(SRCS_DIR)/parsing/parse_and_set/check_data/correct_amt_of_fields.c \
-				$(SRCS_DIR)/parsing/parse_and_set/check_data/check_file.c \
-				$(SRCS_DIR)/parsing/parse_and_set/check_data/check_identifiers.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/add_to_object_list.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/check_and_set_single_element.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/check_and_set/amb_parse_and_set.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/check_and_set/cam_parse_and_set.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/check_and_set/sp_parse_and_set.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/check_and_set/pl_parse_and_set.c \
-				$(SRCS_DIR)/parsing/parse_and_set/elements/check_and_set/light_parse_and_set.c \
-				$(SRCS_DIR)/parsing/parse_and_set/set_data/set_coordinates.c \
-				$(SRCS_DIR)/parsing/parse_and_set/set_data/set_color.c \
-				$(SRCS_DIR)/parsing/parse_and_set/set_data/set_orientation_vector.c \
-				$(SRCS_DIR)/parsing/parsing.c \
-				$(SRCS_DIR)/utils/array_length.c \
-				$(SRCS_DIR)/utils/ft_atod.c \
-				$(SRCS_DIR)/utils/ft_strchr_index.c \
-				$(SRCS_DIR)/utils/ft_split_by_spaces.c \
-				$(SRCS_DIR)/utils/only_numbers.c
+				\
+				$(SRCS_DIR)/0_parsing/errors/errors_elements.c \
+				$(SRCS_DIR)/0_parsing/errors/errors_unique_elements.c \
+				$(SRCS_DIR)/0_parsing/errors/errors.c \
+				$(SRCS_DIR)/0_parsing/errors/set_error_and_return.c \
+				$(SRCS_DIR)/0_parsing/init/init_scene.c \
+				$(SRCS_DIR)/0_parsing/init/init_unique_elements.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_color.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_coordinates.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_orientation_vector.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/correct_amt_of_fields.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_file.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_identifiers.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/add_to_object_list.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set_single_element.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/amb_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cam_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/sp_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/pl_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/light_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_coordinates.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_color.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_orientation_vector.c \
+				$(SRCS_DIR)/0_parsing/parsing.c \
+				$(SRCS_DIR)/0_parsing/utils/array_length.c \
+				$(SRCS_DIR)/0_parsing/utils/ft_atod.c \
+				$(SRCS_DIR)/0_parsing/utils/ft_strchr_index.c \
+				$(SRCS_DIR)/0_parsing/utils/ft_split_by_spaces.c \
+				$(SRCS_DIR)/0_parsing/utils/only_numbers.c \
+				$(SRCS_DIR)/0_parsing/free/free_array.c \
+				$(SRCS_DIR)/0_parsing/free/free_parsing.c \
+				$(SRCS_DIR)/0_parsing/free/free_scene.c \
 
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)		# Each o. file has a corresponding c. file
@@ -143,9 +145,10 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)		# Following lines are executed for eac
 	@mkdir -p $(@D)		# create directory if it doesn't exist; -p: no error if existing, @D: directory part of target
 
 # Update progress bar variables
-	@$(eval SRC_COMP := $(shell expr $(SRC_COMP) + 1))							# Increment SRC_NUM
-	@$(eval PERCENT := $(shell echo "$(SRC_COMP) / $(TOTAL_SRCS) * 100" | bc))	# Calculate percentage
-	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))							# Calculate progress in 5% steps
+# Calculate progress dynamically
+	@$(eval SRC_COMP := $(shell expr $(SRC_COMP) + 1))									# Increment SRC_NUM
+	@$(eval PERCENT := $(shell echo "($(SRC_COMP) * 100) / $(TOTAL_SRCS)" | bc))	# Calculate percentage
+	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))									# Calculate progress in 5% steps
 
 # Print progress bar
 	@printf "$(BOLD)\rCompiling $(NAME): ["										# '\r' moves cursor to beginning of line, overwriting previous line -> progess shown on same line
@@ -153,7 +156,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)		# Following lines are executed for eac
 	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi	# Prints '-' for remaining progress (not filled with '#')
 	@printf "] "
 	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi						# Switch to green color for 100%
-	@printf "%d/%d - " $(SRC_COMP) $(TOTAL_SRCS)									# Print current compiled and total number of files
+	@printf "%d/%d - " $(SRC_COMP) $(TOTAL_SRCS)								# Print current compiled and total number of files
 	@printf "%d%% $(RESET)" $(PERCENT)											# Print percentage
 
 # Compile source file into object file

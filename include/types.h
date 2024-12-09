@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/06 14:31:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 00:48:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ Defines the types and data structures used in the raytracer program.
 # define TYPES_H
 
 # include "libft.h"	// for 't_list' definition
+# include "parsing.h" // for 't_pars' definition
 
 //#######
 //# MLX #
@@ -207,8 +208,6 @@ typedef union u_object_data
 	t_cylinder	cy;
 }	t_obj_data;
 
-typedef struct s_scene_object_node	t_obj_node; // Forward declaration
-
 //#########
 //# SCENE #
 //#########
@@ -238,45 +237,37 @@ typedef struct s_light
 
 /**
 Structure representing the camera in the scene.
-- t_vec3 `position`:		The position of the camera.
-- t_vec3 `orientation`:		The orientation of the camera.
-- double `fov`:				The field of view of the camera [0, 180].
+- t_vec3 `position`:		Camera position in world coordinates
+- t_vec3 `orientation`:		Forward direction of the camera (normalized)
+- t_vec3 `right`:			Right vector, perpendicular to orientation and up
+							(used for world-space orientation).
+- t_vec3 `up`:				Up vector perpendicular to right and orientation
+							(used for world-space orientation).
+- double `fov`:				Horizontal field of view [0, 180].
+- double `scale`:			Scaling factor, derived from FOV.
+- double `aspect_ratio`:	Screen aspect ratio
 */
 typedef struct s_camera
 {
 	t_vec3		position;
 	t_vec3		orientation;
+	t_vec3		right;
+	t_vec3		up;
 	double		fov;
+	double		scale;
+	double		aspect_ratio;
 }	t_cam;
-
-/*
-Structure representing the parts needed for parsing.
-- int 'a_found', 'c_found' and 'l_found':
-Ambient light, camera and light are all unique objects, so these variables 
-indicate if they occure more than once.
-- int 'fd':				Used to store the file descriptor of the .rt-file.
-- int 'error_code':		Used to store the error code indicating the issue.
-- char *element:		Used to store a line from the rt-file, using gnl.
-- char **elem_data:		Used to store a line from the rt-file, separated by
-spaces.
-*/
-typedef struct s_pars
-{
-	int		a_found;
-	int		c_found;
-	int		l_found;
-	int		fd;
-	int		error_code;
-	char	*element;
-	char	**elem_data;
-}	t_pars;
 
 /**
 Structure representing the entire scene.
-- t_ambi_light `ambient_light`:	The ambient light in the scene.
+- t_pars `pars`:				Structure holding parsing data.
+- t_ambi_light `ambi_light`:	The ambient light in the scene.
 - t_light `light`:				The light source in the scene.
 - t_cam `cam`:					The camera in the scene.
 - t_list `objs`:				Linked list of objects in the scene.
+- int `tot_cyl`:				Total number of cylinders in the scene.
+- int `tot_sp`:					Total number of spheres in the scene.
+- int `tot_pl`:					Total number of planes in the scene.
 */
 typedef struct s_scene
 {

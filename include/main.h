@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/06 15:36:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 01:07:47 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,18 @@ int		ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 
 void	render_scene(t_rt *rt, int bg_color);
 
-// utils/0_vector_utils.c
+// utils/0_vector_utils_1.c
 
 t_vec3	vec3_add(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_mult(t_vec3 v, double scalar);
+t_vec3	vec3_mult(t_vec3 vec, double scalar);
+t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2);
 double	vec3_dot(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_norm(t_vec3 v);
+
+// utils/0_vector_utils_2.c
+
+t_vec3	vec3_new(double x, double y, double z);
+t_vec3	vec3_norm(t_vec3 vec);
 
 // utils/1_quadratic_utils.c
 
