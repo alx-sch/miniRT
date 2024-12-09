@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 19:48:00 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 19:49:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ typedef enum e_object_type
 }	t_obj_type;
 
 /**
-Structure storing (only once precomputed) data for ray-object intersection
-calculations. This helps to avoid redundant calculations for each ray-object
-intersection and improve performance.
+Structure storing data for ray-object intersection calculations, which is pre-
+computed once during parsing. This helps to avoid redundant calculations for
+each ray-object intersection and improve performance.
 - double `c`:				Constant term of the quadratic equation.
 - t_vec3 `difference`:		Vector difference between relevant object and
 							ray points (used in plane intersections).
