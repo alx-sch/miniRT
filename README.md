@@ -7,20 +7,6 @@
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
 </p>
 
-## Projection of 3D scene onto 2D Screen
-
-<div style="display: block;">
-<img width="600" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
-</div>
-
-<div style="display: block;">
-<img width="830" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-</div>
-
-- The camera has a frustum that defines what it can see (a 3D pyramid-like shape).
-- The near plane is the closest part of the frustum to the camera, and it's like a window through which the camera views the 3D world (until the far plane).
-- The viewport is the 2D version of that window (the near plane) where the 3D world gets projected and displayed on the screen.
-
 ## Ray-Object Intersection
 
 This section explains the mathematical approach to detecting intersections between rays and various geometric objects.
@@ -505,6 +491,10 @@ $$
 -\frac{h}{2} \leq \text{Projection Length} \leq \frac{h}{2}
 $$
 
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_cyl_height.png" alt="ray_cyl_height.png" width="350"/>
+</p>
+
 ```C
 /**
 Function to check whether a given intersection point on an infinite cylinder lies
@@ -656,3 +646,141 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., $\vec{OC}$, the quadratic coefficient $c$, and $\vec{OC} \cdot \vec{U}$). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
 
 Precomputing these constants reduced my computation time by two-thirds for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~35 sec to ~12 sec.
+
+## Projection of 3D scene onto 2D Screen
+
+### The Geometry of Perspective Projection
+
+A **pinhole camera model** can be used to describe how a 3D scene is projected onto a 2D screen (viewport). The pinhole model has the following properties
+- Rays originate from the camera's position (the "eye") and pass through a virtual screen plane (the viewport).
+- The **field of view (FOV)** defines the angular range visible to the camera, which determines the extent of the scene captured.
+- The **view frustum** is a truncated pyramid extending from the camera's position toward the viewport. The rectangular screen at the base of the frustum defines the visible scene.
+
+<div align="center"">
+<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
+</div>
+
+<div align="center">
+<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
+</div>
+
+### Ray Direction Calculation
+
+The **Field of View (FOV)** represents how much of the 3D scene is visible to the camera. Depending on the orientation of the camera, the FOV could be horizontal or vertical:
+
+- The vertical FOV ($\text{FOV}_v$) is the angle between the top and bottom edges of the view frustum.
+- The horizontal FOV ($\text{FOV}_h$) is the angle between the left and right edges of the view frustum.
+
+Vertical FOV is often the most common in graphics programming, but horizontal FOV can also be defined depending on the viewport dimensions.
+
+To calculate how this FOV scales the projection from 3D space onto 2D screen space, we employ trigonometric functions, specifically the tangent function.
+
+### Geometric Relationship Using Tangent
+
+Imagine a right triangle formed by:
+1. The **camera's position** (the "eye") as the vertex.
+2. **A point on the top edge** of the screen as one endpoint.
+3. **The center of the screen** as the other endpoint.
+
+The angle between the screen's center and the top edge of the frustum corresponds to $\frac{\text{FOV}_v}{2}$.   
+
+Using $\tan(\text{angle}) = \frac{\text{opposite}}{\text{adjacent}}$, we can represent this relationship mathematically:
+
+$$
+\tan\left(\frac{\text{FOV}_v}{2}\right) = \frac{\text{Half the Screen Height}}{\text{Distance to Screen}}
+$$
+
+<p align="center">
+	<img width="350" alt="tan_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/tan_FOV.png">  
+<p align="center"> </p>
+
+
+The tangent function defines the "scaling factor" that maps world-space distances to screen-space distances, ensuring that closer objects appear larger and distant objects appear smaller.   
+Changing the FOV changes $\tan\left(\frac{\text{FOV}_v}{2}\right)$, which directly affects the scaling. A wider FOV results in a smaller tangent value, making objects appear farther away (and vice versa).
+
+In C, trigonometric functions expect their input angles to be in radians, not degrees. Therefore, the FOV angle is converted using the formula $Radians = Degrees \times \frac{\pi}{180}$ in the function below
+
+### Ray Direction Calculation
+
+The direction of a ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
+
+**Steps to Calculate Ray Direction:**
+
+1. **FOV Scaling Factor:**    
+   The tangent of half the vertical FOV defines how much the view scales with distance.
+   
+$$
+\text{scale} = \tan\left(\frac{\text{FOV}_v}{2}\right) \text{(converted into radians)}
+$$
+
+2. **Normalization of Pixel Coordinates:**    
+   When projecting a 3D scene from world space to a 2D viewport, we need to map the 2D pixel coordinates of the screen to a common mathematical range known as **normalized device 
+   coordinates (NDC)**. These coordinates range from -1 to 1 in both horizontal and vertical directions. This mapping allows the rendering process to operate independently of the actual 
+   screen resolution, making the projection consistent regardless of the screen size.
+
+   We map these screen pixel positions (`x`, `y`) to a range of [-1, 1] so they are consistent and independent of the screen's resolution:
+   - **Horizontal NDC Mapping:** `norm_x = (2.0 * (x + 0.5) / WINDOW_W) - 1.0` ensures that the leftmost pixel maps to `-1` and the rightmost pixel maps to `1`. The term `(x + 0.5)` ensures to center the mapping is at the pixel's center rather than at the pixel's edge (so the values for `norm_x` are close to but not exactly `-1` and `1`, differing by a small fraction).
+   - **Vertical NDC Mapping:** `norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H))`, with the topmost pixel mapping to `1` and bottommost one mapping to `-1`. Similar to the horizontal case, `(y + 0.5)` ensures the mapping is centered on the pixel.
+
+3. **Aspect Ratio Adjustment:**    
+  The aspect ratio ensures that the spatial proportions of objects remain accurate across displays with different width-to-height ratios. Without this adjustment, objects might appear 
+  stretched or squished, especially on non-square screens. 
+
+   The aspect ratio is defined as `aspect_ratio = WINDOW_W / WINDOW_H`.
+  
+    In this implementation, the vertical FOV is used as the starting point for perspective projection calculations. This means that the vertical dimensions are already 
+  correctly scaled according to the screen height and FOV.   
+  
+    Thus, the aspect ratio is applied to the horizontal NDC calculation only: `norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio`
+  
+4. **Putting It All Together:**  
+   - Map pixel indices (`x`, `y`) to the normalized device coordinate range [-1, 1].
+   - Adjust horizontal values by the aspect ratio to maintain spatial proportions for non-square displays.
+   - Scale both normalized x and y values by the field of view's scaling factor derived from the tangent of half the vertical FOV.
+   - Normalize these values to ensure they map correctly to 3D space for ray calculations.
+
+```C
+/**
+Compute the direction vector of a ray passing through a given pixel in the camera's view.
+
+ @param x	The horizontal pixel coordinate on the screen.
+ @param y	The vertical pixel coordinate on the screen.
+ @param cam	The camera object containing the FOV in degrees.
+
+ @return	The normalized direction vector of the ray in camera space.
+
+ @note
+The z-component of the ray direction is set to 1.0 as a convention.
+This places the projection plane (screen) at z = 1.0 in camera space, which simplifies
+the perspective projection math. The vector is then normalized to ensure it has a unit length,
+making it independent of this initial choice for z.
+*/
+t_vec3	compute_ray_direction(int x, int y, t_cam cam)
+{
+	double	scale;		// Scaling factor from the vertical FOV
+	double	aspect_ratio;	// Ratio of screen width to height
+	double	norm_x;		// Normalized x-coordinate in NDC
+	double	norm_y;		// Normalized y-coordinate in NDC
+	t_vec3	ray_dir;	// Ray direction vector
+
+	scale = tan((cam.fov / 2) * M_PI / 180.0);
+
+	aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
+
+	// Map pixel coordinates to normalized device coordinates (NDC)
+	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio * scale;
+	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * scale;
+
+	// Construct the direction vector in camera space
+	ray_dir.x = norm_x;
+	ray_dir.y = norm_y;
+	ray_dir.z = 1.0;	// Pointing forward in camera space.
+
+        // Normalize the direction vector to ensure it has a unit length
+	return (vec3_norm(ray_dir));
+}
+```
+
+### Handling Camera Orientation
+
+XXX

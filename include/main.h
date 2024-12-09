@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:37:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 13:13:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ and declaring all function prototypes.
 
 // Custom headers
 # include "libft.h"			// libft
-# include "mlx.h"			  // mlx
+# include "mlx.h"			// mlx
 # include "errors.h"		// Error messages and formatting styles
 # include "types.h"			// Typedefs, data structs, e.g. 't_rt'
 # include "parsing.h"		// Parsing header file
