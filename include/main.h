@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 13:13:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 20:09:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ and declaring all function prototypes.
 //#############
 
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
+# define BG_COLOR		0x2B2B2B // Anthracite (dark grey)
 
 //##################
 //# FCT PROTOTYPES #

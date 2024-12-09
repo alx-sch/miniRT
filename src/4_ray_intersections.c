@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 18:26:05 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 20:09:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,6 @@ int	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
 		current_obj = current_obj->next;
 	}
 	if (ixr.ixn_color == -1)
-		ixr.ixn_color = rt->scene.ambi_light.hex_color;
+		ixr.ixn_color = BG_COLOR;
 	return (ixr.ixn_color);
 }
