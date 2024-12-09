@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 16:25:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:22:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
-
 /*
 	Welcome to the parsing header file!
-	
+
 	When ./miniRT is ran, it expects an argument <scene.rt>. This file needs
 	to comply to certain rules.
 	The parsing part of the program takes care of the following:
@@ -59,7 +56,7 @@
 			pl 0.0,0.0,-10.0 0.0,1.0,0.0 0,0,225
 			∗ identifier: pl
 			∗ x,y,z coordinates of a point in the plane: 0.0,0.0,-10.0
-			∗ 3d normalized normal vector. In range [-1,1] for each x,y,z axis: 
+			∗ 3d normalized normal vector. In range [-1,1] for each x,y,z axis:
 			0.0,1.0,0.0
 			∗ R,G,B colors in range [0-255]: 0,0,225
 		Sphere:
@@ -68,7 +65,7 @@
 			∗ x,y,z coordinates of the sphere center: 0.0,0.0,20.6
 			∗ the sphere diameter: 12.6
 			∗ R,G,B colors in range [0-255]: 10, 0, 255
-		
+
 	The program will show a descriptive error message and exit with an error code,
 	depending on what the issue was.
 
@@ -80,11 +77,24 @@
 	values.
 		--> For unique elements, there are designated spots in the t_scene
 		struct.
-		--> For nonunique elements, an object node is added to the linked list 
+		--> For nonunique elements, an object node is added to the linked list
 		of t_scene struct, which will ultimately contain all the objects.
 	4. If there are no errors after parsing is done - the t_scene will be
 	populated with all the data from the rt-file.
 */
+
+#ifndef PARSING_H
+# define PARSING_H
+
+# include "types.h" // for type definitions
+
+// Forward declarations
+typedef struct s_rt				t_rt;
+typedef struct s_scene			t_scene;
+typedef struct s_ambi_light		t_ambi_light;
+typedef struct s_camera			t_cam;
+typedef struct s_light			t_light;
+typedef union u_object_data		t_obj_data;
 
 /*
 	ERROR CODES -- PARSING
@@ -224,6 +234,32 @@ of a double.\n"
 0 and 255.\n"
 
 /*
+	STRUCTURES -- PARSING
+*/
+
+/*
+Structure representing the parts needed for parsing.
+- int 'a_found', 'c_found' and 'l_found':
+Ambient light, camera and light are all unique objects, so these variables
+indicate if they occure more than once.
+- int 'fd':				Used to store the file descriptor of the .rt-file.
+- int 'error_code':		Used to store the error code indicating the issue.
+- char *element:		Used to store a line from the rt-file, using gnl.
+- char **elem_data:		Used to store a line from the rt-file, separated by
+spaces.
+*/
+typedef struct s_pars
+{
+	int		a_found;
+	int		c_found;
+	int		l_found;
+	int		fd;
+	int		error_code;
+	char	*element;
+	char	**elem_data;
+}	t_pars;
+
+/*
 	FUNCTIONS -- PARSING
 */
 
@@ -303,5 +339,23 @@ int			set_orientation_vector(char *input_coords, double *x, double *y, \
 double *z);
 void		set_color(char **rgb, unsigned char *r, unsigned char *g, \
 unsigned char *b);
+
+// PARSING --FREE
+
+void		free_parsing(t_pars *parsing);
+int			ft_freearray(char **arr);
+void		free_scene_and_exit(t_scene *scene, t_rt *rt);
+void		free_scene(t_scene *scene);
+
+// PARSING -- UTILS
+
+int			array_length(char **array);
+double		ft_atod(char *str);
+int			ft_strchr_index(char *str, char c);
+int			only_numbers_and_newline(char *str);
+int			only_numbers_dec_pt_and_newline(char *str);
+int			only_numbers_single_signs_and_dec_pt(char *str);
+int			only_numbers_and_dec_pt(char *str);
+char		**ft_split_by_spaces(const char *s);
 
 #endif

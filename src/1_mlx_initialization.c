@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialization.c                                   :+:      :+:    :+:   */
+/*   1_mlx_initialization.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:36:36 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/05 07:17:16 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 07:55:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ Initializes the MiniLibX components required for graphic rendering:
  @note 		Return of `mlx_get_data_addr()` is cast to `(int *)` in order to
 			access the image data as an array of integers (4 bytes per pixel)
 			more easily; e.g. `img->data[pixel_index] = color`.
+
+ @details	Some MiniLibX functions might set the `errno` variable even if the
+			function call succeeds. To avoid false error messages, `errno` is
+			explicitly reset to `0` before each MiniLibX function call.
 */
 void	init_mlx(t_rt *rt)
 {

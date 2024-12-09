@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sp_parse_and_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:56:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:28:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	set_sphere(t_scene *scene)
 		return (ERR_MEM_ALLOC);
 	set_color(rgb, &obj_data->sp.color.r, &obj_data->sp.color.g, \
 	&obj_data->sp.color.b);
-	obj_data->sp.ixd.oc = vec3_sub(scene->cam.position, obj_data->sp.center);
+	obj_data->sp.ixd.oc = vec3_sub(scene->cam.pos, obj_data->sp.center);
 	obj_data->sp.ixd.c = vec3_dot(obj_data->sp.ixd.oc, \
 	obj_data->sp.ixd.oc) - (obj_data->sp.radius * obj_data->sp.radius);
 	if (add_to_object_list(&scene, &obj_data) != 0)

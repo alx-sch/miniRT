@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_unique_elements.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:09:59 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/05 13:48:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:27:03 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,21 @@ void	init_ambience(t_ambi_light *amb)
 /*Initializes all values of the t_cam struct to 0.*/
 void	init_camera(t_cam *cam)
 {
-	cam->position.x = 0;
-	cam->position.y = 0;
-	cam->position.z = 0;
-	cam->orientation.x = 0;
-	cam->orientation.y = 0;
-	cam->orientation.z = 0;
+	cam->pos.x = 0;
+	cam->pos.y = 0;
+	cam->pos.z = 0;
+	cam->ori.x = 0;
+	cam->ori.y = 0;
+	cam->ori.z = 0;
 	cam->fov = 0;
+	cam->scale = 0;
+	cam->aspect_ratio = 0;
+	cam->right.x = 0;
+	cam->right.y = 0;
+	cam->right.z = 0;
+	cam->up.x = 0;
+	cam->up.y = 0;
+	cam->up.z = 0;
 }
 
 /*Initializes all values of the t_light struct to 0.*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/06 15:36:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:13:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ and declaring all function prototypes.
 
 // Custom headers
 # include "libft.h"			// libft
-# include "mlx.h"			  // mlx
+# include "mlx.h"			// mlx
 # include "errors.h"		// Error messages and formatting styles
 # include "types.h"			// Typedefs, data structs, e.g. 't_rt'
 # include "parsing.h"		// Parsing header file
-# include "colors.h"		// TEST ONLY NOT NEEDED IN FINAL PROJECT
 
 //#############
 //# CONSTANTS #
@@ -49,35 +48,55 @@ and declaring all function prototypes.
 //# FCT PROTOTYPES #
 //##################
 
-// initialization.c
+// main.c
+
+int		main(int argc, char **argv);
+
+// 1_mlx_initialization.c
 
 void	init_mlx(t_rt *rt);
 
-// event_handlers.c
+// 2_event_handling.c
 
 void	start_event_loop(t_rt *rt);
 
-// ray.c
+// 3_ray_plane_intersection.c
 
 int		ray_intersect_plane(t_vec3 ray_dir, t_plane *plane, double *t);
+
+// 3_ray_sphere_intersection.c
+
 int		ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t);
+
+// 3_ray_cylinder_intersection.c
+
 int		ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 			t_cylinder *cylinder, double *t);
-
 int		ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 			t_cylinder *cylinder, double *t);
 int		ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 			t_cylinder *cylinder, double *t);
 
-void	render_scene(t_rt *rt, int bg_color);
+// 4_ray_intersections.c
 
-// utils/0_vector_utils.c
+int		find_closest_intersection(t_vec3 ray_dir, t_rt *rt);
+
+// 5_ray_render.c
+
+void	render_scene(t_rt *rt);
+
+// utils/0_vector_utils_1.c
 
 t_vec3	vec3_add(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_mult(t_vec3 v, double scalar);
+t_vec3	vec3_mult(t_vec3 vec, double scalar);
+t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2);
 double	vec3_dot(t_vec3 v1, t_vec3 v2);
-t_vec3	vec3_norm(t_vec3 v);
+
+// utils/0_vector_utils_2.c
+
+t_vec3	vec3_new(double x, double y, double z);
+t_vec3	vec3_norm(t_vec3 vec);
 
 // utils/1_quadratic_utils.c
 
@@ -97,28 +116,5 @@ void	cleanup(t_rt **rt_ptr);
 // utils/4_error_exit.c
 
 void	cleanup_error_exit(char *msg, t_rt *rt);
-
-/*
-	PARSING
-*/
-
-
-// GENERAL --FREE
-
-void	free_parsing(t_pars *parsing);
-int		ft_freearray(char **arr);
-void	free_scene_and_exit(t_scene *scene, t_rt *rt);
-void	free_scene(t_scene *scene);
-
-// GENERAL -- UTILS
-
-int		array_length(char **array);
-double	ft_atod(char *str);
-int		ft_strchr_index(char *str, char c);
-int		only_numbers_and_newline(char *str);
-int		only_numbers_dec_pt_and_newline(char *str);
-int		only_numbers_single_signs_and_dec_pt(char *str);
-int		only_numbers_and_dec_pt(char *str);
-char	**ft_split_by_spaces(const char *s);
 
 #endif

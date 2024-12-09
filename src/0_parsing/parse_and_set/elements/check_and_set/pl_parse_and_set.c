@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pl_parse_and_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:56:22 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:28:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	set_plane(t_scene *scene)
 	set_color(rgb, &obj_data->pl.color.r, &obj_data->pl.color.g, \
 	&obj_data->pl.color.b);
 	obj_data->pl.ixd.difference = vec3_sub(obj_data->pl.point_in_plane, \
-		scene->cam.position);
+		scene->cam.pos);
 	if (add_to_object_list(&scene, &obj_data) != 0)
 		return (ERR_MEM_ALLOC);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/08 17:42:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 13:14:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 		cleanup_error_exit(ERR_MALLOC, NULL);
 	parse_and_set_objects(rt, argc, argv);
 	init_mlx(rt);
-	render_scene(rt, BLACK); // render a simple scene without shadows, lighting considerations etc.
+	render_scene(rt);
 	mlx_put_image_to_window(rt->mlx.mlx_ptr, rt->mlx.win_ptr,
 		rt->mlx.img.img_ptr, 0, 0);
 	start_event_loop(rt);

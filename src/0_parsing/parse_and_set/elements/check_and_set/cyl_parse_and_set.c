@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cyl_parse_and_set.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:57:19 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:28:01 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_obj_data **obj_data)
 	(*obj_data)->cy.cap_top_normal = (*obj_data)->cy.orientation;
 	(*obj_data)->cy.cap_bottom_normal = vec3_mult((*obj_data)->cy.orientation, \
 	-1.0);
-	(*obj_data)->cy.ixd.oc = vec3_sub((*scene)->cam.position, \
+	(*obj_data)->cy.ixd.oc = vec3_sub((*scene)->cam.pos, \
 	(*obj_data)->cy.center);
 	(*obj_data)->cy.ixd.axis_dot_oc = vec3_dot((*obj_data)->cy.ixd.oc, \
 	(*obj_data)->cy.orientation);
