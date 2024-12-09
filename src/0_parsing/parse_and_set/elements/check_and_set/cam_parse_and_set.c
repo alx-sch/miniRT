@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/08 23:45:03 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 11:26:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@ int	parse_and_set_camera(t_scene *scene)
 	if (check_coordinates(scene->pars.elem_data[1], &scene->pars.error_code, \
 	ERR_CAM_COOR_FIELDS) != 0)
 		return (scene->pars.error_code);
-	set_coordinates(scene->pars.elem_data[1], &scene->cam.position.x, \
-	&scene->cam.position.y, &scene->cam.position.z);
+	set_coordinates(scene->pars.elem_data[1], &scene->cam.pos.x, \
+	&scene->cam.pos.y, &scene->cam.pos.z);
 	if (check_orientation_vector(scene->pars.elem_data[2], \
 	&scene->pars.error_code, ERR_CAM_VECTOR_FIELDS) != 0)
 		return (scene->pars.error_code);
-	set_orientation_vector(scene->pars.elem_data[2], &scene->cam.orientation.x, \
-	&scene->cam.orientation.y, &scene->cam.orientation.z);
+	set_orientation_vector(scene->pars.elem_data[2], &scene->cam.ori.x, \
+	&scene->cam.ori.y, &scene->cam.ori.z);
 	if (camera_field_of_view(scene, &scene->pars.error_code) != 0)
 		return (scene->pars.error_code);
 	scene->cam.scale = tan((scene->cam.fov / 2) * M_PI / 180.0);
 	scene->cam.aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
 	scene->cam.right = vec3_norm(vec3_cross(
 				vec3_new(0, 1, 0),
-				scene->cam.orientation));
+				scene->cam.ori));
 	scene->cam.up = vec3_norm(vec3_cross(
-				scene->cam.orientation,
+				scene->cam.ori,
 				scene->cam.right));
 	return (0);
 }

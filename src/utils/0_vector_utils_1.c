@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:35:34 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 01:07:58 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 12:38:14 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
 	result.x = (v1.y * v2.z) - (v1.z * v2.y);
 	result.y = (v1.z * v2.x) - (v1.x * v2.z);
 	result.z = (v1.x * v2.y) - (v1.y * v2.x);
-
 	return (result);
 }
 

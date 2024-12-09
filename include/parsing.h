@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 00:41:58 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 10:22:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "types.h" // for type definitions
+
 // Forward declarations
 typedef struct s_rt				t_rt;
 typedef struct s_scene			t_scene;
@@ -93,8 +95,6 @@ typedef struct s_ambi_light		t_ambi_light;
 typedef struct s_camera			t_cam;
 typedef struct s_light			t_light;
 typedef union u_object_data		t_obj_data;
-
-# include "types.h" // for 't_scene' definition
 
 /*
 	ERROR CODES -- PARSING
@@ -339,5 +339,23 @@ int			set_orientation_vector(char *input_coords, double *x, double *y, \
 double *z);
 void		set_color(char **rgb, unsigned char *r, unsigned char *g, \
 unsigned char *b);
+
+// PARSING --FREE
+
+void		free_parsing(t_pars *parsing);
+int			ft_freearray(char **arr);
+void		free_scene_and_exit(t_scene *scene, t_rt *rt);
+void		free_scene(t_scene *scene);
+
+// PARSING -- UTILS
+
+int			array_length(char **array);
+double		ft_atod(char *str);
+int			ft_strchr_index(char *str, char c);
+int			only_numbers_and_newline(char *str);
+int			only_numbers_dec_pt_and_newline(char *str);
+int			only_numbers_single_signs_and_dec_pt(char *str);
+int			only_numbers_and_dec_pt(char *str);
+char		**ft_split_by_spaces(const char *s);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/12/09 01:50:18 by aschenk          ###   ########.fr        #
+#    Updated: 2024/12/09 12:22:34 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/3_ray_plane_intersection.c \
 				$(SRCS_DIR)/3_ray_sphere_intersection.c \
 				$(SRCS_DIR)/3_ray_cylinder_intersection.c \
-				$(SRCS_DIR)/4_render.c \
+				$(SRCS_DIR)/4_ray_intersections.c \
+				$(SRCS_DIR)/5_ray_render.c \
 				$(SRCS_DIR)/utils/0_vector_utils_1.c \
 				$(SRCS_DIR)/utils/0_vector_utils_2.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \
@@ -78,7 +79,7 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)		# Each o. file has a correspo
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/main.h \
-				$(HDRS_DIR)/colors.h \
+				$(HDRS_DIR)/parsing.h \
 				$(HDRS_DIR)/errors.h \
 				$(HDRS_DIR)/types.h
 

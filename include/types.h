@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 00:48:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 11:25:01 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,8 +237,8 @@ typedef struct s_light
 
 /**
 Structure representing the camera in the scene.
-- t_vec3 `position`:		Camera position in world coordinates
-- t_vec3 `orientation`:		Forward direction of the camera (normalized)
+- t_vec3 `pos`:				Camera position in world coordinates
+- t_vec3 `ori`:				Forward direction of the camera (normalized)
 - t_vec3 `right`:			Right vector, perpendicular to orientation and up
 							(used for world-space orientation).
 - t_vec3 `up`:				Up vector perpendicular to right and orientation
@@ -249,8 +249,8 @@ Structure representing the camera in the scene.
 */
 typedef struct s_camera
 {
-	t_vec3		position;
-	t_vec3		orientation;
+	t_vec3		pos;
+	t_vec3		ori;
 	t_vec3		right;
 	t_vec3		up;
 	double		fov;
