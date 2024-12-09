@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:20:50 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 19:41:58 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,17 @@ Function to find the intersection of a ray with a sphere.
 */
 int	ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t)
 {
-	sphere->ixd.b = 2.0 * vec3_dot(sphere->ixd.oc, ray_dir);
-	sphere->ixd.discriminant = calculate_discriminant(1.0, sphere->ixd.b,
-			sphere->ixd.c);
-	if (sphere->ixd.discriminant < 0.0)
+	double	b;
+	double	discriminant;
+
+	b = 2.0 * vec3_dot(sphere->ixd.oc, ray_dir);
+	discriminant = calculate_discriminant(1.0, b, sphere->ixd.c);
+	if (discriminant < 0.0)
 		return (0);
-	*t = calculate_entry_distance(1.0, sphere->ixd.b, sphere->ixd.discriminant);
+	*t = calculate_entry_distance(1.0, b, discriminant);
 	if (*t >= 0.0)
 		return (1);
-	*t = calculate_exit_distance(1.0, sphere->ixd.b, sphere->ixd.discriminant);
+	*t = calculate_exit_distance(1.0, b, discriminant);
 	if (*t >= 0.0)
 		return (1);
 	return (0);

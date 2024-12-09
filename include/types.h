@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 11:25:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 19:45:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,26 +109,34 @@ typedef enum e_object_type
 }	t_obj_type;
 
 /**
-Structure storing (precomputed) data for ray-object intersection calculations.
-- double `a`:				Coefficient of the quadratic term.
-- double `b`:				Coefficient of the linear term.
+Structure storing (only once precomputed) data for ray-object intersection
+calculations. This helps to avoid redundant calculations for each ray-object
+intersection and improve performance.
 - double `c`:				Constant term of the quadratic equation.
-- double `discriminant`:	Discriminant used to determine intersection validity.
 - t_vec3 `difference`:		Vector difference between relevant object and
-							ray points (used for plane intersections).
+							ray points (used in plane intersections).
+- double `dot_diff_normal`:	Dot product between the difference vector and the
+							object's normal (used in plane intersections).
 - t_vec3 `oc`:				Vector from the object's center to the ray origin.
 - double `axis_dot_oc`:		Dot product between the object's axis vector and `oc`,
 							(used in cylinder intersections).
+- t_vec3 `to_cap_center_top`:		Vector from the ray origin to the top cap
+									center (used in cylinder intersections).
+- t_vec3 `to_cap_center_bottom`:	Vector from the ray origin to the bottom cap
+									center (used in cylinder intersections).
+- int `cap_hit`:			Flag indicating if a cap was hit during cylinder
+							intersect. computing (default: 0, top: 1, bottom: 2).
 */
 typedef struct s_intersection_data
 {
-	double	a;
-	double	b;
 	double	c;
-	double	discriminant;
 	t_vec3	difference;
+	double	dot_diff_normal;
 	t_vec3	oc;
 	double	axis_dot_oc;
+	double	dot_to_top;
+	double	dot_to_bottom;
+	int		cap_hit;
 }	t_ixd;
 
 /**
@@ -138,6 +146,7 @@ Structure representing a plane in 3D space:
  - t_vec3 `normal`:			A normalized vector representing the plane's normal,
 							which is perpendicular to the plane's surface.
  - t_color `color`:			The color of the plane.
+ - int `hex_color`:			The color of the plane in hexadecimal format.
  - t_ixd `ixd`:				Ray intersection data for the plane.
 */
 typedef struct s_plane
@@ -146,6 +155,7 @@ typedef struct s_plane
 	t_vec3		point_in_plane;
 	t_vec3		normal;
 	t_color		color;
+	int			hex_color;
 	t_ixd		ixd;
 }	t_plane;
 
@@ -155,6 +165,7 @@ Structure representing a sphere in 3D space.
  - t_vec3 `center`:			The center point of the sphere.
  - double `radius`:			The radius of the sphere.
  - t_color `color`:			The color of the sphere.
+ - int `hex_color`:			The color of the sphere in hexadecimal format.
  - t_ixd `ixd`:				Ray intersection data for the sphere.
 */
 typedef struct s_sphere
@@ -163,6 +174,7 @@ typedef struct s_sphere
 	t_vec3		center;
 	double		radius;
 	t_color		color;
+	int			hex_color;
 	t_ixd		ixd;
 }	t_sphere;
 
@@ -174,6 +186,7 @@ Structure representing a cylinder in 3D space:
  - double `radius`:			The radius of the cylinder.
  - double `height`:			The height of the cylinder.
  - t_color `color`:			The color of the cylinder.
+ - int `hex_color`:			The color of the cylinder in hexadecimal format.
  - t_ixd `ixd`:				Ray intersection data for the cylinder.
 */
 typedef struct s_cylinder
@@ -189,6 +202,7 @@ typedef struct s_cylinder
 	t_vec3		cap_top_normal;
 	t_vec3		cap_bottom_normal;
 	t_color		color;
+	int			hex_color;
 	t_ixd		ixd;
 }	t_cylinder;
 
@@ -216,11 +230,13 @@ typedef union u_object_data
 Structure representing the ambient light in the scene.
 - double `ratio`:	The ratio of the ambient lightning [0.0-1.0]
 - t_color `color`:	The color of the ambient light.
+- int `hex_color`:	The color of the ambient light in hexadecimal format.
 */
 typedef struct s_ambi_light
 {
 	double		ratio;
 	t_color		color;
+	int			hex_color;
 }	t_ambi_light;
 
 /**

@@ -6,11 +6,21 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 11:28:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/09 18:52:47 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+/* Stores special attributes for a plane in the object data. */
+static void	set_special_attributes_plane(t_scene *scene, t_obj_data *obj_data)
+{
+	obj_data->pl.ixd.difference = vec3_sub(obj_data->pl.point_in_plane, \
+		scene->cam.pos);
+	obj_data->pl.hex_color = color_to_hex(obj_data->pl.color);
+	obj_data->pl.ixd.dot_diff_normal = vec3_dot(obj_data->pl.ixd.difference, \
+		obj_data->pl.normal);
+}
 
 /*Stores all the data of the current plane in the linked list of objects.*/
 int	set_plane(t_scene *scene)
@@ -35,8 +45,7 @@ int	set_plane(t_scene *scene)
 		return (ERR_MEM_ALLOC);
 	set_color(rgb, &obj_data->pl.color.r, &obj_data->pl.color.g, \
 	&obj_data->pl.color.b);
-	obj_data->pl.ixd.difference = vec3_sub(obj_data->pl.point_in_plane, \
-		scene->cam.pos);
+	set_special_attributes_plane(scene, obj_data);
 	if (add_to_object_list(&scene, &obj_data) != 0)
 		return (ERR_MEM_ALLOC);
 	return (0);
