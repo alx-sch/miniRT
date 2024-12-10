@@ -525,7 +525,7 @@ $$
 $$
 
 3. **Project this vector onto the cylinder's axis:**       
-   Find the component of $\vec{V}$ along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point, where $\vec{U}$ is the normalized orientation vector representing the cylinder's axis:
+   Find the component of ($\vec{V}$) along the cylinder's axis (the projection). This gives the distance along the axis from the cylinder's center to the intersection point, where ($\vec{U}$) is the normalized orientation vector representing the cylinder's axis:
 
 $$
 \text{Projection Length} = \vec{V} \cdot \vec{U}
@@ -622,7 +622,7 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 To account for the cylinder's end caps, the goal is to check if a ray intersects the circular regions at the top or bottom of the cylinder. These regions can be treated as planes with finite radii. The steps to determine an intersection with a cap are as follows:
 
 1. **Represent the cap as a plane**:  
-   Each cap is a circular disk lying on a plane perpendicular to the cylinder's axis. The plane equation for a cap is:
+   Each cap is a circular disk on a plane perpendicular to the cylinder's axis. The plane equation for a cap is:
 
    $(\vec{P} - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
 
@@ -650,10 +650,10 @@ To account for the cylinder's end caps, the goal is to check if a ray intersects
    $t = \frac{(\vec{C}_{\text{cap}} - \vec{O}) \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
 
 4. **Check the intersection point against the cap's radius:**    
-   Once $t$ is computed, the intersection point $\vec{P}(t)$ can be calculated using the ray equation.
+   Once ($t$) is computed, the intersection point $(\vec{P}(t))$ can be calculated using the ray equation.
    The intersection point lies within the cap if the squared length of this vector is less than or equal to the squared radius of the cap:
    
-   $\|\| \vec{P}(t) - \vec{C}_{\text{cap}}  \|\|^2 \leq r^2$
+   $\Vert \vec{P}(t) - \vec{C}_{\text{cap}}  \Vert^2 \leq r^2$
 
 ```C
 /**
@@ -730,7 +730,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 #### Intersection Constants
 
-In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., $\vec{OC}$, the quadratic coefficient $c$, and $\vec{OC} \cdot \vec{U}$). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
+In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., ($\vec{OC}$), the quadratic coefficient ($c$), and ($\vec{OC} \cdot \vec{U}$)). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
 
 Precomputing these constants reduced my computation time by two-thirds for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~35 sec to ~12 sec.
 
@@ -760,7 +760,7 @@ The **Field of View (FOV)** represents how much of the 3D scene is visible to th
 
 Vertical FOV is often the most common in graphics programming, but horizontal FOV can also be defined depending on the viewport dimensions.
 
-To calculate how this FOV scales the projection from 3D space onto 2D screen space, we employ trigonometric functions, specifically the tangent function.
+We employ trigonometric functions, specifically the tangent function, to calculate how this FOV scales the projection from 3D space onto 2D screen space.
 
 ### Geometric Relationship Using Tangent
 
