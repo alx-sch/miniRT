@@ -21,7 +21,7 @@ $$
 
 Where:
 - **$\vec{P}(t)$:**  
-    The point on the ray at distance \(t\) from the ray's origin.  
+    The point on the ray at distance $(t)$ from the ray's origin.  
     It represents a location along the path defined by the ray, calculated by moving from the ray's starting point in the direction of the ray's direction vector.
 
 - **$\vec{O}$:**  
@@ -30,11 +30,11 @@ Where:
 
 -  **$\vec{D}$:**  
     The normalized direction vector of the ray.  
-    A normalized vector has a magnitude (or length) of 1, ensuring that the scalar \(t\) directly corresponds to the distance traveled along the ray.  
+    A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
 
 - **$t$:**  
     A scalar value indicating the distance along the ray.  
-    It scales the direction vector, determining how far along the ray the point \( P(t) \) is. When the direction vector is normalized, the value of \(t\) directly represents the magnitude of the distance from the ray’s origin.
+    It scales the direction vector, determining how far along the ray the point $\vec{P}(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
 
 ### Plane Intersection
 
@@ -52,7 +52,7 @@ Where:
 - **$n$:**  
     The normal vector of the plane, which is perpendicular to the surface.
 
-Substitute the ray equation ' $P(t) = \vec{O} + t \vec{D}$ ' into the plane equation:
+Substitute the ray equation $P(t) = \vec{O} + t \vec{D}$ into the plane equation:
 
 $$
 (\vec{O} + t \vec{D} - \vec{P_0}) \cdot n = 0
@@ -70,9 +70,9 @@ $$
 t = \frac{(P_0 - \vec{O}) \cdot n}{\vec{D} \cdot n}
 $$
 
-- *t* will be **positive** if the denominator ' $\vec{D} \cdot n$ ' is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
-- *t* will be **negative** if the denominator ' $\vec{D} \cdot n$ ' is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
-- If the denominator ' $\vec{D} \cdot n$ ' is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+- ($t$) will be **positive** if the denominator $(\vec{D} \cdot n)$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
+- ($t$) will be **negative** if the denominator $(\vec{D} \cdot n)$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
+- If the denominator $(\vec{D} \cdot n)$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
 
 In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
@@ -218,14 +218,14 @@ $$
 t_2 = \frac{-b + \sqrt{b^2 - 4ac}}{2a}
 $$
 
-If $t_1 < 0$ and $t_2 >0$, the ray starts **within** the object and the valid intersection point is $t_2$ (the exit point), which is **in front of the camera**. $t_1$ is negative, corresponding to an intersection **behind the camera**, making it invalid.
+If ($t_1 < 0$) and ($t_2 >0$), the ray starts **within** the object and the valid intersection point is ($t_2$) (the exit point), which is **in front of the camera**. ($t_1$) is negative, corresponding to an intersection **behind the camera**, making it invalid.
 
 ### Sphere Intersection
 
 To find where a ray intersects a sphere, we start with the general equation of the sphere:
 
 $$
-\|\| \vec{P} - \vec{C} \|\|^2= \left( \vec{P}  - \vec{C} \right) \cdot \left(\vec{P} - \vec{C} \right) = r^2
+\Vert \vec{P} - \vec{C} \Vert^2= \left( \vec{P}  - \vec{C} \right) \cdot \left(\vec{P} - \vec{C} \right) = r^2
 $$
 
 Where:
@@ -238,7 +238,7 @@ Where:
 - **$r$:**  
     The radius of the sphere.
 
-Now, substitute the ray equation ' $\vec{P}(t) = \vec{O} + t \vec{D}$ ' into the sphere equation:
+Now, substitute the ray equation $\vec{P}(t) = \vec{O} + t \vec{D}$ into the sphere equation:
 
 $$
 \left(\vec{O} + t \vec{D} - \vec{C} \right) \cdot \left( \vec{O} + t \vec{D} - \vec{C} \right) = r^2
@@ -256,7 +256,7 @@ $$
 \left( \vec{OC} \cdot \vec{OC} \right) + 2t \left( \vec{OC} \cdot \vec{D} \right) + t^2 \left( \vec{D} \cdot \vec{D} \right) = r^2
 $$
 
-Since $\vec{D}$ is normalized ($\|\|\vec{D}\|\| =  \vec{D} \cdot \vec{D} = 1$), the equation simplifies into an quadratic equation: 
+Since $\vec{D}$ is normalized ($\Vert \vec{D} \Vert=  \vec{D} \cdot \vec{D} = 1$), the equation simplifies into an quadratic equation: 
 
 $$
 t^2 +  2t \left( \vec{OC} \cdot \vec{D} \right) + \left( \vec{OC} \cdot \vec{OC} \right) - r^2 = 0
@@ -274,7 +274,7 @@ Where the coefficients are:
 - **$b = 2(\vec{OC} \cdot \vec{D}$)**
 - **$c = \left( \vec{OC} \cdot \vec{OC} \right) - r^2$**
 
-The following function first checks if there are any real solutions for $t$ (discriminate >= 0).
+The following function first checks if there are any real solutions for ($t$) (discriminate >= 0).
 If so, the intersection distances are calculated.
 
 ```C
@@ -334,26 +334,31 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 
 ### Cylinder Intersection
 
-For a cylinder with a given center at $(C_x, C_y, C_z)$, radius $r$, and a normalized orientation vector $\vec{U}$ (which represents its axis), the general equation is:
+For a cylinder with a given point on its axis (for example, the center) at $(C_x, C_y, C_z)$, radius $(r)$, and a normalized orientation vector $(\vec{U}\$ (which represents its axis), the general equation is:
 
 $$    
 (x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 - ((x, y, z) \cdot \vec{U})^2 = r^2
 $$
 
-Where $(x,y,z)$ represents any point on the cylinder’s surface, and $(x,y,z) \cdot \vec{U}$ is the dot product that measures how much of the position vector (from the center of the cylinder) lies along the cylinder's axis.
+Here, $(x, y, z)$ represents any point on the cylinder’s surface, and ($(x, y, z) \cdot \vec{U}\$) is the dot product that measures the projection of the position vector (from the cylinder's center or any point on its axis) onto the cylinder's axis.
 
 This equation is equivalent to:
 
 $$
-\|\| \vec{P} |\|^2 - (\vec{P} \cdot \vec{U})^2 = r^2
+\Vert \vec{P} \Vert^2 - (\vec{P} \cdot \vec{U})^2 = r^2
 $$
 
-Here
-- $\|\| \vec{P} |\|^2 = (P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2$ is the squared distance of $\vec{P}$ from the center.
-- $(\vec{P} \cdot \vec{U})^2$ removes the squared distance contribution along the axis.
+Here:
+- $\vec{P} = (P_x - C_x, P_y - C_y, P_z - C_z)$ is the vector from the cylinder's axis centerline to the point on the surface.
+- ($\Vert \vec{P} \Vert$) represents the magnitude of ($\vec{P}$), i.e., the distance of the point on the surface from the cylinder’s axis centerline: 
 
-This leaves only the perpendicular distance from the axis, ensuring that any point on the cylinder's surface satisfies the condition of being at a fixed radial distance 
-$r$ from the axis, independent of the cylinder's center.
+$$
+\Vert \vec{P} \Vert= \sqrt{(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2}.
+$$
+
+- ($\vec{P} \cdot \vec{U}$) removes the contribution of ($\vec{P}$) along the cylinder's axis by projecting ($\vec{P}$) onto the unit vector ($\vec{U}$), which is parallel to the cylinder's axis.
+
+Taken together, the equation ($\Vert \vec{P} \Vert ^2 - (\vec{P} \cdot \vec{U})^2 = r^2 $) ensures that the point lies at a perpendicular distance ($r$) from the cylinder's axis, defining the cylinder's surface. This isolates the radial distance from the axis, independent of the cylinder's position or orientation.
 
 The parametric form of the [ray equation](https://github.com/Busedame/miniRT/blob/main/README.md#ray-equation) is:
 
