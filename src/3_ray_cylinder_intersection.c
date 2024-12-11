@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/11 18:10:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/11 18:14:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 {
 	double	denominator;
 	double	numerator;
-	double	t_intersection;
-	t_vec3	p_intersection;
+	double	t_hit;
+	t_vec3	p_hit;
 	t_vec3	difference;
 
 	denominator = vec3_dot(ray_dir, cylinder->cap_top_normal);
@@ -126,14 +126,14 @@ int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 		return (0);
 	numerator = vec3_dot(vec3_sub(ray_origin, cylinder->cap_top_center),
 			cylinder->cap_top_normal);
-	t_intersection = (-1) * (numerator / denominator);
-	if (t_intersection < 0.0)
+	t_hit = (-1) * (numerator / denominator);
+	if (t_hit < 0.0)
 		return (0);
-	p_intersection = vec3_add(ray_origin, vec3_mult(ray_dir, t_intersection));
-	difference = vec3_sub(p_intersection, cylinder->cap_top_center);
+	p_hit = vec3_add(ray_origin, vec3_mult(ray_dir, t_hit));
+	difference = vec3_sub(p_hit, cylinder->cap_top_center);
 	if (vec3_dot(difference, difference) <= cylinder->radius_sqrd)
 	{
-		*t = t_intersection;
+		*t = t_hit;
 		return (1);
 	}
 	return (0);
@@ -155,8 +155,8 @@ int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 {
 	double	denominator;
 	double	numerator;
-	double	t_intersection;
-	t_vec3	p_intersection;
+	double	t_hit;
+	t_vec3	p_hit;
 	t_vec3	difference;
 
 	denominator = vec3_dot(ray_dir, cylinder->cap_bottom_normal);
@@ -164,14 +164,14 @@ int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 		return (0);
 	numerator = vec3_dot(vec3_sub(ray_origin, cylinder->cap_bottom_center),
 			cylinder->cap_bottom_normal);
-	t_intersection = (-1) * (numerator / denominator);
-	if (t_intersection < 0.0)
+	t_hit = (-1) * (numerator / denominator);
+	if (t_hit < 0.0)
 		return (0);
-	p_intersection = vec3_add(ray_origin, vec3_mult(ray_dir, t_intersection));
-	difference = vec3_sub(p_intersection, cylinder->cap_bottom_center);
+	p_hit = vec3_add(ray_origin, vec3_mult(ray_dir, t_hit));
+	difference = vec3_sub(p_hit, cylinder->cap_bottom_center);
 	if (vec3_dot(difference, difference) <= cylinder->radius_sqrd)
 	{
-		*t = t_intersection;
+		*t = p_hit;
 		return (1);
 	}
 	return (0);
