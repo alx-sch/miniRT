@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 19:38:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/11 18:10:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,22 +115,25 @@ Function to check intersection with cylinder's top end cap.
 int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 		t_cylinder *cylinder, double *t)
 {
-	double	denom;
-	double	t_cap;
-	t_vec3	intersection_point;
+	double	denominator;
+	double	numerator;
+	double	t_intersection;
+	t_vec3	p_intersection;
 	t_vec3	difference;
 
-	denom = vec3_dot(ray_dir, cylinder->cap_top_normal);
-	if (fabs(denom) < 1e-6)
+	denominator = vec3_dot(ray_dir, cylinder->cap_top_normal);
+	if (fabs(denominator) < 1e-6)
 		return (0);
-	t_cap = cylinder->ixd.dot_to_top / denom;
-	if (t_cap < 0.0)
+	numerator = vec3_dot(vec3_sub(ray_origin, cylinder->cap_top_center),
+			cylinder->cap_top_normal);
+	t_intersection = (-1) * (numerator / denominator);
+	if (t_intersection < 0.0)
 		return (0);
-	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
-	difference = vec3_sub(intersection_point, cylinder->cap_top_center);
+	p_intersection = vec3_add(ray_origin, vec3_mult(ray_dir, t_intersection));
+	difference = vec3_sub(p_intersection, cylinder->cap_top_center);
 	if (vec3_dot(difference, difference) <= cylinder->radius_sqrd)
 	{
-		*t = t_cap;
+		*t = t_intersection;
 		return (1);
 	}
 	return (0);
@@ -150,22 +153,25 @@ Function to check intersection with cylinder's bottom end cap.
 int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 		t_cylinder *cylinder, double *t)
 {
-	double	denom;
-	double	t_cap;
-	t_vec3	intersection_point;
+	double	denominator;
+	double	numerator;
+	double	t_intersection;
+	t_vec3	p_intersection;
 	t_vec3	difference;
 
-	denom = vec3_dot(ray_dir, cylinder->cap_bottom_normal);
-	if (fabs(denom) < 1e-6)
+	denominator = vec3_dot(ray_dir, cylinder->cap_bottom_normal);
+	if (fabs(denominator) < 1e-6)
 		return (0);
-	t_cap = cylinder->ixd.dot_to_bottom / denom;
-	if (t_cap < 0.0)
+	numerator = vec3_dot(vec3_sub(ray_origin, cylinder->cap_bottom_center),
+			cylinder->cap_bottom_normal);
+	t_intersection = (-1) * (numerator / denominator);
+	if (t_intersection < 0.0)
 		return (0);
-	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
-	difference = vec3_sub(intersection_point, cylinder->cap_bottom_center);
+	p_intersection = vec3_add(ray_origin, vec3_mult(ray_dir, t_intersection));
+	difference = vec3_sub(p_intersection, cylinder->cap_bottom_center);
 	if (vec3_dot(difference, difference) <= cylinder->radius_sqrd)
 	{
-		*t = t_cap;
+		*t = t_intersection;
 		return (1);
 	}
 	return (0);
