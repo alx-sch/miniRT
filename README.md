@@ -568,24 +568,20 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 To account for the cylinder's end caps, the goal is to check if a ray intersects the circular regions at the top or bottom of the cylinder. These regions can be treated as planes with finite radii. The steps to determine an intersection with a cap are as follows:
 
 1. **Represent the cap as a plane**:  
-   Each cap is a circular disk on a plane perpendicular to the cylinder's axis. The plane equation for a cap is:
+   Each cap is a circular disk on a plane perpendicular to the cylinder's axis. The plane equation for a cap is: $(P - C_{\text{cap}}) \cdot \vec{U} = 0$
 
-   $(\vec{P} - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
-
-   Here:  
-   - $\(\vec{C}_{\text{cap}}\)$ is the center of the cap (top or bottom).  
+   Here:
+   - $(P)$ is a point on the plane (we will test for the ray-cap intersection).
+   - $(C)$ is the center of the cap (top or bottom).  
    - $\(\vec{U}\)$ is the normalized orientation vector of the cylinder's axis.  
-   - $\(\vec{P}\)$ is a point on the plane (we will test for the ray-plane intersection).
 
-2. **Find the ray-plane intersection:**     
-   Substitute the ray equation ($\vec{P}(t) = \vec{O} + t \vec{D}$) into the plane equation:
-
-   $((\vec{O} + t \vec{D}) - \vec{C}_{\text{cap}}) \cdot \vec{U} = 0$
+3. **Find the ray-plane intersection:**     
+   Substitute the ray equation into the plane equation: $(O + t \vec{D}) - C_\text{cap} \cdot \vec{U} = 0$
 
    Where:
-   - $\(\vec{O}\)$ is the ray origin.  
-   - $\(\vec{D}\)$ is the normalized direction vector of the ray
-   - $\(t\)$ is the distance from $\(\vec{O}\)$ to the intersection point.
+   - $(O)$ is the ray origin.  
+   - $(\vec{D})$ is the normalized direction vector of the ray
+   - $(t)$ is the distance from $(O)$ to the intersection point.
 
    Simplify:
    
