@@ -1,8 +1,5 @@
 # miniRT -- WIP!!
 
-![Screenshot from 2024-04-21 21-10-07](https://github.com/alx-sch/42_pipex/assets/134595144/350670ec-54ee-4629-94ab-0dcb1dd92a9b)
-
-
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
 </p>
@@ -775,10 +772,10 @@ Compute the direction vector of a ray passing through a given pixel in the camer
  @return	The normalized direction vector of the ray in camera space.
 
  @note
-The z-component of the ray direction is set to 1.0 as a convention.
-This places the projection plane (screen) at z = 1.0 in camera space, which simplifies
-the perspective projection math. The vector is then normalized to ensure it has a unit length,
-making it independent of this initial choice for z.
+The z-component of the ray direction is conventionally set to 1.0
+This positions the projection plane (or screen) at z = 1.0 in camera space, simplifying the
+perspective projection calculations. The resulting vector is then normalized to ensure it has
+a unit length, making it independent of the initial choice for the z-component.
 */
 t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 {
@@ -808,4 +805,80 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 
 ### Handling Camera Orientation
 
-XXX
+In a ray-tracing system, the camera's orientation defines how the rays originating from the camera are aligned with the 3D scene. To compute ray directions in world space, you must transform the rays from camera space, where the z-axis points forward, to the orientation defined by the camera's position and rotation in the scene.
+
+#### Camera Orientation Vectors
+
+The camera's orientation in 3D space is defined by three mutually orthogonal vectors:
+
+- `cam_right`: Points to the right of the camera's view (x-axis).
+- `cam_up`: Points upward from the camera's perspective (y-axis).
+- `cam_orientation` (provided by .rt file): Points forward along the camera's line of sight (z-axis).
+
+These vectors form a **basis** for the camera's local coordinate system. To transform a direction vector from camera space to world space, you combine these basis vectors weighted by the direction's components in camera space.
+
+#### Steps for Orientation Transformation
+
+1. Calculate the Ray Direction in Camera Space:    
+   The ray direction in camera space is computed from the pixel's normalized coordinates and the field of view, as shown in the earlier function above:
+   - $\text{ray-cam-dir} = (x', y', z')$, where:
+      - ($x'$): Scaled and aspect-ratio-adjusted horizontal NDC coordinate.
+      - ($y'$): Scaled vertical NDC coordinate.
+      - ($z'$): Always 1.0, pointing forward in camera space
+    
+2. Transform the Ray Direction in Camera Space to World Space:    
+   After calculating the ray's direction in camera space, we need to transform this direction into world space, where the entire 3D scene is defined. The formula for this transformation is:
+   - $\text{ray-world-dir} = (x' \times cam-right) + (y' \times cam-up) + (z' \times cam-orientation)$
+
+3. Normalize the Resulting Vector:
+   To ensure that the ray direction is a unit vector, normalize the resulting world-space vector.
+
+This full implementation of the `compute_ray_direction` function incorporates the camera orientation:
+
+```C
+/**
+Function to compute the ray direction for a given pixel in a camera's view,
+considering the camera's field of view (FOV), aspect ratio, and orientation.
+
+ @param x		The horizontal pixel coordinate on the screen.
+ @param y		The vertical pixel coordinate on the screen.
+ @param cam		The camera object containing the FOV, orientation vector, and position.
+
+ @return		The normalized direction vector of the ray passing through the pixel, in world space.
+*/
+static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
+{
+	double	scale;		// Scaling factor from the vertical FOV
+	double	aspect_ratio;	// Ratio of screen width to height
+	double	norm_x;		// Normalized x-coordinate in NDC
+	double	norm_y;		// Normalized y-coordinate in NDC
+	t_vec3	cam_right;	// The rightward direction vector of the camera in world space
+	t_vec3	cam_up;		// The upward direction vector of the camera in world space
+	t_vec3	ray_cam_dir;	// The direction vector of the ray in camera space
+	t_vec3	ray_world_dir;	// The direction vector of the ray in world space
+
+	scale = tan((cam.fov / 2) * M_PI / 180.0);
+
+	aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
+
+	// Map pixel coordinates to normalized device coordinates (NDC)
+	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio * scale;
+	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * scale;
+
+	// Ray direction in camera space
+	ray_cam_dir = vec3_new(norm_x, norm_y, 1.0);
+
+	// The cross product produces a vector that is orthogonal to both input vectors.
+	cam_right = vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.ori)); 
+	cam_up = vec3_norm(vec3_cross(scene->cam.ori, scene->cam.right));
+
+	// Transform the ray direction in camera space to world space:   
+	ray_world_dir = vec3_add(
+				vec3_add(
+					vec3_mult(cam.right, ray_cam_dir.x),
+					vec3_mult(cam.up, ray_cam_dir.y)),
+				vec3_mult(cam.ori, ray_cam_dir.z));
+
+	return (vec3_norm(ray_world_dir)); // Return normalized ray direction vector in world space
+}
+```
