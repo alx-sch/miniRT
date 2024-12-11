@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:46:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:55:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:12:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_and_set_single_element(t_scene *scene)
 		scene->pars.error_code = parse_plane(scene);
 	else if (!ft_strcmp(type_id, "cy") || !ft_strcmp(type_id, "cy\n"))
 		scene->pars.error_code = parse_cylinder(scene);
-	else if (!ft_strcmp(type_id, "\n"))
+	else if (!ft_strcmp(type_id, "\n") || type_id[0] == '#')
 		scene->pars.error_code = 0;
 	else
 		scene->pars.error_code = ERR_INVALID_IDENTIFIER;

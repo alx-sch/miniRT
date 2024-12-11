@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 10:22:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/12/10 13:25:14 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,66 +263,75 @@ typedef struct s_pars
 	FUNCTIONS -- PARSING
 */
 
-// parsing.c
+// 0_parsing/parsing.c
 void		parse_and_set_objects(t_rt *rt, int argc, char **argv);
 
-// errors_elements.c
+// 0_parsing/errors/errors_elements.c
 void		sphere_errors(t_pars *parsing, int count);
 void		plane_errors(t_pars *parsing, int count);
 void		cylinder_errors(t_pars *parsing, int count);
 
-// errors_unique_elements.c
+// 0_parsing/errors/errors_unique_elements.c
 void		ambience_errors(t_pars *parsing);
 void		camera_errors(t_pars *parsing);
 void		light_errors(t_pars *parsing);
 
-// errors.c
+// 0_parsing/errors/errors.c
 void		errors_file(int error_code, t_rt *rt);
 void		errors_parsing(t_rt *rt, t_scene *scene, t_pars *pars);
 
-// set_error_and_return.c
+// 0_parsing/errors/set_error_and_return.c
 int			set_error_and_return(char **arr, int **parsing_error, \
 int error_code);
 
-// init_scene.c
+// 0_parsing/free/free_array.c
+int			ft_freearray(char **arr);
+
+// 0_parsing/free/free_parsing.c
+void		free_parsing(t_pars *parsing);
+
+// 0_parsing/free/free_scene.c
+void		free_scene_and_exit(t_scene *scene, t_rt *rt);
+void		free_scene(t_scene *scene);
+
+// 0_parsing/init/init_scene.c
 void		init_parsing(t_pars *parsing);
 void		init_scene(t_scene *scene);
 
-// init_unique_elements.c
+// 0_parsing/init/init_unique_elements.c
 void		init_ambience(t_ambi_light *amb);
 void		init_camera(t_cam *cam);
 void		init_light(t_light *light);
 
-// check_color.c
+// 0_parsing/parse_and_set/check_data/check_color.c
 int			check_color(char **rgb, int *parsing_error, int error_code);
 
-// check_coordinates.c
+// 0_parsing/parse_and_set/check_data/check_coordinates.c
 int			check_coordinates(char *input_coords, int *parsing_error, \
 int error_code);
 
-// check_file.c
+// 0_parsing/parse_and_set/check_data/check_file.c
 int			check_file_existence(char *str);
 int			check_file_extension(char *str);
 
-// check_identifiers.c
+// 0_parsing/parse_and_set/check_data/check_identifiers.c
 int			all_necessary_identifiers(t_pars *pars);
 int			check_unique_identifier(t_pars *parsing, char *str);
 
-// check_orientation_vector.c
+// 0_parsing/parse_and_set/check_data/check_orientation_vector.c
 int			check_orientation_vector(char *input_coords, int *parsing_error, \
 int error_code);
 
-// correct_amt_of_fields.c
+// 0_parsing/parse_and_set/check_data/correct_amt_of_fields.c
 int			correct_amt_of_fields(char **arr, int expected_len);
 
-// add_to_object_list.c
+// 0_parsing/parse_and_set/elements/add_to_object_list.c
 int			add_to_object_list(t_scene **scene, t_obj_data **obj_data);
 
-// check_and_set_single_element.c
+// 0_parsing/parse_and_set/elements/check_and_set_single_element.c
 int			check_and_set_single_element(t_scene *scene);
 
-// Directory: src/parsing/parse_and_set/elements/check_and_set
-// Containing parsing and setting all values of each object.
+// 0_parsing/parse_and_set/elements/check_and_set (Directory)
 int			parse_and_set_ambience(t_scene *scene);
 int			parse_and_set_camera(t_scene *scene);
 int			parse_and_set_light(t_scene *scene);
@@ -330,9 +339,7 @@ int			parse_sphere(t_scene *scene);
 int			parse_plane(t_scene *scene);
 int			parse_cylinder(t_scene *scene);
 
-// Directory: src/parsing/parse_and_set/set_data
-// Containing three files with one function each - for setting coordinates,
-// orientation vector and color to the correct values.
+// 0_parsing/parse_and_set/set_data (Directory)
 int			set_coordinates(char *input_coords, double *x, double *y, \
 double *z);
 int			set_orientation_vector(char *input_coords, double *x, double *y, \
@@ -340,22 +347,22 @@ double *z);
 void		set_color(char **rgb, unsigned char *r, unsigned char *g, \
 unsigned char *b);
 
-// PARSING --FREE
-
-void		free_parsing(t_pars *parsing);
-int			ft_freearray(char **arr);
-void		free_scene_and_exit(t_scene *scene, t_rt *rt);
-void		free_scene(t_scene *scene);
-
-// PARSING -- UTILS
-
+// 0_parsing/utils/array_length.c
 int			array_length(char **array);
+
+// 0_parsing/utils/ft_atod.c
 double		ft_atod(char *str);
+
+// 0_parsing/utils/ft_split_by_spaces.c
+char		**ft_split_by_spaces(const char *s);
+
+// 0_parsing/utils/ft_strchr_index.c
 int			ft_strchr_index(char *str, char c);
+
+// 0_parsing/utils/only_numbers.c
 int			only_numbers_and_newline(char *str);
 int			only_numbers_dec_pt_and_newline(char *str);
 int			only_numbers_single_signs_and_dec_pt(char *str);
 int			only_numbers_and_dec_pt(char *str);
-char		**ft_split_by_spaces(const char *s);
 
 #endif
