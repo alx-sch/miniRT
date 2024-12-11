@@ -20,21 +20,13 @@ P(t) = O + t \vec{D}
 $$
 
 Where:
-- **$P(t)$:**  
-    The point on the ray at distance $(t)$ from the ray's origin.  
-    It represents a location along the path defined by the ray, calculated by moving from the ray's starting point in the direction of the ray's direction vector.
+- **$P(t)$:**  The point on the ray at distance $(t)$ from the ray's origin. It represents a location along the path defined by the ray, calculated by moving from the ray's starting point in the direction of the ray's direction vector.
 
-- **$O$:**  
-    The ray's origin in 3D space.  
-    This point marks the location where the ray begins its journey through space (camera).
+- **$O$:**  The ray's origin in 3D space. This point marks the location where the ray begins its journey through space (camera).
 
--  **$\vec{D}$:**  
-    The normalized direction vector of the ray.  
-    A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
+-  **$\vec{D}$:** The normalized direction vector of the ray. A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
 
-- **$t$:**  
-    A scalar value indicating the distance along the ray.  
-    It scales the direction vector, determining how far along the ray the point $P(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
+- **$t$:**  A scalar value indicating the distance along the ray. It scales the direction vector, determining how far along the ray the point $P(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
 
 ### Plane Intersection
 
@@ -45,12 +37,9 @@ $$
 $$
 
 Where:
-- **$P$:**   
-    Is any point on the plane.
-- **$P_0$**  
-    Is a known point on the plane 
-- **$\vec{N} $:**  
-    The normal vector of the plane, which is perpendicular to the surface.
+- **$P$:** Is any point on the plane.
+- **$P_0$** Is a known point on the plane 
+- **$\vec{N} $:** The normal vector of the plane, which is perpendicular to the surface.
 
 Substitute the ray equation $P(t) = O + t \vec{D}$ into the plane equation:
 
@@ -131,10 +120,8 @@ ax^2 + bx + c = 0
 $$
 
 Where:
-- **$x$:**    
-  The unknown variable we are solving for.
-- **$a$, $b$, $c$:**    
-  The known coefficients of the equation (quadratic, linear, and constant, respectively).
+- **$x$:** The unknown variable we are solving for.
+- **$a$, $b$, $c$:** The known coefficients of the equation (quadratic, linear, and constant, respectively).
 
 The general solution to a quadratic equation is given by the **quadratic formula**:
 
@@ -159,14 +146,12 @@ t = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 $$
 
 Where:
-- **$t$:**    
-  The unknown variable representing the **distance from the ray's origin** to the intersection points.
-- **$a$, $b$, $c$:**    
-  Coefficients determined by the ray and object properties (e.g., direction vectors, centers, and radius).
+- **$t$:** The unknown variable representing the **distance from the ray's origin** to the intersection points.
+- **$a$, $b$, $c$:** Coefficients determined by the ray and object properties (e.g., direction vectors, centers, and radius).
 
 #### Role of the Discriminant (Δ):    
 
-The term under the root is called the discriminant ( $Δ = b^2 - 4ac$ ), which determines the nature of the solutions:
+The term under the root is called the discriminant ($Δ = b^2 - 4ac$), which determines the nature of the solutions:
 
 1. **Δ > 0**: Two distinct real solutions ($t_1$ and $t_2$):
    - The ray intersects the object at **two points**.
@@ -229,14 +214,11 @@ $$
 $$
 
 Where:
-- **$P$:**   
-    Is any point on the sphere's surface.
+- **$P$:** Is any point on the sphere's surface.
   
-- **$C$:**  
-    The center of the sphere.
+- **$C$:** The center of the sphere.
   
-- **$r$:**  
-    The radius of the sphere.
+- **$r$:** The radius of the sphere.
 
 Now, substitute the ray equation $P(t) = O + t \vec{D}$ into the sphere equation:
 
@@ -272,7 +254,7 @@ Where the coefficients are:
 
 - **$a = 1$**
 - **$b = 2(\vec{OC} \cdot \vec{D}$)**
-- **$c = \left( \vec{OC} \cdot \vec{OC} \right) - r^2$**
+- **$c = (\vec{OC} \cdot \vec{OC}) - r^2$**
 
 The following function first checks if there are any real solutions for ($t$) (discriminate >= 0).
 If so, the intersection distances are calculated.
@@ -334,86 +316,68 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 
 ### Cylinder Intersection
 
-For a cylinder with a given point ($P$) on its axis (for example, the center) at $(C_x, C_y, C_z)$, radius $(r)$, and a normalized orientation vector $(\vec{U}\$ (which represents its axis), the general equation is:
+For a cylinder with:
+
+- An axis passing through a reference point $C=(C_x, C_y, C_z)$,
+- Radius $r$,
+- And a normalized orientation vector $\vec{U}$, which represents the direction of the cylinder's axis,
+
+The general equation for a point $P=(P_x , P_y, P_z)$ on the surface of the cylinder is:
 
 $$    
-(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - ((P_x, P_y, P_z) \cdot \vec{U})^2 = r^2
+(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - \left( (P_x - C_x,  P_y - C_y,  P_z - C_z) \cdot \vec{U}\right)^2 = r^2
 $$
 
-Here, $(x, y, z)$ represents any point on the cylinder’s surface, and ($(x, y, z) \cdot \vec{U}\$) is the dot product that measures the projection of the position vector (from the cylinder's center or any point on its axis) onto the cylinder's axis.
+Now define the vector from the reference point ($C$) (on the axis) to the point ($P$) (on the surface), which captures the spatial relationship between the axis and the surface point:
 
-This equation is equivalent to:
+$$    
+\vec{P} = (P_x - C_x,  P_y - C_y,  P_z - C_z)
+$$
+
+- $(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 = \Vert P \Vert^2$: The square of the distance from the axis reference point $C$ to the surface point $P$.
+- $(\vec{P} - \vec{U})^2$: The squared projection of $\vec{P}$ onto the axis direction $\vec{U}$, which measures the component of $\vec{P}$ along the cylinder's axis.
+- Subtracting $(\vec{P} - \vec{U})^2$ removes the contribution of $\vec{P}$ along the axis, leaving only the radial distance from the axis.
+
+The cylinder’s surface is defined by ensuring the perpendicular (radial) distance from the axis equals the radius ($r$). The following equation ensures that this condition is met:
 
 $$
 \Vert \vec{P} \Vert^2 - (\vec{P} \cdot \vec{U})^2 = r^2
 $$
 
-Here:
-- $\vec{P} = (P_x - C_x, P_y - C_y, P_z - C_z)$ is the vector from the cylinder's axis centerline to the point on the surface.
-- ($\Vert \vec{P} \Vert$) represents the magnitude of ($\vec{P}$), i.e., the distance of the point on the surface from the cylinder’s axis centerline: 
-
-$$
-\Vert \vec{P} \Vert= \sqrt{(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2}.
-$$
-
-- ($\vec{P} \cdot \vec{U}$) removes the contribution of ($\vec{P}$) along the cylinder's axis by projecting ($\vec{P}$) onto the unit vector ($\vec{U}$), which is parallel to the cylinder's axis.
-
-Taken together, the equation ($\Vert \vec{P} \Vert ^2 - (\vec{P} \cdot \vec{U})^2 = r^2 $) ensures that the point lies at a perpendicular distance ($r$) from the cylinder's axis, defining the cylinder's surface. This isolates the radial distance from the axis, independent of the cylinder's position or orientation.
-
 The parametric form of the [ray equation](https://github.com/Busedame/miniRT/blob/main/README.md#ray-equation) is:
 
 $$
-x(t) = O_x + tD_x
+P_x(t) = O_x + tD_x
 $$
 $$
-y(t) = O_y + tD_y
+P_y(t) = O_y + tD_y
 $$
 $$
-z(t) = O_z + tD_z
+P_z(t) = O_z + tD_z
 $$
 
 Substituting this into the cylinder equation results in:
 
 $$
-((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - ((O_x + tD_x, O_y + tD_y, O_z + tD_z) \cdot U)^2 = r^2
+\left((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2\right) - \left((O_x - C_x + tD_x, O_y - C_y + tD_y, O_z - C_z + tD_z) \cdot \vec{U} \right)^2 = r^2
 $$
 
 which is the same as:
 
 $$
-(\vec{O} +t\vec{D} \vec{C})^2 - ((O_x + tD_x, O_y + tD_y, O_z + tD_z) \cdot U)^2 = r^2
+\left(\vec{OC} +t\vec{D}\right)^2 - \left(\vec{U} \cdot \vec{OC} + t( \vec{U} \cdot \vec{D})\right)^2 = r^2
 $$
 
-Now for the projection, we compute the dot products of the ray direction and the vector from the ray’s origin to the cylinder center with the cylinder’s orientation vector:
-
-$$    
-\text{axis-dot-ray} = \vec{U} \cdot \vec{D} 
-$$
-
-This gives how much of the ray’s direction aligns with the cylinder’s axis. It’s important for determining the ray's motion along the cylinder’s axis.
+Let ($\text{axis-dot-oc} = \vec{U} \cdot \vec{OC}$) and ($\text{axis-dot-ray} = \vec{U} \cdot \vec{D}$):
 
 $$
-\text{axis-dot-oc} = \vec{U} \cdot \vec{OC}
+\left(\vec{OC} +t\vec{D}\right)^2 - \left(\text{axis-dot-oc} + t(\text{axis-dot-ray})\right)^2 = r^2
 $$
 
-This gives how much of the vector from the ray’s origin to the cylinder’s center aligns with the cylinder’s axis. It helps determine the starting position relative to the axis of the cylinder.
-
-Using these dot products as substitutions in the ray-cylinder-intersection equation results in:
+Expanding the two squared terms gives:
 
 $$
-((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - (\text{axis-dot-oc} + t(\text{axis-dot-ray}))^2 = r^2
-$$
-
-Expanding each squared term of the **first part** of the equation gives
-
-$$
-(O_x + tD_x - C_x)^2 = (O_x - C_x)^2 + 2t(O_x - C_x)D_x + t^2D^2_x 
-$$
-$$
-(O_y + tD_y - C_y)^2 = (O_y - C_y)^2 + 2t(O_y - C_y)D_y + t^2D^2_y 
-$$
-$$
-(O_z + tD_z - C_z)^2 = (O_z - C_z)^2 + 2t(O_z - C_z)D_z + t^2D^2_z 
+\left( \vec{OC} \cdot \vec{OC} + 2t(\vec{OC} \cdot \vec{D}) + t^2(\vec{D} \cdot \vec{D})\right) - \left( (\text{axis-dot-oc})^2 + 2t(\text{axis-dot-oc} \times \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2 \right)
 $$
 
 Expanding the squared terms of the **second part** of the equation gives:
@@ -424,39 +388,15 @@ $$
 
 Grouping all this into a quadratic form ($at^2+bt+c=0$) gives the following coefficients:
 
-- $a = D^2_x + D^2_y + D^2_z - \text{axis-dot-ray}^2 = \vec{D} \cdot \vec{D} - \text{axis-dot-ray}^2$
+- $a = (\vec{D} \cdot \vec{D}) - (\text{axis-dot-ray})^2$
 
-- $b = 2( (O_x - C_x)D_x + (O_y - C_y)D_y + (O_z - C_z)D_z - \text{axis-dot-oc} \times \text{axis-dot-ray} ) = 2( \vec{OC} \cdot \vec{D} - \text{axis-dot-oc} \times \text{axis-dot-ray} )$
+- $b = 2\left( (\vec{OC} \cdot \vec{D}) - (\text{axis-dot-oc} \times \text{axis-dot-ray})\right)$
 
-- $c = (\vec{O} - \vec{C})^2 - \text{axis-dot-oc}^2 - r^2  = \vec{OC} \cdot \vec{OC} - \text{axis-dot-oc}^2 - r^2$
+- $c = (\vec{OC} \cdot \vec{OC}) - (\text{axis-dot-oc})^2 - r^2$
 
 The following function calculates the intersection of a ray with a cylinder using the above derivations. 
 
 ```C
-/**
-Function to calculate the coefficients of the quadratic equation and other variables
-for the intersection of a ray with a cylinder.
-
- @param cyl 		Pointer to the cylinder structure.
- @param ray_dir 	The normalized direction vector of the ray.
- @param oc 		The vector from the ray origin to the cylinder center.
-
- @return		None. The function modifies the cylinder's `ixd` structure
-			to store the calculated coefficients and the discriminante.
-*/
-static void	compute_cylinder_intersection_vars(t_cylinder *cyl, t_vec3 ray_dir, t_vec3 oc)
-{
-	double	axis_dot_ray;
-	double	axis_dot_oc;
-
-	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
-	axis_dot_oc = vec3_dot(oc, cyl->orientation);
-	cyl->ixd.a = vec3_dot(ray_dir, ray_dir)	- pow(axis_dot_ray, 2);	// ixd: intersection data
-	cyl->ixd.b = 2 * (vec3_dot(oc, ray_dir) - axis_dot_oc * axis_dot_ray);
-	cyl->ixd.c = vec3_dot(oc, oc) - pow(axis_dot_oc, 2) - pow(cyl->radius, 2);
-	cyl->ixd.discriminant = calculate_discriminant(cyl->ixd.a, cyl->ixd.b, cyl->ixd.c);
-}
-
 /**
 Function to find the intersection of a ray with a cylinder.
 
@@ -475,19 +415,32 @@ account for:
 - The height bounds of the cylinder
 - Intersection with the cylinder's end caps
 */
-int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-		t_cylinder *cylinder, double *t)
+int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylinder, double *t)
 {
-	t_vec3	oc;	// Vector from ray origin to cylinder center
+	t_vec3	oc;	
+	double	axis_dot_ray;
+	double	axis_dot_oc;
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	
 
 	// Compute the vector from ray origin to the cylinder center
 	oc = vec3_sub(ray_origin, cylinder->center);
 
-	// Precompute quadratic equation variables for the cylinder intersection
-	compute_cylinder_intersection_vars(cylinder, ray_dir, oc);
+	// Compute the dot products
+	axis_dot_ray = vec3_dot(ray_dir, cyl->orientation);
+	axis_dot_oc = vec3_dot(oc, cyl->orientation);
+
+	// Compute coefficients of the quadratic equation:
+	a = vec3_dot(ray_dir, ray_dir)	- (axis_dot_ray * axis_dot_ray);
+	b = 2 * (vec3_dot(oc, ray_dir) - (axis_dot_oc * axis_dot_ray));
+	c = vec3_dot(oc, oc) - (axis_dot_oc * axis_dot_oc) - (cylinder->radius * cylinder->radius)
+	discriminant = calculate_discriminant(a, b, c);
 
 	// If the discriminant is negative, no real solutions exist (no intersection)
-	if (cylinder->ixd.discriminant < 0)
+	if (discriminant < 0)
 		return (0);
 
 	// Calculate the entry distance along the ray (smallest root of the quadratic)
@@ -590,20 +543,7 @@ static int	check_cylinder_height(t_vec3 ray_origin, t_vec3 ray_dir, double t, t_
 
 int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylinder, double *t)
 {
-	t_vec3	oc;	// Vector from ray origin to cylinder center
-
-	// Compute the vector from ray origin to cylinder center
-	oc = vec3_sub(ray_origin, cylinder->center);
-
-	 // Precompute variables required for cylinder intersection
-	compute_cylinder_intersection_vars(cylinder, ray_dir, oc);
-
-	// Check if the discriminant is negative (no real solutions, no intersection)
-	if (cylinder->ixd.discriminant < 0)
-		return (0);
-
-	// Calculate the entry distance along the ray
-	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
+	// [...] same as in `ray_intersect_cylinder()` above
 
 	// Check if the entry point is valid and lies within the cylinder's height bounds
 	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
