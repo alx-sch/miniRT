@@ -16,16 +16,16 @@ This section explains the mathematical approach to detecting intersections betwe
 A ray is represented as:
 
 $$
-\vec{P}(t) = \vec{O} + t \vec{D}
+P(t) = O + t \vec{D}
 $$
 
 Where:
-- **$\vec{P}(t)$:**  
+- **$P(t)$:**  
     The point on the ray at distance $(t)$ from the ray's origin.  
     It represents a location along the path defined by the ray, calculated by moving from the ray's starting point in the direction of the ray's direction vector.
 
-- **$\vec{O}$:**  
-    The ray's origin, represented as a 3D vector.  
+- **$O$:**  
+    The ray's origin in 3D space.  
     This point marks the location where the ray begins its journey through space (camera).
 
 -  **$\vec{D}$:**  
@@ -34,45 +34,45 @@ Where:
 
 - **$t$:**  
     A scalar value indicating the distance along the ray.  
-    It scales the direction vector, determining how far along the ray the point $\vec{P}(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
+    It scales the direction vector, determining how far along the ray the point $P(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
 
 ### Plane Intersection
 
 To find the intersection of a ray with a plane, we use the plane equation:
 
 $$
-(\vec{P} - \vec{P_0}) \cdot n = 0
+(P - P_0) \cdot \vec{N} = 0
 $$
 
 Where:
-- **$\vec{P}$:**   
+- **$P$:**   
     Is any point on the plane.
-- **$\vec{P_0}$**  
+- **$P_0$**  
     Is a known point on the plane 
-- **$n$:**  
+- **$\vec{N} $:**  
     The normal vector of the plane, which is perpendicular to the surface.
 
-Substitute the ray equation $P(t) = \vec{O} + t \vec{D}$ into the plane equation:
+Substitute the ray equation $P(t) = O + t \vec{D}$ into the plane equation:
 
 $$
-(\vec{O} + t \vec{D} - \vec{P_0}) \cdot n = 0
+(O + t \vec{D} - P_0) \cdot \vec{N} = 0
 $$
 
 Rearrange terms:
 
 $$
-(\vec{O} - \vec{P_0}) \cdot n + t (\vec{D} \cdot n) = 0
+(O - P_0) \cdot \vec{N} + t (\vec{D} \cdot \vec{N}) = 0
 $$
 
 Solve for *t*:
 
 $$
-t = \frac{(P_0 - \vec{O}) \cdot n}{\vec{D} \cdot n}
+t = \frac{(P_0 - O) \cdot \vec{N}}{\vec{D} \cdot \vec{N}}
 $$
 
-- ($t$) will be **positive** if the denominator $(\vec{D} \cdot n)$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
-- ($t$) will be **negative** if the denominator $(\vec{D} \cdot n)$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
-- If the denominator $(\vec{D} \cdot n)$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+- ($t$) will be **positive** if the denominator $(\vec{D} \cdot \vec{N} )$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
+- ($t$) will be **negative** if the denominator $(\vec{D} \cdot \vec{N})$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
+- If the denominator $(\vec{D} \cdot \vec{N} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
 
 In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
@@ -225,26 +225,26 @@ If ($t_1 < 0$) and ($t_2 >0$), the ray starts **within** the object and the vali
 To find where a ray intersects a sphere, we start with the general equation of the sphere:
 
 $$
-\Vert \vec{P} - \vec{C} \Vert^2= \left( \vec{P}  - \vec{C} \right) \cdot \left(\vec{P} - \vec{C} \right) = r^2
+\Vert P - C \Vert^2= \left( P  - C \right) \cdot \left(P - C \right) = r^2
 $$
 
 Where:
-- **$\vec{P}$:**   
-    Is any point on the sphere's surface (3D vector).
+- **$P$:**   
+    Is any point on the sphere's surface.
   
-- **$\vec{C}$:**  
-    The center of the sphere (3D vector).
+- **$C$:**  
+    The center of the sphere.
   
 - **$r$:**  
     The radius of the sphere.
 
-Now, substitute the ray equation $\vec{P}(t) = \vec{O} + t \vec{D}$ into the sphere equation:
+Now, substitute the ray equation $P(t) = O + t \vec{D}$ into the sphere equation:
 
 $$
-\left(\vec{O} + t \vec{D} - \vec{C} \right) \cdot \left( \vec{O} + t \vec{D} - \vec{C} \right) = r^2
+\left(O + t \vec{D} - C \right) \cdot \left( O + t \vec{D} - C \right) = r^2
 $$
 
-Let $\vec{OC} = \vec{O} - \vec{C}$, the vector from the sphere center to the ray origin. The equation becomes:
+Let $\vec{OC} = O - C$, the vector from the sphere center to the ray origin. The equation becomes:
 
 $$
 \left(\vec{OC} + t \vec{D} \right) \cdot \left( \vec{OC} + t \vec{D} \right) = r^2
@@ -334,10 +334,10 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 
 ### Cylinder Intersection
 
-For a cylinder with a given point on its axis (for example, the center) at $(C_x, C_y, C_z)$, radius $(r)$, and a normalized orientation vector $(\vec{U}\$ (which represents its axis), the general equation is:
+For a cylinder with a given point ($P$) on its axis (for example, the center) at $(C_x, C_y, C_z)$, radius $(r)$, and a normalized orientation vector $(\vec{U}\$ (which represents its axis), the general equation is:
 
 $$    
-(x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 - ((x, y, z) \cdot \vec{U})^2 = r^2
+(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - ((P_x, P_y, P_z) \cdot \vec{U})^2 = r^2
 $$
 
 Here, $(x, y, z)$ represents any point on the cylinder’s surface, and ($(x, y, z) \cdot \vec{U}\$) is the dot product that measures the projection of the position vector (from the cylinder's center or any point on its axis) onto the cylinder's axis.
@@ -378,16 +378,22 @@ $$
 ((O_x + tD_x - C_x)^2 + (O_y + tD_y - C_y)^2 + (O_z + tD_z - C_z)^2) - ((O_x + tD_x, O_y + tD_y, O_z + tD_z) \cdot U)^2 = r^2
 $$
 
+which is the same as:
+
+$$
+(\vec{O} +t\vec{D} \vec{C})^2 - ((O_x + tD_x, O_y + tD_y, O_z + tD_z) \cdot U)^2 = r^2
+$$
+
 Now for the projection, we compute the dot products of the ray direction and the vector from the ray’s origin to the cylinder center with the cylinder’s orientation vector:
 
 $$    
-\text{axis-dot-ray} = \vec{D} \cdot \vec{U}
+\text{axis-dot-ray} = \vec{U} \cdot \vec{D} 
 $$
 
 This gives how much of the ray’s direction aligns with the cylinder’s axis. It’s important for determining the ray's motion along the cylinder’s axis.
 
 $$
-\text{axis-dot-oc} = \vec{OC} \cdot \vec{U}
+\text{axis-dot-oc} = \vec{U} \cdot \vec{OC}
 $$
 
 This gives how much of the vector from the ray’s origin to the cylinder’s center aligns with the cylinder’s axis. It helps determine the starting position relative to the axis of the cylinder.
