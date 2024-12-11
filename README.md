@@ -609,14 +609,13 @@ Function to check intersection with the cylinder's cap (top or bottom).
 */
 int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double *t, int flag_top)
 {
-	double	denominator;		// fraction's denominator: dot product of ray direction and cap normal;
-	double	numerator		// fraction's numerator: dot product of OC-vec and cap normal
-	double	t_intersect;		// Distance to the intersection point (ray x cap) along the ray
-	t_vec3	cap_center;		// Center of the cap being checked
-	t_vec3	cap_normal;		// Normal vector of the cap
-	t_vec3	to_cap_center;		// Vector from ray origin to the cap center
-	t_vec3	p_intersect;		// Computed intersection point on the cap
-	t_vec3	difference;		// Vector from cap center to intersection point
+	t_vec3	cap_center;	// Center of the cap being checked
+	t_vec3	cap_normal;	// Normal vector of the cap
+	double	denominator;	// fraction's denominator: dot product of ray direction and cap normal;
+	double	numerator	// fraction's numerator: dot product of OC-vec and cap normal
+	double	t_hit;		// Distance to the intersection point (ray x cap) along the ray
+	t_vec3	p_hit;		// Computed intersection point on the cap
+	t_vec3	difference;	// Vector from cap center to intersection point
 
 	// Determine cap center and normal based on the flag
 	if (flag_top)
@@ -641,21 +640,21 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 	// Calculate the distance t_cap to the intersection point on the cap plane
 	numerator = vec3_dot((vec3_sub(ray_origin, cap_center), cap_normal));
-	t_intersect = - numerator / denominator;
+	t_hit = - numerator / denominator;
 
 	// If the intersection is behind the ray's origin, discard it
-	if (t_intersect < 0.0)
+	if (t_hit < 0.0)
 		return (0);
 
 	// Compute the actual intersection point in 3D space
-	p_intersect = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
+	p_hit = vec3_add(ray_origin, vec3_mult(ray_dir, t_hit));
 
 	// Check if the intersection point lies within the cap's radius
-	difference = vec3_sub(p_intersect, cap_center);
+	difference = vec3_sub(p_hit, cap_center);
 	if (vec3_dot(difference, difference) <= (cyl->radius * cyl->radius))
 	{
 		// Valid intersection: store the distance and return success
-		*t = t_intersect;
+		*t = t_hit;
 		return (1);
 	}
 	return (0);	// No valid intersection within the cap's radius
