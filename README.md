@@ -1,4 +1,4 @@
-# miniRT -- WIP!!
+# miniRT
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
