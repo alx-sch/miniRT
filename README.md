@@ -576,26 +576,21 @@ To account for the cylinder's end caps, the goal is to check if a ray intersects
    - $\(\vec{U}\)$ is the normalized orientation vector of the cylinder's axis.  
 
 3. **Find the ray-plane intersection:**     
-   Substitute the ray equation into the plane equation: $(O + t \vec{D}) - C_\text{cap} \cdot \vec{U} = 0$
+   Substitute the ray equation into the plane equation: $( O + t \vec{D} - C_\text{cap} ) \cdot \vec{U} = 0$
 
    Where:
    - $(O)$ is the ray origin.  
    - $(\vec{D})$ is the normalized direction vector of the ray
    - $(t)$ is the distance from $(O)$ to the intersection point.
 
-   Simplify:
-   
-   $(\vec{O} - \vec{C}_{\text{cap}}) \cdot \vec{U} + t(\vec{D} \cdot \vec{U}) = 0$
+   Simplify: $\left(\vec{OC}_\text{cap} \cdot \vec{U} + t(\vec{D} \cdot \vec{U}) \right) = 0$
 
-   Solve for $t$:
-   
-   $t = \frac{(\vec{C}_{\text{cap}} - \vec{O}) \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
+   Solve for $t = - \frac{\vec{OC}_\text{cap} \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
 
 4. **Check the intersection point against the cap's radius:**    
-   Once ($t$) is computed, the intersection point $(\vec{P}(t))$ can be calculated using the ray equation.
+   Once ($t$) is computed, the intersection point $(P(t))$ can be calculated using the ray equation.
    The intersection point lies within the cap if the squared length of this vector is less than or equal to the squared radius of the cap:
-   
-   $\Vert \vec{P}(t) - \vec{C}_{\text{cap}}  \Vert^2 \leq r^2$
+   $\Vert P(t) - C_{\text{cap}}  \Vert^2 \leq r^2$
 
 ```C
 /**
@@ -614,18 +609,19 @@ Function to check intersection with the cylinder's cap (top or bottom).
 */
 int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double *t, int flag_top)
 {
-	double	denom;			// Dot product of ray direction and cap norma
-	double	t_cap;			// Distance to the intersection point along the ray
+	double	denominator;		// fraction's denominator: dot product of ray direction and cap normal;
+	double	numerator		// fraction's numerator: dot product of OC-vec and cap normal
+	double	t_intersect;		// Distance to the intersection point (ray x cap) along the ray
 	t_vec3	cap_center;		// Center of the cap being checked
 	t_vec3	cap_normal;		// Normal vector of the cap
 	t_vec3	to_cap_center;		// Vector from ray origin to the cap center
-	t_vec3	intersection_point;	// Computed intersection point on the cap
+	t_vec3	p_intersect;		// Computed intersection point on the cap
 	t_vec3	difference;		// Vector from cap center to intersection point
 
 	// Determine cap center and normal based on the flag
 	if (flag_top)
 	{
-		// Top cap: offset cylinder center by half its height along orientation
+		// Top cap: offset cylinder center by half its height along the orientation
 		cap_center = vec3_add(cyl->center, vec3_mult(cyl->orientation, cyl->height / 2.0));
 		cap_normal = cyl->orientation;
 	}
@@ -637,29 +633,29 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	}
 
 	// Compute the denominator of the intersection equation (projection of ray direction onto cap normal)
-	denom = vec3_dot(ray_dir, cap_normal);
+	denominator = vec3_dot(ray_dir, cap_normal);
 
 	// If the denominator is near zero, the ray is parallel to the cap and cannot intersect
-	if (fabs(denom) < 1e-6)
+	if (fabs(denominator) < 1e-6)
 		return (0);
 
 	// Calculate the distance t_cap to the intersection point on the cap plane
-	to_cap_center = vec3_sub(cap_center, ray_origin);
-	t_cap = vec3_dot(to_cap_center, cap_normal) / denom;
+	numerator = vec3_dot((vec3_sub(ray_origin, cap_center), cap_normal));
+	t_intersect = - numerator / denominator;
 
 	// If the intersection is behind the ray's origin, discard it
-	if (t_cap < 0.0)
+	if (t_intersect < 0.0)
 		return (0);
 
 	// Compute the actual intersection point in 3D space
-	intersection_point = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
+	p_intersect = vec3_add(ray_origin, vec3_mult(ray_dir, t_cap));
 
 	// Check if the intersection point lies within the cap's radius
-	difference = vec3_sub(intersection_point, cap_center);
+	difference = vec3_sub(p_intersect, cap_center);
 	if (vec3_dot(difference, difference) <= (cyl->radius * cyl->radius))
 	{
 		// Valid intersection: store the distance and return success
-		*t = t_cap;
+		*t = t_intersect;
 		return (1);
 	}
 	return (0);	// No valid intersection within the cap's radius
