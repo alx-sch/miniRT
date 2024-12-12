@@ -20,6 +20,8 @@
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
 
+---
+
 ### Raytracing Files (.rt files)
 
 The `.rt` files define the elements and configurations for the scene to be rendered:
@@ -27,51 +29,51 @@ The `.rt` files define the elements and configurations for the scene to be rende
 #### Mandatory Elements
 
 - **Ambient Light**  
-  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/ambient_line.png"/>  
+  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_A.png" width="500" />  
   * **Identifier**: `A`  
-  * **Ambient lighting ratio** (brightness, range: `[0.0-1.0]`): `0.2`  
-  * **Color** in RGB (`[0-255]`): `255, 255, 255`
+  * **Ambient lighting ratio** (brightness, range: [0.0, 1.0]): `0.2`  
+  * **Color** in RGB ([0-255]): `255, 255, 255`
 
 - **Camera**  
-  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/camera_line.png"/>  
+  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_C.png" width="500"/>  
   * **Identifier**: `C`  
   * **Position (XYZ coordinates)**: `60, 0, 0`  
-  * **Normalized orientation vector** (range: `[-1, 1]`): `1.0, 0.0, 0.0`  
-  * **Field of view (FOV)** in degrees (`[0-180]`): `170`
+  * **Normalized orientation vector** (range: [-1.0, 1.0]): `1.0, 0.0, 0.0`  
+  * **Field of view (FOV)** in degrees ([0-180]): `170`
 
 - **Light**  
-  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/light_line.png"/>  
+  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_L.png" width="500"/>  
   * **Identifier**: `L`  
   * **Position (XYZ coordinates)**: `90, 50, 70`  
-  * **Lighting ratio** (brightness, range: `[0.0-1.0]`): `0.7`  
-  * *(Optional)* **Color** in RGB (`[0-255]`): `255, 255, 255` (default: white)
-
----
+  * **Lighting ratio** (brightness, range: [0.0, 1.0]): `0.7`  
+  * *(Optional)* **Color** in RGB ([0-255]): `255, 255, 255` (default: white)
 
 #### Optional Elements
 
 - **Plane**  
-  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/plane_line.png"/>  
+  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_pl.png" width="500"/>  
   * **Identifier**: `pl`  
   * **Position (XYZ coordinates)** of a point on the plane: `0.0, 0.0, -500.0`  
-  * **Normalized orientation vector** (range: `[-1, 1]`): `-1.0, 1.0, 1.0`  
-  * **Color** in RGB (`[0-255]`): `0, 0, 225`
+  * **Normalized orientation vector** (range: [-1, 1]): `-1.0, 1.0, 1.0`  
+  * **Color** in RGB ([0-255]): `0, 0, 225`
 
 - **Sphere**  
-  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/sphere_line.png"/>  
+  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_sp.png" width="500"/>  
   * **Identifier**: `sp`  
   * **Position (XYZ coordinates)** of the center: `90, 0.0, 0.0`  
   * **Diameter**: `60`  
-  * **Color** in RGB (`[0-255]`): `0, 0, 255`
+  * **Color** in RGB ([0-255]): `0, 0, 255`
 
 - **Cylinder**  
-  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/cylinder_line.png"/>  
+  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
   * **Identifier**: `cy`  
   * **Position (XYZ coordinates)** of the base center: `90.0, 0.0, 0.0`  
-  * **Normalized orientation vector** (axis, range: `[-1, 1]`): `0.0, 1.0, 1.0`  
+  * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
   * **Diameter**: `30`  
   * **Height**: `210.42`  
-  * **Color** in RGB (`[0-255]`): `0, 0, 255`
+  * **Color** in RGB ([0-255]): `0, 0, 255`
+ 
+---
 
 ## Ray-Object Intersection
 
@@ -93,6 +95,8 @@ Where:
 -  **$\vec{D}$:** The normalized direction vector of the ray. A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
 
 - **$t$:**  A scalar value indicating the distance along the ray. It scales the direction vector, determining how far along the ray the point $P(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
+
+---
 
 ### Plane Intersection
 
@@ -176,6 +180,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 	return (0);	// No valid intersection is found
 }
 ```
+---
 
 ### Quadratic Equation
 
@@ -270,6 +275,8 @@ t_2 = \frac{-b + \sqrt{b^2 - 4ac}}{2a}
 $$
 
 If ($t_1 < 0$) and ($t_2 >0$), the ray starts **within** the object and the valid intersection point is ($t_2$) (the exit point), which is **in front of the camera**. ($t_1$) is negative, corresponding to an intersection **behind the camera**, making it invalid.
+
+---
 
 ### Sphere Intersection
 
@@ -379,6 +386,8 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 	return (0);	// No valid intersection found
 }
 ```
+
+---
 
 ### Cylinder Intersection
 
@@ -532,6 +541,8 @@ Please note that this function calculates the intersection of a ray with an infi
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
 <p align="center">The blue and red objects are both infinite cylinders.</p>
 
+---
+
 #### Handling the Cylinder's Height
 
 To account for the height boundaries of the cylinder, follow these steps:
@@ -628,6 +639,8 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
 <p align="center">The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</p>
+
+---
 
 #### Accounting for End Caps
 
@@ -731,12 +744,16 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
 <p align="center">Looking at the end cap of the closed blue cylinder.</p>
 
+---
+
 #### Intersection Constants
 
 In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., distance vectors such 
  as ($\vec{OC}$), the quadratic coefficient ($c$), some dot products like ($\vec{OC} \cdot \vec{U}$)). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
 
 Precomputing these constants reduced my computation time by three-quarters for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~68 sec to ~18 sec.
+
+---
 
 ## Projection of 3D scene onto 2D Screen
 
@@ -755,6 +772,8 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 <img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
 </div>
 
+---
+
 ### Ray Direction Calculation
 
 The **Field of View (FOV)** represents how much of the 3D scene is visible to the camera. Depending on the orientation of the camera, the FOV could be horizontal or vertical:
@@ -765,6 +784,8 @@ The **Field of View (FOV)** represents how much of the 3D scene is visible to th
 Vertical FOV is often the most common in graphics programming, but horizontal FOV can also be defined depending on the viewport dimensions.
 
 We employ trigonometric functions, specifically the tangent function, to calculate how this FOV scales the projection from 3D space onto 2D screen space.
+
+---
 
 ### Geometric Relationship Using Tangent
 
@@ -871,6 +892,8 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	return (vec3_norm(ray_dir));
 }
 ```
+
+---
 
 ### Handling Camera Orientation
 
