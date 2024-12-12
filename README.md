@@ -6,7 +6,7 @@
 
 ## Ray-Object Intersection
 
-This section explains the mathematical approach to detecting intersections between rays and various geometric objects.
+This section outlines the mathematical approach to detecting intersections between rays and various geometric objects. While this [overview document](https://github.com/josephcheel/42-MiniRT/blob/87dd9a09ded69ea9fbc0ae50bf085517908b9f85/Resources/Math/Intersection%20points%20calculations.pdf)] was not directly used for deriving all the mathematical formulations and functions presented here, it provides an excellent summary of the fundamental concepts and calculations.
 
 ### Ray Equation
 
