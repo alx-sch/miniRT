@@ -771,7 +771,7 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 
 <p align="center">
 	<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-<p align="center">Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (near plane). </p>
+<p align="center">Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport). </p>
 
 <p align="center">
 	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
