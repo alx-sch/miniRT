@@ -817,6 +817,8 @@ Changing the FOV changes $\tan\left(\frac{\text{FOV}_v}{2}\right)$, which direct
 
 In C, trigonometric functions expect their input angles to be in radians, not degrees. Therefore, the FOV angle is converted using the formula $Radians = Degrees \times \frac{\pi}{180}$ in the function below
 
+---
+
 ### Ray Direction Calculation
 
 The direction of a ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
