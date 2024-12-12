@@ -4,6 +4,75 @@
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
 </p>
 
+## How to Use
+
+1. Clone the repository and navigate into the project directory:    
+   ```
+   git clone https://github.com/Busedame/miniRT miniRT && cd miniRT
+   ```
+   
+2. Build the project using the provided Makefile:
+   ```
+   make
+   ```
+
+3. Follow the instructions provided in the output to run the program.
+
+The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
+
+### Raytracing Files (.rt files)
+
+The `.rt` files define the elements and configurations for the scene to be rendered:
+
+#### Mandatory Elements
+
+- **Ambient Light**  
+  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/ambient_line.png"/>  
+  * **Identifier**: `A`  
+  * **Ambient lighting ratio** (brightness, range: `[0.0-1.0]`): `0.2`  
+  * **Color** in RGB (`[0-255]`): `255, 255, 255`
+
+- **Camera**  
+  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/camera_line.png"/>  
+  * **Identifier**: `C`  
+  * **Position (XYZ coordinates)**: `60, 0, 0`  
+  * **Normalized orientation vector** (range: `[-1, 1]`): `1.0, 0.0, 0.0`  
+  * **Field of view (FOV)** in degrees (`[0-180]`): `170`
+
+- **Light**  
+  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/light_line.png"/>  
+  * **Identifier**: `L`  
+  * **Position (XYZ coordinates)**: `90, 50, 70`  
+  * **Lighting ratio** (brightness, range: `[0.0-1.0]`): `0.7`  
+  * *(Optional)* **Color** in RGB (`[0-255]`): `255, 255, 255` (default: white)
+
+---
+
+#### Optional Elements
+
+- **Plane**  
+  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/plane_line.png"/>  
+  * **Identifier**: `pl`  
+  * **Position (XYZ coordinates)** of a point on the plane: `0.0, 0.0, -500.0`  
+  * **Normalized orientation vector** (range: `[-1, 1]`): `-1.0, 1.0, 1.0`  
+  * **Color** in RGB (`[0-255]`): `0, 0, 225`
+
+- **Sphere**  
+  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/sphere_line.png"/>  
+  * **Identifier**: `sp`  
+  * **Position (XYZ coordinates)** of the center: `90, 0.0, 0.0`  
+  * **Diameter**: `60`  
+  * **Color** in RGB (`[0-255]`): `0, 0, 255`
+
+- **Cylinder**  
+  <img src="https://github.com/josephcheel/42-MiniRT/blob/main/Resources/Img/cylinder_line.png"/>  
+  * **Identifier**: `cy`  
+  * **Position (XYZ coordinates)** of the base center: `90.0, 0.0, 0.0`  
+  * **Normalized orientation vector** (axis, range: `[-1, 1]`): `0.0, 1.0, 1.0`  
+  * **Diameter**: `30`  
+  * **Height**: `210.42`  
+  * **Color** in RGB (`[0-255]`): `0, 0, 255`
+
 ## Ray-Object Intersection
 
 This section outlines the mathematical approach to detecting intersections between rays and various geometric objects. While this [overview document](https://github.com/josephcheel/42-MiniRT/blob/87dd9a09ded69ea9fbc0ae50bf085517908b9f85/Resources/Math/Intersection%20points%20calculations.pdf) was not directly used for deriving all the mathematical formulations and functions presented here, it provides an excellent summary of the fundamental concepts and calculations.
