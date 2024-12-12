@@ -769,13 +769,13 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 - The **field of view (FOV)** defines the angular range visible to the camera, which determines the extent of the scene captured.
 - The **view frustum** is a truncated pyramid extending from the camera's position toward the viewport. The rectangular screen at the base of the frustum defines the visible scene.
 
-<div align="center"">
-<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-</div>
+<p align="center">
+	<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
+<p align="center">Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (near plane). </p>
 
-<div align="center">
-<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
-</div>
+<p align="center">
+	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
+<p align="center">Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</p>
 
 ---
 
