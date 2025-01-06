@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/11 18:14:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/01/06 18:10:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 
 /**
 Function to check intersection with cylinder's top end cap.
+- t_hit is the distance from the ray origin to the intersection point.
+- p_hit is the intersection point.
 
  @param ray_origin 	The origin of the ray.
  @param ray_dir 	The normalized direction vector of the ray.
@@ -141,6 +143,8 @@ int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 
 /**
 Function to check intersection with cylinder's bottom end cap.
+- t_hit is the distance from the ray origin to the intersection point.
+- p_hit is the intersection point.
 
  @param ray_origin 	The origin of the ray.
  @param ray_dir 	The normalized direction vector of the ray.
@@ -171,7 +175,7 @@ int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 	difference = vec3_sub(p_hit, cylinder->cap_bottom_center);
 	if (vec3_dot(difference, difference) <= cylinder->radius_sqrd)
 	{
-		*t = p_hit;
+		*t = t_hit;
 		return (1);
 	}
 	return (0);
