@@ -42,10 +42,10 @@ Function to find the intersection of a ray with a plane.
 
  @note
 Due to floating-point precision limitations, directly comparing a dot product
-to zero can be unreliable. A small threshold (1e-6) is used to determine if the
-ray is parallel to the plane. Values below this threshold are considered too
-close to zero, indicating parallelism or preventing division by very small
-numbers, which could lead to inaccuracies.
+to zero can be unreliable. Thus, a small threshold (1e-6) is used instead of zero.
+This also effectively treats planes that are "almost" parallel as parallel. Without this safeguard,
+very shallow angles could lead to intersections at extreme distances, potentially causing visual artifacts
+where planes appear infinitely large in rendering.
 */
 int	ray_intersect_plane(t_vec3 ray_dir, t_plane *plane,
 		double *t)
