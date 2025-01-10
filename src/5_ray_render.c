@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5_ray_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:36:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/01/10 15:42:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,15 @@ the closest intersection.
 static void	render_pixel(t_rt *rt, int x, int y)
 {
 	t_vec3	ray_dir;
-	int		pix_color;
+	t_ixr	ixr;
 
 	ray_dir = compute_ray_direction(x, y, rt->scene.cam);
-	pix_color = find_closest_intersection(ray_dir, rt);
-	set_pixel_color(&rt->mlx.img, x, y, pix_color);
+	ixr = find_closest_intersection(ray_dir, rt);
+	if (ixr.ixn_color == -1)
+		ixr.ixn_color = BG_COLOR;
+	else
+		modify_color(ray_dir, rt, &ixr);
+	set_pixel_color(&rt->mlx.img, x, y, ixr.ixn_color);
 }
 
 /**

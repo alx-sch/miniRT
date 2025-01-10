@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 19:49:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/01/10 16:26:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,50 @@ typedef struct s_color
 	unsigned char	g;
 	unsigned char	b;
 }	t_color;
+
+/**
+Utility struct to store the closest intersection distance and its color.
+- double `t_closest`:	The closest intersection distance for a ray.
+- int `ixn_color`:		The color of the closest intersection.
+*/
+typedef struct s_intersection_result
+{
+	double	ray_origin;
+	double	t_closest;
+	int		ixn_color;
+}	t_ixr;
+
+/*
+Struct to store data about a shadow ray (a ray from an object towards the 
+light source). This is used to determine whether (a pixel of) an object is
+in shadow or not.
+- t_vec3 `intersection_point`:	The point where the ray from the camera hits
+								the object.
+- t_vec3 `light_dir`:			The direction of the ray from the object to
+								the light source.
+- t_vec3 `normal`:				A vector that is perpendicular to a surface at 
+								a given point.
+	--> Sphere: The normal at any point on a sphere points directly away from 
+				the center of the sphere.
+    --> Cylinder: The normal at any point on the curved surface (not top or
+				bottom) of a cylinder points directly away from the axis of the 
+				cylinder.
+    --> Plane: The normal to a plane is a vector that is perpendicular to the 
+				plane.
+- t_vec3 `offset_origin`:		The intersection point, but with a very small
+								adjustment, avoiding self shadowing and (the
+								shadow ray starts a little bit above the
+								surface).
+
+*/
+typedef struct s_shadow
+{
+	t_vec3	intersection_point;
+	t_vec3	light_dir;
+	t_vec3	normal;
+	t_vec3	offset_origin;
+	double	length;
+}	t_shadow;
 
 //###########
 //# OBJECTS #

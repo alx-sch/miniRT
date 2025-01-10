@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4_ray_intersections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 20:09:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:07:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,30 @@ corresponding color.
 
 // IN FILE:
 
-int	find_closest_intersection(t_vec3 ray_dir, t_rt *rt);
+t_ixr	find_closest_intersection(t_vec3 ray_dir, t_rt *rt);
 
-/**
-Utility struct to store the closest intersection distance and its color.
-- double `t_closest`:	The closest intersection distance for a ray.
-- int `ixn_color`:		The color of the closest intersection.
-*/
-typedef struct s_intersection_result
+double	clamp(double value, double min, double max)
 {
-	double	t_closest;
-	int		ixn_color;
-}	t_ixr;
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}
+
+t_color	mix_ambient_light(t_color object_color, t_color ambient_color, \
+	double ambient_intensity)
+{
+	t_color	result;
+
+	result.r = clamp(ambient_intensity * object_color.r * \
+	ambient_color.r, 0.0, 1.0);
+	result.g = clamp(ambient_intensity * object_color.g * \
+	ambient_color.g, 0.0, 1.0);
+	result.b = clamp(ambient_intensity * object_color.b * \
+	ambient_color.b, 0.0, 1.0);
+	return (result);
+}
 
 /**
 Checks for intersection of a ray with a plane object.
@@ -52,6 +64,7 @@ static void	check_plane_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	if (ray_intersect_plane(ray_dir, &obj_data->pl, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
+		ixr->ray_origin = t;
 		ixr->ixn_color = obj_data->pl.hex_color;
 	}
 }
@@ -75,6 +88,7 @@ static void	check_sphere_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	if (ray_intersect_sphere(ray_dir, &obj_data->sp, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
+		ixr->ray_origin = t;
 		ixr->ixn_color = obj_data->sp.hex_color;
 	}
 }
@@ -106,12 +120,14 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 		&& t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
+		ixr->ray_origin = t;
 		ixr->ixn_color = obj_data->cy.hex_color;
 	}
 	if (obj_data->cy.ixd.cap_hit != 2 && ray_intersect_cap_top(ray_origin,
 			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
+		ixr->ray_origin = t;
 		ixr->ixn_color = obj_data->cy.hex_color;
 		obj_data->cy.ixd.cap_hit = 1;
 	}
@@ -120,6 +136,7 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 	{
 		ixr->t_closest = t;
 		ixr->ixn_color = obj_data->cy.hex_color;
+		ixr->ray_origin = t;
 		obj_data->cy.ixd.cap_hit = 2;
 	}
 }
@@ -135,7 +152,7 @@ if no intersections occur.
  @return 			The computed color for the closest intersection;
  					or ambient light when no intersections occur.
 */
-int	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
+t_ixr	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
 {
 	t_list		*current_obj;
 	t_obj_data	*obj_data;
@@ -155,7 +172,5 @@ int	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
 			check_cyl_intersection(rt->scene.cam.pos, ray_dir, obj_data, &ixr);
 		current_obj = current_obj->next;
 	}
-	if (ixr.ixn_color == -1)
-		ixr.ixn_color = BG_COLOR;
-	return (ixr.ixn_color);
+	return (ixr);
 }
