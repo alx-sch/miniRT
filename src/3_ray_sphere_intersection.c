@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_ray_sphere_intersection.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 19:41:58 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/01/14 14:22:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

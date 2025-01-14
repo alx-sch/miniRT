@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/10 15:42:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:02:56 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ static void	render_pixel(t_rt *rt, int x, int y)
 
 	ray_dir = compute_ray_direction(x, y, rt->scene.cam);
 	ixr = find_closest_intersection(ray_dir, rt);
-	if (ixr.ixn_color == -1)
-		ixr.ixn_color = BG_COLOR;
-	else
-		modify_color(ray_dir, rt, &ixr);
+	modify_color(ray_dir, rt, &ixr);
 	set_pixel_color(&rt->mlx.img, x, y, ixr.ixn_color);
 }
 

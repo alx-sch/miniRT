@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/01/10 16:29:05 by nholbroo         ###   ########.fr        #
+#    Updated: 2025/01/14 16:00:43 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,10 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/3_ray_cylinder_intersection.c \
 				$(SRCS_DIR)/4_ray_intersections.c \
 				$(SRCS_DIR)/5_ray_render.c \
-				$(SRCS_DIR)/6_ray_shadows.c \
-				$(SRCS_DIR)/7_ray_shadows_utils_1.c \
-				$(SRCS_DIR)/7_ray_shadows_utils_2.c \
+				$(SRCS_DIR)/6_modify_color.c \
+				$(SRCS_DIR)/7_shadow_intersections.c \
+				$(SRCS_DIR)/8_create_shadow_ray.c \
+				$(SRCS_DIR)/9_shadow_copy_objs.c \
 				$(SRCS_DIR)/utils/0_vector_utils_1.c \
 				$(SRCS_DIR)/utils/0_vector_utils_2.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \

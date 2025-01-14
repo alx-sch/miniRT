@@ -6,11 +6,34 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:05:51 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/10 17:10:17 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:42:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+double	clamp(double value, double min, double max)
+{
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}
+
+t_color	mix_ambient_light(t_color object_color, t_color ambient_color, \
+	double ambient_intensity)
+{
+	t_color	result;
+
+	result.r = clamp(ambient_intensity * object_color.r * \
+	ambient_color.r, 0.0, 1.0);
+	result.g = clamp(ambient_intensity * object_color.g * \
+	ambient_color.g, 0.0, 1.0);
+	result.b = clamp(ambient_intensity * object_color.b * \
+	ambient_color.b, 0.0, 1.0);
+	return (result);
+}
 
 /**
 Checks for intersection of a ray with a plane object.
@@ -33,7 +56,7 @@ int	shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir,
 	shadow = create_shadow_ray(rt, ray_dir, *ixr, obj_data);
 	plane = copy_plane(&obj_data->pl, &shadow);
 	if (ray_intersect_plane(shadow.light_dir, &plane, &t) 
-		&& t > 1e-4 && t < shadow.length)
+		&& t > 0 && t < shadow.length - 1e-6)
 		return (1);
 	return (0);
 }
@@ -59,7 +82,7 @@ int	shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir,
 	shadow = create_shadow_ray(rt, ray_dir, *ixr, obj_data);
 	sphere = copy_sphere(&obj_data->sp, &shadow);
 	if (ray_intersect_sphere(ray_dir, &sphere, &t)
-		&& t > 1e-4 && t < shadow.length)
+		&& t > 0 && t < shadow.length - 1e-6)
 		return (1);
 	return (0);
 }
@@ -92,13 +115,13 @@ int	shadow_check_cyl_intersection(t_rt *rt, t_vec3 ray_dir,
 	shadow = create_shadow_ray(rt, ray_dir, *ixr, obj_data);
 	cylinder = copy_cylinder(&obj_data->cy, &shadow);
 	if (ray_intersect_cylinder(rt->scene.light.position, ray_dir, &cylinder, &t)
-		&& t > 1e-4 && t < shadow.length)
+		&& t > 0 && t < shadow.length - 1e-6)
 		return (1);
 	if (ray_intersect_cap_top(rt->scene.light.position,
-			ray_dir, &cylinder, &t) && t > 1e-4 && t < shadow.length)
+			ray_dir, &cylinder, &t) && t > 0 && t < shadow.length - 1e-6)
 		return (1);
 	if (ray_intersect_cap_bottom(rt->scene.light.position,
-			ray_dir, &cylinder, &t) && t > 1e-4 && t < shadow.length)
+			ray_dir, &cylinder, &t) && t > 0 && t < shadow.length - 1e-6)
 		return (1);
 	return (0);
 }

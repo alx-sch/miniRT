@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_parse_and_set.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 13:13:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/01/14 14:55:54 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	parse_and_set_light(t_scene *scene)
 	if (check_coordinates(scene->pars.elem_data[1], \
 	&scene->pars.error_code, ERR_LIGHT_COOR_FIELDS) != 0)
 		return (scene->pars.error_code);
+	set_coordinates(scene->pars.elem_data[1], &scene->light.position.x, \
+	&scene->light.position.y, &scene->light.position.z);
 	if (light_brightness(scene, &scene->pars.error_code) != 0)
 		return (scene->pars.error_code);
 	if (arr_len == 4 && scene->pars.elem_data[3][0] != '\n')

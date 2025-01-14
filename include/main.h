@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/10 16:26:15 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:01:13 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,11 @@ t_ixr		find_closest_intersection(t_vec3 ray_dir, t_rt *rt);
 
 void		render_scene(t_rt *rt);
 
-// 6_ray_shadows.c
-
+// 6_modify_color.c
 int			is_ray_in_shadow(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
 void		modify_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
-t_shadow	create_shadow_ray(t_rt *rt, t_vec3 ray_dir, t_ixr *ixr, 
-				t_obj_data *obj_data);
-t_vec3		get_normal_at_point(t_vec3 point, t_obj_data *obj_data);
-t_vec3		calculate_cylinder_normal(t_vec3 intersection_point, 
-				t_obj_data *obj_data);
 
-// 7_ray_shadows_utils_1.c
-
-t_cylinder	copy_cylinder(t_cylinder *cyl, t_shadow *shadow);
-t_sphere	copy_sphere(t_sphere *sp, t_shadow *shadow);
-t_plane		copy_plane(t_plane *pl, t_shadow *shadow);
-
-// 7_ray_shadows_utils_2.c
+// 7_shadow_intersections.c
 
 int			shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir, 
 				t_obj_data *obj_data, t_ixr **ixr);
@@ -110,6 +98,20 @@ int			shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir,
 				t_obj_data *obj_data, t_ixr **ixr);
 int			shadow_check_cyl_intersection(t_rt *rt, t_vec3 ray_dir,
 				t_obj_data *obj_data, t_ixr **ixr);
+
+// 8_create_shadow_ray.c
+
+t_shadow	create_shadow_ray(t_rt *rt, t_vec3 ray_dir, t_ixr *ixr, 
+				t_obj_data *obj_data);
+t_vec3		get_normal_at_point(t_vec3 point, t_obj_data *obj_data);
+t_vec3		calculate_cylinder_normal(t_vec3 intersection_point, 
+				t_obj_data *obj_data);
+
+// 9_shadow_copy_objs.c
+
+t_cylinder	copy_cylinder(t_cylinder *cyl, t_shadow *shadow);
+t_sphere	copy_sphere(t_sphere *sp, t_shadow *shadow);
+t_plane		copy_plane(t_plane *pl, t_shadow *shadow);
 
 // utils/0_vector_utils_1.c
 
