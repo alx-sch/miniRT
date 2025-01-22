@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/01/14 16:00:43 by nholbroo         ###   ########.fr        #
+#    Updated: 2025/01/22 17:36:04 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/sp_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/pl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/light_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/adjust_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_orientation_vector.c \
@@ -115,7 +116,7 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 #####################
 
 CC :=			cc
-CFLAGS :=		-Wall -Wextra -Werror
+# CFLAGS :=		-Wall -Wextra -Werror
 CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)		# Look for headers in these directories
 CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
 

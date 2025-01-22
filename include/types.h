@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/10 16:26:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:27:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,6 @@ typedef struct s_color
 	unsigned char	b;
 }	t_color;
 
-/**
-Utility struct to store the closest intersection distance and its color.
-- double `t_closest`:	The closest intersection distance for a ray.
-- int `ixn_color`:		The color of the closest intersection.
-*/
-typedef struct s_intersection_result
-{
-	double	ray_origin;
-	double	t_closest;
-	int		ixn_color;
-}	t_ixr;
-
 /*
 Struct to store data about a shadow ray (a ray from an object towards the 
 light source). This is used to determine whether (a pixel of) an object is
@@ -137,6 +125,20 @@ typedef struct s_shadow
 	t_vec3	offset_origin;
 	double	length;
 }	t_shadow;
+
+/**
+Utility struct to store the closest intersection distance and its color.
+- double `t_closest`:	The closest intersection distance for a ray.
+- int `ixn_color`:		The color of the closest intersection.
+*/
+typedef struct s_intersection_result
+{
+	double		ray_origin;
+	double		t_closest;
+	int			ixn_color;
+	t_obj_data	*hit_obj;
+	t_shadow	shadow;
+}	t_ixr;
 
 //###########
 //# OBJECTS #

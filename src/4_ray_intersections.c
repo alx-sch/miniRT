@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/14 16:02:49 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:10:21 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	check_plane_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	{
 		ixr->t_closest = t;
 		ixr->ray_origin = t;
-		ixr->ixn_color = obj_data->pl.hex_color;
+		ixr->hit_obj = obj_data;
 	}
 }
 
@@ -66,7 +66,7 @@ static void	check_sphere_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	{
 		ixr->t_closest = t;
 		ixr->ray_origin = t;
-		ixr->ixn_color = obj_data->sp.hex_color;
+		ixr->hit_obj = obj_data;
 	}
 }
 
@@ -98,21 +98,21 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 	{
 		ixr->t_closest = t;
 		ixr->ray_origin = t;
-		ixr->ixn_color = obj_data->cy.hex_color;
+		ixr->hit_obj = obj_data;
 	}
 	if (obj_data->cy.ixd.cap_hit != 2 && ray_intersect_cap_top(ray_origin,
 			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
 		ixr->ray_origin = t;
-		ixr->ixn_color = obj_data->cy.hex_color;
+		ixr->hit_obj = obj_data;
 		obj_data->cy.ixd.cap_hit = 1;
 	}
 	if (obj_data->cy.ixd.cap_hit != 1 && ray_intersect_cap_bottom(ray_origin,
 			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ixn_color = obj_data->cy.hex_color;
+		ixr->hit_obj = obj_data;
 		ixr->ray_origin = t;
 		obj_data->cy.ixd.cap_hit = 2;
 	}
@@ -137,7 +137,9 @@ t_ixr	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
 
 	current_obj = rt->scene.objs;
 	ixr.t_closest = INFINITY;
-	ixr.ixn_color = -1;
+	ixr.ray_origin = INFINITY;
+	ixr.ixn_color = 0;
+	ixr.hit_obj = NULL;
 	while (current_obj != NULL)
 	{
 		obj_data = (t_obj_data *)current_obj->content;
@@ -149,7 +151,7 @@ t_ixr	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
 			check_cyl_intersection(rt->scene.cam.pos, ray_dir, obj_data, &ixr);
 		current_obj = current_obj->next;
 	}
-	if (ixr.ixn_color == -1)
+	if (ixr.hit_obj == NULL)
 		ixr.ixn_color = BG_COLOR;
 	return (ixr);
 }

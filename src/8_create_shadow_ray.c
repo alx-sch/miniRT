@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   6_create_shadow_ray.c                              :+:      :+:    :+:   */
+/*   8_create_shadow_ray.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:54:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/14 15:54:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/22 20:27:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,36 @@ t_vec3	get_normal_at_point(t_vec3 point, t_obj_data *obj_data)
 	return ((t_vec3){0, 0, 0});
 }
 
-t_shadow	create_shadow_ray(t_rt *rt, t_vec3 ray_dir, t_ixr *ixr, 
-	t_obj_data *obj_data)
+t_shadow	init_shadow(t_rt *rt, t_ixr *ixr, t_vec3 ray_dir)
 {
 	t_shadow	shadow;
 
 	shadow.intersection_point = vec3_add(rt->scene.cam.pos, \
 	vec3_scale(ray_dir, ixr->ray_origin));
-	shadow.normal = get_normal_at_point(shadow.intersection_point, obj_data);
+	shadow.normal = get_normal_at_point(shadow.intersection_point, \
+	ixr->hit_obj);
 	shadow.offset_origin = vec3_add(shadow.intersection_point, \
-	vec3_scale(shadow.normal, 1e-4));
+	vec3_scale(shadow.normal, 1e-6));
 	shadow.length = vec3_length(vec3_sub(rt->scene.light.position, \
 	shadow.offset_origin));
 	shadow.light_dir = vec3_norm(vec3_sub(rt->scene.light.position, \
 	shadow.offset_origin));
 	return (shadow);
 }
+
+// t_shadow	create_shadow_ray(t_rt *rt, t_vec3 ray_dir, t_ixr *ixr, 
+// 	t_obj_data *obj_data)
+// {
+// 	t_shadow	shadow;
+
+// 	shadow.intersection_point = vec3_add(rt->scene.cam.pos, \
+// 	vec3_scale(ray_dir, ixr->ray_origin));
+// 	shadow.normal = get_normal_at_point(shadow.intersection_point, obj_data);
+// 	shadow.offset_origin = vec3_add(shadow.intersection_point, \
+// 	vec3_scale(shadow.normal, 1e-4));
+// 	shadow.length = vec3_length(vec3_sub(rt->scene.light.position, \
+// 	shadow.offset_origin));
+// 	shadow.light_dir = vec3_norm(vec3_sub(rt->scene.light.position, \
+// 	shadow.offset_origin));
+// 	return (shadow);
+// }

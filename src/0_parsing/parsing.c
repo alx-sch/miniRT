@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/10 13:16:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:42:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,5 @@ void	parse_and_set_objects(t_rt *rt, int argc, char **argv)
 	parsing(rt, &rt->scene, argv[1]);
 	if (rt->scene.pars.error_code != 0)
 		errors_parsing(rt, &rt->scene, &rt->scene.pars);
+	adjust_color(&rt);
 }

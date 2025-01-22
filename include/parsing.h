@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/10 17:01:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:53:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_ambi_light		t_ambi_light;
 typedef struct s_camera			t_cam;
 typedef struct s_light			t_light;
 typedef union u_object_data		t_obj_data;
+typedef struct s_color			t_color;
 
 /*
 	ERROR CODES -- PARSING
@@ -340,12 +341,15 @@ int			parse_plane(t_scene *scene);
 int			parse_cylinder(t_scene *scene);
 
 // 0_parsing/parse_and_set/set_data (Directory)
+void		adjust_color(t_rt **rt);
+t_color		mix_ambient_light(t_color object_color, t_color ambient_color);
+double		adjust_to_color_range(double value, double min, double max);
+void		set_color(char **rgb, unsigned char *r, unsigned char *g, \
+unsigned char *b);
 int			set_coordinates(char *input_coords, double *x, double *y, \
 double *z);
 int			set_orientation_vector(char *input_coords, double *x, double *y, \
 double *z);
-void		set_color(char **rgb, unsigned char *r, unsigned char *g, \
-unsigned char *b);
 
 // 0_parsing/utils/array_length.c
 int			array_length(char **array);
