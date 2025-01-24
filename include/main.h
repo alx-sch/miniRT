@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/22 20:34:00 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:20:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int			shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir,
 				t_sphere sp, t_ixr **ixr);
 int			shadow_check_cyl_intersection(t_rt *rt, t_vec3 ray_dir,
 				t_cylinder cy, t_ixr **ixr);
-int			is_ray_in_shadow(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
+int			is_ray_in_shadow(t_rt *rt, t_ixr *ixr);
 
 // 8_create_shadow_ray.c
 
@@ -105,8 +105,6 @@ t_shadow	init_shadow(t_rt *rt, t_ixr *ixr, t_vec3 ray_dir);
 t_vec3		get_normal_at_point(t_vec3 point, t_obj_data *obj_data);
 t_vec3		calculate_cylinder_normal(t_vec3 intersection_point, 
 				t_obj_data *obj_data);
-// t_shadow	create_shadow_ray(t_rt *rt, t_vec3 ray_dir, t_ixr *ixr, 
-// 				t_obj_data *obj_data);
 
 // 9_shadow_copy_objs.c
 

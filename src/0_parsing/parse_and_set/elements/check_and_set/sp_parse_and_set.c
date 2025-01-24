@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/10 17:11:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:51:28 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	set_sphere(t_scene *scene)
 	if (add_to_object_list(&scene, &obj_data) != 0)
 		return (ERR_MEM_ALLOC);
 	obj_data->sp.hex_color = color_to_hex(obj_data->sp.color);
+	obj_data->sp.hit = 0;
 	return (0);
 }
 

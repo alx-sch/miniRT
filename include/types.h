@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/22 18:27:52 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:44:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ typedef struct s_plane
 	t_color		color;
 	int			hex_color;
 	t_ixd		ixd;
+	int			hit;
 }	t_plane;
 
 /**
@@ -224,6 +225,7 @@ typedef struct s_sphere
 	t_color		color;
 	int			hex_color;
 	t_ixd		ixd;
+	int			hit;
 }	t_sphere;
 
 /**
@@ -252,6 +254,7 @@ typedef struct s_cylinder
 	t_color		color;
 	int			hex_color;
 	t_ixd		ixd;
+	int			hit;
 }	t_cylinder;
 
 /**

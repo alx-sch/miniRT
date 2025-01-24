@@ -6,12 +6,22 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:23:01 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/22 20:27:14 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/24 17:55:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/**
+All these functions makes a copy of an object, but adjusting it to do
+contain data with a shadow ray (from hitpoint to light source) instead of a
+regular ray (from camera to object).
+*/
+
+/**
+Copies a cylinder object to contain shadow ray data instead of 
+camera-to-object data.
+*/
 t_cylinder	copy_cylinder(t_cylinder *cyl, t_shadow *shadow)
 {
 	t_cylinder	new_cyl;
@@ -41,6 +51,10 @@ t_cylinder	copy_cylinder(t_cylinder *cyl, t_shadow *shadow)
 	return (new_cyl);
 }
 
+/**
+Copies a sphere object to contain shadow ray data instead of 
+camera-to-object data.
+*/
 t_sphere	copy_sphere(t_sphere *sp, t_shadow *shadow)
 {
 	t_sphere	new_sp;
@@ -56,6 +70,10 @@ t_sphere	copy_sphere(t_sphere *sp, t_shadow *shadow)
 	return (new_sp);
 }
 
+/**
+Copies a plane object to contain shadow ray data instead of 
+camera-to-object data.
+*/
 t_plane	copy_plane(t_plane *pl, t_shadow *shadow)
 {
 	t_plane	new_pl;

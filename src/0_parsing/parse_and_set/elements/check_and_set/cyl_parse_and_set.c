@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/10 17:01:30 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:51:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	set_cylinder(t_scene *scene)
 	set_color(rgb, &obj_data->cy.color.r, &obj_data->cy.color.g, \
 	&obj_data->cy.color.b);
 	set_special_attributes_cylinder(&scene, &obj_data);
+	obj_data->cy.hit = 0;
 	if (add_to_object_list(&scene, &obj_data) != 0)
 		return (ERR_MEM_ALLOC);
 	return (0);

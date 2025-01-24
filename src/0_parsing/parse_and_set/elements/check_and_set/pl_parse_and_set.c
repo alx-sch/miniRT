@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pl_parse_and_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 18:52:47 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/01/24 15:51:23 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	set_plane(t_scene *scene)
 	set_color(rgb, &obj_data->pl.color.r, &obj_data->pl.color.g, \
 	&obj_data->pl.color.b);
 	set_special_attributes_plane(scene, obj_data);
+	obj_data->pl.hit = 0;
 	if (add_to_object_list(&scene, &obj_data) != 0)
 		return (ERR_MEM_ALLOC);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:23:12 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/22 20:39:40 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:19:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ int	add_color_effects(t_rt *rt, t_ixr *ixr, t_color rgb)
 	double		intensity;
 	double		final;
 
-	spec_intensity = 0;
+	spec_intensity = 0.0;
 	intensity = vec3_dot(ixr->shadow.normal, ixr->shadow.light_dir);
-	if (intensity != 0)
+	if (intensity < 0)
+		intensity = 0.0;
+	if (intensity != 0.0)
 	{
 		reflection_vec = vec3_norm(vec3_sub(vec3_scale(ixr->shadow.normal, 2 * \
 			vec3_dot(ixr->shadow.normal, ixr->shadow.light_dir)), \
@@ -55,31 +57,64 @@ t_color	set_original_color(t_obj_data *obj)
 		rgb.r = obj->cy.color.r;
 		rgb.g = obj->cy.color.g;
 		rgb.b = obj->cy.color.b;
+		obj->cy.hit = 1;
 	}
 	else if (obj->sp.object_type == SPHERE)
 	{
 		rgb.r = obj->sp.color.r;
 		rgb.g = obj->sp.color.g;
 		rgb.b = obj->sp.color.b;
+		obj->sp.hit = 1;
 	}
 	else if (obj->pl.object_type == PLANE)
 	{
 		rgb.r = obj->pl.color.r;
 		rgb.g = obj->pl.color.g;
 		rgb.b = obj->pl.color.b;
+		obj->pl.hit = 1;
 	}
 	return (rgb);
 }
 
+/**
+If an object has been hit, it means that this is the current hitpoint.
+To avoid an object reading itself as blocking for the light source, the
+hit object stores information on whether it's been hit or not.
+This function resets the hit variable for the hit object to 0.
+*/
+static void	reset_hit_object(t_obj_data *obj)
+{
+	if (obj->cy.object_type == CYLINDER)
+		obj->cy.hit = 0;
+	else if (obj->sp.object_type == SPHERE)
+		obj->sp.hit = 0;
+	else if (obj->pl.object_type == PLANE)
+		obj->pl.hit = 0;
+}
+
+/**
+@param rgb Gets set to the color of the hit object (already mixed with the
+color of ambient light).
+@param ixr->shadow Stores a shadow ray (a ray from hit object to the light
+source).
+
+The is_ray_in_shadow-function checks whether the hitpoint is in shadow or not.
+
+If the hitpoint is in shadow, leave it as it is.
+
+If the hitpoint is not in shadow, also calculate spotlight (at what angle does
+the light hit and how far away) and specular light (shiny effects).
+
+Sets the ixn_color variable to the final color.
+*/
 void	modify_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 {
 	t_color	rgb;
 
 	rgb = set_original_color(ixr->hit_obj);
 	ixr->shadow = init_shadow(rt, ixr, ray_dir);
-	if (is_ray_in_shadow(ixr->shadow.light_dir, rt, ixr))
+	if (is_ray_in_shadow(rt, ixr))
 	{
-		mix_ambient_light(rgb, rt->scene.ambi_light.color);
 		rgb.r *= rt->scene.ambi_light.ratio;
 		rgb.g *= rt->scene.ambi_light.ratio;
 		rgb.b *= rt->scene.ambi_light.ratio;
@@ -87,4 +122,5 @@ void	modify_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 	}
 	else
 		ixr->ixn_color = add_color_effects(rt, ixr, rgb);
+	reset_hit_object(ixr->hit_obj);
 }
