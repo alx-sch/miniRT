@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/24 18:20:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:36:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ t_color	mix_ambient_light(t_color object_color, t_color ambient_color)
 	t_color	result;
 
 	result.r = adjust_to_color_range(object_color.r * \
-	ambient_color.r / 255, 0, 255);
+	ambient_color.r / 255, 0.0, 255.0);
 	result.g = adjust_to_color_range(object_color.g * \
-	ambient_color.g / 255, 0, 255);
+	ambient_color.g / 255, 0.0, 255.0);
 	result.b = adjust_to_color_range(object_color.b * \
-	ambient_color.b / 255, 0, 255);
+	ambient_color.b / 255, 0.0, 255.0);
 	return (result);
 }
 

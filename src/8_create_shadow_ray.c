@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:54:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/24 17:51:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:32:30 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_vec3	calculate_cylinder_normal(t_vec3 intersection_point,
 	double		projection_length;
 
 	cy = &obj_data->cy;
-	cy->orientation = vec3_norm(cy->orientation);
 	projection_length = vec3_dot(vec3_sub(intersection_point, cy->center), 
 			cy->orientation);
 	if (projection_length >= 1e-6 && projection_length < cy->height)

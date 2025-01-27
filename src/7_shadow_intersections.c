@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:05:51 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/24 17:47:05 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:05:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir,
 	double		t;
 
 	if (ray_intersect_plane(ray_dir, &plane, &t) 
-		&& t > 0 && t < (*ixr)->shadow.length && !plane.hit)
+		&& t > 1e-3 && t < (*ixr)->shadow.length && !plane.hit)
 		return (1);
 	return (0);
 }
@@ -41,7 +41,7 @@ int	shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir,
 	double		t;
 
 	if (ray_intersect_sphere(ray_dir, &sp, &t)
-		&& t > 0 && t < (*ixr)->shadow.length && !sp.hit)
+		&& t > 1e-3 && t < (*ixr)->shadow.length && !sp.hit)
 		return (1);
 	return (0);
 }
@@ -58,13 +58,13 @@ int	shadow_check_cyl_intersection(t_rt *rt, t_vec3 ray_dir,
 	double		t;
 
 	if (ray_intersect_cylinder((*ixr)->shadow.offset_origin, ray_dir, \
-		&cyl, &t) && t > 0 && t < (*ixr)->shadow.length && !cyl.hit)
+		&cyl, &t) && t > 1e-3 && t < (*ixr)->shadow.length && !cyl.hit)
 		return (1);
 	if (ray_intersect_cap_top((*ixr)->shadow.offset_origin, ray_dir, \
-		&cyl, &t) && t > 0 && t < (*ixr)->shadow.length && !cyl.hit)
+		&cyl, &t) && t > 1e-3 && t < (*ixr)->shadow.length && !cyl.hit)
 		return (1);
 	if (ray_intersect_cap_bottom((*ixr)->shadow.offset_origin, ray_dir, \
-		&cyl, &t) && t > 0 && t < (*ixr)->shadow.length && !cyl.hit)
+		&cyl, &t) && t > 1e-3 && t < (*ixr)->shadow.length && !cyl.hit)
 		return (1);
 	return (0);
 }
