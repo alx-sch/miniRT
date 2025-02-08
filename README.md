@@ -981,3 +981,13 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	return (vec3_norm(ray_world_dir)); // Return normalized ray direction vector in world space
 }
 ```
+
+## Acknowledgements
+
+The amazing book *Ray Tracing from the Ground Up* by Kevin Suffern is not only an excellent and exhaustive resource on the subject, but also an easy-to-follow guide to the concepts and mathematics behind ray tracing. Figures taken from this book are quoted accordingly. [¹](#footnote1)
+
+The project badge used is retrieved from [this repo](https://github.com/ayogun/42-project-badges) by Ali Ogun.
+
+## References
+
+<a name="footnote1">¹</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters.
