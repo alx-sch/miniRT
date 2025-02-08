@@ -90,7 +90,7 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_tracing_process.png" alt="ray_tracing_process.png" width="400"/>
-<p align="center"><strong>The Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the color of the pixel.</p>
+<p align="center"><strong>The Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the color of the pixel.<sup><a href="#footnote1">[1]</a></sup></p>
 
 ---
 
