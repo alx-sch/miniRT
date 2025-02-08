@@ -27,7 +27,7 @@ The `Makefile` automatically detects your OS and selects the correct MiniLibX li
 
 ---
 
-### Raytracing Files (.rt files)
+### Ray Tracing Files (.rt files)
 
 The `.rt` files define the elements and configurations for the scene to be rendered:
 
