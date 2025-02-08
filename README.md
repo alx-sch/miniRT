@@ -80,6 +80,16 @@ The `.rt` files define the elements and configurations for the scene to be rende
  
 ---
 
+## Introduction to Ray Tracing
+
+Ray tracing is a rendering technique that simulates the way light interacts with objects to create realistic images. Here, algorithms compute the color of each pixel by figuring out where the light came from for that pixel: By tracing the path of individual rays of light as they bounce off surfaces, it can produce highly detailed reflections, shadows, and global illumination. [¹](#footnote1)  
+
+This method was widely used in early computer graphics —think of those iconic shiny spheres in 1980s renders— but it became less common due to its high computational cost. However, with advancements in hardware, ray tracing is experiencing a renaissance in applications like real-time gaming, CGI, and architectural visualization. [¹](#footnote1)
+
+This project, **miniRT**, aims to build a simple yet functional ray tracer from scratch in C, exploring the fundamentals of vector calculations and rendering.
+
+---
+
 ## Ray-Object Intersection
 
 This section outlines the mathematical approach to detecting intersections between rays and various geometric objects. While this [overview document](https://github.com/josephcheel/42-MiniRT/blob/87dd9a09ded69ea9fbc0ae50bf085517908b9f85/Resources/Math/Intersection%20points%20calculations.pdf) was not directly used for deriving all the mathematical formulations and functions presented here, it provides an excellent summary of the fundamental concepts and calculations.
