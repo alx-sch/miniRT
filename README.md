@@ -94,7 +94,7 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/raytracing_example.png" alt="ray_tracing_example.png" width="400"/>
-<p align="center">Example of a ray-tracing render with matte and reflective objects.<a href="#footnote2">[2]</a></sup></p>
+<p align="center">Example of a ray-tracing render with matte and reflective objects.<sup><a href="#footnote2">[2]</a></sup></p>
 
 ---
 
