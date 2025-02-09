@@ -90,7 +90,11 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_tracing_process.png" alt="ray_tracing_process.png" width="400"/>
-<p align="center"><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the color of the pixel.<sup><a href="#footnote1">[1]</a></sup></p>
+<p align="center"><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></p>
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/raytracing_example.png" alt="ray_tracing_example.png" width="400"/>
+<p align="center">Example of a ray-tracing render with matte and reflective objects.<a href="#footnote2">[2]</a></sup></p>
 
 ---
 
@@ -1004,4 +1008,5 @@ The project badge used is retrieved from [this repo](https://github.com/ayogun/4
 
 ## References
 
-<a name="footnote1">¹</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters.
+<a name="footnote1">¹</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters.     
+<a name="footnote2">²</a> Jensen, H.W. (1990-1991): [http://graphics.ucsd.edu/~henrik/images/raytrace.html](http://graphics.ucsd.edu/~henrik/images/raytrace.html)
