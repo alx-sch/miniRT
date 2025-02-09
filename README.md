@@ -84,7 +84,7 @@ The `.rt` files define the elements and configurations for the scene to be rende
 
 Ray tracing is a rendering technique that simulates the way light interacts with objects to create realistic images. Here, algorithms compute the color of each pixel by figuring out where the light came from for that pixel: By tracing the path of individual rays of light as they bounce off surfaces, it can produce highly detailed reflections, shadows, and global illumination.[¹](#footnote1)  
 
-This method was widely used in early computer graphics —think of those iconic shiny spheres in 1980s renders— but it became less common due to its high computational cost. However, with advancements in hardware, ray tracing is experiencing a renaissance in applications like real-time gaming, CGI, and architectural visualization.[¹](#footnote1)
+This method was popular in early static computer graphics —think of those iconic shiny spheres on checkerboard floors in 1980s / 1990s renders— but was somewhat niche due to its computational expense. However, with advancements in hardware, ray tracing is experiencing a renaissance in dynamic applications like real-time gaming, CGI, and architectural visualization.[¹](#footnote1)
 
 This project, **miniRT**, aims to build a simple yet functional ray tracer from scratch in C, exploring the fundamentals of vector calculations and rendering.
 
