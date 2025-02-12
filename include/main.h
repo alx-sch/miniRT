@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 20:30:50 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ int			is_ray_in_shadow(t_rt *rt, t_ixr *ixr);
 // 8_create_shadow_ray.c
 
 t_shadow	init_shadow(t_rt *rt, t_ixr *ixr, t_vec3 ray_dir);
-t_vec3		get_normal_at_point(t_vec3 point, t_obj_data *obj_data);
+t_vec3		get_normal_at_point(t_vec3 point, t_obj *obj);
 t_vec3		calculate_cylinder_normal(t_vec3 intersection_point,
-				t_obj_data *obj_data);
+				t_obj *obj);
 
 // 9_shadow_copy_objs.c
 

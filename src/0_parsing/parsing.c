@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 23:46:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 00:03:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ Prints an error message, and exits with a set error code upon error.
 Returns the t_scene struct upon success.*/
 void	parse_and_set_objects(t_rt *rt, int argc, char **argv)
 {
-	ft_memset(&rt->scene, 0, sizeof(t_scene));
-	rt->scene.pars.fd = -1;
 	if (argc != 2)
 		errors_file(ERR_USAGE, rt);
 	if (check_file_existence(argv[1]))

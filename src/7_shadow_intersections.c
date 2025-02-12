@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   7_shadow_intersections.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:05:51 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/27 15:05:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ Checks for intersection of a shadow ray with a plane object.
 Returns 1 if there was an intersection.
 Returns 0 if there was no intersection
 */
-int	shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir, 
+int	shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir,
 		t_plane plane, t_ixr **ixr)
 {
 	double		t;
 
-	if (ray_intersect_plane(ray_dir, &plane, &t) 
+	if (ray_intersect_plane(ray_dir, &plane, &t)
 		&& t > 1e-3 && t < (*ixr)->shadow.length && !plane.hit)
 		return (1);
 	return (0);
@@ -35,7 +35,7 @@ Checks for intersection of a shadow ray with a sphere object.
 Returns 1 if there was an intersection.
 Returns 0 if there was no intersection
 */
-int	shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir, 
+int	shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir,
 		t_sphere sp, t_ixr **ixr)
 {
 	double		t;
@@ -76,7 +76,7 @@ light source. If there is - this would mean the point is in shadow.
 Returns 1 if there was an intersection.
 Returns 0 if there was no intersection
 */
-static int	is_object_blocking_light(t_rt *rt, t_obj_data *obj, t_ixr *ixr)
+static int	is_object_blocking_light(t_rt *rt, t_obj *obj, t_ixr *ixr)
 {
 	if (obj->pl.object_type == PLANE)
 	{
@@ -108,14 +108,14 @@ Returns 0 if there was no intersection
 */
 int	is_ray_in_shadow(t_rt *rt, t_ixr *ixr)
 {
-	t_list		*current_obj;
-	t_obj_data	*obj_data;
+	t_list	*current_obj;
+	t_obj	*obj;
 
 	current_obj = rt->scene.objs;
 	while (current_obj != NULL)
 	{
-		obj_data = (t_obj_data *)current_obj->content;
-		if (is_object_blocking_light(rt, obj_data, ixr))
+		obj = (t_obj *)current_obj->content;
+		if (is_object_blocking_light(rt, obj, ixr))
 			return (1);
 		current_obj = current_obj->next;
 	}

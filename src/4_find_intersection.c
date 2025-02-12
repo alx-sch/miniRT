@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 20:27:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ If an intersection occurs and is closer than the current closest distance,
 updates the closest intersection distance in the provided struct.
 
  @param ray_dir		The direction vector of the ray.
- @param obj_data	The object data containing the plane information.
+ @param obj	The object data containing the plane information.
  @param ixr			Pointer to the intersection struct to update.
 */
-static void	check_plane_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
+static void	check_plane_intersection(t_vec3 ray_dir, t_obj *obj,
 		t_ixr *ixr)
 {
 	double	t;
 
-	if (ray_intersect_plane(ray_dir, &obj_data->pl, &t) && t < ixr->t_hit)
+	if (ray_intersect_plane(ray_dir, &obj->pl, &t) && t < ixr->t_hit)
 	{
 		ixr->t_hit = t;
-		ixr->hit_obj = obj_data;
+		ixr->hit_obj = obj;
 	}
 }
 
@@ -50,18 +50,18 @@ If an intersection occurs and is closer than the current closest distance,
 updates the closest intersection distance in the provided struct.
 
  @param ray_dir		The direction vector of the ray.
- @param obj_data	The object data containing the sphere information.
+ @param obj	The object data containing the sphere information.
  @param ixr			Pointer to the intersection struct to update.
 */
-static void	check_sphere_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
+static void	check_sphere_intersection(t_vec3 ray_dir, t_obj *obj,
 		t_ixr *ixr)
 {
 	double	t;
 
-	if (ray_intersect_sphere(ray_dir, &obj_data->sp, &t) && t < ixr->t_hit)
+	if (ray_intersect_sphere(ray_dir, &obj->sp, &t) && t < ixr->t_hit)
 	{
 		ixr->t_hit = t;
-		ixr->hit_obj = obj_data;
+		ixr->hit_obj = obj;
 	}
 }
 
@@ -73,7 +73,7 @@ updates the closest intersection distance  in the provided struct.
 
  @param ray_origin	The origin of the ray.
  @param ray_dir		The direction vector of the ray.
- @param obj_data	The object data containing the cylinder information.
+ @param obj	The object data containing the cylinder information.
  @param ixr			Pointer to the intersection struct to update.
 
  @note
@@ -83,29 +83,29 @@ This ensures that only one cap can be marked as hit per cylinder intersection
 check, as only one cap can be visible at a time in the rendering.
 */
 static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
-		t_obj_data *obj_data, t_ixr *ixr)
+		t_obj *obj, t_ixr *ixr)
 {
 	double		t;
 
-	if (ray_intersect_cylinder(ray_origin, ray_dir, &obj_data->cy, &t)
+	if (ray_intersect_cylinder(ray_origin, ray_dir, &obj->cy, &t)
 		&& t < ixr->t_hit)
 	{
 		ixr->t_hit = t;
-		ixr->hit_obj = obj_data;
+		ixr->hit_obj = obj;
 	}
-	if (obj_data->cy.ixd.cap_hit != 2 && ray_intersect_cap_top(ray_origin,
-			ray_dir, &obj_data->cy, &t) && t < ixr->t_hit)
+	if (obj->cy.ixd.cap_hit != 2 && ray_intersect_cap_top(ray_origin,
+			ray_dir, &obj->cy, &t) && t < ixr->t_hit)
 	{
 		ixr->t_hit = t;
-		ixr->hit_obj = obj_data;
-		obj_data->cy.ixd.cap_hit = 1;
+		ixr->hit_obj = obj;
+		obj->cy.ixd.cap_hit = 1;
 	}
-	if (obj_data->cy.ixd.cap_hit != 1 && ray_intersect_cap_bottom(ray_origin,
-			ray_dir, &obj_data->cy, &t) && t < ixr->t_hit)
+	if (obj->cy.ixd.cap_hit != 1 && ray_intersect_cap_bottom(ray_origin,
+			ray_dir, &obj->cy, &t) && t < ixr->t_hit)
 	{
 		ixr->t_hit = t;
-		ixr->hit_obj = obj_data;
-		obj_data->cy.ixd.cap_hit = 2;
+		ixr->hit_obj = obj;
+		obj->cy.ixd.cap_hit = 2;
 	}
 }
 
@@ -121,21 +121,21 @@ scene (object and distance) for a given camera ray.
 */
 void	find_intersection(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 {
-	t_list		*current_obj;
-	t_obj_data	*obj_data;
+	t_list	*current_obj;
+	t_obj	*obj;
 
 	current_obj = rt->scene.objs;
 	ixr->t_hit = INFINITY;
 	ixr->hit_obj = NULL;
 	while (current_obj != NULL)
 	{
-		obj_data = (t_obj_data *)current_obj->content;
-		if (obj_data->pl.object_type == PLANE)
-			check_plane_intersection(ray_dir, obj_data, ixr);
-		else if (obj_data->sp.object_type == SPHERE)
-			check_sphere_intersection(ray_dir, obj_data, ixr);
-		else if (obj_data->cy.object_type == CYLINDER)
-			check_cyl_intersection(rt->scene.cam.pos, ray_dir, obj_data, ixr);
+		obj = (t_obj *)current_obj->content;
+		if (obj->pl.object_type == PLANE)
+			check_plane_intersection(ray_dir, obj, ixr);
+		else if (obj->sp.object_type == SPHERE)
+			check_sphere_intersection(ray_dir, obj, ixr);
+		else if (obj->cy.object_type == CYLINDER)
+			check_cyl_intersection(rt->scene.cam.pos, ray_dir, obj, ixr);
 		current_obj = current_obj->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:23:12 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 20:32:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:51:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	add_color_effects(t_rt *rt, t_ixr *ixr, t_color rgb)
 
 /*Returns the rgb values of the color of the hit object (the object that was hit
 from camera ray).*/
-t_color	set_original_color(t_obj_data *obj)
+t_color	set_original_color(t_obj *obj)
 {
 	t_color	rgb;
 
@@ -111,7 +111,7 @@ To avoid an object reading itself as blocking for the light source, the
 hit object stores information on whether it's been hit or not.
 This function resets the hit variable for the hit object to 0.
 */
-static void	reset_hit_object(t_obj_data *obj)
+static void	reset_hit_object(t_obj *obj)
 {
 	if (obj->cy.object_type == CYLINDER)
 		obj->cy.hit = 0;
@@ -141,10 +141,8 @@ void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 	t_color	rgb;
 
 	ixr->ixn_color = BG_COLOR;
-
 	if (ixr->hit_obj == NULL)
 		return ;
-
 	rgb = set_original_color(ixr->hit_obj);
 	ixr->shadow = init_shadow(rt, ixr, ray_dir);
 	if (is_ray_in_shadow(rt, ixr))

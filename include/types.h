@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 18:52:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:53:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef struct s_intersection_result
 {
 	double		t_hit;
 	int			ixn_color;
-	t_obj_data	*hit_obj;
+	t_obj		*hit_obj;
 	t_shadow	shadow;
 }	t_ixr;
 
@@ -270,7 +270,7 @@ typedef union u_object_data
 	t_sphere	sp;
 	t_plane		pl;
 	t_cylinder	cy;
-}	t_obj_data;
+}	t_obj;
 
 //#########
 //# SCENE #

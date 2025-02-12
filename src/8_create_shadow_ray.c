@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:54:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 18:54:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ perpendicular to the axis and points outward.
 the cap's orientation.
 */
 t_vec3	calculate_cylinder_normal(t_vec3 intersection_point,
-	t_obj_data *obj_data)
+	t_obj *obj)
 {
 	t_cylinder	*cy;
 	t_vec3		point_on_axis;
 	t_vec3		normal;
 	double		projection_length;
 
-	cy = &obj_data->cy;
+	cy = &obj->cy;
 	projection_length = vec3_dot(vec3_sub(intersection_point, cy->center),
 			cy->orientation);
 	if (projection_length >= 1e-6 && projection_length < cy->height)
@@ -51,7 +51,7 @@ at a given point.
 PLANE:
 For a plane, the normal vector is constant everywhere because a plane is flat
 and infinite. The function simply returns the predefined normal vector of the
-plane (obj_data->pl.normal).
+plane (obj->pl.normal).
 SPHERE:
 For a sphere, the normal vector at a point on its surface is the vector
 pointing outward from the sphere's center to the given point on the surface.
@@ -61,14 +61,14 @@ on the shape's geometry. The function calculate_cylinder_normal is responsible
 for computing the normal vector considering the curvature and orientation of
 the cylinder.
 */
-t_vec3	get_normal_at_point(t_vec3 point, t_obj_data *obj_data)
+t_vec3	get_normal_at_point(t_vec3 point, t_obj *obj)
 {
-	if (obj_data->pl.object_type == PLANE)
-		return (obj_data->pl.normal);
-	else if (obj_data->sp.object_type == SPHERE)
-		return (vec3_norm(vec3_sub(point, obj_data->sp.center)));
-	else if (obj_data->cy.object_type == CYLINDER)
-		return (calculate_cylinder_normal(point, obj_data));
+	if (obj->pl.object_type == PLANE)
+		return (obj->pl.normal);
+	else if (obj->sp.object_type == SPHERE)
+		return (vec3_norm(vec3_sub(point, obj->sp.center)));
+	else if (obj->cy.object_type == CYLINDER)
+		return (calculate_cylinder_normal(point, obj));
 	return ((t_vec3){0, 0, 0});
 }
 

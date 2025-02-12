@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/27 14:30:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_scene			t_scene;
 typedef struct s_ambi_light		t_ambi_light;
 typedef struct s_camera			t_cam;
 typedef struct s_light			t_light;
-typedef union u_object_data		t_obj_data;
+typedef union u_object_data		t_obj;
 typedef struct s_color			t_color;
 
 /*
@@ -327,7 +327,7 @@ int error_code);
 int			correct_amt_of_fields(char **arr, int expected_len);
 
 // 0_parsing/parse_and_set/elements/add_to_object_list.c
-int			add_to_object_list(t_scene **scene, t_obj_data **obj_data);
+int			add_to_object_list(t_scene **scene, t_obj **obj);
 
 // 0_parsing/parse_and_set/elements/check_and_set_single_element.c
 int			check_and_set_single_element(t_scene *scene);

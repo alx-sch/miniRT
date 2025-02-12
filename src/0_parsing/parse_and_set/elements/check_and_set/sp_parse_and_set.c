@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sp_parse_and_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/24 15:51:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:58:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,28 @@
 /*Stores all the data of the current sphere in the linked list of objects.*/
 int	set_sphere(t_scene *scene)
 {
-	t_obj_data	*obj_data;
-	char		**rgb;
+	t_obj	*obj;
+	char	**rgb;
 
-	obj_data = malloc(sizeof(t_obj_data));
-	if (!obj_data)
+	obj = malloc(sizeof(t_obj));
+	if (!obj)
 		return (ERR_MEM_ALLOC);
-	obj_data->sp.object_type = SPHERE;
-	if (set_coordinates(scene->pars.elem_data[1], &obj_data->sp.center.x, \
-		&obj_data->sp.center.y, &obj_data->sp.center.z) != 0)
+	obj->sp.object_type = SPHERE;
+	if (set_coordinates(scene->pars.elem_data[1], &obj->sp.center.x, \
+		&obj->sp.center.y, &obj->sp.center.z) != 0)
 		return (ERR_MEM_ALLOC);
-	obj_data->sp.radius = (ft_atod(scene->pars.elem_data[2]) / 2);
+	obj->sp.radius = (ft_atod(scene->pars.elem_data[2]) / 2);
 	rgb = ft_split(scene->pars.elem_data[3], ',');
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
-	set_color(rgb, &obj_data->sp.color.r, &obj_data->sp.color.g, \
-	&obj_data->sp.color.b);
-	obj_data->sp.ixd.oc = vec3_sub(scene->cam.pos, obj_data->sp.center);
-	obj_data->sp.ixd.c = vec3_dot(obj_data->sp.ixd.oc, \
-	obj_data->sp.ixd.oc) - (obj_data->sp.radius * obj_data->sp.radius);
-	if (add_to_object_list(&scene, &obj_data) != 0)
+	set_color(rgb, &obj->sp.color.r, &obj->sp.color.g, &obj->sp.color.b);
+	obj->sp.ixd.oc = vec3_sub(scene->cam.pos, obj->sp.center);
+	obj->sp.ixd.c = vec3_dot(obj->sp.ixd.oc, obj->sp.ixd.oc) \
+	- (obj->sp.radius * obj->sp.radius);
+	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);
-	obj_data->sp.hex_color = color_to_hex(obj_data->sp.color);
-	obj_data->sp.hit = 0;
+	obj->sp.hex_color = color_to_hex(obj->sp.color);
+	obj->sp.hit = 0;
 	return (0);
 }
 

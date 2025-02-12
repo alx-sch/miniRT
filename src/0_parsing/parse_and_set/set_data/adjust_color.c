@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   adjust_color.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/27 15:36:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,21 @@ static void	update_object_color(t_color *color, int *hex_color, t_rt *rt)
 on the ambient light color and intensity.*/
 void	adjust_color(t_rt **rt)
 {
-	t_list		*current_obj;
-	t_obj_data	*obj_data;
+	t_list	*current_obj;
+	t_obj	*obj;
 
 	current_obj = (*rt)->scene.objs;
 	while (current_obj != NULL)
 	{
-		obj_data = (t_obj_data *)current_obj->content;
-		if (obj_data->pl.object_type == PLANE)
-			update_object_color(&obj_data->pl.color, &obj_data->pl.hex_color, \
+		obj = (t_obj *)current_obj->content;
+		if (obj->pl.object_type == PLANE)
+			update_object_color(&obj->pl.color, &obj->pl.hex_color, \
 			*rt);
-		else if (obj_data->sp.object_type == SPHERE)
-			update_object_color(&obj_data->sp.color, &obj_data->sp.hex_color, \
+		else if (obj->sp.object_type == SPHERE)
+			update_object_color(&obj->sp.color, &obj->sp.hex_color, \
 			*rt);
-		else if (obj_data->cy.object_type == CYLINDER)
-			update_object_color(&obj_data->cy.color, &obj_data->cy.hex_color, \
+		else if (obj->cy.object_type == CYLINDER)
+			update_object_color(&obj->cy.color, &obj->cy.hex_color, \
 			*rt);
 		current_obj = current_obj->next;
 	}
