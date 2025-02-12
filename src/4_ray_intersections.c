@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 18:46:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 19:02:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ corresponding color.
 
 // IN FILE:
 
-t_ixr	find_closest_intersection(t_vec3 ray_dir, t_rt *rt);
+t_ixr	find_intersection(t_vec3 ray_dir, t_rt *rt);
 
 /**
 Checks for intersection of a ray with a plane object.
@@ -38,9 +38,9 @@ static void	check_plane_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 {
 	double	t;
 
-	if (ray_intersect_plane(ray_dir, &obj_data->pl, &t) && t < ixr->t_closest)
+	if (ray_intersect_plane(ray_dir, &obj_data->pl, &t) && t < ixr->t_hit)
 	{
-		ixr->t_closest = t;
+		ixr->t_hit = t;
 		ixr->hit_obj = obj_data;
 	}
 }
@@ -61,9 +61,9 @@ static void	check_sphere_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 {
 	double	t;
 
-	if (ray_intersect_sphere(ray_dir, &obj_data->sp, &t) && t < ixr->t_closest)
+	if (ray_intersect_sphere(ray_dir, &obj_data->sp, &t) && t < ixr->t_hit)
 	{
-		ixr->t_closest = t;
+		ixr->t_hit = t;
 		ixr->hit_obj = obj_data;
 	}
 }
@@ -92,22 +92,22 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 	double		t;
 
 	if (ray_intersect_cylinder(ray_origin, ray_dir, &obj_data->cy, &t)
-		&& t < ixr->t_closest)
+		&& t < ixr->t_hit)
 	{
-		ixr->t_closest = t;
+		ixr->t_hit = t;
 		ixr->hit_obj = obj_data;
 	}
 	if (obj_data->cy.ixd.cap_hit != 2 && ray_intersect_cap_top(ray_origin,
-			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
+			ray_dir, &obj_data->cy, &t) && t < ixr->t_hit)
 	{
-		ixr->t_closest = t;
+		ixr->t_hit = t;
 		ixr->hit_obj = obj_data;
 		obj_data->cy.ixd.cap_hit = 1;
 	}
 	if (obj_data->cy.ixd.cap_hit != 1 && ray_intersect_cap_bottom(ray_origin,
-			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
+			ray_dir, &obj_data->cy, &t) && t < ixr->t_hit)
 	{
-		ixr->t_closest = t;
+		ixr->t_hit = t;
 		ixr->hit_obj = obj_data;
 		obj_data->cy.ixd.cap_hit = 2;
 	}
@@ -119,19 +119,18 @@ if no intersections occur.
 
  @param ray_dir 	The direction vector of the current ray.
  @param rt 			Pointer to the main program state structure.
- @param t_closest 	Pointer to the closest intersection distance (updated).
 
  @return 			The computed color for the closest intersection;
  					or ambient light when no intersections occur.
 */
-t_ixr	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
+t_ixr	find_intersection(t_vec3 ray_dir, t_rt *rt)
 {
 	t_list		*current_obj;
 	t_obj_data	*obj_data;
 	t_ixr		ixr;
 
 	current_obj = rt->scene.objs;
-	ixr.t_closest = INFINITY;
+	ixr.t_hit = INFINITY;
 	ixr.ixn_color = 0;
 	ixr.hit_obj = NULL;
 	while (current_obj != NULL)

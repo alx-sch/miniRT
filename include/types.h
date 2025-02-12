@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 18:46:12 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:52:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,13 @@ typedef struct s_shadow
 }	t_shadow;
 
 /**
-Utility struct to store the closest intersection distance and its color.
-- double `t_closest`:	The closest intersection distance for a ray.
+Stores the intersection distance 'camera -> object' and its color.
+- double `t_hit`:		The closest intersection distance for a ray.
 - int `ixn_color`:		The color of the closest intersection.
 */
 typedef struct s_intersection_result
 {
-	double		t_closest;
+	double		t_hit;
 	int			ixn_color;
 	t_obj_data	*hit_obj;
 	t_shadow	shadow;

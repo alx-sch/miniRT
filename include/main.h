@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/24 18:20:59 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:03:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ and declaring all function prototypes.
 //#############
 
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
-# define BG_COLOR		0x000000 // Anthracite (dark grey)
+# define BG_COLOR		0x303030  // Anthracite (dark grey)
 
 //##################
 //# FCT PROTOTYPES #
@@ -80,7 +80,7 @@ int			ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 
 // 4_ray_intersections.c
 
-t_ixr		find_closest_intersection(t_vec3 ray_dir, t_rt *rt);
+t_ixr		find_intersection(t_vec3 ray_dir, t_rt *rt);
 
 // 5_ray_render.c
 
@@ -91,9 +91,9 @@ void		modify_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
 
 // 7_shadow_intersections.c
 
-int			shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir, 
+int			shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir,
 				t_plane pl, t_ixr **ixr);
-int			shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir, 
+int			shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir,
 				t_sphere sp, t_ixr **ixr);
 int			shadow_check_cyl_intersection(t_rt *rt, t_vec3 ray_dir,
 				t_cylinder cy, t_ixr **ixr);
@@ -103,7 +103,7 @@ int			is_ray_in_shadow(t_rt *rt, t_ixr *ixr);
 
 t_shadow	init_shadow(t_rt *rt, t_ixr *ixr, t_vec3 ray_dir);
 t_vec3		get_normal_at_point(t_vec3 point, t_obj_data *obj_data);
-t_vec3		calculate_cylinder_normal(t_vec3 intersection_point, 
+t_vec3		calculate_cylinder_normal(t_vec3 intersection_point,
 				t_obj_data *obj_data);
 
 // 9_shadow_copy_objs.c

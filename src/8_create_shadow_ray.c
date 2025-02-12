@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:54:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 18:46:58 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:54:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_shadow	init_shadow(t_rt *rt, t_ixr *ixr, t_vec3 ray_dir)
 	t_shadow	shadow;
 
 	shadow.intersection_point = vec3_add(rt->scene.cam.pos, \
-	vec3_scale(ray_dir, ixr->t_closest));
+	vec3_scale(ray_dir, ixr->t_hit));
 	shadow.normal = get_normal_at_point(shadow.intersection_point, \
 	ixr->hit_obj);
 	shadow.offset_origin = vec3_add(shadow.intersection_point, \
