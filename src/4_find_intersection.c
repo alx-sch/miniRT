@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_ray_intersections.c                              :+:      :+:    :+:   */
+/*   4_find_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 19:02:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:27:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
 Handles ray-object intersection calculations for planes, spheres, and cylinders
-in the parsed object list. Determines the closest intersection distance and its
-corresponding color.
+in the parsed object list. Determines the closest intersection distance.
 */
 
 #include "main.h"
 
 // IN FILE:
 
-t_ixr	find_intersection(t_vec3 ray_dir, t_rt *rt);
+void	find_intersection(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
 
 /**
 Checks for intersection of a ray with a plane object.
 
 If an intersection occurs and is closer than the current closest distance,
-updates the closest intersection distance and the intersection color in the
-provided struct.
+updates the closest intersection distance in the provided struct.
 
  @param ray_dir		The direction vector of the ray.
  @param obj_data	The object data containing the plane information.
@@ -49,8 +47,7 @@ static void	check_plane_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 Checks for intersection of a ray with a sphere object.
 
 If an intersection occurs and is closer than the current closest distance,
-updates the closest intersection distance and the intersection color in the
-provided struct.
+updates the closest intersection distance in the provided struct.
 
  @param ray_dir		The direction vector of the ray.
  @param obj_data	The object data containing the sphere information.
@@ -72,8 +69,7 @@ static void	check_sphere_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 Checks for intersection of a ray with a cylinder object, including its caps.
 
 If an intersection occurs and is closer than the current closest distance,
-updates the closest intersection distance and the intersection color in the
-provided struct.
+updates the closest intersection distance  in the provided struct.
 
  @param ray_origin	The origin of the ray.
  @param ray_dir		The direction vector of the ray.
@@ -114,37 +110,32 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 }
 
 /**
-Computes the color of the closest intersection with objects or uses ambient light
-if no intersections occur.
+Updates the intersection struct with the closest intersection data found in the
+scene (object and distance) for a given camera ray.
 
  @param ray_dir 	The direction vector of the current ray.
  @param rt 			Pointer to the main program state structure.
+ @param ixr 		Pointer to the intersection struct to update.
 
- @return 			The computed color for the closest intersection;
- 					or ambient light when no intersections occur.
+ @return 			ixr struct containing the closest intersection data.
 */
-t_ixr	find_intersection(t_vec3 ray_dir, t_rt *rt)
+void	find_intersection(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 {
 	t_list		*current_obj;
 	t_obj_data	*obj_data;
-	t_ixr		ixr;
 
 	current_obj = rt->scene.objs;
-	ixr.t_hit = INFINITY;
-	ixr.ixn_color = 0;
-	ixr.hit_obj = NULL;
+	ixr->t_hit = INFINITY;
+	ixr->hit_obj = NULL;
 	while (current_obj != NULL)
 	{
 		obj_data = (t_obj_data *)current_obj->content;
 		if (obj_data->pl.object_type == PLANE)
-			check_plane_intersection(ray_dir, obj_data, &ixr);
+			check_plane_intersection(ray_dir, obj_data, ixr);
 		else if (obj_data->sp.object_type == SPHERE)
-			check_sphere_intersection(ray_dir, obj_data, &ixr);
+			check_sphere_intersection(ray_dir, obj_data, ixr);
 		else if (obj_data->cy.object_type == CYLINDER)
-			check_cyl_intersection(rt->scene.cam.pos, ray_dir, obj_data, &ixr);
+			check_cyl_intersection(rt->scene.cam.pos, ray_dir, obj_data, ixr);
 		current_obj = current_obj->next;
 	}
-	if (ixr.hit_obj == NULL)
-		ixr.ixn_color = BG_COLOR;
-	return (ixr);
 }

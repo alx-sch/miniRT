@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 19:03:22 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:30:50 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ int			ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 int			ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 				t_cylinder *cylinder, double *t);
 
-// 4_ray_intersections.c
+// 4_find_intersection.c
 
-t_ixr		find_intersection(t_vec3 ray_dir, t_rt *rt);
+void		find_intersection(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
 
 // 5_ray_render.c
 
 void		render_scene(t_rt *rt);
 
-// 6_modify_color.c
-void		modify_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
+// 6_compute_color.c
+void		compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
 
 // 7_shadow_intersections.c
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
+#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/01/22 17:36:04 by nholbroo         ###   ########.fr        #
+#    Updated: 2025/02/12 20:31:07 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,9 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/3_ray_plane_intersection.c \
 				$(SRCS_DIR)/3_ray_sphere_intersection.c \
 				$(SRCS_DIR)/3_ray_cylinder_intersection.c \
-				$(SRCS_DIR)/4_ray_intersections.c \
+				$(SRCS_DIR)/4_find_intersection.c \
 				$(SRCS_DIR)/5_ray_render.c \
-				$(SRCS_DIR)/6_modify_color.c \
+				$(SRCS_DIR)/6_compute_color.c \
 				$(SRCS_DIR)/7_shadow_intersections.c \
 				$(SRCS_DIR)/8_create_shadow_ray.c \
 				$(SRCS_DIR)/9_shadow_copy_objs.c \

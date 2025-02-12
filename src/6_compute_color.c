@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   6_modify_color.c                                   :+:      :+:    :+:   */
+/*   6_compute_color.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:23:12 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/27 15:01:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:32:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,21 @@ int	set_final_color(t_ambi_light *amb, double final, t_color rgb)
 /**
 This function adds diffuse and specular light to the hitpoint, if the hitpoint
 is not in shadow.
-@param intensity Diffuse lighting. Computes the contribution of light hitting 
+@param intensity Diffuse lighting. Computes the contribution of light hitting
 the surface based on the angle between the surface normal and light direction.
-@param reflection_vec The direction that light would travel if it reflects off 
-the surface at the intersection point, following the laws of reflection. It 
-helps calculate specular highlights, as these depend on how closely aligned the 
-reflection vector is with the view vector (the closer, the brighter the 
+@param reflection_vec The direction that light would travel if it reflects off
+the surface at the intersection point, following the laws of reflection. It
+helps calculate specular highlights, as these depend on how closely aligned the
+reflection vector is with the view vector (the closer, the brighter the
 highlight).
-@param view_vec The direction from the point on the object's surface 
-(where the light hits) to the camera. It helps simulate how the camera "sees" 
+@param view_vec The direction from the point on the object's surface
+(where the light hits) to the camera. It helps simulate how the camera "sees"
 the reflection of the light source on the object's surface.
 @param spec_intensity Calculates the reflection vector and the view vector.
-Specular highlight happens when the view vector aligns closely with the 
-reflection vector. The spec_intensity is calculated using the dot product of 
+Specular highlight happens when the view vector aligns closely with the
+reflection vector. The spec_intensity is calculated using the dot product of
 these vectors, raised to a power (sharpness factor).
-@param final Stores the combination of diffuse and specular contributions, 
+@param final Stores the combination of diffuse and specular contributions,
 scaling by the light's intensity ratio.
 @param set_final_color Function that combines all elements together and returns
 the final color in hex-format.
@@ -70,7 +70,7 @@ int	add_color_effects(t_rt *rt, t_ixr *ixr, t_color rgb)
 	}
 	if (spec_intensity < 0.0)
 		spec_intensity = 0.0;
-	final = (spec_intensity + intensity) * rt->scene.light.ratio 
+	final = (spec_intensity + intensity) * rt->scene.light.ratio
 		+ rt->scene.ambi_light.ratio;
 	return (set_final_color(&rt->scene.ambi_light, final, rgb));
 }
@@ -136,9 +136,14 @@ the light hit and how far away) and specular light (shiny effects).
 
 Sets the ixn_color variable to the final color.
 */
-void	modify_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
+void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 {
 	t_color	rgb;
+
+	ixr->ixn_color = BG_COLOR;
+
+	if (ixr->hit_obj == NULL)
+		return ;
 
 	rgb = set_original_color(ixr->hit_obj);
 	ixr->shadow = init_shadow(rt, ixr, ray_dir);
