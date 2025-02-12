@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/12 20:31:07 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/12 23:46:32 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,6 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/0_parsing/errors/errors_unique_elements.c \
 				$(SRCS_DIR)/0_parsing/errors/errors.c \
 				$(SRCS_DIR)/0_parsing/errors/set_error_and_return.c \
-				$(SRCS_DIR)/0_parsing/init/init_scene.c \
-				$(SRCS_DIR)/0_parsing/init/init_unique_elements.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_orientation_vector.c \
