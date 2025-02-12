@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4_ray_intersections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/22 19:10:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:46:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	check_plane_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	if (ray_intersect_plane(ray_dir, &obj_data->pl, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ray_origin = t;
 		ixr->hit_obj = obj_data;
 	}
 }
@@ -65,7 +64,6 @@ static void	check_sphere_intersection(t_vec3 ray_dir, t_obj_data *obj_data,
 	if (ray_intersect_sphere(ray_dir, &obj_data->sp, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ray_origin = t;
 		ixr->hit_obj = obj_data;
 	}
 }
@@ -97,14 +95,12 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 		&& t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ray_origin = t;
 		ixr->hit_obj = obj_data;
 	}
 	if (obj_data->cy.ixd.cap_hit != 2 && ray_intersect_cap_top(ray_origin,
 			ray_dir, &obj_data->cy, &t) && t < ixr->t_closest)
 	{
 		ixr->t_closest = t;
-		ixr->ray_origin = t;
 		ixr->hit_obj = obj_data;
 		obj_data->cy.ixd.cap_hit = 1;
 	}
@@ -113,7 +109,6 @@ static void	check_cyl_intersection(t_vec3 ray_origin, t_vec3 ray_dir,
 	{
 		ixr->t_closest = t;
 		ixr->hit_obj = obj_data;
-		ixr->ray_origin = t;
 		obj_data->cy.ixd.cap_hit = 2;
 	}
 }
@@ -137,7 +132,6 @@ t_ixr	find_closest_intersection(t_vec3 ray_dir, t_rt *rt)
 
 	current_obj = rt->scene.objs;
 	ixr.t_closest = INFINITY;
-	ixr.ray_origin = INFINITY;
 	ixr.ixn_color = 0;
 	ixr.hit_obj = NULL;
 	while (current_obj != NULL)

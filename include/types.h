@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/24 15:44:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:46:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,21 +95,21 @@ typedef struct s_color
 }	t_color;
 
 /*
-Struct to store data about a shadow ray (a ray from an object towards the 
+Struct to store data about a shadow ray (a ray from an object towards the
 light source). This is used to determine whether (a pixel of) an object is
 in shadow or not.
 - t_vec3 `intersection_point`:	The point where the ray from the camera hits
 								the object.
 - t_vec3 `light_dir`:			The direction of the ray from the object to
 								the light source.
-- t_vec3 `normal`:				A vector that is perpendicular to a surface at 
+- t_vec3 `normal`:				A vector that is perpendicular to a surface at
 								a given point.
-	--> Sphere: The normal at any point on a sphere points directly away from 
+	--> Sphere: The normal at any point on a sphere points directly away from
 				the center of the sphere.
     --> Cylinder: The normal at any point on the curved surface (not top or
-				bottom) of a cylinder points directly away from the axis of the 
+				bottom) of a cylinder points directly away from the axis of the
 				cylinder.
-    --> Plane: The normal to a plane is a vector that is perpendicular to the 
+    --> Plane: The normal to a plane is a vector that is perpendicular to the
 				plane.
 - t_vec3 `offset_origin`:		The intersection point, but with a very small
 								adjustment, avoiding self shadowing and (the
@@ -133,7 +133,6 @@ Utility struct to store the closest intersection distance and its color.
 */
 typedef struct s_intersection_result
 {
-	double		ray_origin;
 	double		t_closest;
 	int			ixn_color;
 	t_obj_data	*hit_obj;
