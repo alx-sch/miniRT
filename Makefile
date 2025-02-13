@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/13 16:18:28 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/13 17:33:53 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,11 +55,11 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set_single_element.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/amb_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cam_parse_and_set.c \
-				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/sp_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/pl_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/light_parse_and_set.c \
-				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/adjust_color.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/apply_ambient_light.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_orientation_vector.c \

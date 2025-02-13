@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 23:58:44 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:39:14 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ int	set_sphere(t_scene *scene)
 	obj = malloc(sizeof(t_obj));
 	if (!obj)
 		return (ERR_MEM_ALLOC);
-	obj->sp.object_type = SPHERE;
-	if (set_coordinates(scene->pars.elem_data[1], &obj->sp.center.x, \
-		&obj->sp.center.y, &obj->sp.center.z) != 0)
+	obj->object_type = SPHERE;
+	if (set_coordinates(scene->pars.elem_data[1], &obj->x.sp.center.x, \
+		&obj->x.sp.center.y, &obj->x.sp.center.z) != 0)
 		return (ERR_MEM_ALLOC);
-	obj->sp.radius = (ft_atod(scene->pars.elem_data[2]) / 2);
+	obj->x.sp.radius = (ft_atod(scene->pars.elem_data[2]) / 2);
 	rgb = ft_split(scene->pars.elem_data[3], ',');
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
-	set_color(rgb, &obj->sp.color.r, &obj->sp.color.g, &obj->sp.color.b);
-	obj->sp.ixd.oc = vec3_sub(scene->cam.pos, obj->sp.center);
-	obj->sp.ixd.c = vec3_dot(obj->sp.ixd.oc, obj->sp.ixd.oc) \
-	- (obj->sp.radius * obj->sp.radius);
+	set_color(rgb, &obj->color.r, &obj->color.g, &obj->color.b);
+	obj->ixd.oc = vec3_sub(scene->cam.pos, obj->x.sp.center);
+	obj->ixd.c = vec3_dot(obj->ixd.oc, obj->ixd.oc) \
+	- (obj->x.sp.radius * obj->x.sp.radius);
 	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);
-	obj->sp.hex_color = color_to_hex(obj->sp.color);
-	obj->sp.hit = 0;
+	obj->hex_color = color_to_hex(obj->color);
+	obj->hit = 0;
 	return (0);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   adjust_color.c                                     :+:      :+:    :+:   */
+/*   apply_ambient_light.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:34:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	update_object_color(t_color *color, int *hex_color, t_rt *rt)
 
 /*Iterates through all the objects, and updating their color values based
 on the ambient light color and intensity.*/
-void	adjust_color(t_rt **rt)
+void	apply_ambient_light(t_rt **rt)
 {
 	t_list	*current_obj;
 	t_obj	*obj;
@@ -56,15 +56,7 @@ void	adjust_color(t_rt **rt)
 	while (current_obj != NULL)
 	{
 		obj = (t_obj *)current_obj->content;
-		if (obj->pl.object_type == PLANE)
-			update_object_color(&obj->pl.color, &obj->pl.hex_color, \
-			*rt);
-		else if (obj->sp.object_type == SPHERE)
-			update_object_color(&obj->sp.color, &obj->sp.hex_color, \
-			*rt);
-		else if (obj->cy.object_type == CYLINDER)
-			update_object_color(&obj->cy.color, &obj->cy.hex_color, \
-			*rt);
+		update_object_color(&obj->color, &obj->hex_color, *rt);
 		current_obj = current_obj->next;
 	}
 }
