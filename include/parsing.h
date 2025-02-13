@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:01:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_scene			t_scene;
 typedef struct s_ambi_light		t_ambi_light;
 typedef struct s_camera			t_cam;
 typedef struct s_light			t_light;
-typedef union u_object_data		t_obj;
+typedef struct u_object			t_obj;
 typedef struct s_color			t_color;
 
 /*

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:05:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,20 @@ void		start_event_loop(t_rt *rt);
 
 // 3_ray_plane_intersection.c
 
-int			ray_intersect_plane(t_vec3 ray_dir, t_plane *plane, double *t);
+int			ray_intersect_plane(t_vec3 ray_dir, t_obj *obj, double *t);
 
 // 3_ray_sphere_intersection.c
 
-int			ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t);
+int			ray_intersect_sphere(t_vec3 ray_dir, t_obj *obj, double *t);
 
 // 3_ray_cylinder_intersection.c
 
 int			ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-				t_cylinder *cylinder, double *t);
+				t_obj *obj, double *t);
 int			ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
-				t_cylinder *cylinder, double *t);
+				t_obj *obj, double *t);
 int			ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
-				t_cylinder *cylinder, double *t);
+				t_obj *obj, double *t);
 
 // 4_find_intersection.c
 

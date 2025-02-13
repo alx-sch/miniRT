@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 18:53:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:04:07 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
 // IN FILE:
 
-int		ray_intersect_plane(t_vec3 ray_dir, t_plane *plane,
-			double *t);
+int		ray_intersect_plane(t_vec3 ray_dir, t_obj *obj, double *t);
 
 /**
 Function to find the intersection of a ray with a plane.
@@ -47,15 +46,14 @@ ray is parallel to the plane. Values below this threshold are considered too
 close to zero, indicating parallelism or preventing division by very small
 numbers, which could lead to inaccuracies.
 */
-int	ray_intersect_plane(t_vec3 ray_dir, t_plane *plane,
-		double *t)
+int	ray_intersect_plane(t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	double	denom;
 
-	denom = vec3_dot(ray_dir, plane->normal);
+	denom = vec3_dot(ray_dir, obj->x.pl.normal);
 	if (fabs(denom) > 1e-6)
 	{
-		*t = plane->ixd.dot_diff_normal / denom;
+		*t = obj->ixd.dot_diff_normal / denom;
 		if (*t >= 0.0)
 			return (1);
 	}

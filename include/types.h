@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 23:53:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:01:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,6 @@ Structure representing a cylinder in 3D space:
 */
 typedef struct s_cylinder
 {
-	t_obj_type	object_type;
 	t_vec3		center;
 	t_vec3		orientation;
 	double		radius;
@@ -250,10 +249,6 @@ typedef struct s_cylinder
 	t_vec3		cap_bottom_center;
 	t_vec3		cap_top_normal;
 	t_vec3		cap_bottom_normal;
-	t_color		color;
-	int			hex_color;
-	t_ixd		ixd;
-	int			hit;
 }	t_cylinder;
 
 /**
@@ -265,11 +260,21 @@ at a time:
  - t_plane `pl`:		Represents a plane object in the scene.
  - t_cylinder `cy`:		Represents a cylinder object in the scene.
 */
-typedef union u_object_data
+typedef union u_object_specific
 {
 	t_sphere	sp;
 	t_plane		pl;
 	t_cylinder	cy;
+}	t_obj_x;
+
+typedef struct u_object
+{
+	t_obj_type	object_type;
+	t_obj_x		x;
+	t_color		color;
+	int			hex_color;
+	t_ixd		ixd;
+	int			hit;
 }	t_obj;
 
 //#########

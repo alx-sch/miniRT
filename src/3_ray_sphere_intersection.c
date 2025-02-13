@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_ray_sphere_intersection.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/14 16:11:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:05:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
 // IN FILE:
 
-int		ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t);
+int		ray_intersect_sphere(t_vec3 ray_dir, t_obj *obj, double *t);
 
 /**
 Function to find the intersection of a ray with a sphere.
@@ -42,13 +42,13 @@ Function to find the intersection of a ray with a sphere.
  @note 				`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
 					vector is normalized.
 */
-int	ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t)
+int	ray_intersect_sphere(t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	double	b;
 	double	discriminant;
 
-	b = 2.0 * vec3_dot(sphere->ixd.oc, ray_dir);
-	discriminant = calculate_discriminant(1.0, b, sphere->ixd.c);
+	b = 2.0 * vec3_dot(obj->ixd.oc, ray_dir);
+	discriminant = calculate_discriminant(1.0, b, obj->ixd.c);
 	if (discriminant < 0.0)
 		return (0);
 	*t = calculate_entry_distance(1.0, b, discriminant);
