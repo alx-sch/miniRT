@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/14 00:15:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/14 00:39:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static void	apply_ambient_light_to_object(t_obj *obj, t_rt *rt)
 {
 	float	intensity;
-	float	ambi_r;__
+	float	ambi_r;
 	float	ambi_g;
 	float	ambi_b;
 
