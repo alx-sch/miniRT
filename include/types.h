@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/13 16:01:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/13 23:10:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ typedef struct s_vec3
 
 /**
 Structure representing a color in RGB format:
-- int `r`: The red component of the color [0-255].
-- int `g`: The green component of the color [0-255].
-- int `b`: The blue component of the color [0-255].
+- unsigned char `r`: The red component of the color [0-255].
+- unsigned char `g`: The green component of the color [0-255].
+- unsigned char `b`: The blue component of the color [0-255].
 */
 typedef struct s_color
 {

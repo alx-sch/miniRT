@@ -6,47 +6,31 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/13 17:34:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/14 00:15:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-/*If the object's new color is smaller than 0 or greater than 255 (outside
-of the RGB range), updates the color to 0 or 255.*/
-double	adjust_to_color_range(double value, double min, double max)
+/* Updates an object's color based on the ambient light. */
+static void	apply_ambient_light_to_object(t_obj *obj, t_rt *rt)
 {
-	if (value < min)
-		return (min);
-	if (value > max)
-		return (max);
-	return (value);
+	float	intensity;
+	float	ambi_r;__
+	float	ambi_g;
+	float	ambi_b;
+
+	intensity = rt->scene.ambi_light.ratio;
+	ambi_r = (float)rt->scene.ambi_light.color.r * intensity;
+	ambi_g = (float)rt->scene.ambi_light.color.g * intensity;
+	ambi_b = (float)rt->scene.ambi_light.color.b * intensity;
+	obj->color.r = (float)obj->color.r * ambi_r / 255.0;
+	obj->color.g = (float)obj->color.g * ambi_g / 255.0;
+	obj->color.b = (float)obj->color.b * ambi_b / 255.0;
 }
 
-/*Mixes the object color with the ambient light and intensity, and returns
-the result.*/
-t_color	mix_ambient_light(t_color object_color, t_color ambient_color)
-{
-	t_color	result;
-
-	result.r = adjust_to_color_range(object_color.r * \
-	ambient_color.r / 255, 0.0, 255.0);
-	result.g = adjust_to_color_range(object_color.g * \
-	ambient_color.g / 255, 0.0, 255.0);
-	result.b = adjust_to_color_range(object_color.b * \
-	ambient_color.b / 255, 0.0, 255.0);
-	return (result);
-}
-
-/*Updates an object's color and hex color.*/
-static void	update_object_color(t_color *color, int *hex_color, t_rt *rt)
-{
-	*color = mix_ambient_light(*color, rt->scene.ambi_light.color);
-	*hex_color = color_to_hex(*color);
-}
-
-/*Iterates through all the objects, and updating their color values based
-on the ambient light color and intensity.*/
+/* Iterates through all objects and updates their color based
+on ambient light. */
 void	apply_ambient_light(t_rt **rt)
 {
 	t_list	*current_obj;
@@ -56,7 +40,7 @@ void	apply_ambient_light(t_rt **rt)
 	while (current_obj != NULL)
 	{
 		obj = (t_obj *)current_obj->content;
-		update_object_color(&obj->color, &obj->hex_color, *rt);
+		apply_ambient_light_to_object(obj, *rt);
 		current_obj = current_obj->next;
 	}
 }
