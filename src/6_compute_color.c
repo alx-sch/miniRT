@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:23:12 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/13 16:18:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:38:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 		return ;
 	ixr->ixn_color = color_to_hex(ixr->hit_obj->color);
 
-	// ixr->shadow = init_shadow(rt, ixr, ray_dir);
+	//ixr->shadow = init_shadow(rt, ixr, ray_dir);
 	// if (is_ray_in_shadow(rt, ixr))
 	// {
 	// 	rgb.r *= rt->scene.ambi_light.ratio;

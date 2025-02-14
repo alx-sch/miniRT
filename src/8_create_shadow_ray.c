@@ -6,9 +6,16 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:54:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/14 12:40:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+A shadow ray is a ray that is cast from the intersection point of a primary ray
+(like a camera ray hitting an object) towards the light source.
+If the shadow ray hits another object before reaching the light source,
+the point is in shadow; otherwise, it is lit.
+*/
 
 #include "main.h"
 

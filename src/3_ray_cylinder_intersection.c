@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/13 16:09:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:37:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
 	if (discriminant < 0)
 		return (0);
 	*t = calculate_entry_distance(a, b, discriminant);
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, obj, *t))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, obj, *t))
 		return (1);
 	*t = calculate_exit_distance(a, b, discriminant);
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, obj, *t))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, obj, *t))
 		return (1);
 	return (0);
 }

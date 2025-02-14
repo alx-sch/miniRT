@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/13 16:05:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:37:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	ray_intersect_sphere(t_vec3 ray_dir, t_obj *obj, double *t)
 	if (discriminant < 0.0)
 		return (0);
 	*t = calculate_entry_distance(1.0, b, discriminant);
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 	*t = calculate_exit_distance(1.0, b, discriminant);
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 	return (0);
 }
