@@ -154,6 +154,12 @@ Where:
 - **$P_0$** Is a known point on the plane 
 - **$\vec{n} $:** The normal vector of the plane, which is perpendicular to the surface.
 
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/plane_definition.png" alt="plane_definition.png" width="200"/>
+    <br>
+    <span>A plane is defined by a point <i>a</i>, which determines its location, and a normal <i>n</i>, which defines its orientation. The point <i>p</i> is any point on the plane, such as the intersection of a ray with the plane.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
 Substitute the ray equation $P(t) = O + t \vec{d}$ into the plane equation:
 
 $$
@@ -342,7 +348,11 @@ Where:
   
 - **$r$:** The radius of the sphere.
 
-Now, substitute the ray equation $P(t) = O + t \vec{d}$ into the sphere equation:
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/sphere_definition.png" alt="sphere_definition.png" width="200"/>
+    <br>
+    <span> A sphere is defined by its center <i>c</i> and radius <i>r</i>, which determine its size and position. The point <i>p</i> represents any point on the sphere's surface (potential intersection point).<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 $$
 \left(O + t \vec{d} - C \right) \cdot \left( O + t \vec{d} - C \right) = r^2
