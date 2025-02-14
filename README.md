@@ -21,8 +21,6 @@ This project is a collaboration between:
   - [Plane Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#plane-intersection)
   - [Sphere Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#sphere-intersection)
   - [Cylinder Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#cylinder-intersection)
-- 
-
 
 ---
 
@@ -175,6 +173,12 @@ $$
 - ($t$) will be **positive** if the denominator $(\vec{d} \cdot \vec{n} )$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
 - ($t$) will be **negative** if the denominator $(\vec{d} \cdot \vec{n})$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
 - If the denominator $(\vec{d} \cdot \vec{n} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+
+<p align="center">&nbsp;</p>
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_plane_intersection.png" alt="ray_plane_intersection.png" width="400"/>
+<p align="center">The plane becomes visible if the ray intersects it in front of the camera's origin (t > 0).<sup><a href="#footnote1">[1]</a></sup></p>
 
 In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
