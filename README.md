@@ -13,9 +13,14 @@ This project is a collaboration between:
 
 ## Overview
 
-- **[How to Use](https://github.com/Busedame/miniRT?tab=readme-ov-file#how-to-use)**: Building **miniRT** and defining scene elements in `.rt` files.
+- **[How to Use](https://github.com/Busedame/miniRT?tab=readme-ov-file#how-to-use)**: Building miniRT and defining scene elements in `.rt` files.
 - **[Introduction to Ray Tracing](https://github.com/Busedame/miniRT/edit/main/README.md#introduction-to-ray-tracing)**
-- **[Ray-Object Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#ray-object-intersection)**: Outlines the mathematical approach to detecting intersections between rays and geometric objects. Respective functions used in miniRT are derived from this.
+- **[Ray-Object Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT.
+  - [Ray Equation](https://github.com/Busedame/miniRT/edit/main/README.md#ray-equation)
+  - [Quadratic Equation](https://github.com/Busedame/miniRT/edit/main/README.md#quadratic-equation)
+  - [Plane Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#plane-intersection)
+  - [Sphere Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#sphere-intersection)
+  - [Cylinder Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#cylinder-intersection)
 - 
 
 
@@ -36,6 +41,7 @@ This project is a collaboration between:
 3. Follow the instructions provided in the output to run the program.
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
+[MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows and handling graphics/events.
 
 ---
 
