@@ -476,7 +476,7 @@ $$
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/cylinder_definition.png" alt="cylinder_definition.png" width="200"/>
     <br>
-    <span>A cylinder is defined by a point on its axis and a vector representing its direction (e.g., <i>(0,0,0)</i> as the point and <i>(0,1,0)</i> as the orientation vector (y-axis) in the figure above), a radius, and a height given by $\Vert y_1 - y_0 \Vert$.<sup><a href="#footnote1">[1]</a></sup></span>
+    <span>A cylinder is defined by a point on its axis and a vector representing its direction (e.g., <i>(0,0,0)</i> as the point and <i>(0,1,0)</i> as the orientation vector along the y-axis in the figure above in the figure above), a radius, and a height given by $\Vert y_1 - y_0 \Vert$. The point  <i>p<i> can be any point on the cylinder's mantle.<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
 
 Now define the vector from the reference point ($C$) (on the axis) to the point ($P$) (on the surface), which captures the spatial relationship between the axis and the surface point:
