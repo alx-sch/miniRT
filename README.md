@@ -463,16 +463,21 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 ### Cylinder Intersection
 
 For a cylinder with:
+- a center point $C=(C_x, C_y, C_z)$ through which the cylinder's axis passes,
+- radius $r$,
+- and a normalized orientation vector $\vec{u}$, which represents the direction of the cylinder's axis,
 
-- An axis passing through a reference point $C=(C_x, C_y, C_z)$,
-- Radius $r$,
-- And a normalized orientation vector $\vec{u}$, which represents the direction of the cylinder's axis,
-
-The general equation for a point $P=(P_x , P_y, P_z)$ on the surface of the cylinder is:
+the general equation for a point $P=(P_x , P_y, P_z)$ on the surface of the cylinder is:
 
 $$    
 (P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - \left( (P_x - C_x,  P_y - C_y,  P_z - C_z) \cdot \vec{u}\right)^2 = r^2
 $$
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/cylinder_definition.png" alt="cylinder_definition.png" width="200"/>
+    <br>
+    <span>A cylinder is defined by a point on its axis and a vector representing its direction (e.g., <i>(0,0,0)</i> as the point and <i>(0,1,0)</i> as the orientation vector (y-axis) in the figure above), a radius, and a height given by $\Vert y_1 - y_0 \Vert$.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 Now define the vector from the reference point ($C$) (on the axis) to the point ($P$) (on the surface), which captures the spatial relationship between the axis and the surface point:
 
