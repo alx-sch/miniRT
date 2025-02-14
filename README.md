@@ -9,6 +9,18 @@ This project is a collaboration between:
 - **[Natalie](https://github.com/busedame)**: Responsible for the  `.rt` file parser and the implementation of lighting and shadows.
 - **[Alex](https://github.com/alx-sch)**: Focused on MiniLibX (graphical library) integration, ray-object intersections, the renderer, and this README.
 
+---
+
+## Overview
+
+- **[How to Use](https://github.com/Busedame/miniRT?tab=readme-ov-file#how-to-use)**: Building **miniRT** and defining scene elements in `.rt` files.
+- **[Introduction to Ray Tracing](https://github.com/Busedame/miniRT/edit/main/README.md#introduction-to-ray-tracing)**
+- **[Ray-Object Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#ray-object-intersection)**: Outlines the mathematical approach to detecting intersections between rays and geometric objects. Respective functions used in miniRT are derived from this.
+- 
+
+
+---
+
 ## How to Use
 
 1. Clone the repository and navigate into the project directory:    
