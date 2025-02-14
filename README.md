@@ -106,13 +106,15 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_tracing_process.png" alt="ray_tracing_process.png" width="400"/>
-<p align="center"><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></p>
-
-<p align="center">&nbsp;</p>
-				     
+    <br>
+    <span><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+			     
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/raytracing_example.png" alt="ray_tracing_example.png" width="400"/>
-<p align="center">Example of a ray-tracing render with matte and reflective objects.<sup><a href="#footnote2">[2]</a></sup></p>
+    <br>
+    <span>Example of a ray-tracing render with matte and reflective objects.<sup><a href="#footnote2">[2]</a></sup></span>
+</p>
 
 ---
 
@@ -174,11 +176,11 @@ $$
 - ($t$) will be **negative** if the denominator $(\vec{d} \cdot \vec{n})$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
 - If the denominator $(\vec{d} \cdot \vec{n} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
 
-<p align="center">&nbsp;</p>
-
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_plane_intersection.png" alt="ray_plane_intersection.png" width="400"/>
-<p align="center">The plane becomes visible if the ray intersects it in front of the camera's origin (t > 0).<sup><a href="#footnote1">[1]</a></sup></p>
+    <br>
+    <span>The plane becomes visible if the ray intersects it in front of the camera's origin (t > 0).<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
@@ -376,6 +378,18 @@ Where the coefficients are:
 - **$b = 2(\vec{oc} \cdot \vec{d}$)**
 - **$c = (\vec{oc} \cdot \vec{oc}) - r^2$**
 
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_discriminante.png" alt="ray_sphere_discriminante.png" width="400"/>
+    <br>
+    <span>The discriminant indicates whether the ray intersects the sphere at zero, one, or two points.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_intersection_distance.png" alt="ray_sphere_intersection_distance.png" width="400"/>
+    <br>
+    <span>Rays do not register an intersection at their origin; the intersection requires t > 0.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
 The following function first checks if there are any real solutions for ($t$) (discriminate >= 0).
 If so, the intersection distances are calculated.
 
@@ -420,14 +434,14 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 	*t = calculate_entry_distance(1.0, b, discriminant);
 
 	// Check if the entry point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	// Calculate the distance to the second intersection point (largest root)
 	*t = calculate_exit_distance(1.0, b, discriminant);
 
 	// Check if the exit point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	return (0);	// No valid intersection found
@@ -569,14 +583,14 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the entry point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	// Calculate the exit distance along the ray (second root of the quadratic)
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the exit point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	return (0);	// No valid intersection found
