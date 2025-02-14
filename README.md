@@ -228,7 +228,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 		*t = vec3_dot(difference, plane->normal) / denom;
 
 		// If the intersection distance is non-negative, the intersection is valid
-		if (*t >= 0.0)
+		if (*t > 0.0)
 			return (1);
 	}
 
@@ -701,14 +701,14 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 	// [...] same as in `ray_intersect_cylinder()` above
 
 	// Check if the entry point is valid and lies within the cylinder's height bounds
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
 
 	// Calculate the exit distance along the ray
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the exit point is valid and lies within the cylinder's height bounds
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
 
 	return (0);	   // No valid intersection found
@@ -802,7 +802,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	t_hit = - numerator / denominator;
 
 	// If the intersection is behind the ray's origin, discard it
-	if (t_hit < 0.0)
+	if (t_hit <= 0.0)
 		return (0);
 
 	// Compute the actual intersection point in 3D space
