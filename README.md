@@ -600,7 +600,9 @@ Please note that this function calculates the intersection of a ray with an infi
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
-<p align="center">The blue and red objects are both infinite cylinders.</p>
+    <br>
+    <span>The blue and red objects are both infinite cylinders.</span>
+</p>
 
 ---
 
@@ -699,7 +701,9 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 ```
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
-<p align="center">The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</p>
+    <br>
+    <span>The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</span>
+</p>
 
 ---
 
@@ -803,7 +807,9 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
-<p align="center">Looking at the end cap of the closed blue cylinder.</p>
+    <br>
+    <span>Looking at the end cap of the closed blue cylinder.</span>
+</p>
 
 ---
 
@@ -827,11 +833,15 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 
 <p align="center">
 	<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-<p align="center">Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport). </p>
+	<br>
+	<span>Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport).</span>
+</p>
 
 <p align="center">
-	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
-<p align="center">Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</p>
+	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">
+	<br>
+	<span>Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</span>
+</p>
 
 ---
 
