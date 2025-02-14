@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/13 16:04:07 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:00:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ray_intersect_plane(t_vec3 ray_dir, t_obj *obj, double *t)
 	if (fabs(denom) > 1e-6)
 	{
 		*t = obj->ixd.dot_diff_normal / denom;
-		if (*t >= 0.0)
+		if (*t > 0.0)
 			return (1);
 	}
 	return (0);
