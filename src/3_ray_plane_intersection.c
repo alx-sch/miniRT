@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/14 16:00:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:45:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ Function to find the intersection of a ray with a plane.
 
  @note
 Due to floating-point precision limitations, directly comparing a dot product
-to zero can be unreliable. A small threshold (1e-6) is used to determine if the
-ray is parallel to the plane. Values below this threshold are considered too
-close to zero, indicating parallelism or preventing division by very small
-numbers, which could lead to inaccuracies.
+to zero can be unreliable. A small threshold (EPSILON -> 1e-6) is used to
+determine if the ray is parallel to the plane. Values below this threshold are
+considered too close to zero, indicating parallelism or preventing division by
+very small numbers, which could lead to inaccuracies.
 */
 int	ray_intersect_plane(t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	double	denom;
 
 	denom = vec3_dot(ray_dir, obj->x.pl.normal);
-	if (fabs(denom) > 1e-6)
+	if (fabs(denom) > EPSILON)
 	{
 		*t = obj->ixd.dot_diff_normal / denom;
 		if (*t > 0.0)

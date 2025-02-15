@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/14 16:01:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:44:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
 	t_vec3	difference;
 
 	denominator = vec3_dot(ray_dir, obj->x.cy.cap_top_normal);
-	if (fabs(denominator) < 1e-6)
+	if (fabs(denominator) < EPSILON)
 		return (0);
 	numerator = vec3_dot(vec3_sub(ray_origin, obj->x.cy.cap_top_center),
 			obj->x.cy.cap_top_normal);
@@ -164,7 +164,7 @@ int	ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
 	t_vec3	difference;
 
 	denominator = vec3_dot(ray_dir, obj->x.cy.cap_bottom_normal);
-	if (fabs(denominator) < 1e-6)
+	if (fabs(denominator) < EPSILON)
 		return (0);
 	numerator = vec3_dot(vec3_sub(ray_origin, obj->x.cy.cap_bottom_center),
 			obj->x.cy.cap_bottom_normal);
