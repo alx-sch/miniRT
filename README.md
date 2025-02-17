@@ -354,6 +354,8 @@ Where:
     <span> A sphere is defined by its center <i>c</i> and radius <i>r</i>, which determine its size and position. The point <i>p</i> represents any point on the sphere's surface (potential intersection point).<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
 
+Now, substitute the ray equation $P(t) = O + t \vec{d}$ into the sphere equation:
+
 $$
 \left(O + t \vec{d} - C \right) \cdot \left( O + t \vec{d} - C \right) = r^2
 $$
@@ -467,7 +469,7 @@ For a cylinder with:
 - radius $r$,
 - and a normalized orientation vector $\vec{u}$, which represents the direction of the cylinder's axis,
 
-the general equation for a point $P=(P_x , P_y, P_z)$ on the surface of the cylinder is:
+the general equation for a point $P=(P_x, P_y, P_z)$ on the surface of the cylinder is:
 
 $$    
 (P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - \left( (P_x - C_x,  P_y - C_y,  P_z - C_z) \cdot \vec{u}\right)^2 = r^2
@@ -485,7 +487,7 @@ $$
 \vec{p} = (P_x - C_x,  P_y - C_y,  P_z - C_z)
 $$
 
-- $(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 = \Vert P \Vert^2$: The square of the distance from the axis reference point $C$ to the surface point $P$.
+- $(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 = \Vert\vec{p}\Vert^2$: The square of the distance from the axis reference point $C$ to the surface point $P$.
 - $(\vec{p} - \vec{u})^2$: The squared projection of $\vec{p}$ onto the axis direction $\vec{u}$, which measures the component of $\vec{p}$ along the cylinder's axis.
 - Subtracting $(\vec{p} - \vec{u})^2$ removes the contribution of $\vec{p}$ along the axis, leaving only the radial distance from the axis.
 
