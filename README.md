@@ -1081,5 +1081,4 @@ The project badge used is retrieved from [this repo](https://github.com/ayogun/4
 
 <a name="footnote1">¹</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters.     
 <a name="footnote2">²</a> Jensen, H.W. (1990-1991): [http://graphics.ucsd.edu/~henrik/images/raytrace.html](http://graphics.ucsd.edu/~henrik/images/raytrace.html)    
-<a name="footnote3">³</a> Datamine Software (2024)	
-*Perspective and Orthogonal Views* : [https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm](https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm)
+<a name="footnote3">³</a> Datamine Software (2024). *Perspective and Orthogonal Views*: [https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm](https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm)
