@@ -9,6 +9,21 @@ This project is a collaboration between:
 - **[Natalie](https://github.com/busedame)**: Responsible for the  `.rt` file parser and the implementation of lighting and shadows.
 - **[Alex](https://github.com/alx-sch)**: Focused on MiniLibX (graphical library) integration, ray-object intersections, the renderer, and this README.
 
+---
+
+## Overview
+
+- **[How to Use](https://github.com/Busedame/miniRT?tab=readme-ov-file#how-to-use)**: Building miniRT and defining scene elements in `.rt` files.
+- **[Introduction to Ray Tracing](https://github.com/Busedame/miniRT/edit/main/README.md#introduction-to-ray-tracing)**
+- **[Ray-Object Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT.
+  - [Ray Equation](https://github.com/Busedame/miniRT/edit/main/README.md#ray-equation)
+  - [Quadratic Equation](https://github.com/Busedame/miniRT/edit/main/README.md#quadratic-equation)
+  - [Plane Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#plane-intersection)
+  - [Sphere Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#sphere-intersection)
+  - [Cylinder Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#cylinder-intersection)
+
+---
+
 ## How to Use
 
 1. Clone the repository and navigate into the project directory:    
@@ -24,6 +39,7 @@ This project is a collaboration between:
 3. Follow the instructions provided in the output to run the program.
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
+[MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows and handling graphics/events.
 
 ---
 
@@ -90,13 +106,15 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_tracing_process.png" alt="ray_tracing_process.png" width="400"/>
-<p align="center"><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></p>
-
-<p align="center">&nbsp;</p>
-				     
+    <br>
+    <span><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+			     
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/raytracing_example.png" alt="ray_tracing_example.png" width="400"/>
-<p align="center">Example of a ray-tracing render with matte and reflective objects.<sup><a href="#footnote2">[2]</a></sup></p>
+    <br>
+    <span>Example of a ray-tracing render with matte and reflective objects.<sup><a href="#footnote2">[2]</a></sup></span>
+</p>
 
 ---
 
@@ -109,7 +127,7 @@ This section outlines the mathematical approach to detecting intersections betwe
 A ray is represented as:
 
 $$
-P(t) = O + t \vec{D}
+P(t) = O + t \vec{d}
 $$
 
 Where:
@@ -117,7 +135,7 @@ Where:
 
 - **$O$:**  The ray's origin in 3D space. This point marks the location where the ray begins its journey through space (camera).
 
--  **$\vec{D}$:** The normalized direction vector of the ray. A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
+-  **$\vec{d}$:** The normalized direction vector of the ray. A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
 
 - **$t$:**  A scalar value indicating the distance along the ray. It scales the direction vector, determining how far along the ray the point $P(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
 
@@ -128,35 +146,47 @@ Where:
 To find the intersection of a ray with a plane, we use the plane equation:
 
 $$
-(P - P_0) \cdot \vec{N} = 0
+(P - P_0) \cdot \vec{n} = 0
 $$
 
 Where:
 - **$P$:** Is any point on the plane.
 - **$P_0$** Is a known point on the plane 
-- **$\vec{N} $:** The normal vector of the plane, which is perpendicular to the surface.
+- **$\vec{n} $:** The normal vector of the plane, which is perpendicular to the surface.
 
-Substitute the ray equation $P(t) = O + t \vec{D}$ into the plane equation:
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/plane_definition.png" alt="plane_definition.png" width="200"/>
+    <br>
+    <span>A plane is defined by a point <i>a</i>, which determines its location, and a normal <i>n</i>, which defines its orientation. The point <i>p</i> is any point on the plane, such as the intersection of a ray with the plane.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
+Substitute the ray equation $P(t) = O + t \vec{d}$ into the plane equation:
 
 $$
-(O + t \vec{D} - P_0) \cdot \vec{N} = 0
+(O + t \vec{d} - P_0) \cdot \vec{n} = 0
 $$
 
 Rearrange terms:
 
 $$
-(O - P_0) \cdot \vec{N} + t (\vec{D} \cdot \vec{N}) = 0
+(O - P_0) \cdot \vec{n} + t (\vec{d} \cdot \vec{n}) = 0
 $$
 
 Solve for *t*:
 
 $$
-t = \frac{(P_0 - O) \cdot \vec{N}}{\vec{D} \cdot \vec{N}}
+t = \frac{(P_0 - O) \cdot \vec{n}}{\vec{d} \cdot \vec{n}}
 $$
 
-- ($t$) will be **positive** if the denominator $(\vec{D} \cdot \vec{N} )$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
-- ($t$) will be **negative** if the denominator $(\vec{D} \cdot \vec{N})$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
-- If the denominator $(\vec{D} \cdot \vec{N} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+- ($t$) will be **positive** if the denominator $(\vec{d} \cdot \vec{n} )$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
+- ($t$) will be **negative** if the denominator $(\vec{d} \cdot \vec{n})$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
+- If the denominator $(\vec{d} \cdot \vec{n} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_plane_intersection.png" alt="ray_plane_intersection.png" width="400"/>
+    <br>
+    <span>The plane becomes visible if the ray intersects it in front of the camera's origin (t > 0).<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
@@ -198,7 +228,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 		*t = vec3_dot(difference, plane->normal) / denom;
 
 		// If the intersection distance is non-negative, the intersection is valid
-		if (*t >= 0.0)
+		if (*t > 0.0)
 			return (1);
 	}
 
@@ -209,7 +239,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 
 ### Quadratic Equation
 
-Intersection calculations with geometric objects like spheres and cylinders can be solved using **quadratic equations**. A quadratic equation has the general form:
+While planes are intersected by solving a linear equation, objects like spheres and cylinders require solving a **quadratic equations**. A quadratic equation has the general form:
 
 $$
 ax^2 + bx + c = 0
@@ -318,28 +348,32 @@ Where:
   
 - **$r$:** The radius of the sphere.
 
-Now, substitute the ray equation $P(t) = O + t \vec{D}$ into the sphere equation:
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/sphere_definition.png" alt="sphere_definition.png" width="200"/>
+    <br>
+    <span> A sphere is defined by its center <i>c</i> and radius <i>r</i>, which determine its size and position. The point <i>p</i> represents any point on the sphere's surface (potential intersection point).<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 $$
-\left(O + t \vec{D} - C \right) \cdot \left( O + t \vec{D} - C \right) = r^2
+\left(O + t \vec{d} - C \right) \cdot \left( O + t \vec{d} - C \right) = r^2
 $$
 
-Let $\vec{OC} = O - C$, the vector from the sphere center to the ray origin. The equation becomes:
+Let $\vec{oc} = O - C$, the vector from the sphere center to the ray origin. The equation becomes:
 
 $$
-\left(\vec{OC} + t \vec{D} \right) \cdot \left( \vec{OC} + t \vec{D} \right) = r^2
+\left(\vec{oc} + t \vec{d} \right) \cdot \left( \vec{oc} + t \vec{d} \right) = r^2
 $$
 
 Expand the dot product:
 
 $$
-\left( \vec{OC} \cdot \vec{OC} \right) + 2t \left( \vec{OC} \cdot \vec{D} \right) + t^2 \left( \vec{D} \cdot \vec{D} \right) = r^2
+\left( \vec{oc} \cdot \vec{oc} \right) + 2t \left( \vec{oc} \cdot \vec{d} \right) + t^2 \left( \vec{d} \cdot \vec{d} \right) = r^2
 $$
 
-Since $\vec{D}$ is normalized ($\Vert \vec{D} \Vert=  \vec{D} \cdot \vec{D} = 1$), the equation simplifies into an quadratic equation: 
+Since $\vec{d}$ is normalized ($\Vert \vec{d} \Vert=  \vec{d} \cdot \vec{d} = 1$), the equation simplifies into an quadratic equation: 
 
 $$
-t^2 +  2t \left( \vec{OC} \cdot \vec{D} \right) + \left( \vec{OC} \cdot \vec{OC} \right) - r^2 = 0
+t^2 +  2t \left( \vec{oc} \cdot \vec{d} \right) + \left( \vec{oc} \cdot \vec{oc} \right) - r^2 = 0
 $$
 
 As explained [above](https://github.com/Busedame/miniRT/blob/main/README.md#quadratic-intersections-in-ray-tracing), this solves into:
@@ -351,8 +385,20 @@ $$
 Where the coefficients are:
 
 - **$a = 1$**
-- **$b = 2(\vec{OC} \cdot \vec{D}$)**
-- **$c = (\vec{OC} \cdot \vec{OC}) - r^2$**
+- **$b = 2(\vec{oc} \cdot \vec{d}$)**
+- **$c = (\vec{oc} \cdot \vec{oc}) - r^2$**
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_discriminante.png" alt="ray_sphere_discriminante.png" width="400"/>
+    <br>
+    <span>The discriminant indicates whether the ray intersects the sphere at zero, one, or two points.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_intersection_distance.png" alt="ray_sphere_intersection_distance.png" width="400"/>
+    <br>
+    <span>Rays do not register an intersection at their origin; the intersection requires t > 0.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 The following function first checks if there are any real solutions for ($t$) (discriminate >= 0).
 If so, the intersection distances are calculated.
@@ -398,14 +444,14 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 	*t = calculate_entry_distance(1.0, b, discriminant);
 
 	// Check if the entry point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	// Calculate the distance to the second intersection point (largest root)
 	*t = calculate_exit_distance(1.0, b, discriminant);
 
 	// Check if the exit point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	return (0);	// No valid intersection found
@@ -417,31 +463,36 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 ### Cylinder Intersection
 
 For a cylinder with:
+- a center point $C=(C_x, C_y, C_z)$ through which the cylinder's axis passes,
+- radius $r$,
+- and a normalized orientation vector $\vec{u}$, which represents the direction of the cylinder's axis,
 
-- An axis passing through a reference point $C=(C_x, C_y, C_z)$,
-- Radius $r$,
-- And a normalized orientation vector $\vec{U}$, which represents the direction of the cylinder's axis,
-
-The general equation for a point $P=(P_x , P_y, P_z)$ on the surface of the cylinder is:
+the general equation for a point $P=(P_x , P_y, P_z)$ on the surface of the cylinder is:
 
 $$    
-(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - \left( (P_x - C_x,  P_y - C_y,  P_z - C_z) \cdot \vec{U}\right)^2 = r^2
+(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - \left( (P_x - C_x,  P_y - C_y,  P_z - C_z) \cdot \vec{u}\right)^2 = r^2
 $$
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/cylinder_definition.png" alt="cylinder_definition.png" width="200"/>
+    <br>
+    <span>A cylinder is defined by a point on its axis and a vector representing its direction (e.g., <i>(0,0,0)</i> as the point and <i>(0,1,0)</i> as the orientation vector along the y-axis in the figure above in the figure above), a radius, and a height given by $\Vert y_1 - y_0 \Vert$. The point  <i>p</i> can be any point on the cylinder's mantle.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 Now define the vector from the reference point ($C$) (on the axis) to the point ($P$) (on the surface), which captures the spatial relationship between the axis and the surface point:
 
 $$    
-\vec{P} = (P_x - C_x,  P_y - C_y,  P_z - C_z)
+\vec{p} = (P_x - C_x,  P_y - C_y,  P_z - C_z)
 $$
 
 - $(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 = \Vert P \Vert^2$: The square of the distance from the axis reference point $C$ to the surface point $P$.
-- $(\vec{P} - \vec{U})^2$: The squared projection of $\vec{P}$ onto the axis direction $\vec{U}$, which measures the component of $\vec{P}$ along the cylinder's axis.
-- Subtracting $(\vec{P} - \vec{U})^2$ removes the contribution of $\vec{P}$ along the axis, leaving only the radial distance from the axis.
+- $(\vec{p} - \vec{u})^2$: The squared projection of $\vec{p}$ onto the axis direction $\vec{u}$, which measures the component of $\vec{p}$ along the cylinder's axis.
+- Subtracting $(\vec{p} - \vec{u})^2$ removes the contribution of $\vec{p}$ along the axis, leaving only the radial distance from the axis.
 
 The cylinder’s surface is defined by ensuring the perpendicular (radial) distance from the axis equals the radius ($r$). The following equation ensures that this condition is met:
 
 $$
-\Vert \vec{P} \Vert^2 - (\vec{P} \cdot \vec{U})^2 = r^2
+\Vert \vec{p} \Vert^2 - (\vec{p} \cdot \vec{u})^2 = r^2
 $$
 
 The parametric form of the [ray equation](https://github.com/Busedame/miniRT/blob/main/README.md#ray-equation) is:
@@ -465,19 +516,19 @@ $$
 which is the same as:
 
 $$
-\left(\vec{OC} +t\vec{D}\right)^2 - \left(\vec{U} \cdot \vec{OC} + t( \vec{U} \cdot \vec{D})\right)^2 = r^2
+\left(\vec{oc} +t\vec{d}\right)^2 - \left(\vec{u} \cdot \vec{oc} + t( \vec{u} \cdot \vec{d})\right)^2 = r^2
 $$
 
-Let ($\text{axis-dot-oc} = \vec{U} \cdot \vec{OC}$) and ($\text{axis-dot-ray} = \vec{U} \cdot \vec{D}$):
+Let ($\text{axis-dot-oc} = \vec{u} \cdot \vec{oc}$) and ($\text{axis-dot-ray} = \vec{u} \cdot \vec{d}$):
 
 $$
-\left(\vec{OC} +t\vec{D}\right)^2 - \left(\text{axis-dot-oc} + t(\text{axis-dot-ray})\right)^2 = r^2
+\left(\vec{oc} +t\vec{d}\right)^2 - \left(\text{axis-dot-oc} + t(\text{axis-dot-ray})\right)^2 = r^2
 $$
 
 Expanding the two squared terms gives:
 
 $$
-\left( \vec{OC} \cdot \vec{OC} + 2t(\vec{OC} \cdot \vec{D}) + t^2(\vec{D} \cdot \vec{D})\right) - \left( (\text{axis-dot-oc})^2 + 2t(\text{axis-dot-oc} \times \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2 \right)
+\left( \vec{oc} \cdot \vec{oc} + 2t(\vec{oc} \cdot \vec{d}) + t^2(\vec{d} \cdot \vec{d})\right) - \left( (\text{axis-dot-oc})^2 + 2t(\text{axis-dot-oc} \times \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2 \right)
 $$
 
 Expanding the squared terms of the **second part** of the equation gives:
@@ -488,11 +539,11 @@ $$
 
 Grouping all this into a quadratic form ($at^2+bt+c=0$) gives the following coefficients:
 
-- $a = (\vec{D} \cdot \vec{D}) - (\text{axis-dot-ray})^2$
+- $a = (\vec{d} \cdot \vec{d}) - (\text{axis-dot-ray})^2$
 
-- $b = 2\left( (\vec{OC} \cdot \vec{D}) - (\text{axis-dot-oc} \times \text{axis-dot-ray})\right)$
+- $b = 2\left( (\vec{oc} \cdot \vec{d}) - (\text{axis-dot-oc} \times \text{axis-dot-ray})\right)$
 
-- $c = (\vec{OC} \cdot \vec{OC}) - (\text{axis-dot-oc})^2 - r^2$
+- $c = (\vec{oc} \cdot \vec{oc}) - (\text{axis-dot-oc})^2 - r^2$
 
 The following function calculates the intersection of a ray with a cylinder using the above derivations. 
 
@@ -547,14 +598,14 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the entry point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	// Calculate the exit distance along the ray (second root of the quadratic)
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the exit point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	return (0);	// No valid intersection found
@@ -564,7 +615,9 @@ Please note that this function calculates the intersection of a ray with an infi
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
-<p align="center">The blue and red objects are both infinite cylinders.</p>
+    <br>
+    <span>The blue and red objects are both infinite cylinders.</span>
+</p>
 
 ---
 
@@ -576,20 +629,20 @@ To account for the height boundaries of the cylinder, follow these steps:
    Use the ray equation with the calculated intersection distance ($t$) to find the intersection point ($P$):
    
 $$
-P(t) = O + t \vec{D}
+P(t) = O + t \vec{d}
 $$
 
 2. **Compute vector from cylinder's center to intersection point:**
 
 $$
-\vec{V} = P - C
+\vec{v} = P - C
 $$
 
 3. **Project this vector onto the cylinder's axis:**       
-   Find the component of ($\vec{V}$) along the cylinder's axis by projecting ($\vec{V}$) onto the normalized axis direction vector ($\vec{U}$):
+   Find the component of ($\vec{v}$) along the cylinder's axis by projecting ($\vec{v}$) onto the normalized axis direction vector ($\vec{u}$):
 
 $$
-\text{Projection Length} = \vec{V} \cdot \vec{U}
+\text{Projection Length} = \vec{v} \cdot \vec{u}
 $$
 
 4. **Compare the projection length to the height bounds:**  
@@ -648,14 +701,14 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 	// [...] same as in `ray_intersect_cylinder()` above
 
 	// Check if the entry point is valid and lies within the cylinder's height bounds
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
 
 	// Calculate the exit distance along the ray
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the exit point is valid and lies within the cylinder's height bounds
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
 
 	return (0);	   // No valid intersection found
@@ -663,7 +716,9 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 ```
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
-<p align="center">The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</p>
+    <br>
+    <span>The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</span>
+</p>
 
 ---
 
@@ -677,19 +732,19 @@ To account for the cylinder's end caps, the goal is to check if a ray intersects
    Here:
    - $(P)$ is a point on the plane (we will test for the ray-cap intersection).
    - $(C)$ is the center of the cap (top or bottom).  
-   - $\(\vec{U}\)$ is the normalized orientation vector of the cylinder's axis.  
+   - $\(\vec{u}\)$ is the normalized orientation vector of the cylinder's axis.  
 
 3. **Find the ray-plane intersection:**     
-   Substitute the ray equation into the plane equation: $( O + t \vec{D} - C_\text{cap} ) \cdot \vec{U} = 0$
+   Substitute the ray equation into the plane equation: $( O + t \vec{d} - C_\text{cap} ) \cdot \vec{u} = 0$
 
    Where:
    - $(O)$ is the ray origin.  
-   - $(\vec{D})$ is the normalized direction vector of the ray
+   - $(\vec{d})$ is the normalized direction vector of the ray
    - $(t)$ is the distance from $(O)$ to the intersection point.
 
-   Simplify: $\left(\vec{OC}_\text{cap} \cdot \vec{U} + t(\vec{D} \cdot \vec{U}) \right) = 0$
+   Simplify: $\left(\vec{oc}_\text{cap} \cdot \vec{u} + t(\vec{d} \cdot \vec{u}) \right) = 0$
 
-   Solve for $t = - \frac{\vec{OC}_\text{cap} \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
+   Solve for $t = - \frac{\vec{oc}_\text{cap} \cdot \vec{u}}{\vec{d} \cdot \vec{u}}$
 
 4. **Check the intersection point against the cap's radius:**    
    Once ($t$) is computed, the intersection point $(P(t))$ can be calculated using the ray equation.
@@ -747,7 +802,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	t_hit = - numerator / denominator;
 
 	// If the intersection is behind the ray's origin, discard it
-	if (t_hit < 0.0)
+	if (t_hit <= 0.0)
 		return (0);
 
 	// Compute the actual intersection point in 3D space
@@ -767,20 +822,30 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
-<p align="center">Looking at the end cap of the closed blue cylinder.</p>
+    <br>
+    <span>Looking at the end cap of the closed blue cylinder.</span>
+</p>
 
 ---
 
 #### Intersection Constants
 
 In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., distance vectors such 
- as ($\vec{OC}$), the quadratic coefficient ($c$), some dot products like ($\vec{OC} \cdot \vec{U}$)). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
+ as ($\vec{oc}$), the quadratic coefficient ($c$), some dot products like ($\vec{oc} \cdot \vec{u}$)). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
 
 Precomputing these constants reduced my computation time by three-quarters for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~68 sec to ~18 sec.
 
 ---
 
-## Projection of 3D scene onto 2D Screen
+## Perspective Viewing
+
+
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/orthographic_perspective_viewing.png" alt="orthographic_perspective_viewing.png" width="500"/>
+    <br>
+    <span><strong>Top:</strong> In orthogonal viewing, each pixel is a separate camera ray, all running parallel to one another. This results in objects being the same size, regardless of their distance. Used in technical drawings and CAD. <br><strong>Bottom:</strong> Perspective viewing is more in line with how we perceive the world: Camera rays have a single point of origin. This way, objects have a vanishing point and appear smaller the farther they are away. Used in realistic 3D rendering. <br> Sources: Diagrams left <sup><a href="#footnote1">[1]</a></sup>; diagrams right<sup><a href="#footnote3">[3]</a></sup> </span>
+</p>
 
 ### The Geometry of Perspective Projection
 
@@ -791,11 +856,15 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 
 <p align="center">
 	<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-<p align="center">Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport). </p>
+	<br>
+	<span>Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport).</span>
+</p>
 
 <p align="center">
-	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
-<p align="center">Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</p>
+	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">
+	<br>
+	<span>Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</span>
+</p>
 
 ---
 
@@ -1011,4 +1080,5 @@ The project badge used is retrieved from [this repo](https://github.com/ayogun/4
 ## References
 
 <a name="footnote1">¹</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters.     
-<a name="footnote2">²</a> Jensen, H.W. (1990-1991): [http://graphics.ucsd.edu/~henrik/images/raytrace.html](http://graphics.ucsd.edu/~henrik/images/raytrace.html)
+<a name="footnote2">²</a> Jensen, H.W. (1990-1991): [http://graphics.ucsd.edu/~henrik/images/raytrace.html](http://graphics.ucsd.edu/~henrik/images/raytrace.html)    
+<a name="footnote3">³</a> Datamine Software (2024). *Perspective and Orthogonal Views*: [https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm](https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm)
