@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_cleanup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 23:00:59 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/06 16:00:33 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:54:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ clean up the linked list nodes used for object parsinb.
 */
 void	del_token(void *content)
 {
-	t_obj_data	*obj_data;
+	t_obj	*obj;
 
-	obj_data = (t_obj_data *)content;
-	if (!obj_data)
+	obj = (t_obj *)content;
+	if (!obj)
 		return ;
-	free(obj_data);
+	free(obj);
 }
 
 /**

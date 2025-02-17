@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/01/24 15:44:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/14 12:36:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ typedef struct s_vec3
 
 /**
 Structure representing a color in RGB format:
-- int `r`: The red component of the color [0-255].
-- int `g`: The green component of the color [0-255].
-- int `b`: The blue component of the color [0-255].
+- unsigned char `r`: The red component of the color [0-255].
+- unsigned char `g`: The green component of the color [0-255].
+- unsigned char `b`: The blue component of the color [0-255].
 */
 typedef struct s_color
 {
@@ -94,22 +94,26 @@ typedef struct s_color
 	unsigned char	b;
 }	t_color;
 
+//#################
+//# INTERSECTIONS #
+//#################
+
 /*
-Struct to store data about a shadow ray (a ray from an object towards the 
+Struct to store data about a shadow ray (a ray from an object towards the
 light source). This is used to determine whether (a pixel of) an object is
 in shadow or not.
 - t_vec3 `intersection_point`:	The point where the ray from the camera hits
 								the object.
 - t_vec3 `light_dir`:			The direction of the ray from the object to
 								the light source.
-- t_vec3 `normal`:				A vector that is perpendicular to a surface at 
+- t_vec3 `normal`:				A vector that is perpendicular to a surface at
 								a given point.
-	--> Sphere: The normal at any point on a sphere points directly away from 
+	--> Sphere: The normal at any point on a sphere points directly away from
 				the center of the sphere.
     --> Cylinder: The normal at any point on the curved surface (not top or
-				bottom) of a cylinder points directly away from the axis of the 
+				bottom) of a cylinder points directly away from the axis of the
 				cylinder.
-    --> Plane: The normal to a plane is a vector that is perpendicular to the 
+    --> Plane: The normal to a plane is a vector that is perpendicular to the
 				plane.
 - t_vec3 `offset_origin`:		The intersection point, but with a very small
 								adjustment, avoiding self shadowing and (the
@@ -127,16 +131,16 @@ typedef struct s_shadow
 }	t_shadow;
 
 /**
-Utility struct to store the closest intersection distance and its color.
-- double `t_closest`:	The closest intersection distance for a ray.
+Stores the data of the closest intersection between the camera ray and an object.
+- t_obj	`*hit_obj`:		The closest object that the ray intersects with.
+- double `t_hit`:		The closest intersection distance for a ray.
 - int `ixn_color`:		The color of the closest intersection.
 */
 typedef struct s_intersection_result
 {
-	double		ray_origin;
-	double		t_closest;
+	t_obj		*hit_obj;
+	double		t_hit;
 	int			ixn_color;
-	t_obj_data	*hit_obj;
 	t_shadow	shadow;
 }	t_ixr;
 
@@ -241,7 +245,6 @@ Structure representing a cylinder in 3D space:
 */
 typedef struct s_cylinder
 {
-	t_obj_type	object_type;
 	t_vec3		center;
 	t_vec3		orientation;
 	double		radius;
@@ -251,10 +254,6 @@ typedef struct s_cylinder
 	t_vec3		cap_bottom_center;
 	t_vec3		cap_top_normal;
 	t_vec3		cap_bottom_normal;
-	t_color		color;
-	int			hex_color;
-	t_ixd		ixd;
-	int			hit;
 }	t_cylinder;
 
 /**
@@ -266,12 +265,22 @@ at a time:
  - t_plane `pl`:		Represents a plane object in the scene.
  - t_cylinder `cy`:		Represents a cylinder object in the scene.
 */
-typedef union u_object_data
+typedef union u_object_specific
 {
 	t_sphere	sp;
 	t_plane		pl;
 	t_cylinder	cy;
-}	t_obj_data;
+}	t_obj_x;
+
+typedef struct u_object
+{
+	t_obj_type	object_type;
+	t_obj_x		x;
+	t_color		color;
+	int			hex_color;
+	t_ixd		ixd;
+	int			hit;
+}	t_obj;
 
 //#########
 //# SCENE #

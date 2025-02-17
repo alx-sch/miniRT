@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_and_set_single_element.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:46:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/10 13:12:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:03:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

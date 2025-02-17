@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
+#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/01/22 17:36:04 by nholbroo         ###   ########.fr        #
+#    Updated: 2025/02/13 17:33:53 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,12 +32,9 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/3_ray_plane_intersection.c \
 				$(SRCS_DIR)/3_ray_sphere_intersection.c \
 				$(SRCS_DIR)/3_ray_cylinder_intersection.c \
-				$(SRCS_DIR)/4_ray_intersections.c \
+				$(SRCS_DIR)/4_find_intersection.c \
 				$(SRCS_DIR)/5_ray_render.c \
-				$(SRCS_DIR)/6_modify_color.c \
-				$(SRCS_DIR)/7_shadow_intersections.c \
-				$(SRCS_DIR)/8_create_shadow_ray.c \
-				$(SRCS_DIR)/9_shadow_copy_objs.c \
+				$(SRCS_DIR)/6_compute_color.c \
 				$(SRCS_DIR)/utils/0_vector_utils_1.c \
 				$(SRCS_DIR)/utils/0_vector_utils_2.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \
@@ -48,8 +45,6 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/0_parsing/errors/errors_unique_elements.c \
 				$(SRCS_DIR)/0_parsing/errors/errors.c \
 				$(SRCS_DIR)/0_parsing/errors/set_error_and_return.c \
-				$(SRCS_DIR)/0_parsing/init/init_scene.c \
-				$(SRCS_DIR)/0_parsing/init/init_unique_elements.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_orientation_vector.c \
@@ -60,11 +55,11 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set_single_element.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/amb_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cam_parse_and_set.c \
-				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/sp_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/pl_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/light_parse_and_set.c \
-				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/adjust_color.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/apply_ambient_light.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_orientation_vector.c \
