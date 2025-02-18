@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 01:31:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 08:03:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ static void	render_pixel(t_rt *rt, int x, int y)
 	t_ixr	cam_ray_ixr;
 
 	ray_dir = compute_ray_direction(x, y, rt->scene.cam);
-	find_intersection(rt->scene.cam.pos, ray_dir, rt, &cam_ray_ixr);
-	reset_cap_hits(rt);
+	find_ix(rt->scene.cam.pos, ray_dir, rt, &cam_ray_ixr);
 	compute_color(ray_dir, rt, &cam_ray_ixr);
 	set_pixel_color(&rt->mlx.img, x, y, cam_ray_ixr.ixn_color);
 }

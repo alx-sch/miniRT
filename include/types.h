@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 01:19:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 07:22:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ typedef struct s_shadow
 
 /**
 Stores the data of the closest intersection between the camera ray and an object.
- - t_obj	`*hit_obj`:		The closest object that the ray intersects with.
+ - t_obj `*hit_obj`:		The closest object that the ray intersects with.
  - double `t_hit`:			The closest intersection distance for a ray.
  - t_vec3 `hit_point`:		The point where the ray intersects the object.
  - int `ixn_color`:			The color of the closest intersection.
