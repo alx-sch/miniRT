@@ -1,7 +1,7 @@
 # Complex scene description file for ray tracer
 
 # Ambient lighting
-A 1 255,255,255
+A 0.1 255,255,255
 
 # Camera
 C 0,-1,0 0,0,1 90

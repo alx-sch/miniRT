@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 08:03:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:54:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,46 +23,6 @@ through the camera's view.
 void	render_scene(t_rt *rt);
 
 /**
-Function to compute the ray direction for a given pixel in a camera's view,
-considering the camera's field of view (FOV), aspect ratio, and orientation.
-
- @param x		The horizontal pixel coordinate on the screen.
- @param y		The vertical pixel coordinate on the screen.
- @param cam		The camera object containing the FOV, orientation vector,
-				and position.
-
- @return		The normalized direction vector of the ray passing through
-				the pixel, in world space.
-
- @details
-This function calculates the ray direction for a pixel by mapping the pixel
-coordinates to normalized device coordinates (NDC), adjusting for the camera's
-horizontal FOV and aspect ratio, and transforming the resulting direction into
-world space using the camera's orientation.
-
-See the README for more details on the derivation of this function:
-https://github.com/Busedame/miniRT/blob/main/README.md#ray-direction-calculation
-*/
-static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
-{
-	double	norm_x;
-	double	norm_y;
-	t_vec3	ray_cam_dir;
-	t_vec3	ray_world_dir;
-
-	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * cam.aspect_ratio
-		* cam.scale;
-	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * cam.scale;
-	ray_cam_dir = vec3_new(norm_x, norm_y, 1.0);
-	ray_world_dir = vec3_add(\
-						vec3_add(\
-							vec3_mult(cam.right, ray_cam_dir.x), \
-							vec3_mult(cam.up, ray_cam_dir.y)), \
-						vec3_mult(cam.ori, ray_cam_dir.z));
-	return (vec3_norm(ray_world_dir));
-}
-
-/**
 Render a single pixel on the screen by computing the ray direction and finding
 the closest intersection.
 
@@ -72,13 +32,27 @@ the closest intersection.
 */
 static void	render_pixel(t_rt *rt, int x, int y)
 {
-	t_vec3	ray_dir;
-	t_ixr	cam_ray_ixr;
+	t_vec3	camera_ray_dir;
+	t_ix	camera_ray_ix;
+	t_shdw	shadow_ray;
+	t_ix	shadow_ray_ix;
 
-	ray_dir = compute_ray_direction(x, y, rt->scene.cam);
-	find_ix(rt->scene.cam.pos, ray_dir, rt, &cam_ray_ixr);
-	compute_color(ray_dir, rt, &cam_ray_ixr);
-	set_pixel_color(&rt->mlx.img, x, y, cam_ray_ixr.ixn_color);
+	camera_ray_dir = compute_camera_ray(x, y, rt->scene.cam);
+	find_ix(rt->scene.cam.pos, camera_ray_dir, rt, &camera_ray_ix);
+	if (!camera_ray_ix.hit_obj)
+	{
+		set_pixel_color(&rt->mlx.img, x, y, BG_COLOR);
+		return ;
+	}
+	shadow_ray = compute_shadow_ray(&camera_ray_ix, rt->scene.light);
+	find_ix(shadow_ray.ori, shadow_ray.dir, rt, &shadow_ray_ix);
+	if (shadow_ray_ix.hit_obj && shadow_ray_ix.t_hit < shadow_ray.len)
+		set_pixel_color(&rt->mlx.img, x, y, 0x000000); // actually it's obj_color in ambient light
+	else
+		set_pixel_color(&rt->mlx.img, x, y, camera_ray_ix.hit_obj->hex_color);
+
+	// compute_color(camera_ray_dir, rt, &camera_ray_ix);
+	// set_pixel_color(&rt->mlx.img, x, y, camera_ray_ix.ixn_color);
 }
 
 /**

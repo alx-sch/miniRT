@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/18 07:51:34 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/18 17:43:49 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/3_ray_hit_sphere.c \
 				$(SRCS_DIR)/3_ray_hit_cylinder.c \
 				$(SRCS_DIR)/4_find_intersection.c \
+				$(SRCS_DIR)/5_compute_rays.c \
 				$(SRCS_DIR)/5_ray_render.c \
 				$(SRCS_DIR)/6_compute_color.c \
 				$(SRCS_DIR)/utils/0_vector_utils_1.c \

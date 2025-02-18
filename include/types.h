@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 07:22:44 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:34:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,13 @@ typedef struct s_quadratic_solution
 	double	axis_dot_ray;
 }	t_quad;
 
+typedef struct s_shadow_ray
+{
+	t_vec3	dir;
+	double	len;
+	t_vec3	ori;
+}	t_shdw;
+
 //#################
 //# INTERSECTIONS #
 //#################
@@ -156,20 +163,34 @@ typedef struct s_shadow
 }	t_shadow;
 
 /**
-Stores the data of the closest intersection between the camera ray and an object.
- - t_obj `*hit_obj`:		The closest object that the ray intersects with.
- - double `t_hit`:			The closest intersection distance for a ray.
- - t_vec3 `hit_point`:		The point where the ray intersects the object.
- - int `ixn_color`:			The color of the closest intersection.
+Enumeration representing if a cap was hit during cylinder intersection.
+ - no cap hit:		0
+ - top cap hit:		1
+ - bottom cap hit:	2
 */
-typedef struct s_intersection_result
+typedef enum e_cap_hit
+{
+	NO_HIT,
+	TOP_CAP,
+	BOTTOM_CAP
+}	t_cap_hit;
+
+/**
+Stores the data of the closest intersection between a ray and an object.
+ - t_obj `*hit_obj`:	Pointer to the closest obj that the ray intersects with.
+ - double `t_hit`:		The closest intersection distance for the ray.
+ - t_vec3 `hit_point`:	The point where the ray intersects the object.
+ - int `ixn_color`:		The color of the closest intersection.
+*/
+typedef struct s_intersection_data
 {
 	t_obj		*hit_obj;
 	double		t_hit;
 	t_vec3		hit_point;
+	t_cap_hit	cap_hit;
 	int			ixn_color;
 	t_shadow	shadow;
-}	t_ixr;
+}	t_ix;
 
 //###########
 //# OBJECTS #
@@ -198,7 +219,6 @@ Structure representing a plane in 3D space:
 */
 typedef struct s_plane
 {
-	t_obj_type	object_type;
 	t_vec3		point_in_plane;
 	t_vec3		normal;
 }	t_plane;
@@ -211,7 +231,6 @@ Structure representing a sphere in 3D space.
 */
 typedef struct s_sphere
 {
-	t_obj_type	object_type;
 	t_vec3		center;
 	double		radius;
 }	t_sphere;
@@ -228,7 +247,7 @@ Structure representing a cylinder in 3D space:
  - t_vec3 `cap_bottom_center`:	The center of the cylinder's bottom cap.
  - t_vec3 `cap_top_normal`:		The normal vector of the top cap.
  - t_vec3 `cap_bottom_normal`:	The normal vector of the bottom cap.
- - int `cap_hit`:			Flag indicating if a cap was hit during cylinder
+ - t_cap_hit `cap_hit`:		Flag indicating if a cap was hit during cylinder
 							intersect. computing (default: 0, top: 1, bottom: 2).
 */
 typedef struct s_cylinder
@@ -243,7 +262,6 @@ typedef struct s_cylinder
 	t_vec3		cap_bottom_center;
 	t_vec3		cap_top_normal;
 	t_vec3		cap_bottom_normal;
-	int			cap_hit;
 }	t_cylinder;
 
 /**
