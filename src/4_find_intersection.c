@@ -6,13 +6,14 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:46:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 23:21:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-Handles ray-object intersection calculations for planes, spheres, and cylinders
-in the parsed object list. Determines the closest intersection distance.
+Handles camera ray -> object intersection for planes, spheres, and cylinders
+in the parsed object list. Determines the intersection data for the closest
+object hit by the ray.
 */
 
 #include "main.h"
