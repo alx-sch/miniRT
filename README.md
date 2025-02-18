@@ -31,12 +31,24 @@ This project is a collaboration between:
    git clone https://github.com/Busedame/miniRT miniRT && cd miniRT
    ```
    
-2. Build the project using the provided Makefile:
+2. Build the project:
    ```
    make
    ```
-
-3. Follow the instructions provided in the output to run the program.
+   
+3. **macOS Users:** Install X11 via XQuartz if needed:
+   ```
+   brew install xquartz
+   ```
+   If Homebrew is not installed, first run:
+   ```
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+   After installation, restart your Mac or run:
+   ```
+   export DISPLAY=:0
+   ```
+4. Run the program following the instructions in the output.
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
 [MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows and handling graphics/events.
