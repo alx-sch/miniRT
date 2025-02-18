@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/14 14:37:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:42:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,37 @@ https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
 // IN FILE:
 
-int		ray_intersect_sphere(t_vec3 ray_dir, t_obj *obj, double *t);
+int	ray_intersect_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
 
 /**
 Function to find the intersection of a ray with a sphere.
 
- @param ray_origin 	The starting point of the ray (3D vector).
- @param ray_dir 	The direction vector of the ray (assumed to be normalized).
- @param sphere 		Pointer to the sphere structure.
- @param t 			Pointer to store the distance to the first intersection
-					point (if found); could be the entry or exit point (if the
-					ray starts inside the object).
+ @param ray_ori 	The origin of the ray.
+ @param ray_dir		The normalized direction vector of the ray.
+ @param obj			Pointer to the object data.
+ @param t 			A pointer to store the distance to the intersection point.
 
  @return 			`1` if an intersection is found (and t is set to the
 					intersection distance);
 					`0` if there is no intersection.
 
- @note 				`a = (ray_dir . ray_dir)` is 1.0 if the ray direction
+ @note 				`a = (ray_dir . ray_dir)` is 1.0 as the ray direction
 					vector is normalized.
 */
-int	ray_intersect_sphere(t_vec3 ray_dir, t_obj *obj, double *t)
+int	ray_intersect_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 {
-	double	b;
-	double	discriminant;
+	t_quad	qd;
 
-	b = 2.0 * vec3_dot(obj->ixd.oc, ray_dir);
-	discriminant = calculate_discriminant(1.0, b, obj->ixd.c);
-	if (discriminant < 0.0)
+	qd.oc = vec3_sub(ray_ori, obj->x.sp.center);
+	qd.b = 2.0 * vec3_dot(qd.oc, ray_dir);
+	qd.c = vec3_dot(qd.oc, qd.oc) - (obj->x.sp.radius * obj->x.sp.radius);
+	qd.discriminant = calculate_discriminant(1.0, qd.b, qd.c);
+	if (qd.discriminant < 0.0)
 		return (0);
-	*t = calculate_entry_distance(1.0, b, discriminant);
+	*t = calculate_entry_distance(1.0, qd.b, qd.discriminant);
 	if (*t > 0.0)
 		return (1);
-	*t = calculate_exit_distance(1.0, b, discriminant);
+	*t = calculate_exit_distance(1.0, qd.b, qd.discriminant);
 	if (*t > 0.0)
 		return (1);
 	return (0);

@@ -6,19 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/13 17:01:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:31:47 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
-/* Stores special attributes for a plane in the object data. */
-static void	set_special_attributes_plane(t_scene *scene, t_obj *obj)
-{
-	obj->ixd.difference = vec3_sub(obj->x.pl.point_in_plane, scene->cam.pos);
-	obj->hex_color = color_to_hex(obj->color);
-	obj->ixd.dot_diff_normal = vec3_dot(obj->ixd.difference, obj->x.pl.normal);
-}
 
 /*Stores all the data of the current plane in the linked list of objects.*/
 int	set_plane(t_scene *scene)
@@ -41,8 +33,7 @@ int	set_plane(t_scene *scene)
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
 	set_color(rgb, &obj->color.r, &obj->color.g, &obj->color.b);
-	set_special_attributes_plane(scene, obj);
-	obj->hit = 0;
+	obj->hex_color = color_to_hex(obj->color);
 	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);
 	return (0);
@@ -61,7 +52,7 @@ int	parse_plane(t_scene *scene)
 {
 	char	**rgb;
 
-	scene->tot_pl++;
+	scene->pars.tot_pl++;
 	if (!correct_amt_of_fields(scene->pars.elem_data, 4))
 		return (ERR_PL_FIELDS);
 	if (check_coordinates(scene->pars.elem_data[1], \

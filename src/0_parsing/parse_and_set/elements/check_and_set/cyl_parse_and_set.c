@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/13 17:13:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:32:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,7 @@ static void	set_special_attributes_cylinder(t_scene **scene, t_obj **obj)
 	vec3_mult((*obj)->x.cy.orientation, (*obj)->x.cy.height / 2.0));
 	(*obj)->x.cy.cap_top_normal = (*obj)->x.cy.orientation;
 	(*obj)->x.cy.cap_bottom_normal = vec3_mult((*obj)->x.cy.orientation, -1.0);
-	(*obj)->ixd.oc = vec3_sub((*scene)->cam.pos, (*obj)->x.cy.center);
-	(*obj)->ixd.axis_dot_oc = vec3_dot((*obj)->ixd.oc, \
-	(*obj)->x.cy.orientation);
-	(*obj)->ixd.c = vec3_dot((*obj)->ixd.oc, \
-		(*obj)->ixd.oc) - ((*obj)->ixd.axis_dot_oc * \
-		(*obj)->ixd.axis_dot_oc) - (*obj)->x.cy.radius_sqrd;
-	(*obj)->ixd.cap_hit = 0;
-	(*obj)->hex_color = color_to_hex((*obj)->color);
-	(*obj)->ixd.dot_to_top = vec3_dot(vec3_sub(
-				(*obj)->x.cy.cap_top_center, (*scene)->cam.pos),
-			(*obj)->x.cy.cap_top_normal);
-	(*obj)->ixd.dot_to_bottom = vec3_dot(vec3_sub(
-				(*obj)->x.cy.cap_bottom_center, (*scene)->cam.pos),
-			(*obj)->x.cy.cap_bottom_normal);
+	(*obj)->x.cy.cap_hit = 0;
 }
 
 /*Stores the radius and height of the cylinder in the linked list of objects.*/
@@ -43,6 +30,7 @@ static void	set_r_and_h(t_obj **obj, char *diameter, char *height)
 	(*obj)->x.cy.radius = (ft_atod(diameter) / 2);
 	(*obj)->x.cy.radius_sqrd = (*obj)->x.cy.radius * (*obj)->x.cy.radius;
 	(*obj)->x.cy.height = ft_atod(height);
+	(*obj)->x.cy.height_half = (*obj)->x.cy.height / 2.0;
 }
 
 /*Stores all the data of the current cylinder in the linked list of objects.*/
@@ -67,8 +55,8 @@ int	set_cylinder(t_scene *scene)
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
 	set_color(rgb, &obj->color.r, &obj->color.g, &obj->color.b);
+	obj->hex_color = color_to_hex(obj->color);
 	set_special_attributes_cylinder(&scene, &obj);
-	obj->hit = 0;
 	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);
 	return (0);
@@ -89,7 +77,7 @@ int	parse_cylinder(t_scene *scene)
 {
 	char	**rgb;
 
-	scene->tot_cyl++;
+	scene->pars.tot_cyl++;
 	if (!correct_amt_of_fields(scene->pars.elem_data, 6))
 		return (ERR_CY_FIELDS);
 	if (check_coordinates(scene->pars.elem_data[1], \

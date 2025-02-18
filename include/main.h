@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/15 10:44:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 01:05:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,43 +52,46 @@ and declaring all function prototypes.
 
 // main.c
 
-int			main(int argc, char **argv);
+int		main(int argc, char **argv);
 
 // 1_mlx_initialization.c
 
-void		init_mlx(t_rt *rt);
+void	init_mlx(t_rt *rt);
 
 // 2_event_handling.c
 
-void		start_event_loop(t_rt *rt);
+void	start_event_loop(t_rt *rt);
 
 // 3_ray_plane_intersection.c
 
-int			ray_intersect_plane(t_vec3 ray_dir, t_obj *obj, double *t);
+int		ray_intersect_plane(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
+			double *t);
 
 // 3_ray_sphere_intersection.c
 
-int			ray_intersect_sphere(t_vec3 ray_dir, t_obj *obj, double *t);
+int		ray_intersect_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
+			double *t);
 
 // 3_ray_cylinder_intersection.c
 
-int			ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-				t_obj *obj, double *t);
-int			ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
-				t_obj *obj, double *t);
-int			ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
-				t_obj *obj, double *t);
+int		ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj,
+			double *t);
+int		ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj,
+			double *t);
+int		ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj,
+			double *t);
 
 // 4_find_intersection.c
 
-void		find_intersection(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
+void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
+void	reset_cap_hits(t_rt *rt);
 
 // 5_ray_render.c
 
-void		render_scene(t_rt *rt);
+void	render_scene(t_rt *rt);
 
 // 6_compute_color.c
-void		compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
+void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr);
 
 // 7_shadow_intersections.c
 
