@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/18 19:55:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:00:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	set_cylinder(t_scene *scene)
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
 	set_color(rgb, &obj->color.r, &obj->color.g, &obj->color.b);
-	obj->hex_color = color_to_hex(obj->color);
 	set_special_attributes_cylinder(&obj);
 	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);

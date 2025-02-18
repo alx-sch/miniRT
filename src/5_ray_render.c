@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 17:54:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 21:57:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static void	render_pixel(t_rt *rt, int x, int y)
 	if (shadow_ray_ix.hit_obj && shadow_ray_ix.t_hit < shadow_ray.len)
 		set_pixel_color(&rt->mlx.img, x, y, 0x000000); // actually it's obj_color in ambient light
 	else
-		set_pixel_color(&rt->mlx.img, x, y, camera_ray_ix.hit_obj->hex_color);
+		set_pixel_color(&rt->mlx.img, x, y,
+			color_to_hex(camera_ray_ix.hit_obj->color));
 
 	// compute_color(camera_ray_dir, rt, &camera_ray_ix);
 	// set_pixel_color(&rt->mlx.img, x, y, camera_ray_ix.ixn_color);
