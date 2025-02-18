@@ -842,18 +842,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 ---
 
-#### Intersection Constants
-
-In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., distance vectors such 
- as ($\vec{oc}$), the quadratic coefficient ($c$), some dot products like ($\vec{oc} \cdot \vec{u}$)). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
-
-Precomputing these constants reduced my computation time by three-quarters for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~68 sec to ~18 sec.
-
----
-
 ## Perspective Viewing
-
-
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/orthographic_perspective_viewing.png" alt="orthographic_perspective_viewing.png" width="500"/>
