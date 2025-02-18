@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_ray_sphere_intersection.c                        :+:      :+:    :+:   */
+/*   3_ray_hit_sphere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 00:42:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 07:52:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
 // IN FILE:
 
-int	ray_intersect_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
+int	ray_hit_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
 
 /**
 Function to find the intersection of a ray with a sphere.
@@ -40,7 +40,7 @@ Function to find the intersection of a ray with a sphere.
  @note 				`a = (ray_dir . ray_dir)` is 1.0 as the ray direction
 					vector is normalized.
 */
-int	ray_intersect_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
+int	ray_hit_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	t_quad	qd;
 

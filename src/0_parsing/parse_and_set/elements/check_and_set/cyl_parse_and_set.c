@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/18 00:32:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:47:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 /*Stores various attributes of the cylinder in the linked list of objects.*/
 static void	set_special_attributes_cylinder(t_scene **scene, t_obj **obj)
 {
-	(*obj)->x.cy.cap_top_center = vec3_add((*obj)->x.cy.center, \
-	vec3_mult((*obj)->x.cy.orientation, (*obj)->x.cy.height / 2.0));
-	(*obj)->x.cy.cap_bottom_center = vec3_sub((*obj)->x.cy.center, \
-	vec3_mult((*obj)->x.cy.orientation, (*obj)->x.cy.height / 2.0));
 	(*obj)->x.cy.cap_top_normal = (*obj)->x.cy.orientation;
 	(*obj)->x.cy.cap_bottom_normal = vec3_mult((*obj)->x.cy.orientation, -1.0);
-	(*obj)->x.cy.cap_hit = 0;
+	(*obj)->x.cy.cap_top_center = vec3_add((*obj)->x.cy.center, \
+	vec3_mult((*obj)->x.cy.cap_top_normal, (*obj)->x.cy.height / 2.0));
+	(*obj)->x.cy.cap_bottom_center = vec3_add((*obj)->x.cy.center, \
+	vec3_mult((*obj)->x.cy.cap_bottom_normal, (*obj)->x.cy.height / 2.0));
 }
 
 /*Stores the radius and height of the cylinder in the linked list of objects.*/

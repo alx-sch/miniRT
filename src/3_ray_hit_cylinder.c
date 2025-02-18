@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_ray_cylinder_intersection.c                      :+:      :+:    :+:   */
+/*   3_ray_hit_cylinder.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 01:05:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 14:09:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,9 @@ https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
 // IN FILE:
 
-int	ray_intersect_cylinder(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
-		double *t);
-int	ray_intersect_cap_top(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
-		double *t);
-int	ray_intersect_cap_bottom(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
-		double *t);
+int	ray_hit_cyl(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
+int	ray_hit_cap_top(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
+int	ray_hit_cap_bottom(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
 
 /**
 Function to check whether a given intersection point on an infinite cylinder
@@ -45,7 +42,7 @@ lies within the cylinder's finite height bounds.
 					height bounds;
 					`0` otherwise.
 */
-static int	check_cylinder_height(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
+static int	cyl_height_check(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
 				double t)
 {
 	t_vec3	intersection_point;
@@ -65,17 +62,16 @@ static int	check_cylinder_height(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
 Determinse whether a ray intersects with a finite cylinder (tube)
 and, if so, calculates the distance to the closest intersection point.
 
- @param ray_origin 		The origin of the ray.
- @param ray_dir			The normalized direction vector of the ray.
- @param obj 			Pointer to the object structure.
- @param t 				Pointer to store the intersection distance.
+ @param ray_ori 	The origin of the ray.
+ @param ray_dir		The normalized direction vector of the ray.
+ @param obj 		Pointer to the object structure.
+ @param t 			Pointer to store the intersection distance.
 
- @return 				`1` if the ray intersects with the cylinder within its
- 						finite height bounds;
-						`0` otherwise.
+ @return 			`1` if the ray intersects with the cylinder within its
+ 					finite height bounds;
+					`0` otherwise.
 */
-int	ray_intersect_cylinder(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
-		double *t)
+int	ray_hit_cyl(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	t_quad	qd;
 
@@ -91,10 +87,10 @@ int	ray_intersect_cylinder(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
 	if (qd.discriminant < 0)
 		return (0);
 	*t = calculate_entry_distance(qd.a, qd.b, qd.discriminant);
-	if (*t > 0.0 && check_cylinder_height(ray_ori, ray_dir, obj, *t))
+	if (*t > 0.0 && cyl_height_check(ray_ori, ray_dir, obj, *t))
 		return (1);
 	*t = calculate_exit_distance(qd.a, qd.b, qd.discriminant);
-	if (*t > 0.0 && check_cylinder_height(ray_ori, ray_dir, obj, *t))
+	if (*t > 0.0 && cyl_height_check(ray_ori, ray_dir, obj, *t))
 		return (1);
 	return (0);
 }
@@ -106,14 +102,13 @@ Function to check intersection with cylinder's top end cap.
 
  @param ray_ori 	The origin of the ray.
  @param ray_dir		The normalized direction vector of the ray.
- @param cylinder 	Pointer to the cylinder structure.
+ @param obj 		Pointer to the object structure.
  @param t 			Pointer to store the intersection distance, if valid.
 
  @return 			`1` if the ray intersects the cap within its radius;
 					`0` otherwise.
 */
-int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj,
-		double *t)
+int	ray_hit_cap_top(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	double	denominator;
 	double	numerator;
@@ -124,12 +119,12 @@ int	ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj,
 	denominator = vec3_dot(ray_dir, obj->x.cy.cap_top_normal);
 	if (fabs(denominator) < EPSILON)
 		return (0);
-	numerator = vec3_dot(vec3_sub(ray_origin, obj->x.cy.cap_top_center),
+	numerator = vec3_dot(vec3_sub(ray_ori, obj->x.cy.cap_top_center),
 			obj->x.cy.cap_top_normal);
 	t_hit = (-1) * (numerator / denominator);
 	if (t_hit <= 0.0)
 		return (0);
-	p_hit = vec3_add(ray_origin, vec3_mult(ray_dir, t_hit));
+	p_hit = vec3_add(ray_ori, vec3_mult(ray_dir, t_hit));
 	difference = vec3_sub(p_hit, obj->x.cy.cap_top_center);
 	if (vec3_dot(difference, difference) <= obj->x.cy.radius_sqrd)
 	{
@@ -146,14 +141,13 @@ Function to check intersection with cylinder's bottom end cap.
 
  @param ray_ori 	The origin of the ray.
  @param ray_dir		The normalized direction vector of the ray.
- @param cylinder 	Pointer to the cylinder structure.
+ @param obj 		Pointer to the object structure.
  @param t 			Pointer to store the intersection distance, if valid.
 
  @return 			`1` if the ray intersects the cap within its radius;
 					`0` otherwise.
 */
-int	ray_intersect_cap_bottom(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj,
-		double *t)
+int	ray_hit_cap_bottom(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	double	denominator;
 	double	numerator;

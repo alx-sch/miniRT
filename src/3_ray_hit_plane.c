@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_ray_plane_intersection.c                         :+:      :+:    :+:   */
+/*   3_ray_hit_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 00:41:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 07:52:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ https://github.com/Busedame/miniRT/blob/main/README.md#ray-object-intersection
 
 // IN FILE:
 
-int	ray_intersect_plane(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
+int	ray_hit_plane(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
 
 /**
 Function to find the intersection of a ray with a plane.
@@ -45,7 +45,7 @@ determine if the ray is parallel to the plane. Values below this threshold are
 considered too close to zero, indicating parallelism or preventing division by
 very small numbers, which could lead to inaccuracies.
 */
-int	ray_intersect_plane(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
+int	ray_hit_plane(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 {
 	double	denom;
 	t_vec3	difference;

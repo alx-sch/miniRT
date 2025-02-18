@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:23:12 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/14 14:38:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:20:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,25 @@ the light hit and how far away) and specular light (shiny effects).
 
 Sets the ixn_color variable to the final color.
 */
-void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
-{
-	t_color	rgb;
+// void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ix *ix)
+// {
+// 	t_color	rgb;
+// 	t_ix	shadow_ray_ix;
+// 	t_vec3  shadow_dir;
+// 	double  shadow_len;
 
-	ixr->ixn_color = BG_COLOR;
-	if (ixr->hit_obj == NULL)
-		return ;
-	ixr->ixn_color = color_to_hex(ixr->hit_obj->color);
+// 	ix->ixn_color = BG_COLOR;
+// 	if (!ix->hit_obj)
+// 		return ;
+// 	shadow_dir = vec3_norm(vec3_sub(rt->scene.light.position, ix->hit_point));
+// 	shadow_len = vec3_length(vec3_sub(rt->scene.light.position, ix->hit_point));
+// 	find_ix(ix->hit_point, shadow_dir, rt, &shadow_ray_ix);
+// 	if (shadow_ray_ix.hit_obj && shadow_ray_ix.t_hit < shadow_len)
+// 	{
+// 		ix->ixn_color = 0;
+// 		return ;
+// 	}
+// 	ix->ixn_color = color_to_hex(ix->hit_obj->color);
 
 	//ixr->shadow = init_shadow(rt, ixr, ray_dir);
 	// if (is_ray_in_shadow(rt, ixr))
@@ -154,4 +165,4 @@ void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 	// else
 	// 	ixr->ixn_color = add_color_effects(rt, ixr, rgb);
 	// reset_hit_object(ixr->hit_obj);
-}
+//}
