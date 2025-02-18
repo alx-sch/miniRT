@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 16:04:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:46:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ Checks for intersection of a ray with a plane object.
 
 Updates the intersection data in the provided `ixr` struct if an intersection
 occurs that is closer than the current closest distance.
-
  @param ray_ori 	The origin of the ray.
  @param ray_dir		The normalized direction vector of the ray.
  @param obj			Pointer to the object data.
@@ -48,7 +47,6 @@ Checks for intersection of a ray with a sphere object.
 
 Updates the intersection data in the provided `ixr` struct if an intersection
 occurs that is closer than the current closest distance.
-
  @param ray_ori 	The origin of the ray.
  @param ray_dir		The normalized direction vector of the ray.
  @param obj			Pointer to the object data.
@@ -70,7 +68,6 @@ Checks for intersection of a ray with a cylinder object, including its caps.
 
 Updates the intersection data in the provided `ixr` struct if an intersection
 occurs that is closer than the current closest distance.
-
  @param ray_ori 	The origin of the ray.
  @param ray_dir		The normalized direction vector of the ray.
  @param obj			Pointer to the object data.
@@ -109,7 +106,6 @@ static void	cyl_ix(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj, t_ix *ix)
 /**
 Updates the intersection struct with the closest intersection data found in the
 scene (object and distance) for a given camera ray.
-
  @param ray_ori 	The origin of the ray.
  @param ray_dir		The normalized direction vector of the ray.
  @param obj			Pointer to the object data.

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 07:52:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:39:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ray_hit_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
 
 /**
 Function to find the intersection of a ray with a sphere.
-
  @param ray_ori 	The origin of the ray.
  @param ray_dir		The normalized direction vector of the ray.
  @param obj			Pointer to the object data.

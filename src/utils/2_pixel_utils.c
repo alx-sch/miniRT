@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:23:53 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/05 07:00:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:42:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ Converts an RGB color to its hexadecimal representation.
 This function takes a `t_color` structure containing the red, green, and blue
 components of a color (each in the range [0-255]) and combines them into a single
 integer in the format `0xRRGGBB`.
-
  @param color 	The color struct containing the red, green, and blue components.
 
  @return		An integer representing the color in hexadecimal format.

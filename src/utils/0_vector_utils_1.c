@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:35:34 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:38:14 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:40:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ double	vec3_dot(t_vec3 v1, t_vec3 v2);
 
 /**
 Function to add two 3D vectors.
-
  @param v1 	The first vector.
  @param v2 	The second vector.
 
@@ -61,7 +60,6 @@ t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
 
 /**
 Function to multiply a 3D vector by a scalar.
-
  @param v 		The vector to be scaled.
  @param scalar 	The scalar value to multiply the vector by.
 
@@ -79,7 +77,6 @@ t_vec3	vec3_mult(t_vec3 vec, double scalar)
 
 /**
 Function to compute the cross product of two 3D vectors.
-
  @param v1 	The first vector.
  @param v2 	The second vector.
 
