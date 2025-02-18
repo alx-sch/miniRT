@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/18 17:43:49 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/18 19:53:14 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,7 +112,7 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 #####################
 
 CC :=			cc
-# CFLAGS :=		-Wall -Wextra -Werror
+CFLAGS :=		-Wall -Wextra -Werror
 CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)		# Look for headers in these directories
 CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
 

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 18:14:47 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:53:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ static t_vec3	compute_normal(t_ix *ix)
 {
 	t_vec3	normal;
 
+	normal = vec3_new(0, 0, 0);
 	if (ix->hit_obj->object_type == PLANE)
 		normal = ix->hit_obj->x.pl.normal;
 	else if (ix->hit_obj->object_type == SPHERE)
