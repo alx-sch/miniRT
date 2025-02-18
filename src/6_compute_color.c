@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:23:12 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/18 08:39:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 09:06:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +138,16 @@ void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ixr *ixr)
 {
 	t_color	rgb;
 	t_ixr	shadow_ray_ix;
-	t_vec3  light_dir;
+	t_vec3  shadow_dir;
+	double  shadow_len;
 
 	ixr->ixn_color = BG_COLOR;
 	if (!ixr->hit_obj)
 		return ;
-	light_dir = vec3_norm(vec3_sub(rt->scene.light.position, ixr->hit_point));
-	find_ix(ixr->hit_point, light_dir, rt, &shadow_ray_ix);
-	if (shadow_ray_ix.hit_obj)
+	shadow_dir = vec3_norm(vec3_sub(rt->scene.light.position, ixr->hit_point));
+	shadow_len = vec3_length(vec3_sub(rt->scene.light.position, ixr->hit_point));
+	find_ix(ixr->hit_point, shadow_dir, rt, &shadow_ray_ix);
+	if (shadow_ray_ix.hit_obj && shadow_ray_ix.t_hit < shadow_len)
 	{
 		ixr->ixn_color = 0;
 		return ;
