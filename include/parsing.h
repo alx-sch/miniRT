@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/13 17:34:58 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:33:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ indicate if they occure more than once.
 - char *element:		Used to store a line from the rt-file, using gnl.
 - char **elem_data:		Used to store a line from the rt-file, separated by
 spaces.
+- int 'tot_sp', 'tot_pl' and 'tot_cyl': Stores total count of each object.
 */
 typedef struct s_pars
 {
@@ -258,6 +259,9 @@ typedef struct s_pars
 	int		error_code;
 	char	*element;
 	char	**elem_data;
+	int		tot_sp;
+	int		tot_pl;
+	int		tot_cyl;
 }	t_pars;
 
 /*

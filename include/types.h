@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/14 12:36:12 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 01:19:01 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ Defines the types and data structures used in the raytracer program.
 /*
 Data structure holding image info, incl. dimensions, pixel data, color, and
 endianess.
-- void *`img_prt`:	Pointer to image object. Used when manipulating image as a
+ - void *`img_prt`:	Pointer to image object. Used when manipulating image as a
 					whole, e.g. loading into memory or passing to redering ftcs.
-- int *`data_ptr`:	Pointer to the start of image data -> raw pixel information.
+ - int *`data_ptr`:	Pointer to the start of image data -> raw pixel information.
 					Used in operations reading/modifying individual pixels, such
 					as setting the color. int values represent whole pixels.
-- int `bits_per_pixel`:	Number of bits used to represent each pixel,
-						holds the color.
-- int `line_size`:	Length of each line in the image in bytes,
+ - int `bits_per_pixel`:	Number of bits used to represent each pixel,
+							holds the color.
+ - int `line_size`:	Length of each line in the image in bytes,
 					indicating the number of bytes needed to store a single
 					row of pixels in the image.
-- int `endian`:		Endianness refers to the byte order in which data types are
+ - int `endian`:	Endianness refers to the byte order in which data types are
 					stored in memory (either big or little endian; left to right
 					and right to left, respectively). Used to determine how to
 					interpret image data ('img' and 'data' members).
@@ -53,9 +53,9 @@ typedef struct s_img
 
 /*
 Data structure holding MiniLibX components for rendering the raytracer output.
-- void *`mlx`:		Pointer to the MiniLibX context.
-- void *`win`:		Pointer to the window object.
-- t_img `img`:		Image structure containing pixel data, color, and endianess.
+ - void *`mlx`:		Pointer to the MiniLibX context.
+ - void *`win`:		Pointer to the window object.
+ - t_img `img`:		Image structure containing pixel data, color, and endianess.
 */
 typedef struct s_mlx
 {
@@ -70,9 +70,9 @@ typedef struct s_mlx
 
 /**
 Structure representing a 3D vector or a point.
-- double `x`:		The x-coordinate/-component of the vector.
-- double `y`:		The y-coordinate/-component of the vector.
-- double `z`:		The z-coordinate/-component of the vector.
+ - double `x`:	The x-coordinate/-component of the point / vector.
+ - double `y`:	The y-coordinate/-component of the point / vector.
+ - double `z`:	The z-coordinate/-component of the point / vector.
 */
 typedef struct s_vec3
 {
@@ -83,9 +83,9 @@ typedef struct s_vec3
 
 /**
 Structure representing a color in RGB format:
-- unsigned char `r`: The red component of the color [0-255].
-- unsigned char `g`: The green component of the color [0-255].
-- unsigned char `b`: The blue component of the color [0-255].
+ - unsigned char `r`:	The red component of the color [0-255].
+ - unsigned char `g`:	The green component of the color [0-255].
+ - unsigned char `b`:	The blue component of the color [0-255].
 */
 typedef struct s_color
 {
@@ -93,6 +93,31 @@ typedef struct s_color
 	unsigned char	g;
 	unsigned char	b;
 }	t_color;
+
+/**
+Structure for storing values used in ray-object intersection calculations,
+primarily for quadratic equation solutions (e.g., spheres, cylinders).
+ - double `a`: 				Coefficient of t² in the quadratic equation.
+ - double `b`:				Coefficient of t in the quadratic equation.
+ - double `c`:				Constant term in the quadratic equation.
+ - douboe `discriminant`:	The discriminant of the quadratic equation, used to
+							determine if real solutions exist.
+ - t_vec 3`oc`:				Vector from the object's center to the ray origin.
+ - double `axis_dot_oc`:	Dot product between the object's axis vector and
+							`oc`, used for cylinder intersections.
+ - double `axis_dot_ray`:	Dot product between the object's axis vector and
+ 							the ray direction, used for cylinder intersections.
+*/
+typedef struct s_quadratic_solution
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	t_vec3	oc;
+	double	axis_dot_oc;
+	double	axis_dot_ray;
+}	t_quad;
 
 //#################
 //# INTERSECTIONS #
@@ -132,14 +157,16 @@ typedef struct s_shadow
 
 /**
 Stores the data of the closest intersection between the camera ray and an object.
-- t_obj	`*hit_obj`:		The closest object that the ray intersects with.
-- double `t_hit`:		The closest intersection distance for a ray.
-- int `ixn_color`:		The color of the closest intersection.
+ - t_obj	`*hit_obj`:		The closest object that the ray intersects with.
+ - double `t_hit`:			The closest intersection distance for a ray.
+ - t_vec3 `hit_point`:		The point where the ray intersects the object.
+ - int `ixn_color`:			The color of the closest intersection.
 */
 typedef struct s_intersection_result
 {
 	t_obj		*hit_obj;
 	double		t_hit;
+	t_vec3		hit_point;
 	int			ixn_color;
 	t_shadow	shadow;
 }	t_ixr;
@@ -150,6 +177,9 @@ typedef struct s_intersection_result
 
 /**
 Enumeration representing different types of 3D objects.
+ - plane:		0
+ - sphere:		1
+ - cylinder:	2
 */
 typedef enum e_object_type
 {
@@ -158,38 +188,6 @@ typedef enum e_object_type
 	CYLINDER
 }	t_obj_type;
 
-/**
-Structure storing data for ray-object intersection calculations, which is pre-
-computed once during parsing. This helps to avoid redundant calculations for
-each ray-object intersection and improve performance.
-- double `c`:				Constant term of the quadratic equation.
-- t_vec3 `difference`:		Vector difference between relevant object and
-							ray points (used in plane intersections).
-- double `dot_diff_normal`:	Dot product between the difference vector and the
-							object's normal (used in plane intersections).
-- t_vec3 `oc`:				Vector from the object's center to the ray origin.
-- double `axis_dot_oc`:		Dot product between the object's axis vector and `oc`,
-							(used in cylinder intersections).
-- double `dot_to_top`:		Dot product between the ray direction and the vector
-							from the ray origin to the top cap center (used in
-							cylinder cap intersections).
-- double `dot_to_bottom`:	Dot product between the ray direction and the vector
-							from the ray origin to the bottom cap center (used in
-							cylinder cap intersections).
-- int `cap_hit`:			Flag indicating if a cap was hit during cylinder
-							intersect. computing (default: 0, top: 1, bottom: 2).
-*/
-typedef struct s_intersection_data
-{
-	double	c;
-	t_vec3	difference;
-	double	dot_diff_normal;
-	t_vec3	oc;
-	double	axis_dot_oc;
-	double	dot_to_top;
-	double	dot_to_bottom;
-	int		cap_hit;
-}	t_ixd;
 
 /**
 Structure representing a plane in 3D space:
@@ -197,19 +195,12 @@ Structure representing a plane in 3D space:
  - t_vec3 `point_in_plane`:	A point that lies on the plane.
  - t_vec3 `normal`:			A normalized vector representing the plane's normal,
 							which is perpendicular to the plane's surface.
- - t_color `color`:			The color of the plane.
- - int `hex_color`:			The color of the plane in hexadecimal format.
- - t_ixd `ixd`:				Ray intersection data for the plane.
 */
 typedef struct s_plane
 {
 	t_obj_type	object_type;
 	t_vec3		point_in_plane;
 	t_vec3		normal;
-	t_color		color;
-	int			hex_color;
-	t_ixd		ixd;
-	int			hit;
 }	t_plane;
 
 /**
@@ -217,31 +208,28 @@ Structure representing a sphere in 3D space.
  - t_object `object_type`:	The object type (always `SPHERE`).
  - t_vec3 `center`:			The center point of the sphere.
  - double `radius`:			The radius of the sphere.
- - t_color `color`:			The color of the sphere.
- - int `hex_color`:			The color of the sphere in hexadecimal format.
- - t_ixd `ixd`:				Ray intersection data for the sphere.
 */
 typedef struct s_sphere
 {
 	t_obj_type	object_type;
 	t_vec3		center;
 	double		radius;
-	t_color		color;
-	int			hex_color;
-	t_ixd		ixd;
-	int			hit;
 }	t_sphere;
 
 /**
 Structure representing a cylinder in 3D space:
- - t_object `object_type`:	The object type (always `CYLINDER`).
  - t_vec3 `center`:			The center of the cylinder's base.
  - t_vec3 `orientation`:	A normalized vector representing the cylinder's axis.
  - double `radius`:			The radius of the cylinder.
+ - double `radius_sqrd`:	The square of the cylinder's radius.
  - double `height`:			The height of the cylinder.
- - t_color `color`:			The color of the cylinder.
- - int `hex_color`:			The color of the cylinder in hexadecimal format.
- - t_ixd `ixd`:				Ray intersection data for the cylinder.
+ - double `height_half`:	Half of the cylinder's height.
+ - t_vec3 `cap_top_center`:		The center of the cylinder's top cap.
+ - t_vec3 `cap_bottom_center`:	The center of the cylinder's bottom cap.
+ - t_vec3 `cap_top_normal`:		The normal vector of the top cap.
+ - t_vec3 `cap_bottom_normal`:	The normal vector of the bottom cap.
+ - int `cap_hit`:			Flag indicating if a cap was hit during cylinder
+							intersect. computing (default: 0, top: 1, bottom: 2).
 */
 typedef struct s_cylinder
 {
@@ -250,10 +238,12 @@ typedef struct s_cylinder
 	double		radius;
 	double		radius_sqrd;
 	double		height;
+	double		height_half;
 	t_vec3		cap_top_center;
 	t_vec3		cap_bottom_center;
 	t_vec3		cap_top_normal;
 	t_vec3		cap_bottom_normal;
+	int			cap_hit;
 }	t_cylinder;
 
 /**
@@ -278,8 +268,6 @@ typedef struct u_object
 	t_obj_x		x;
 	t_color		color;
 	int			hex_color;
-	t_ixd		ixd;
-	int			hit;
 }	t_obj;
 
 //#########
@@ -288,9 +276,9 @@ typedef struct u_object
 
 /**
 Structure representing the ambient light in the scene.
-- double `ratio`:	The ratio of the ambient lightning [0.0-1.0]
-- t_color `color`:	The color of the ambient light.
-- int `hex_color`:	The color of the ambient light in hexadecimal format.
+ - double `ratio`:		The ratio of the ambient lightning [0.0-1.0]
+ - t_color `color`:		The color of the ambient light.
+ - int `hex_color`:		The color of the ambient light in hexadecimal format.
 */
 typedef struct s_ambi_light
 {
@@ -300,9 +288,9 @@ typedef struct s_ambi_light
 }	t_ambi_light;
 
 /**
-Structure representing a light source in the scene.
-- t_vec3 `position`:	The position of the light source.
-- double `ratio`:		The ratio of the light brightness [0.0-1.0]
+Structure representing the light source in the scene.
+ - t_vec3 `position`:	The position of the light source.
+ - double `ratio`:		The ratio of the light brightness [0.0-1.0]
 */
 typedef struct s_light
 {
@@ -313,15 +301,15 @@ typedef struct s_light
 
 /**
 Structure representing the camera in the scene.
-- t_vec3 `pos`:				Camera position in world coordinates
-- t_vec3 `ori`:				Forward direction of the camera (normalized)
-- t_vec3 `right`:			Right vector, perpendicular to orientation and up
+ - t_vec3 `pos`:			Camera position in world coordinates
+ - t_vec3 `ori`:			Forward direction of the camera (normalized)
+ - t_vec3 `right`:			Right vector, perpendicular to orientation and up
 							(used for world-space orientation).
-- t_vec3 `up`:				Up vector perpendicular to right and orientation
+ - t_vec3 `up`:				Up vector perpendicular to right and orientation
 							(used for world-space orientation).
-- double `fov`:				Horizontal field of view [0, 180].
-- double `scale`:			Scaling factor, derived from FOV.
-- double `aspect_ratio`:	Screen aspect ratio
+ - double `fov`:			Horizontal field of view [0, 180].
+ - double `scale`:			Scaling factor, derived from FOV.
+ - double `aspect_ratio`:	Screen aspect ratio
 */
 typedef struct s_camera
 {
@@ -336,14 +324,11 @@ typedef struct s_camera
 
 /**
 Structure representing the entire scene.
-- t_pars `pars`:				Structure holding parsing data.
-- t_ambi_light `ambi_light`:	The ambient light in the scene.
-- t_light `light`:				The light source in the scene.
-- t_cam `cam`:					The camera in the scene.
-- t_list `objs`:				Linked list of objects in the scene.
-- int `tot_cyl`:				Total number of cylinders in the scene.
-- int `tot_sp`:					Total number of spheres in the scene.
-- int `tot_pl`:					Total number of planes in the scene.
+ - t_pars `pars`:				Structure holding parsing data.
+ - t_ambi_light `ambi_light`:	The ambient light in the scene.
+ - t_light `light`:				The light source in the scene.
+ - t_cam `cam`:					The camera in the scene.
+ - t_list `objs`:				Linked list of objects in the scene.
 */
 typedef struct s_scene
 {
@@ -352,9 +337,6 @@ typedef struct s_scene
 	t_light			light;
 	t_cam			cam;
 	t_list			*objs;
-	int				tot_cyl;
-	int				tot_sp;
-	int				tot_pl;
 }	t_scene;
 
 //####################

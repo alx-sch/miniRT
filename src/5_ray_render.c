@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/12 20:30:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 01:31:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 		* cam.scale;
 	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * cam.scale;
 	ray_cam_dir = vec3_new(norm_x, norm_y, 1.0);
-	ray_world_dir = vec3_add(
-			vec3_add(vec3_mult(cam.right, ray_cam_dir.x),
-				vec3_mult(cam.up, ray_cam_dir.y)),
-			vec3_mult(cam.ori, ray_cam_dir.z));
+	ray_world_dir = vec3_add(\
+						vec3_add(\
+							vec3_mult(cam.right, ray_cam_dir.x), \
+							vec3_mult(cam.up, ray_cam_dir.y)), \
+						vec3_mult(cam.ori, ray_cam_dir.z));
 	return (vec3_norm(ray_world_dir));
 }
 
@@ -72,12 +73,13 @@ the closest intersection.
 static void	render_pixel(t_rt *rt, int x, int y)
 {
 	t_vec3	ray_dir;
-	t_ixr	ixr;
+	t_ixr	cam_ray_ixr;
 
 	ray_dir = compute_ray_direction(x, y, rt->scene.cam);
-	find_intersection(ray_dir, rt, &ixr);
-	compute_color(ray_dir, rt, &ixr);
-	set_pixel_color(&rt->mlx.img, x, y, ixr.ixn_color);
+	find_intersection(rt->scene.cam.pos, ray_dir, rt, &cam_ray_ixr);
+	reset_cap_hits(rt);
+	compute_color(ray_dir, rt, &cam_ray_ixr);
+	set_pixel_color(&rt->mlx.img, x, y, cam_ray_ixr.ixn_color);
 }
 
 /**

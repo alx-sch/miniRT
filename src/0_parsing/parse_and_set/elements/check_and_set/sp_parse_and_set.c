@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/13 16:39:14 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:31:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,9 @@ int	set_sphere(t_scene *scene)
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
 	set_color(rgb, &obj->color.r, &obj->color.g, &obj->color.b);
-	obj->ixd.oc = vec3_sub(scene->cam.pos, obj->x.sp.center);
-	obj->ixd.c = vec3_dot(obj->ixd.oc, obj->ixd.oc) \
-	- (obj->x.sp.radius * obj->x.sp.radius);
+	obj->hex_color = color_to_hex(obj->color);
 	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);
-	obj->hex_color = color_to_hex(obj->color);
-	obj->hit = 0;
 	return (0);
 }
 
@@ -53,7 +49,7 @@ int	parse_sphere(t_scene *scene)
 {
 	char	**rgb;
 
-	scene->tot_sp++;
+	scene->pars.tot_sp++;
 	if (!correct_amt_of_fields(scene->pars.elem_data, 4))
 		return (ERR_SP_FIELDS);
 	if (check_coordinates(scene->pars.elem_data[1], &scene->pars.error_code, \
