@@ -171,7 +171,7 @@ Since a vector needs two points to be defined, we can look at it like this:
 - `vector point` is (2,4,1)
 - To visualize how this works: Draw one point at 0,0,0 and draw a line to point 2,4,1. The direction of the vector will be determined by in which direction this line is going, starting from start point.
 
-However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*.  
+However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*. Note that this is only used in the first few examples, as it is not something we have implemented in the project. It is mostly used as a more visual example of how points and vectors can be distinguished.  
 - `w` If it is a point (set to 1), if it is a vector (set to 0).  
 
 ##
@@ -256,7 +256,9 @@ We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3
 5. Since 14 is equivalent to x², and we want to find x, we need to take the *square root* of 14.
 6. The magnitude of vector v is 3.741657387.
 
-In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors - if we don't use *normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
+In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors/*normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
+
+###
 
 **Normalization⚖️**
 
@@ -270,6 +272,41 @@ You normalize a vector by dividing each of its components by its magnitude.
 6. Since the square root of 1 = 1, the vector v is now normalized.
 
 ###
+
+**Dot product📍➡️📍**
+
+The dot product is also called a scalar product or inner product. It takes two vectors and returns a *scalar value*. The dot product is computed as the sum of the
+products of the corresponding components of each vector.  
+It essentially looks like this:
+```bash
+	float	dot(vec a, vec b)
+	{
+		return (a.x * b.x + a.y * b.y + a.z * b.z);
+	}
+```
+It is a bit hard to understand what actually happens, but think about this:
+- The *smaller* the dot product, the *larger* the angle between the two vectors.
+- The *greater* the dot product, the *smaller* the angle between the two vectors.
+- If the *dot product is 0*, the vectors are perpendicular (90°).
+- If the *dot product is 1*, the vectors are *identical* (0°).
+- If the *dot product is -1*, the vectors are pointing in *opposite* directions (180°).
+
+💡 Note: Since we only operate with unit vectors (length of 1), the dot product is equivalent to the *cosine of the angle* between them. This also means that the *maximum* dot product is 1, and the *minimum* dot product is -1.  
+If the vectors were NOT normalized, we would have to take the cosine of the result.  
+
+Let's do an example with two normalized vectors v1 (0,0,1) and v2 (1,0,0):
+- We do our dot product calculation, which leaves us with the result 0.
+- Since the result is 0, we know that these vectors are perpendicular to each other.
+
+With vectors v1 (1,0,0) and v2 (1,0,0)
+- We do our dot product calculation, which leaves us with the result 1.
+- Since the result is 1, we know that these vectors are identical.
+
+With vectors v1 (-1,0,0) and v2 (1,0,0)
+- We do our dot product calculation, which leaves us with the result -1.
+- Since the result is -1, we know that these vectors are pointing in opposite directions.
+
+Anything in between -1 and 1 (when we are talking about unit vectors), will indicate the angle between the two vectors. The closer the dot product is to 1, the smaller the angle is (since 1 would make them identical). The closer the dot product is to -1, the greater the angle is (since -1 would make them opposite).
 
 ---
 
