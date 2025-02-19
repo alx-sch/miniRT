@@ -137,8 +137,8 @@ This part is written while studying the book "The Ray Tracer Challenge" by Jamis
 
 ### Vectors
 A vector can be seen as a line that's giving us information about two things:
-- The direction it is pointing to
-- How long it is
+- The direction it is pointing to.
+- How long it is.
 
 A vector gets determined by its x,y,z coordinates, as in a coordinate system.
 <p align="center">
@@ -146,6 +146,9 @@ A vector gets determined by its x,y,z coordinates, as in a coordinate system.
     <br>
     <span>A coordinate system with x,y,z.<sup><a href="#footnote2">[2]</a></sup></span>
 </p>
+- `x` How far to the right or the left.
+- `y` How far up or down.
+- `z` How close or far away from the viewer.
 
 ---
 
