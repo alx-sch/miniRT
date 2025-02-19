@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 11:12:25 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:21:51 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ An offset is applied to the shadow ray origin along the surface normal
 to prevent shadow acne, which results from floating-point precision errors
 causing self-intersections. This ensures the shadow ray starts slightly
 above the surface, avoiding unintended intersections with its origin.
+If the camera is wihtin the object, the offset is negated to ensure
+the shadow ray starts inside the object, too.
 */
 t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 {
@@ -135,6 +137,8 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 	shadow_ray.len = vec3_length(vec3_sub(light.position, hit_point));
 	normal = compute_normal(camera_ray_ix);
 	offset = vec3_mult(normal, EPSILON);
+	if (camera_ray_ix->hit_obj->cam_in_obj)
+		offset = vec3_mult(offset, -1.0);
 	shadow_ray.ori = vec3_add(hit_point, offset);
 	return (shadow_ray);
 }

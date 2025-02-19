@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:39:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:11:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int	ray_hit_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 		return (1);
 	*t = calculate_exit_distance(1.0, qd.b, qd.discriminant);
 	if (*t > 0.0)
+	{
+		obj->cam_in_obj = 1;
 		return (1);
+	}
 	return (0);
 }

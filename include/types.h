@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 11:11:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:07:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,8 @@ Structure representing a 3D object in the scene.
  - t_obj_x `x`:					Union holding the specific object data.
  - t_color `color`:				The color of the object.
  - int `color_in_amb`:			Color of the object in ambient light (hex value).
+ - int `cam_in_obj`:			Flag indicating if the camera is inside the
+ 								object (not relevant for planes).
 */
 typedef struct u_object
 {
@@ -261,6 +263,7 @@ typedef struct u_object
 	t_obj_x		x;
 	t_color		color;
 	int			color_in_amb;
+	int			cam_in_obj;
 }	t_obj;
 
 //#########

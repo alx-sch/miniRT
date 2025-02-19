@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:01:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:08:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	apply_ambient_light_and_adj_pl_normal(t_rt **rt)
 			if (vec3_dot(cam_to_plane, obj->x.pl.normal) > 0)
 				obj->x.pl.normal = vec3_mult(obj->x.pl.normal, -1.0);
 		}
+		obj->cam_in_obj = 0;
 		current_obj = current_obj->next;
 	}
 }
