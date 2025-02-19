@@ -241,11 +241,24 @@ The result after scaling gives us a point (7,-3.5,10.5). This point will be 3.5 
 **Finding the length of a vector📏**
 
 Until now, we have mainly looked at different ways to figure out vector directions. Now, what about the length, or the *magnitude* of a vector? This means how far you would travel in a straight line, if you were to walk from one end of the vector to the other.  
+
 Do you remember Pythagoras' theorem?  
 
 $$
 a² + b² = c²
 $$
+
+If we have a vector v (1, 2, 3):
+- v.x (1) = 1 * 1 = 1
+- v.y (2) = 2 * 2 = 4
+- v.z (3) = 3 * 3 = 9
+- 1 + 4 + 9 = 14
+- We need to take the *square root* of 14.
+- The magnitude of vector v is 3.741657387.
+
+In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't operate with unit vectors - if we don't *normalize* the vectors - the calculations would be scaled differently for every ray casted. By normalizing the vector, all calculations will be done relative to a common scale (the unit vector which is 1).
+
+###
 
 ---
 
