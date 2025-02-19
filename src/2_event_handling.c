@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:24:44 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:20:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:44:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	start_event_loop(t_rt *rt);
 Handles key press events:
 - Esc:				The window is closed, all allocated memory is freed,
 					and the program terminates successfully.
-
  @param keycode 	The key code of the pressed key.
  @param rt 			Pointer to the main structure of the program.
 
@@ -46,7 +45,6 @@ Handles window close events:
 If the destruction signal is received (by clicking the 'x' button),
 the window is closed, all allocated memory is freed, and the program
 terminates successfully.
-
  @param rt 	Pointer to the main structure of the program.
 
  @return 	`0` on success (no specific action taken).
@@ -64,7 +62,6 @@ Sets up event hooks for and starts the MiniLibX event loop.
 The event loop waits for and dispatches events (key presses and window close
 events) to the appropriate handlers. The loop runs indefinitely until the
 program is terminated.
-
  @param rt 	Pointer to the main structure of the program.
 */
 void	start_event_loop(t_rt *rt)

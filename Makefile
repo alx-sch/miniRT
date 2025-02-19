@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/18 17:43:49 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/19 11:08:29 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/pl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/light_parse_and_set.c \
-				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/apply_ambient_light.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/apply_ambient_light_and_adj_pl_normal.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_orientation_vector.c \
@@ -112,7 +112,7 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 #####################
 
 CC :=			cc
-# CFLAGS :=		-Wall -Wextra -Werror
+CFLAGS :=		-Wall -Wextra -Werror
 CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)		# Look for headers in these directories
 CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
 

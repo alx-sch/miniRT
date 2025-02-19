@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 17:34:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:07:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,54 +119,28 @@ typedef struct s_quadratic_solution
 	double	axis_dot_ray;
 }	t_quad;
 
+/**
+Structure for storing shadow ray data.
+ - t_vec3 `dir`:	The normalized direction of the ray.
+ - t_vec3 `ori`:	The starting point of the ray.
+ - double `len`:	The length of the ray (shadow origin to light source).
+*/
 typedef struct s_shadow_ray
 {
 	t_vec3	dir;
-	double	len;
 	t_vec3	ori;
+	double	len;
 }	t_shdw;
 
 //#################
 //# INTERSECTIONS #
 //#################
 
-/*
-Struct to store data about a shadow ray (a ray from an object towards the
-light source). This is used to determine whether (a pixel of) an object is
-in shadow or not.
-- t_vec3 `intersection_point`:	The point where the ray from the camera hits
-								the object.
-- t_vec3 `light_dir`:			The direction of the ray from the object to
-								the light source.
-- t_vec3 `normal`:				A vector that is perpendicular to a surface at
-								a given point.
-	--> Sphere: The normal at any point on a sphere points directly away from
-				the center of the sphere.
-    --> Cylinder: The normal at any point on the curved surface (not top or
-				bottom) of a cylinder points directly away from the axis of the
-				cylinder.
-    --> Plane: The normal to a plane is a vector that is perpendicular to the
-				plane.
-- t_vec3 `offset_origin`:		The intersection point, but with a very small
-								adjustment, avoiding self shadowing and (the
-								shadow ray starts a little bit above the
-								surface).
-
-*/
-typedef struct s_shadow
-{
-	t_vec3	intersection_point;
-	t_vec3	light_dir;
-	t_vec3	normal;
-	t_vec3	offset_origin;
-	double	length;
-}	t_shadow;
-
 /**
 Enumeration representing if a cap was hit during cylinder intersection.
- - no cap hit:		0
- - top cap hit:		1
- - bottom cap hit:	2
+ - NO_HIT:		0
+ - TOP_CAP:		1
+ - BOTTOM_CAP:	2
 */
 typedef enum e_cap_hit
 {
@@ -188,8 +162,6 @@ typedef struct s_intersection_data
 	double		t_hit;
 	t_vec3		hit_point;
 	t_cap_hit	cap_hit;
-	int			ixn_color;
-	t_shadow	shadow;
 }	t_ix;
 
 //###########
@@ -198,9 +170,9 @@ typedef struct s_intersection_data
 
 /**
 Enumeration representing different types of 3D objects.
- - plane:		0
- - sphere:		1
- - cylinder:	2
+ - PLANE:		0
+ - SPHERE:		1
+ - CYLINDER:	2
 */
 typedef enum e_object_type
 {
@@ -209,10 +181,8 @@ typedef enum e_object_type
 	CYLINDER
 }	t_obj_type;
 
-
 /**
 Structure representing a plane in 3D space:
- - t_object `object_type`:	The object type (always `PLANE`).
  - t_vec3 `point_in_plane`:	A point that lies on the plane.
  - t_vec3 `normal`:			A normalized vector representing the plane's normal,
 							which is perpendicular to the plane's surface.
@@ -225,7 +195,6 @@ typedef struct s_plane
 
 /**
 Structure representing a sphere in 3D space.
- - t_object `object_type`:	The object type (always `SPHERE`).
  - t_vec3 `center`:			The center point of the sphere.
  - double `radius`:			The radius of the sphere.
 */
@@ -237,18 +206,17 @@ typedef struct s_sphere
 
 /**
 Structure representing a cylinder in 3D space:
- - t_vec3 `center`:			The center of the cylinder's base.
+ - t_vec3 `center`:			The center point of the cylinder's axis.
  - t_vec3 `orientation`:	A normalized vector representing the cylinder's axis.
  - double `radius`:			The radius of the cylinder.
  - double `radius_sqrd`:	The square of the cylinder's radius.
  - double `height`:			The height of the cylinder.
  - double `height_half`:	Half of the cylinder's height.
- - t_vec3 `cap_top_center`:		The center of the cylinder's top cap.
- - t_vec3 `cap_bottom_center`:	The center of the cylinder's bottom cap.
- - t_vec3 `cap_top_normal`:		The normal vector of the top cap.
+ - t_vec3 `cap_top_center`:		The center point of the cylinder's top cap.
+ - t_vec3 `cap_bottom_center`:	The center point of the cylinder's bottom cap.
+ - t_vec3 `cap_top_normal`:		The normal vector of the top cap
+ 								(same as `orientation`).
  - t_vec3 `cap_bottom_normal`:	The normal vector of the bottom cap.
- - t_cap_hit `cap_hit`:		Flag indicating if a cap was hit during cylinder
-							intersect. computing (default: 0, top: 1, bottom: 2).
 */
 typedef struct s_cylinder
 {
@@ -269,9 +237,9 @@ Union to store different types of geometric objects.
 
 Allows a single data structure to hold one of the following object types
 at a time:
- - t_sphere `sp`:		Represents a sphere object in the scene.
- - t_plane `pl`:		Represents a plane object in the scene.
- - t_cylinder `cy`:		Represents a cylinder object in the scene.
+ - t_sphere `sp`:		Represents a sphere object.
+ - t_plane `pl`:		Represents a plane object.
+ - t_cylinder `cy`:		Represents a cylinder object.
 */
 typedef union u_object_specific
 {
@@ -280,12 +248,22 @@ typedef union u_object_specific
 	t_cylinder	cy;
 }	t_obj_x;
 
+/**
+Structure representing a 3D object in the scene.
+ - t_obj_type `object_type`:	The type of the object.
+ - t_obj_x `x`:					Union holding the specific object data.
+ - t_color `color`:				The color of the object.
+ - int `color_in_amb`:			Color of the object in ambient light (hex value).
+ - int `cam_in_obj`:			Flag indicating if the camera is inside the
+ 								object (not relevant for planes).
+*/
 typedef struct u_object
 {
 	t_obj_type	object_type;
 	t_obj_x		x;
 	t_color		color;
-	int			hex_color;
+	int			color_in_amb;
+	int			cam_in_obj;
 }	t_obj;
 
 //#########
@@ -296,19 +274,18 @@ typedef struct u_object
 Structure representing the ambient light in the scene.
  - double `ratio`:		The ratio of the ambient lightning [0.0-1.0]
  - t_color `color`:		The color of the ambient light.
- - int `hex_color`:		The color of the ambient light in hexadecimal format.
 */
 typedef struct s_ambi_light
 {
 	double		ratio;
 	t_color		color;
-	int			hex_color;
 }	t_ambi_light;
 
 /**
 Structure representing the light source in the scene.
  - t_vec3 `position`:	The position of the light source.
  - double `ratio`:		The ratio of the light brightness [0.0-1.0]
+ - t_color `color`:		The color of the light source.
 */
 typedef struct s_light
 {
@@ -319,25 +296,25 @@ typedef struct s_light
 
 /**
 Structure representing the camera in the scene.
- - t_vec3 `pos`:			Camera position in world coordinates
- - t_vec3 `ori`:			Forward direction of the camera (normalized)
- - t_vec3 `right`:			Right vector, perpendicular to orientation and up
+ - t_vec3 `pos`:			Camera position in world coordinates.
+ - t_vec3 `dir`:			Forward direction of the camera (normalized).
+ - double `fov`:			Horizontal field of view [0, 180].
+ - double `scale`:			Scaling factor, derived from FOV.
+ - double `aspect_ratio`:	Screen aspect ratio.
+  - t_vec3 `right`:			Right vector, perpendicular to orientation and up
 							(used for world-space orientation).
  - t_vec3 `up`:				Up vector perpendicular to right and orientation
 							(used for world-space orientation).
- - double `fov`:			Horizontal field of view [0, 180].
- - double `scale`:			Scaling factor, derived from FOV.
- - double `aspect_ratio`:	Screen aspect ratio
 */
 typedef struct s_camera
 {
 	t_vec3		pos;
-	t_vec3		ori;
-	t_vec3		right;
-	t_vec3		up;
+	t_vec3		dir;
 	double		fov;
 	double		scale;
 	double		aspect_ratio;
+	t_vec3		right;
+	t_vec3		up;
 }	t_cam;
 
 /**

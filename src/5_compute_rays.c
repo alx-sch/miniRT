@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 18:14:47 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:21:51 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light);
 /**
 Computes the camera ray direction for a given pixel,
 considering the camera's field of view (FOV), aspect ratio, and orientation.
-
  @param x		The horizontal pixel coordinate on the screen.
  @param y		The vertical pixel coordinate on the screen.
  @param cam		The camera object containing the FOV, orientation vector,
@@ -58,14 +57,13 @@ t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 						vec3_add(\
 							vec3_mult(cam.right, ray_cam_dir.x), \
 							vec3_mult(cam.up, ray_cam_dir.y)), \
-						vec3_mult(cam.ori, ray_cam_dir.z));
+						vec3_mult(cam.dir, ray_cam_dir.z));
 	return (vec3_norm(ray_world_dir));
 }
 
 /**
 Utility function for `compute_normal()`.
 Computes the normal vector for a point on the mantle of a cylinder.
-
  @param ix	Intersection data containing the hit point and cylinder object.
 
  @return	Normalized normal vector at the given hit point on the cyl's mantle.
@@ -86,7 +84,6 @@ static t_vec3	compute_cyl_mantle_normal(t_ix *ix)
 
 /**
 Computes the surface normal at an intersection point.
-
  @param ix	Intersection data containing hit object information.
 
  @return 	Normalized normal vector at the intersection point.
@@ -95,6 +92,7 @@ static t_vec3	compute_normal(t_ix *ix)
 {
 	t_vec3	normal;
 
+	normal = vec3_new(0, 0, 0);
 	if (ix->hit_obj->object_type == PLANE)
 		normal = ix->hit_obj->x.pl.normal;
 	else if (ix->hit_obj->object_type == SPHERE)
@@ -113,7 +111,6 @@ static t_vec3	compute_normal(t_ix *ix)
 
 /**
 Computes the shadow ray for a given intersection point and light source.
-
  @param camera_ray_ix	Pointer to the intersection data of the camera ray.
  @param light			Light source data.
 
@@ -125,6 +122,8 @@ An offset is applied to the shadow ray origin along the surface normal
 to prevent shadow acne, which results from floating-point precision errors
 causing self-intersections. This ensures the shadow ray starts slightly
 above the surface, avoiding unintended intersections with its origin.
+If the camera is wihtin the object, the offset is negated to ensure
+the shadow ray starts inside the object, too.
 */
 t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 {
@@ -138,6 +137,8 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 	shadow_ray.len = vec3_length(vec3_sub(light.position, hit_point));
 	normal = compute_normal(camera_ray_ix);
 	offset = vec3_mult(normal, EPSILON);
+	if (camera_ray_ix->hit_obj->cam_in_obj)
+		offset = vec3_mult(offset, -1.0);
 	shadow_ray.ori = vec3_add(hit_point, offset);
 	return (shadow_ray);
 }

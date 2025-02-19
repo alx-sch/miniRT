@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/18 00:31:47 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:04:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	set_plane(t_scene *scene)
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
 	set_color(rgb, &obj->color.r, &obj->color.g, &obj->color.b);
-	obj->hex_color = color_to_hex(obj->color);
 	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);
 	return (0);
