@@ -176,8 +176,8 @@ However, since these coordinates are also defining a *point* in a coordinate sys
 
 **Adding a Vector to a Point ➕**
 
-Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector. 
-We add the values of point a and vector together:  
+Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector.  
+**We add the values of point a and vector together:**  
 - a.x (2) + v.x (3) = b.x (5)
 - a.y (5) + v.y (4) = b.y (9)
 - a.z (-1) + v.z (1) = b.z (0)
@@ -185,14 +185,14 @@ We add the values of point a and vector together:
 
 And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
 
-**Finding a vector with two points ➖**
+**Finding a vector direction between two points ➖**
 
 Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are talking about miniRT, let's give them the following roles:
 - `point a` = Light source coordinates.
 - `point b` = Object coordinates.
 
 We want to find a vector that gives us the direction from object to light source.  
-We subtract the values of point b from point a (a - b).
+**We subtract the values of point b from point a (a - b).**  
 - a.x (2) - b.x (3) = v.x (-1)
 - a.y (5) - b.y (4) = v.y (1)
 - a.z (-1) - b.z (1) = v.z (-2)
@@ -202,6 +202,17 @@ In order to make the vector point from the object to the light source, subtract 
 
 💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
 **So:** In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
+
+**Finding the opposite direction of a vector**
+
+Say we have a vector pointing from a surface to the light source. What can we do to reverse the direction -- so make it point *from* the light source *to* the surface?  
+**We introduce a zero vector (0,0,0,0) subtract vector v (2,4,1,0) from vector zero, and get new vector:**  
+- zv.x (0) - v.x (2) = nv.x (-2)
+- zv.y (0) - v.y (4) = nv.y (-4)
+- zv.z (0) - v.z (1) = nv.z (-1)
+- zv.w (0) - v.w (0) = nv.w (0)
+
+Here we are essentially just reversing the *sign* of the different coordinates of vector v. Another (and much more straightforward) way to do this, would be just reversing the sign of vector v. **So + becomes -, and - becomes +**.
 
 ---
 
