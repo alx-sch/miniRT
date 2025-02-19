@@ -174,7 +174,7 @@ Since a vector needs two points to be defined, we can look at it like this:
 However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*.  
 - `w` If it is a point (set to 1), if it is a vector (set to 0).  
 
-**Adding a Vector to a Point**
+**Adding a Vector to a Point ➕**
 
 Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector. 
 We add the values of point a and vector together:  
@@ -185,7 +185,7 @@ We add the values of point a and vector together:
 
 And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
 
-**Finding a vector with two points**
+**Finding a vector with two points ➖**
 
 Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are talking about miniRT, let's give them the following roles:
 - `point a` = Light source coordinates.
