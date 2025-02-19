@@ -135,21 +135,59 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 In this part, we will have a look at some important mathematical terms and concepts, needed to build the equations and calculations for miniRT.  
 This part is written while studying the book "The Ray Tracer Challenge" by Jamis Buck, and it is a result of reading and taking notes from this book.
 
-### Vectors
-A vector can be seen as a line that's giving us information about two things:
-- The direction it is pointing to.
-- How long it is.
+### EPSILON
 
-A vector gets determined by its x,y,z coordinates, as in a coordinate system.
+Since we are dealing with floating point numbers (e.g. 1.5512) in our calculations, we need to account for floating point precision errors. This means that two numbers that should be seen as equivalent, can end up being shown as different. This happens because of round off errors happening on a binary level.  
+To take this into consideration, we can use an `EPSILON` value. This is a very small value (e.g. 1-e6 or 0.000001).
+```bash
+	Instead of this:
+	if (a < 0)
+
+	Do this:
+	if (a < EPSILON)
+```
+
+### Vectors
+
+In a 3D space (as in the real world or in our miniRT), we can use a coordinate system to determine a *point in space*. This essentially means *where* something is located in a certain space.
+
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/coordinate_system.png" alt="coordinate_system.png" width="400"/>
     <br>
     <span>A coordinate system with x,y,z.<sup><a href="#footnote2">[2]</a></sup></span>
 </p>
 
-- `x` How far to the right or the left.
-- `y` How far up or down.
-- `z` How close or far away from the viewer.
+`x` How far to the right or the left.  
+`y` How far up or down.  
+`z` How close or far away from the viewer.  
+
+A *vector* works similar, and can be seen as a line that's giving us information about two things:
+- The direction it is pointing to.
+- How long it is.
+
+A vector gets determined by its x,y,z coordinates, as in a 3D coordinate system.
+Since a vector needs two points to be defined, we can look at it like this:
+- `start point` is (0,0,0)
+- `vector point` is (2,4,1)
+- Draw one point at 0,0,0 and draw a line to point 2,4,1. The direction of the vector will be determined by in which direction this line is going.
+
+However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*.  
+`w` If it is a point (set to 1), if it is a vector (set to 0).  
+
+**Adding a Vector to a Point**
+
+Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector. 
+We add the values of point a and vector together:  
+- a.x + v.x = 5
+- a.y + v.y = 9
+- a.z + v.z = 0
+- a.w + v.w = 1
+
+And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
+
+**Subtracting two points**
+
+
 
 ---
 
