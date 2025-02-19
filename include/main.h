@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 17:53:44 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:33:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,36 +119,36 @@ void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ix *ix);
 
 // utils/0_vector_utils_1.c
 
-t_vec3		vec3_add(t_vec3 v1, t_vec3 v2);
-t_vec3		vec3_sub(t_vec3 v1, t_vec3 v2);
-t_vec3		vec3_mult(t_vec3 vec, double scalar);
-t_vec3		vec3_cross(t_vec3 v1, t_vec3 v2);
-double		vec3_dot(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_add(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2);
+t_vec3	vec3_mult(t_vec3 vec, double scalar);
+t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2);
+double	vec3_dot(t_vec3 v1, t_vec3 v2);
 
 // utils/0_vector_utils_2.c
 
-t_vec3		vec3_new(double x, double y, double z);
-t_vec3		vec3_norm(t_vec3 vec);
-t_vec3		vec3_scale(t_vec3 v, double scalar);
-double		vec3_length(t_vec3 v);
+t_vec3	vec3_new(double x, double y, double z);
+t_vec3	vec3_norm(t_vec3 vec);
+t_vec3	vec3_scale(t_vec3 v, double scalar);
+double	vec3_length(t_vec3 v);
 
 // utils/1_quadratic_utils.c
 
-double		calculate_discriminant(double a, double b, double c);
-double		calculate_entry_distance(double a, double b, double discriminant);
-double		calculate_exit_distance(double a, double b, double discriminant);
+double	calculate_discriminant(double a, double b, double c);
+double	calculate_entry_distance(double a, double b, double discriminant);
+double	calculate_exit_distance(double a, double b, double discriminant);
 
 // utils/2_pixel_utils.c
 
-int			color_to_hex(t_color color);
-void		set_pixel_color(t_img *img, int x, int y, int color);
+int		color_to_hex(t_color color);
+void	set_pixel_color(t_img *img, int x, int y, int color);
 
 // utils/3_cleanup.c
 
-void		cleanup(t_rt **rt_ptr);
+void	cleanup(t_rt **rt_ptr);
 
 // utils/4_error_exit.c
 
-void		cleanup_error_exit(char *msg, t_rt *rt);
+void	cleanup_error_exit(char *msg, t_rt *rt);
 
 #endif

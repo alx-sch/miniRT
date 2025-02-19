@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 16:08:40 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/04 09:18:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:42:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ double	calculate_discriminant(double a, double b, double c)
 /**
 Calculates the distance to the entry point of a ray with an object using the
 quadratic equation `t1 = (-b - sqrt(b^2 - 4ac)) / 2a`.
-
  @param a 				The coefficient of the quadratic term.
  @param b 				The coefficient of the linear term.
  @param discriminant 	The discriminant of the quadratic equation (`b^2 - 4ac`).
@@ -71,7 +70,6 @@ double	calculate_entry_distance(double a, double b, double discriminant)
 /**
 Calculates the distance to the exit point of a ray with an object using the
 quadratic equation `x = (-b + sqrt(b^2 - 4ac)) / 2a`.
-
  @param a 				The coefficient of the quadratic term.
  @param b 				The coefficient of the linear term.
  @param discriminant 	The discriminant of the quadratic equation (`b^2 - 4ac`).
