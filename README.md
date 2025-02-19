@@ -176,7 +176,7 @@ However, since these coordinates are also defining a *point* in a coordinate sys
 
 ##
 
-**Adding a Vector to a Point➕**
+**Adding a vector direction to a point➕**
 
 Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector.  
 **We add the values of point a and vector together:**  
@@ -198,7 +198,7 @@ Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are tal
 We want to find a vector that gives us the direction from object to light source.  
 The direction of a vector between two points can be seen as this formula:
 ```bash
-	direction (x,y,z) = dest (x,y,z) - origin (x,y,z)
+	direction (x,y,z,0) = dest (x,y,z,1) - origin (x,y,z,1)
 ```
 **We subtract the values of point b from point a == light_coords - object_coords == a - b.**  
 - a.x (2) - b.x (3) = v.x (-1)
@@ -226,7 +226,25 @@ Here we are essentially just reversing the *sign* of the different coordinates o
 
 ##
 
+**Finding the distance from start to a point🏃‍♀️**
 
+If you have a vector, and you want to find a point that is 3.5 times further in the vector direction, e.g. to see where a ray intersects a sphere. 3.5 would be the *scalar* value. Multiplying with this value, *scales* the vector - meaning that each component (x,y,z,w) gets multiplied with the same value (3.5).  
+**We have a vector v (2,-1,3) and scale it by 3.5:**  
+- v.x (2) * 3.5 = 7
+- v.y (-1) * 3.5 = -3.5
+- v.z (3) * 3.5 = 10.5
+
+The result after scaling gives us a point (7,-3.5,10.5). This point will be 3.5 times further away from our original point, moved in the direction of vector v.
+
+##
+
+**Finding the length of a vector📏**
+
+Until now, we have mainly looked at different ways to figure out vector directions. Now, what about the length, or the *magnitude* of a vector? This means how far you would travel in a straight line, if you were to walk from one end of the vector to the other.  
+Do you remember Pythagoras' theorem?
+\[
+a^2 + b^2 = c^2
+\]
 
 ---
 
