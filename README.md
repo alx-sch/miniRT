@@ -275,8 +275,8 @@ You normalize a vector by dividing each of its components by its magnitude.
 
 **Dot product📍➡️📍**
 
-The dot product is also called a scalar product or inner product. It takes two vectors and returns a *scalar value*. The dot product is computed as the sum of the
-products of the corresponding components of each vector.  
+The dot product is also called a scalar product or inner product. It tells us *how aligned* two vectors are. This essentially means how big the angle between them are. Well, why not only use angles then, like 90°, 180°, etc.? That would be more computationally expensive, as it would require trigonometric functions. The dot product is a simple arithmetic operation, and serves the same purpose.  
+So how is it calculated? It takes two vectors and returns a *scalar value*. The dot product is computed as the *sum of the products of the corresponding components of each vector*.  
 It essentially looks like this (assuming both vectors are normalized):
 ```bash
 	float	dot(vec a, vec b)
