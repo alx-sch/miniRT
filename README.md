@@ -242,8 +242,9 @@ The result after scaling gives us a point (7,-3.5,10.5). This point will be 3.5 
 
 Until now, we have mainly looked at different ways to figure out vector directions. Now, what about the length, or the *magnitude* of a vector? This means how far you would travel in a straight line, if you were to walk from one end of the vector to the other.  
 Do you remember Pythagoras' theorem?  
-`a² + b² = c²`
-
+$$
+a² + b² = c²
+$$
 ---
 
 ## Ray-Object Intersection
