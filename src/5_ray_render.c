@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 09:00:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 10:57:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	shade_pixel(t_rt *rt, t_ix *camera_ray_ix, int x, int y)
 	if (is_shadowed)
 		color = 0x000000; // actually it's obj_color in ambient light
 	else
-		color = color_to_hex(camera_ray_ix->hit_obj->color);
+		color = camera_ray_ix->hit_obj->color_in_amb;
 	set_pixel_color(&rt->mlx.img, x, y, color);
 }
 

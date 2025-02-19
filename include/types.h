@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 09:06:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:11:57 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,12 +253,14 @@ Structure representing a 3D object in the scene.
  - t_obj_type `object_type`:	The type of the object.
  - t_obj_x `x`:					Union holding the specific object data.
  - t_color `color`:				The color of the object.
+ - int `color_in_amb`:			Color of the object in ambient light (hex value).
 */
 typedef struct u_object
 {
 	t_obj_type	object_type;
 	t_obj_x		x;
 	t_color		color;
+	int			color_in_amb;
 }	t_obj;
 
 //#########
@@ -292,7 +294,7 @@ typedef struct s_light
 /**
 Structure representing the camera in the scene.
  - t_vec3 `pos`:			Camera position in world coordinates.
- - t_vec3 `ori`:			Forward direction of the camera (normalized).
+ - t_vec3 `dir`:			Forward direction of the camera (normalized).
  - double `fov`:			Horizontal field of view [0, 180].
  - double `scale`:			Scaling factor, derived from FOV.
  - double `aspect_ratio`:	Screen aspect ratio.
@@ -304,7 +306,7 @@ Structure representing the camera in the scene.
 typedef struct s_camera
 {
 	t_vec3		pos;
-	t_vec3		ori;
+	t_vec3		dir;
 	double		fov;
 	double		scale;
 	double		aspect_ratio;

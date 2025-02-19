@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/18 00:33:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:06:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ int			parse_plane(t_scene *scene);
 int			parse_cylinder(t_scene *scene);
 
 // 0_parsing/parse_and_set/set_data (Directory)
-void		apply_ambient_light(t_rt **rt);
+void		apply_ambient_light_and_adj_pl_normal(t_rt **rt);
 t_color		mix_ambient_light(t_color object_color, t_color ambient_color);
 double		adjust_to_color_range(double value, double min, double max);
 void		set_color(char **rgb, unsigned char *r, unsigned char *g, \

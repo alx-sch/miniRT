@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:45:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:12:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 						vec3_add(\
 							vec3_mult(cam.right, ray_cam_dir.x), \
 							vec3_mult(cam.up, ray_cam_dir.y)), \
-						vec3_mult(cam.ori, ray_cam_dir.z));
+						vec3_mult(cam.dir, ray_cam_dir.z));
 	return (vec3_norm(ray_world_dir));
 }
 
