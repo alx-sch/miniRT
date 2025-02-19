@@ -161,7 +161,7 @@ In a 3D space (as in the real world or in our miniRT), we can use a coordinate s
 `y` How far up or down.  
 `z` How close or far away from the viewer.  
 
-A *vector* works similar, and can be seen as a line that's giving us information about two things:
+A **vector** works similar, and can be seen as a line that's giving us information about two things:
 - The direction it is pointing to.
 - How long it is.
 
@@ -185,9 +185,23 @@ We add the values of point a and vector together:
 
 And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
 
-**Subtracting two points**
+**Finding a vector with two points**
 
+Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are talking about miniRT, let's give them the following roles:
+- `point a` = Light source coordinates.
+- `point b` = Object coordinates.
 
+We want to find a vector that gives us the direction from object to light source.  
+We subtract the values of point b from point a (a - b).
+- a.x (2) - b.x (3) = v.x (-1)
+- a.y (5) - b.y (4) = v.y (1)
+- a.z (-1) - b.z (1) = v.z (-2)
+- a.w (1) - b.w (1) = v.w (0)
+
+In order to make the vector point from the object to the light source, subtract the object’s coordinates from the light source’s coordinates. This way, the vector will point in the direction from the object to the light source.
+
+💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
+In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
 
 ---
 
