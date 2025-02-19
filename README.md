@@ -201,7 +201,7 @@ We subtract the values of point b from point a (a - b).
 In order to make the vector point from the object to the light source, subtract the object’s coordinates from the light source’s coordinates. This way, the vector will point in the direction from the object to the light source.
 
 💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
-In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
+**So:** In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
 
 ---
 
