@@ -262,12 +262,12 @@ In our miniRT project, we don't want to operate with vectors with a different ma
 
 Normalizing a vector keeps the correct direction, but reduces or increases its magnitude to 1. In miniRT we don't accept orientation vectors that are not normalized, but whenever a new vector is created - we make sure to normalize it each time.  
 You normalize a vector by dividing each of its components by its magnitude.
-- We have a vector v (1,2,3) and after using Pythagoras' theorem (multiplying each value with itself one time, adding them together, then square root of the result), we figured out its magnitude is 3.741657387.
-- We divide each of its components by the magnitude (1 / 3.741657387, 2 / 3.741657387, 3 / 3.741657387).
-- Vector v now has the following coordinates (0.267261242, 0.534522484, 0.801783726)
-- Now let's check if vector v is now normalized, by using Pythagoras' on these new values.
-- 0.071428571 + 0.285714286 + 0.642857143 = 1
-- Since the square root of 1 = 1, the vector v is now normalized.
+1. We have a vector v (1,2,3) and after using Pythagoras' theorem (multiplying each value with itself one time, adding them together, then square root of the result), we figured out its magnitude is 3.741657387.
+2. We divide each of its components by the magnitude (1 / 3.741657387, 2 / 3.741657387, 3 / 3.741657387).
+3. Vector v now has the following coordinates (0.267261242, 0.534522484, 0.801783726)
+4. Now let's check if vector v is now normalized, by using Pythagoras' on these new values.
+5. 0.071428571 + 0.285714286 + 0.642857143 = 1
+6. Since the square root of 1 = 1, the vector v is now normalized.
 
 ###
 
