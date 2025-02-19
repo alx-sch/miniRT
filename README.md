@@ -308,6 +308,15 @@ With vectors v1 (-1,0,0) and v2 (1,0,0)
 
 Anything in between -1 and 1 (when we are talking about unit vectors), will indicate the angle between the two vectors. The closer the dot product is to 1, the smaller the angle is (since 1 would make them identical). The closer the dot product is to -1, the greater the angle is (since -1 would make them opposite).
 
+Let's do an example with two not-normalized vectors, v1 (2,1,4) and v2 (3,4,2):
+1. Find the dot product of v1 and v2, which is 18.
+2. Find the magnitude of each vector. v1 is 4.582575695 and v2 is 5.385164807.
+3. Multiply the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
+4. Divide the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
+5. We get 0.729396809.
+6. Our result indicates that the angle is less than 90 degrees, but greater than 0 degrees. 
+7. The angle between v1 and v2 is approximately 43.16°. We will not look more into how dot product is converted into degrees, as this feels redundant for now.
+
 ---
 
 ## Ray-Object Intersection
