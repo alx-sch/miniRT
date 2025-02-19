@@ -294,7 +294,9 @@ It is a bit hard to understand what actually happens, but think about this:
 💡 Note: Since we only operate with unit vectors (length of 1), the dot product is equivalent to the *cosine of the angle* between them. This also means that the *maximum* dot product is 1, and the *minimum* dot product is -1.  
 If the vectors were NOT normalized, we would have to also take the cosine of the result to keep it between the range of -1 and 1.  
 
-Let's do an example with two normalized vectors v1 (0,0,1) and v2 (1,0,0):
+**Let's do some examples with two normalized vectors:**
+
+With vectors v1 (0,0,1) and v2 (1,0,0):
 - We do our dot product calculation, which leaves us with the result 0.
 - Since the result is 0, we know that these vectors are perpendicular to each other.
 
