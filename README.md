@@ -57,7 +57,8 @@ The `Makefile` automatically detects your OS and selects the correct MiniLibX li
 
 ### Ray Tracing Files (.rt files)
 
-The `.rt` files define the elements and configurations for the scene to be rendered:
+Our miniRT implementation uses a left-handed coordinate system, meaning that increasing values of x move an object to the right, y moves it up, and z moves it away from the camera.
+The `.rt` files define the elements and configurations for the scene to be rendered: 
 
 #### Mandatory Elements
 
@@ -104,10 +105,9 @@ The `.rt` files define the elements and configurations for the scene to be rende
   * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
   * **Diameter**: `30`  
   * **Height**: `210.42`  
-  * **Color** in RGB ([0-255]): `0, 0, 255`
- 
----
+  * **Color** in RGB ([0-255]): `0, 0, 255`    
 
+---
 ## Introduction to Ray Tracing
 
 Ray tracing is a rendering technique that simulates the way light interacts with objects to create realistic images. Here, algorithms compute the color of each pixel by figuring out where the light came from for that pixel: By tracing the path of individual rays of light as they bounce off surfaces, it can produce highly detailed reflections, shadows, and global illumination.[¹](#footnote1)  
