@@ -174,7 +174,7 @@ Since a vector needs two points to be defined, we can look at it like this:
 However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*.  
 - `w` If it is a point (set to 1), if it is a vector (set to 0).  
 
-***
+##
 
 **Adding a Vector to a Point➕**
 
@@ -187,7 +187,7 @@ Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figur
 
 And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
 
-***
+##
 
 **Finding a vector direction between two points➖**
 
@@ -207,7 +207,7 @@ In order to make the vector point from the object to the light source, subtract 
 💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
 **So:** In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
 
-***
+##
 
 **Finding the opposite direction of a vector🔃**
 
@@ -220,7 +220,7 @@ Say we have a vector pointing from a surface to the light source. What can we do
 
 Here we are essentially just reversing the *sign* of the different coordinates of vector v. Another (and much more straightforward) way to do this, would be just reversing the sign of vector v. **So + becomes -, and - becomes +**.
 
-***
+##
 
 ---
 
