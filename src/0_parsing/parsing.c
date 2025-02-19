@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/19 11:06:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:25:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ void	parse_and_set_objects(t_rt *rt, int argc, char **argv)
 	parsing(rt, &rt->scene, argv[1]);
 	if (rt->scene.pars.error_code != 0)
 		errors_parsing(rt, &rt->scene, &rt->scene.pars);
-	apply_ambient_light_and_adj_pl_normal(&rt);
+	prepare_scene_objects(&rt);
 }

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 13:10:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:05:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,7 @@ int	ray_hit_cyl(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 		return (1);
 	*t = calculate_exit_distance(qd.a, qd.b, qd.discriminant);
 	if (*t > 0.0 && cyl_height_check(ray_ori, ray_dir, obj, *t))
-	{
-		obj->cam_in_obj = 1;
 		return (1);
-	}
 	return (0);
 }
 
