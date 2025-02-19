@@ -196,7 +196,11 @@ Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are tal
 - `point b` = Object coordinates.
 
 We want to find a vector that gives us the direction from object to light source.  
-**We subtract the values of point b from point a (a - b).**  
+The direction of a vector between two points can be seen as this formula:
+```bash
+	direction (x,y,z) = dest (x,y,z) - origin (x,y,z)
+```
+**We subtract the values of point b from point a == light_coords - object_coords == a - b.**  
 - a.x (2) - b.x (3) = v.x (-1)
 - a.y (5) - b.y (4) = v.y (1)
 - a.z (-1) - b.z (1) = v.z (-2)
@@ -221,6 +225,8 @@ Say we have a vector pointing from a surface to the light source. What can we do
 Here we are essentially just reversing the *sign* of the different coordinates of vector v. Another (and much more straightforward) way to do this, would be just reversing the sign of vector v. **So + becomes -, and - becomes +**.
 
 ##
+
+
 
 ---
 
