@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:33:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:41:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ and declaring all function prototypes.
 
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
 # define BG_COLOR		0x303030  // Anthracite (dark grey)
-# define EPSILON 		1e-6
+# define EPSILON 		1e-3
 
 //##################
 //# FCT PROTOTYPES #
