@@ -277,7 +277,7 @@ You normalize a vector by dividing each of its components by its magnitude.
 
 The dot product is also called a scalar product or inner product. It takes two vectors and returns a *scalar value*. The dot product is computed as the sum of the
 products of the corresponding components of each vector.  
-It essentially looks like this:
+It essentially looks like this (assuming both vectors are normalized):
 ```bash
 	float	dot(vec a, vec b)
 	{
@@ -292,7 +292,7 @@ It is a bit hard to understand what actually happens, but think about this:
 - If the *dot product is -1*, the vectors are pointing in *opposite* directions (180°).
 
 💡 Note: Since we only operate with unit vectors (length of 1), the dot product is equivalent to the *cosine of the angle* between them. This also means that the *maximum* dot product is 1, and the *minimum* dot product is -1.  
-If the vectors were NOT normalized, we would have to take the cosine of the result.  
+If the vectors were NOT normalized, we would have to also take the cosine of the result to keep it between the range of -1 and 1.  
 
 Let's do an example with two normalized vectors v1 (0,0,1) and v2 (1,0,0):
 - We do our dot product calculation, which leaves us with the result 0.
