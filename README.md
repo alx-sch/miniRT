@@ -249,12 +249,12 @@ a² + b² = c²
 $$
 
 We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
-- v.x (1) = 1 * 1 = 1
-- v.y (2) = 2 * 2 = 4
-- v.z (3) = 3 * 3 = 9
-- 1 + 4 + 9 = 14
-- Since 14 is equivalent to x², and we want to find x, we need to take the *square root* of 14.
-- The magnitude of vector v is 3.741657387.
+1. v.x (1) = 1 * 1 = 1
+2. v.y (2) = 2 * 2 = 4
+3. v.z (3) = 3 * 3 = 9
+4. 1 + 4 + 9 = 14
+5. Since 14 is equivalent to x², and we want to find x, we need to take the *square root* of 14.
+6. The magnitude of vector v is 3.741657387.
 
 In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors - if we don't use *normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
 
