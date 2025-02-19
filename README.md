@@ -142,7 +142,7 @@ A vector can be seen as a line that's giving us information about two things:
 
 A vector gets determined by its x,y,z coordinates, as in a coordinate system.
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Coordinate_system.png" alt="Coordinate_system.png" width="400"/>
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/coordinate_system.png" alt="coordinate_system.png" width="400"/>
     <br>
     <span>A coordinate system with x,y,z.<sup><a href="#footnote2">[2]</a></sup></span>
 </p>
