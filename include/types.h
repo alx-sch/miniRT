@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:22:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 09:06:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,8 @@ Structure representing a cylinder in 3D space:
  - double `height_half`:	Half of the cylinder's height.
  - t_vec3 `cap_top_center`:		The center point of the cylinder's top cap.
  - t_vec3 `cap_bottom_center`:	The center point of the cylinder's bottom cap.
- - t_vec3 `cap_top_normal`:		The normal vector of the top cap.
+ - t_vec3 `cap_top_normal`:		The normal vector of the top cap
+ 								(same as `orientation`).
  - t_vec3 `cap_bottom_normal`:	The normal vector of the bottom cap.
 */
 typedef struct s_cylinder

@@ -6,14 +6,12 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 23:16:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/19 09:00:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-Handles the computation of ray directions for rendering pixels and performs
-the rendering of the entire scene by calculating intersections for rays cast
-through the camera's view.
+TBD.
 */
 
 #include "main.h"
@@ -23,15 +21,15 @@ through the camera's view.
 void	render_scene(t_rt *rt);
 
 /**
-Traces the camera ray and finds the intersection
+Traces the camera ray and finds the intersection.
  @param rt 				Pointer to the main structure.
+ @param camera_ray_ix 	Pointer to the intersection structure to be filled.
  @param x 				The x-coordinate of the pixel.
  @param y 				The y-coordinate of the pixel.
- @param camera_ray_ix 	Pointer to the intersection structure to be filled.
 
  @return				`1` if an intersection was found, `0` otherwise.
 */
-static int	trace_camera_ray(t_rt *rt, int x, int y, t_ix *camera_ray_ix)
+static int	trace_camera_ray(t_rt *rt, t_ix *camera_ray_ix, int x, int y)
 {
 	t_vec3	camera_ray_dir;
 
@@ -58,17 +56,17 @@ static int	handle_shadow_ray(t_rt *rt, t_ix *camera_ray_ix)
 }
 
 /**
-Computes and applies the final color for a pixel based shadows, reflections,
+Computes and applies the final color for a pixel based on shadows, reflections,
 and lighting.
  - Determines if the point is in shadow.
- - Will eventually incorporate reflection and lighting calculations.
+ - If not, will eventually incorporate reflection and lighting calculations.
  - Sets the computed color to the pixel.
- @param rt				Pointer to the main structure.
- @param x				The pixel's x-coordinate.
- @param y				The pixel's y-coordinate.
- @param camera_ray_ix	Pointer to the intersection data of the camera ray.
+ @param rt 				Pointer to the main structure.
+ @param camera_ray_ix 	Pointer to the intersection structure to be filled.
+ @param x 				The x-coordinate of the pixel.
+ @param y 				The y-coordinate of the pixel.
 */
-static void	shade_pixel(t_rt *rt, int x, int y, t_ix *camera_ray_ix)
+static void	shade_pixel(t_rt *rt, t_ix *camera_ray_ix, int x, int y)
 {
 	int	color;
 	int	is_shadowed;
@@ -93,12 +91,12 @@ static void	render_pixel(t_rt *rt, int x, int y)
 {
 	t_ix	camera_ray_ix;
 
-	if (trace_camera_ray(rt, x, y, &camera_ray_ix) == 0)
+	if (trace_camera_ray(rt, &camera_ray_ix, x, y) == 0)
 	{
 		set_pixel_color(&rt->mlx.img, x, y, BG_COLOR);
 		return ;
 	}
-	shade_pixel(rt, x, y, &camera_ray_ix);
+	shade_pixel(rt, &camera_ray_ix, x, y);
 }
 
 /**
