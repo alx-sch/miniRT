@@ -130,7 +130,7 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 
 ---
 
-## Introduction to basic mathematical terms
+## Introduction to basic mathematical terms and concepts
 
 In this part, we will have a look at some important mathematical terms and concepts, needed to build the equations and calculations for miniRT.  
 This part is written while studying the book "The Ray Tracer Challenge" by Jamis Buck, and it is a result of reading and taking notes from this book.
