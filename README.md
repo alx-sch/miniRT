@@ -310,7 +310,7 @@ With vectors v1 (-1,0,0) and v2 (1,0,0)
 
 Anything in between -1 and 1 will indicate the angle between the two vectors. The closer the dot product is to 1, the smaller the angle is (since 1 would make them identical). The closer the dot product is to -1, the greater the angle is (since -1 would make them opposite).
 
-Let's do an example with two not-normalized vectors, v1 (2,1,4) and v2 (3,4,2):
+**Let's do an example with two not-normalized vectors, v1 (2,1,4) and v2 (3,4,2):**
 1. Find the dot product of v1 and v2, which is 18.
 2. Find the magnitude of each vector. v1 is 4.582575695 and v2 is 5.385164807.
 3. Multiply the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
