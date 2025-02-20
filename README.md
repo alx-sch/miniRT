@@ -263,13 +263,17 @@ In our miniRT project, we don't want to operate with vectors with a different ma
 **Normalization⚖️**
 
 Normalizing a vector keeps the correct direction, but reduces or increases its magnitude to 1. In miniRT we don't accept orientation vectors that are not normalized, but whenever a new vector is created - we make sure to normalize it each time.  
-You normalize a vector by dividing each of its components by its magnitude.
+
+**You normalize a vector by dividing each of its components by its magnitude:**
 1. In our previous example we had a vector v (1,2,3). After using Pythagoras' theorem (multiplying each value with itself one time, adding them together, then square root of the result), we figured out its magnitude was 3.741657387.
 2. We divide each of its components by the magnitude (1 / 3.741657387, 2 / 3.741657387, 3 / 3.741657387).
-3. Vector v now has the following coordinates (0.267261242, 0.534522484, 0.801783726)
-4. Now let's check if vector v is now normalized, by using Pythagoras' on these new values.
-5. 0.071428571 + 0.285714286 + 0.642857143 = 1
-6. Since the square root of 1 = 1, the vector v is now normalized.
+3. Vector v now has the following coordinates (0.267261242, 0.534522484, 0.801783726).
+
+**Checking if the vector is normalized:**
+1. We use Pythagoras' on the new values of vector v.
+3. 0.267261242² + 0.534522484² + 0.801783726² = 1²
+4. 0.071428571 + 0.285714286 + 0.642857143 = 1
+5. Since the square root of 1 = 1, the vector v is now normalized.
 
 ###
 
@@ -285,11 +289,11 @@ It essentially looks like this (assuming both vectors are normalized):
 	}
 ```
 It is a bit hard to understand what actually happens, but think about this:
-- The *smaller* the dot product, the *larger* the angle between the two vectors.
-- The *greater* the dot product, the *smaller* the angle between the two vectors.
 - If the *dot product is 0*, the vectors are perpendicular (90°).
 - If the *dot product is 1*, the vectors are *identical* (0°).
 - If the *dot product is -1*, the vectors are pointing in *opposite* directions (180°).
+- The *smaller* the dot product, the *larger* the angle between the two vectors.
+- The *greater* the dot product, the *smaller* the angle between the two vectors.
 
 💡 Note: Since we only operate with unit vectors (length of 1), the dot product is equivalent to the *cosine of the angle* between them. This also means that the *maximum* dot product is 1, and the *minimum* dot product is -1.  
 If the vectors were NOT normalized, we would have to also take the cosine of the result to keep it between the range of -1 and 1.  
@@ -312,13 +316,14 @@ Anything in between -1 and 1 will indicate the angle between the two vectors. Th
 
 **Let's do an example with two not-normalized vectors, v1 (2,1,4) and v2 (3,4,2):**  
 
-1. Find the dot product of v1 and v2, which is 18.
-2. Find the magnitude of each vector. v1 is 4.582575695 and v2 is 5.385164807.
-3. Multiply the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
-4. Divide the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
+1. Find the *dot product* of v1 and v2, which is 18.
+2. Find the *magnitude* of *each vector*. v1 is 4.582575695 and v2 is 5.385164807.
+3. *Multiply* the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
+4. *Divide* the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
 5. We get 0.729396809.
-6. Our result indicates that the angle is less than 90 degrees, but greater than 0 degrees. 
-7. The angle between v1 and v2 is approximately 43.16°. We will not look more into how dot product is converted into degrees, as this feels redundant for now.
+
+Our result indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
+The angle between v1 and v2 is approximately 43.16°. We will not look more into how dot product is converted into degrees, as this feels redundant for now.
 
 ---
 
