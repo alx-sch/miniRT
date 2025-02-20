@@ -256,6 +256,12 @@ Pythagoras' theorem is mostly known for its usage of finding the unknown side (h
     <span>Pythagoras' in a 2D coordinate system. c or vector 1 is the unknown side/hypotenuse, and will tell us the length of the vector.<sup><a href="#footnote2">[2]</a></sup></span>
 </p>
 
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_2.png" alt="Pythagoras_2.png" width="400"/>
+    <br>
+    <span>Pythagoras' in a 3D coordinate system. d is the unkown side/hypotenuse, and will tell us the length of the vector.<sup><a href="#footnote2">[2]</a></sup></span>
+</p>
+
 We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
 1. v.x (1) = 1 * 1 = 1
 2. v.y (2) = 2 * 2 = 4
