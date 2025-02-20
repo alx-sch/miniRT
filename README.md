@@ -443,7 +443,8 @@ t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
 
 ##
 
-**Lastly, some useful terms:**
+**Lastly, some useful terms:**  
+
 `Discriminant`: In the context of raytracing, a number that tells you whether an object was intersected or not.
 - If positive -> The ray intersects at *two points*.
 - If 0 -> The ray is tangent (scratches the surface) at *one point*.
