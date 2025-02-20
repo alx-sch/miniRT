@@ -187,6 +187,19 @@ Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figur
 
 And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
 
+Code example:
+```bash
+t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
+	result.z = v1.z + v2.z;
+	return (result);
+}
+```
+
 ##
 
 **Finding a vector direction between two points➖**
@@ -210,6 +223,19 @@ In order to make the vector point from the object to the light source, subtract 
 
 💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
 **So:** In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
+
+Code example:
+```bash
+t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	return (result);
+}
+```
 
 ##
 
@@ -235,6 +261,19 @@ If you have a vector, and you want to find a point that is 3.5 times further in 
 - v.z (3) * 3.5 = 10.5
 
 The result after scaling gives us a point (7,-3.5,10.5). This point will be 3.5 times further away from our original point, moved in the direction of vector v.
+
+Code example:
+```bash
+t_vec3	vec3_mult(t_vec3 vec, double scalar)
+{
+	t_vec3	result;
+
+	result.x = vec.x * scalar;
+	result.y = vec.y * scalar;
+	result.z = vec.z * scalar;
+	return (result);
+}
+```
 
 ##
 
@@ -272,6 +311,14 @@ We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3
 
 In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors/*normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
 
+Code example:
+```bash
+double	vec3_length(t_vec3 v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+```
+
 ##
 
 **Normalization⚖️**
@@ -288,6 +335,25 @@ Normalizing a vector keeps the correct direction, but reduces or increases its m
 3. 0.267261242² + 0.534522484² + 0.801783726² = 1²
 4. 0.071428571 + 0.285714286 + 0.642857143 = 1
 5. Since the square root of 1 = 1, the vector v is now normalized.
+
+Code example:
+```bash
+t_vec3	vec3_norm(t_vec3 vec)
+{
+	double	length;
+	double	inv_length;
+
+	length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+	if (length > 1e-6)
+	{
+		inv_length = 1.0 / length;
+		vec.x *= inv_length;
+		vec.y *= inv_length;
+		vec.z *= inv_length;
+	}
+	return (vec);
+}
+```
 
 ##
 
@@ -346,7 +412,7 @@ Converted to degrees, the angle between v1 and v2 is approximately 43.16°.
 
 The cross product is similar to the dot product, but instead of returning a scalar, it *returns another vector*. This new vector will be *perpendicular* to both the original vectors. This becomes very handy when setting up the *camera coordinate system*. This is further explained further down in this README, about *camera orientation vectors*.  
 
-Shortly explained, finding the cross product makes sure that **no matter the camera orientation vector, right and up will always be relative to the orientation**.  
+To give a short introduction, finding the cross product makes sure that **no matter the camera orientation vector, right and up will always be relative to the orientation**.  
 
 It's maybe intuitive to think that right (x) would always mean (1,0,0) and up (y) would always mean (0,1,0). However this is only true if z is (0,0,1). If the camera orientation vector is facing diagonally upwards (1,1,1) -- these calculations would be wrong. That's why we need the cross product, to correctly determine what is left, right, up and down -- and that it stays perpendicular to wherever the camera is facing.  
 
@@ -361,6 +427,19 @@ So:
 - v3.z = v1.x * v2.y - v1.y * v2.x
 
 The calculation takes two vectors, and returns a new vector that is perpendicular to both original vectors.
+
+Code example:
+```bash
+t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = (v1.y * v2.z) - (v1.z * v2.y);
+	result.y = (v1.z * v2.x) - (v1.x * v2.z);
+	result.z = (v1.x * v2.y) - (v1.y * v2.x);
+	return (result);
+}
+```
 
 ---
 
