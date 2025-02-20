@@ -248,7 +248,7 @@ $$
 a² + b² = c²
 $$
 
-Pythagoras' theorem is mostly known for its usage of finding the unknown side (hypotenuse) of a triangle. I found it a bit hard to figure out exactly why this applies to finding the length of a vector, but I will show two very poorly made drawings. I have tried to show exactly why this makes sense.
+Pythagoras' theorem says this: "In a right-angled triangle, the square of the hypotenuse side is equal to the sum of squares of the other two sides“. I found it a bit hard to figure out exactly why this applies to finding the length of a vector, but I will show two very poorly made drawings. I have tried to show exactly why this makes sense.
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_1.png" alt="Pythagoras_1.png" width="400"/>
