@@ -248,6 +248,14 @@ $$
 a² + b² = c²
 $$
 
+Pythagoras' theorem is mostly known for its usage of finding the unknown side (hypotenuse) of a triangle. I found it a bit hard to figure out exactly why this applies to finding the length of a vector, but I will show two very poorly made drawings. I have tried to show exactly why this makes sense.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_1.png" alt="Pythagoras_1.png" width="400"/>
+    <br>
+    <span>Pythagoras' in a 2D coordinate system.<sup><a href="#footnote2">[2]</a></sup></span>
+</p>
+
 We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
 1. v.x (1) = 1 * 1 = 1
 2. v.y (2) = 2 * 2 = 4
@@ -322,7 +330,7 @@ Anything in between -1 and 1 will indicate the angle between the two vectors. Th
 4. *Divide* the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
 5. We get 0.729396809.
 
-Our result indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
+Our result "0.729396809" indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
 The angle between v1 and v2 is approximately 43.16°. We will not look more into how dot product is converted into degrees, as this feels redundant for now.
 
 ---
