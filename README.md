@@ -253,7 +253,7 @@ Pythagoras' theorem is mostly known for its usage of finding the unknown side (h
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_1.png" alt="Pythagoras_1.png" width="400"/>
     <br>
-    <span>Pythagoras' in a 2D coordinate system.<sup><a href="#footnote2">[2]</a></sup></span>
+    <span>c/v1 (vector 1) is the unknown side/hypotenuse.<sup><a href="#footnote2">[2]</a></sup></span>
 </p>
 
 We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
