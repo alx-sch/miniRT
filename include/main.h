@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 17:41:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/20 21:52:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ and declaring all function prototypes.
 //#############
 
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
-# define BG_COLOR		0x303030  // Anthracite (dark grey)
+# define BG_COLOR		0x303030	// Anthracite (dark grey)
 # define EPSILON 		1e-3
+# define K_DIFFUSE		0.6			// Diffuse reflection coefficient [0.0, 1.0]
+# define K_SPECULAR		0.2
 
 //##################
 //# FCT PROTOTYPES #

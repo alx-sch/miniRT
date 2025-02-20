@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 13:21:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/20 22:25:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ static t_vec3	compute_normal(t_ix *ix)
 
 /**
 Computes the shadow ray for a given intersection point and light source.
+Also updates the provided intersection data with the light direction and
+distance as well as the surface normal.
  @param camera_ray_ix	Pointer to the intersection data of the camera ray.
  @param light			Light source data.
 
@@ -134,11 +136,14 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 
 	hit_point = camera_ray_ix->hit_point;
 	shadow_ray.dir = vec3_norm(vec3_sub(light.position, hit_point));
+	camera_ray_ix->light_dir = shadow_ray.dir;
 	shadow_ray.len = vec3_length(vec3_sub(light.position, hit_point));
+	camera_ray_ix->light_dist = shadow_ray.len;
 	normal = compute_normal(camera_ray_ix);
-	offset = vec3_mult(normal, EPSILON);
 	if (camera_ray_ix->hit_obj->cam_in_obj)
-		offset = vec3_mult(offset, -1.0);
+		normal = vec3_mult(normal, -1.0);
+	camera_ray_ix->normal = normal;
+	offset = vec3_mult(normal, EPSILON);
 	shadow_ray.ori = vec3_add(hit_point, offset);
 	return (shadow_ray);
 }

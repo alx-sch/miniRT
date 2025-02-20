@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:23:53 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:42:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:02:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	color_to_hex(t_color color)
 {
 	int	hex;
 
-	hex = (color.r << 16) | (color.g << 8) | color.b;
+	hex = color.r << 16 | color.g << 8 | color.b;
 	return (hex);
 }
 

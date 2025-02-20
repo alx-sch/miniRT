@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/19 17:37:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/20 20:47:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	apply_ambient_light_to_object(t_obj *obj, t_rt *rt)
 	color_in_amb.r = (float)obj->color.r * ambi_r / 255.0;
 	color_in_amb.g = (float)obj->color.g * ambi_g / 255.0;
 	color_in_amb.b = (float)obj->color.b * ambi_b / 255.0;
-	obj->color_in_amb = color_to_hex(color_in_amb);
+	obj->color_in_amb = color_in_amb;
 }
 
 /**
