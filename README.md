@@ -1387,7 +1387,7 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 }
 ```
 
-## Handling colors
+## Handling light and colors
 
 In miniRT there will be three colors taken into consideration. The color of the object, the color of the light source and the color of the ambient light. We move pixel by pixel, and we color each pixel. All the different color components have to be taken into consideration, since they are all present and will all blend together.
 All colors are represented by the values RGB (red, green, blue). Each value can range from 0-255. These components put together can represent any color you can think of.  
