@@ -154,7 +154,7 @@ In a 3D space (as in the real world or in our miniRT), we can use a coordinate s
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/coordinate_system.png" alt="coordinate_system.png" width="400"/>
     <br>
-    <span>A coordinate system with x,y,z.<sup><a href="#footnote2">[2]</a></sup></span>
+    <span>A coordinate system with x,y,z.</span>
 </p>
 
 `x` How far to the right or the left.  
@@ -253,13 +253,13 @@ Pythagoras' theorem says this: "In a right-angled triangle, the square of the hy
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_1.png" alt="Pythagoras_1.png" width="400"/>
     <br>
-    <span>Pythagoras' in a 2D coordinate system. c or vector 1 is the unknown side/hypotenuse, and will tell us the length of the vector.<sup><a href="#footnote2">[2]</a></sup></span>
+    <span>Pythagoras' in a 2D coordinate system. c or vector 1 is the unknown side/hypotenuse, and will tell us the length of the vector.</span>
 </p>
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_2.png" alt="Pythagoras_2.png" width="400"/>
     <br>
-    <span>Pythagoras' in a 3D coordinate system. d is the unkown side/hypotenuse, and will tell us the length of the vector.<sup><a href="#footnote2">[2]</a></sup></span>
+    <span>Pythagoras' in a 3D coordinate system. d is the unkown side/hypotenuse, and will tell us the length of the vector.</span>
 </p>
 
 We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
