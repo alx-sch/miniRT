@@ -321,8 +321,9 @@ Anything in between -1 and 1 will indicate the angle between the two vectors. Th
 3. *Multiply* the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
 4. *Divide* the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
 5. We get 0.729396809.
-- Our result indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
-- The angle between v1 and v2 is approximately 43.16°. We will not look more into how dot product is converted into degrees, as this feels redundant for now.
+
+Our result indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
+The angle between v1 and v2 is approximately 43.16°. We will not look more into how dot product is converted into degrees, as this feels redundant for now.
 
 ---
 
