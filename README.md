@@ -272,7 +272,7 @@ We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3
 
 In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors/*normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
 
-###
+##
 
 **Normalization⚖️**
 
@@ -289,7 +289,7 @@ Normalizing a vector keeps the correct direction, but reduces or increases its m
 4. 0.071428571 + 0.285714286 + 0.642857143 = 1
 5. Since the square root of 1 = 1, the vector v is now normalized.
 
-###
+##
 
 **Dot product📍➡️📍**
 
