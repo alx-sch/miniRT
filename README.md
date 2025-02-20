@@ -133,7 +133,7 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 ## Introduction to basic mathematical terms and concepts
 
 In this part, we will have a look at some important mathematical terms and concepts, needed to build the equations and calculations for miniRT.  
-This part is written while studying the book "The Ray Tracer Challenge" by Jamis Buck, and it is a result of reading and taking notes from this book.
+This part is written while studying the book "The Ray Tracer Challenge" by Jamis Buck (2019), and it is a result of reading and taking notes from this book.
 
 ### Epsilon
 
@@ -339,6 +339,26 @@ Anything in between -1 and 1 will indicate the angle between the two vectors. Th
 
 Our result "0.729396809" indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
 Converted to degrees, the angle between v1 and v2 is approximately 43.16°.
+
+##
+
+**Cross product✖️**
+
+The cross product is similar to the dot product, but instead of returning a scalar, it *returns another vector*. This new vector will be *perpendicular* to both the original vectors. This becomes very handy when setting up the *camera coordinate system*. This is further explained further down in this README, about *camera orientation vectors*.  
+Shortly explained, finding the cross product makes sure that **no matter the camera orientation vector, right and up will always be relative to the orientation**.  
+It's maybe intuitive to think that right (x) would always mean (1,0,0) and up (y) would always mean (0,1,0). However this is only true if z is (0,0,1). If the camera orientation vector is facing diagonally upwards (1,1,1) -- these calculations would be wrong. That's why we need the cross product, to correctly determine what is left, right, up and down -- and that it stays perpendicular to wherever the camera is facing.  
+
+So:
+- If the camera is always fixed, Right = (1,0,0) and Up = (0,1,0) would work.
+- But since the camera can rotate and look in any direction, we use the cross product to ensure Right and Up stay properly aligned.
+- Note that the order of which the calculation happens is very important!
+
+**The calculation of the cross product looks like this:**
+- v3.x = v1.y * v2.z - v1.z * v2.y
+- v3.y = v1.z * v2.x - v1.x * v2.z
+- v3.z = v1.x * v2.y - v1.y * v2.x
+
+The calculation takes two vectors, and returns a new vector that is perpendicular to both original vectors.
 
 ---
 
@@ -1285,6 +1305,10 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	return (vec3_norm(ray_world_dir)); // Return normalized ray direction vector in world space
 }
 ```
+
+## 
+
+---
 
 ## Acknowledgements
 
