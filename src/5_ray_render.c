@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/20 23:06:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:20:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ static void	shade_pixel(t_rt *rt, t_ix *camera_ray_ix, int x, int y)
 	}
 	else
 	{
-		attenuation = 500 / (camera_ray_ix->light_dist * camera_ray_ix->light_dist);
+		attenuation = K_DISTANCE * 100 / (camera_ray_ix->light_dist * camera_ray_ix->light_dist);
 		attenuation = clamp(attenuation, 1.0);
 		//attenuation = 1.0;
 		diffuse = calculate_diffuse(rt, camera_ray_ix);

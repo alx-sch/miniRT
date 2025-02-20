@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/19 17:24:08 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/20 23:36:58 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/utils/0_vector_utils_1.c \
 				$(SRCS_DIR)/utils/0_vector_utils_2.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \
-				$(SRCS_DIR)/utils/2_pixel_utils.c \
+				$(SRCS_DIR)/utils/2_color_utils.c \
 				$(SRCS_DIR)/utils/3_cleanup.c \
 				$(SRCS_DIR)/utils/4_error_exit.c \
 				$(SRCS_DIR)/0_parsing/errors/errors_elements.c \

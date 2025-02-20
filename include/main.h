@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/20 21:52:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:34:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,14 @@ and declaring all function prototypes.
 
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
 # define BG_COLOR		0x303030	// Anthracite (dark grey)
-# define EPSILON 		1e-3
-# define K_DIFFUSE		0.6			// Diffuse reflection coefficient [0.0, 1.0]
+# define EPSILON 		1e-3	// Small value to avoid floating-point errors
+# define K_DIFFUSE		0.7		// Diffuse reflection coefficient [0.0, 1.0]
 # define K_SPECULAR		0.2
+
+// Controls the rate at which light intensity diminishes as the distance
+// increases (the smaller the value, the faster the light intensity decreases).
+// [0.0, INFINITY], but values between 3.0 and 10.0 are recommended.
+# define K_DISTANCE		7.0
 
 //##################
 //# FCT PROTOTYPES #
