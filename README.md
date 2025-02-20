@@ -338,7 +338,7 @@ Anything in between -1 and 1 will indicate the angle between the two vectors. Th
 5. We get 0.729396809.
 
 Our result "0.729396809" indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
-The angle between v1 and v2 is approximately 43.16°. We will not look more into how dot product is converted into degrees, as this feels redundant for now.
+Converted to degrees, the angle between v1 and v2 is approximately 43.16°.
 
 ---
 
