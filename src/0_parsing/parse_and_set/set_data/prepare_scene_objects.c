@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/21 01:36:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:23:57 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ void	prepare_scene_objects(t_rt **rt)
 		else if (obj->object_type == CYLINDER
 			&& is_cam_inside_cylinder((*rt)->scene.cam.pos, obj))
 			obj->cam_in_obj = 1;
-		if (obj->cam_in_obj == 1)
-			printf("Camera is inside object\n");
 		current_obj = current_obj->next;
 	}
 }
