@@ -7,7 +7,7 @@
 <p align="center">
     <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/miniRT_render.png" alt="miniRT_render.png" width="500"/>
     <br>
-    <span>miniRT render of  <a href="https://github.com/Busedame/miniRT/blob/main/scenes/cam_inside_sphere.rt">this</a> scene.</span>
+    <span>miniRT render of  <a href="https://github.com/Busedame/miniRT/blob/main/scenes/cam_inside_sphere.rt">this scene</a>.</span>
 </p>
 
 This project is a collaboration between:
