@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 01:26:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:00:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,16 @@ and declaring all function prototypes.
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
 # define BG_COLOR		0x303030	// Anthracite (dark grey)
 # define EPSILON 		1e-3	// Small value to avoid floating-point errors
-# define K_DIFFUSE		0.7		// Diffuse reflection coefficient [0.0, 1.0]
-# define K_SPECULAR		0.2
+# define K_DIFFUSE		0.7		// Diffuse intensity factor [0.0, 1.0]
+# define K_SPECULAR		0.5		// Specular intensity factor [0.0, 1.0]
 
+// Shininess factor for specular reflection.
+// Controls of how glossy the specular reflection is (the bigger the value, the
+// smaller / more focused the highlight).
+// [0.0, INT_MAX], but values between 3.0 and 10.0 are recommended.
+# define K_SHININESS	5.0
+
+// Fade factor for light intensity.
 // Controls the rate at which light intensity diminishes as the distance
 // increases (the bigger the value, the farther the light reaches).
 // [0.0, INT_MAX], but values between 3.0 and 10.0 are recommended.

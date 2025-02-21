@@ -6,13 +6,12 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 01:50:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:04:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-Functions to compute the camera and shadow rays for a given pixel,
-using intersection data to determine proper ray origins and directions.
+Functions to compute the camera and shadow rays for a given pixel.
 */
 
 #include "main.h"

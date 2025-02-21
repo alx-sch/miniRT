@@ -6,12 +6,21 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 01:51:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:09:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-TBD
+Functions for rendering a 3D scene by tracing rays from the camera and
+calculating intersections with objects in the scene.
+The rendering process includes the following steps:
+ 1.	Trace the camera ray to find the closest intersection with an object.
+ 2. Check for shadows by calculating a shadow ray to determine if the light
+ 	is blocked.
+ 3. Apply diffuse and specular lighting if the point is not in shadow,
+ 	otherwise use ambient color.
+ 4. Set the color of the pixel based on the computed shading.
+ 5. Repeat for every pixel to render the entire scene.
 */
 
 #include "main.h"
