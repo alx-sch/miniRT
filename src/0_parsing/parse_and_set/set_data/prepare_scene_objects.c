@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/20 20:47:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:36:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ Updates an object's color based on ambient light.
 */
 static void	apply_ambient_light_to_object(t_obj *obj, t_rt *rt)
 {
-	float	ambi_r;
-	float	ambi_g;
-	float	ambi_b;
+	double	ambi_r;
+	double	ambi_g;
+	double	ambi_b;
 	t_color	color_in_amb;
 
-	ambi_r = (float)rt->scene.ambi_light.color.r * rt->scene.ambi_light.ratio;
-	ambi_g = (float)rt->scene.ambi_light.color.g * rt->scene.ambi_light.ratio;
-	ambi_b = (float)rt->scene.ambi_light.color.b * rt->scene.ambi_light.ratio;
-	color_in_amb.r = (float)obj->color.r * ambi_r / 255.0;
-	color_in_amb.g = (float)obj->color.g * ambi_g / 255.0;
-	color_in_amb.b = (float)obj->color.b * ambi_b / 255.0;
+	ambi_r = rt->scene.ambi_light.color.r * rt->scene.ambi_light.ratio;
+	ambi_g = rt->scene.ambi_light.color.g * rt->scene.ambi_light.ratio;
+	ambi_b = rt->scene.ambi_light.color.b * rt->scene.ambi_light.ratio;
+	color_in_amb.r = obj->color.r * ambi_r / 255.0;
+	color_in_amb.g = obj->color.g * ambi_g / 255.0;
+	color_in_amb.b = obj->color.b * ambi_b / 255.0;
 	obj->color_in_amb = color_in_amb;
 }
 
@@ -109,6 +109,8 @@ void	prepare_scene_objects(t_rt **rt)
 		else if (obj->object_type == CYLINDER
 			&& is_cam_inside_cylinder((*rt)->scene.cam.pos, obj))
 			obj->cam_in_obj = 1;
+		if (obj->cam_in_obj == 1)
+			printf("Camera is inside object\n");
 		current_obj = current_obj->next;
 	}
 }

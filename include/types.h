@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/20 23:02:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:24:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,25 +95,30 @@ typedef struct s_color
 }	t_color;
 
 /**
-Holds different components of an object's color properties for shading
+Holds different components of an object's color properties for shading.
  - t_color `base`:			The original / base color of the object.
+ - t_color `light`:			The color of the object in the light.
  - t_color `ambient`:		The color of the object in ambient light.
  - t_color `diffuse`:		The color of the object in diffuse light.
- - t_color `specular`:		The color of specular highlights.
- - double `attenuation`:	Factor by which the color is attenuated with
- 							distance [0.0-1.0].
+ - t_color `specular`:		The color of the object in specular light.
+ - double `diff_coef`:		The intensity of the obj's diffuse reflection.
+ - double `spec_coef`:		The intensity of the obj's specular reflection.
+ - double `fade`:			Factor by which the color is fading with distance.
  - t_color `shaded`:		The final color of the object after applying all
  							shading.
 */
-typedef struct s_object_color
+typedef struct s_pixel_shade
 {
 	t_color		base;
+	t_color		light;
 	t_color		ambient;
 	t_color		diffuse;
 	t_color		specular;
-	double		attenuation;
+	double		diff_coeff;
+	double		spec_coeff;
+	double		fade;
 	t_color		shaded;
-}	t_obj_color;
+}	t_shade;
 
 /**
 Structure for storing values used in ray-object intersection calculations,

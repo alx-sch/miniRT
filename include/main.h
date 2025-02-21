@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/20 23:34:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:26:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ and declaring all function prototypes.
 # define K_SPECULAR		0.2
 
 // Controls the rate at which light intensity diminishes as the distance
-// increases (the smaller the value, the faster the light intensity decreases).
-// [0.0, INFINITY], but values between 3.0 and 10.0 are recommended.
-# define K_DISTANCE		7.0
+// increases (the bigger the value, the farther the light reaches).
+// [0.0, INT_MAX], but values between 3.0 and 10.0 are recommended.
+# define K_FADE			7.0
 
 //##################
 //# FCT PROTOTYPES #
@@ -94,35 +94,17 @@ void	find_ix(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ixr);
 t_vec3	compute_camera_ray(int x, int y, t_cam cam);
 t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light);
 
-// 5_ray_render.c
+// 6_pixel_shading.c
+
+t_shade	get_shading(t_rt *rt, t_ix *ix);
+
+// 7_render_scene.c
 
 void	render_scene(t_rt *rt);
 
-// 6_compute_color.c
-void	compute_color(t_vec3 ray_dir, t_rt *rt, t_ix *ix);
-
-// 7_shadow_intersections.c
-
-// int			shadow_check_plane_intersection(t_rt *rt, t_vec3 ray_dir,
-// 				t_plane pl, t_ix **ixr);
-// int			shadow_check_sphere_intersection(t_rt *rt, t_vec3 ray_dir,
-// 				t_sphere sp, t_ix **ixr);
-// int			shadow_check_cyl_intersection(t_rt *rt, t_vec3 ray_dir,
-// 				t_cylinder cy, t_ix **ixr);
-// int			is_ray_in_shadow(t_rt *rt, t_ix *ixr);
-
-// // 8_create_shadow_ray.c
-
-// t_shadow	init_shadow(t_rt *rt, t_ix *ixr, t_vec3 ray_dir);
-// t_vec3		get_normal_at_point(t_vec3 point, t_obj *obj);
-// t_vec3		calculate_cylinder_normal(t_vec3 intersection_point,
-// 				t_obj *obj);
-
-// // 9_shadow_copy_objs.c
-
-// t_cylinder	copy_cylinder(t_cylinder *cyl, t_shadow *shadow);
-// t_sphere	copy_sphere(t_sphere *sp, t_shadow *shadow);
-// t_plane		copy_plane(t_plane *pl, t_shadow *shadow);
+//####################
+//# UTILS PROTOTYPES #
+//####################
 
 // utils/0_vector_utils_1.c
 
@@ -145,10 +127,11 @@ double	calculate_discriminant(double a, double b, double c);
 double	calculate_entry_distance(double a, double b, double discriminant);
 double	calculate_exit_distance(double a, double b, double discriminant);
 
-// utils/2_pixel_utils.c
+// utils/2_color_utils.c
 
 int		color_to_hex(t_color color);
 void	set_pixel_color(t_img *img, int x, int y, int color);
+double	clamp(double value, double max);
 
 // utils/3_cleanup.c
 
