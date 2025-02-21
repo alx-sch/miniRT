@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   2_pixel_utils.c                                    :+:      :+:    :+:   */
+/*   2_color_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:23:53 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:42:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:50:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-Utility functions for working with pixels in the image buffer.
+Utility functions for working with color values.
 */
 
 #include "main.h"
@@ -20,6 +20,7 @@ Utility functions for working with pixels in the image buffer.
 
 int		color_to_hex(t_color color);
 void	set_pixel_color(t_img *img, int x, int y, int color);
+double	clamp(double value, double max);
 
 /**
 Converts an RGB color to its hexadecimal representation.
@@ -35,7 +36,7 @@ int	color_to_hex(t_color color)
 {
 	int	hex;
 
-	hex = (color.r << 16) | (color.g << 8) | color.b;
+	hex = color.r << 16 | color.g << 8 | color.b;
 	return (hex);
 }
 
@@ -70,4 +71,18 @@ void	set_pixel_color(t_img *img, int x, int y, int color)
 
 	pixel_index = (y * WINDOW_W) + x;
 	img->data_ptr[pixel_index] = color;
+}
+
+/**
+Clamps a value to a specified maximum value.
+For example used to avoid color values exceeding the maximum value of 255.
+ @param value The value to clamp.
+
+ @return The clamped value.
+*/
+double	clamp(double value, double max)
+{
+	if (value > max)
+		return (max);
+	return (value);
 }

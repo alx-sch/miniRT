@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 13:07:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:24:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,32 @@ typedef struct s_color
 }	t_color;
 
 /**
+Holds different components of an object's color properties for shading.
+ - t_color `base`:			The original / base color of the object.
+ - t_color `light`:			The color of the object in the light.
+ - t_color `ambient`:		The color of the object in ambient light.
+ - t_color `diffuse`:		The color of the object in diffuse light.
+ - t_color `specular`:		The color of the object in specular light.
+ - double `diff_coef`:		The intensity of the obj's diffuse reflection.
+ - double `spec_coef`:		The intensity of the obj's specular reflection.
+ - double `fade`:			Factor by which the color is fading with distance.
+ - t_color `shaded`:		The final color of the object after applying all
+ 							shading.
+*/
+typedef struct s_pixel_shade
+{
+	t_color		base;
+	t_color		light;
+	t_color		ambient;
+	t_color		diffuse;
+	t_color		specular;
+	double		diff_coeff;
+	double		spec_coeff;
+	double		fade;
+	t_color		shaded;
+}	t_shade;
+
+/**
 Structure for storing values used in ray-object intersection calculations,
 primarily for quadratic equation solutions (e.g., spheres, cylinders).
  - double `a`: 				Coefficient of t² in the quadratic equation.
@@ -154,13 +180,21 @@ Stores the data of the closest intersection between a ray and an object.
  - t_obj `*hit_obj`:	Pointer to the closest obj that the ray intersects with.
  - double `t_hit`:		The closest intersection distance for the ray.
  - t_vec3 `hit_point`:	The point where the ray intersects the object.
- - int `ixn_color`:		The color of the closest intersection.
+ - t_vec3 `normal`:		The normal vector at the intersection point.
+ - t_vec3 `light_dir`:	The normalized direction vector from the hit point to
+ 						the light source.
+ - double `light_dist`:	The distance from the hit point to the light source.
+ - t_cap_hit `cap_hit`:	Indicates if a and which cap was hit during
+ 						cylinder intersection.
 */
 typedef struct s_intersection_data
 {
 	t_obj		*hit_obj;
 	double		t_hit;
 	t_vec3		hit_point;
+	t_vec3		normal;
+	t_vec3		light_dir;
+	double		light_dist;
 	t_cap_hit	cap_hit;
 }	t_ix;
 
@@ -262,7 +296,7 @@ typedef struct u_object
 	t_obj_type	object_type;
 	t_obj_x		x;
 	t_color		color;
-	int			color_in_amb;
+	t_color		color_in_amb;
 	int			cam_in_obj;
 }	t_obj;
 

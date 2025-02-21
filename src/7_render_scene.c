@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   5_ray_render.c                                     :+:      :+:    :+:   */
+/*   7_render_scene.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/19 10:57:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:51:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
-TBD.
+/*
+TBD
 */
 
 #include "main.h"
@@ -56,33 +56,32 @@ static int	handle_shadow_ray(t_rt *rt, t_ix *camera_ray_ix)
 }
 
 /**
-Computes and applies the final color for a pixel based on shadows, reflections,
-and lighting.
+Computes and applies the final color for a pixel based on shadows, diffuse and
+specular lighting.
  - Determines if the point is in shadow.
- - If not, will eventually incorporate reflection and lighting calculations.
+ - If not, will incorporate diffuse and specular lighting.
  - Sets the computed color to the pixel.
  @param rt 				Pointer to the main structure.
  @param camera_ray_ix 	Pointer to the intersection structure to be filled.
  @param x 				The x-coordinate of the pixel.
  @param y 				The y-coordinate of the pixel.
 */
-static void	shade_pixel(t_rt *rt, t_ix *camera_ray_ix, int x, int y)
+static void	shade_pixel(t_rt *rt, t_ix *ix, int x, int y)
 {
-	int	color;
-	int	is_shadowed;
+	int		is_shadowed;
+	t_shade	pix;
 
-	is_shadowed = handle_shadow_ray(rt, camera_ray_ix);
+	is_shadowed = handle_shadow_ray(rt, ix);
 	if (is_shadowed)
-		color = 0x000000; // actually it's obj_color in ambient light
+		pix.shaded = ix->hit_obj->color_in_amb;
 	else
-		color = camera_ray_ix->hit_obj->color_in_amb;
-	set_pixel_color(&rt->mlx.img, x, y, color);
+		pix = get_shading(rt, ix);
+	set_pixel_color(&rt->mlx.img, x, y, color_to_hex(pix.shaded));
 }
 
 /**
-Render a single pixel on the screen by computing the ray direction and finding
+Renders a single pixel on the screen by computing the ray direction and finding
 the closest intersection.
-
  @param rt 	Pointer to the main structure of the program.
  @param x 	The x-coordinate of the pixel.
  @param y 	The y-coordinate of the pixel.
@@ -100,8 +99,7 @@ static void	render_pixel(t_rt *rt, int x, int y)
 }
 
 /**
-Render the entire scene by iterating over each pixel and rendering it.
-
+Renders the entire scene by iterating over each pixel and rendering it.
  @param rt 	Pointer to the main structure of the program.
 */
 void	render_scene(t_rt *rt)
