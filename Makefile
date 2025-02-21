@@ -6,9 +6,13 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/21 01:22:39 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/21 22:07:38 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# Implement light attenuation (fading of light intensity with distance);
+# set FADE to 1 to enable, 0 to disable during compilation ('make FADE=0')
+FADE ?=			1
 
 NAME :=			miniRT
 
@@ -113,13 +117,14 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
-CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)		# Look for headers in these directories
+CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) # Look for headers in these directories
+CFLAGS +=		-DFADE=$(FADE)
 CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
 
 CFLAGS +=		-g -Wpedantic						# Debugging flag, pedantic warnings
 
 ifeq ($(strip $(OS)),Darwin)						# Suppress some errors/warnings on MacOS (due to the way prototypes are defined in MiniLibX)
-	CFLAGS += 		-Wno-strict-prototypes
+	CFLAGS += 	-Wno-strict-prototypes
 endif
 
 ######################
