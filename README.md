@@ -113,7 +113,7 @@ The `.rt` files define the elements and configurations for the scene to be rende
   * **Height**: `210.42`  
   * **Color** in RGB ([0-255]): `0, 0, 255`
 
-To make it easier for the user, the orientation vectors do not need to be perfectly normalized. Vectors such as $(0.707, 0.707, 0)$ are accepted as well, instead of requiring exact values like $(1/\sqrt{2}, 1/\sqrt{2}, 0) = (0.707106..., 0.707106..., 0)$.
+To make it easier for the user, the orientation vectors do not need to be perfectly normalized. Vectors such as $(0.707, 0.707, 0)$ are accepted as well, instead of requiring exact values like $(1/\sqrt{2}, 1/\sqrt{2}, 0) = (0.707106\dots, 0.707106\dots, 0)$.
 
 ---
 ## Introduction to Ray Tracing
