@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:10:11 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 22:30:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/22 08:52:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ properties.
  @param ix	Pointer to the ray/pixel intersection data.
 
  @return	A `t_pix_shade` struct with the computed shading components.
+
+ @note		`FADE` is a preprocessor macro (default: `1` -> fading on).
 */
 t_shade	get_shading(t_rt *rt, t_ix *ix)
 {
