@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_by_spaces.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:20:07 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:28:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/22 11:23:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ char	**ft_split_by_spaces(const char *s)
 	{
 		while (*s && (*s == ' ' || *s == '\t'))
 			s++;
+		if (*s == '#')
+			break;
 		word_arr[i] = ft_word_into_array(s, i, word_arr);
 		if (word_arr[i] == NULL)
 			return (NULL);
