@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_orientation_vector.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:33:28 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 16:58:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:06:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-/*Checks if the values only consist of '+', '-', numbers and decimal point, 
+/*Checks if the values only consist of '+', '-', numbers and decimal point,
 if they are all between -1 and 1, and the if the vector is normalized.*/
 static int	orientation_vector_valid(char **coords)
 {
@@ -30,14 +30,14 @@ static int	orientation_vector_valid(char **coords)
 		|| vec_y < -1 || vec_y > 1
 		|| vec_z < -1 || vec_z > 1)
 		return (1);
-	if (fabs(sqrt(vec_x * vec_x + vec_y * vec_y + vec_z * vec_z) - 1) > 0.0001)
+	if (fabs(sqrt(vec_x * vec_x + vec_y * vec_y + vec_z * vec_z) - 1) > 0.001)
 		return (2);
 	return (0);
 }
 
 /*Checks if the orientation vector of a given object is valid.
 1. Checks if there are 3 coordinates.
-2. Calls orientation_vector_valid() to see if the values only consist of 
+2. Calls orientation_vector_valid() to see if the values only consist of
 '+', '-', numbers and decimal point, if they are all between -1 and 1, and
 the if the vector is normalized.
 If an error occurs, the correct error code is set.*/

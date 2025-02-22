@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 18:08:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:00:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,23 @@
 /*Stores all the data of the current sphere in the linked list of objects.*/
 int	set_sphere(t_scene *scene)
 {
-	t_obj_data	*obj_data;
-	char		**rgb;
+	t_obj	*obj;
+	char	**rgb;
 
-	obj_data = malloc(sizeof(t_obj_data));
-	if (!obj_data)
+	obj = malloc(sizeof(t_obj));
+	if (!obj)
 		return (ERR_MEM_ALLOC);
-	obj_data->sp.object_type = SPHERE;
-	if (set_coordinates(scene->pars.elem_data[1], &obj_data->sp.center.x, \
-		&obj_data->sp.center.y, &obj_data->sp.center.z) != 0)
+	obj->object_type = SPHERE;
+	if (set_coordinates(scene->pars.elem_data[1], &obj->x.sp.center.x, \
+		&obj->x.sp.center.y, &obj->x.sp.center.z) != 0)
 		return (ERR_MEM_ALLOC);
-	obj_data->sp.radius = (ft_atod(scene->pars.elem_data[2]) / 2);
+	obj->x.sp.radius = (ft_atod(scene->pars.elem_data[2]) / 2);
 	rgb = ft_split(scene->pars.elem_data[3], ',');
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
-	set_color(rgb, &obj_data->sp.color.r, &obj_data->sp.color.g, \
-	&obj_data->sp.color.b);
-	obj_data->sp.ixd.oc = vec3_sub(scene->cam.pos, obj_data->sp.center);
-	obj_data->sp.ixd.c = vec3_dot(obj_data->sp.ixd.oc, \
-	obj_data->sp.ixd.oc) - (obj_data->sp.radius * obj_data->sp.radius);
-	if (add_to_object_list(&scene, &obj_data) != 0)
+	set_color(rgb, &obj->color.r, &obj->color.g, &obj->color.b);
+	if (add_to_object_list(&scene, &obj) != 0)
 		return (ERR_MEM_ALLOC);
-	obj_data->sp.hex_color = color_to_hex(obj_data->sp.color);
 	return (0);
 }
 
@@ -53,7 +48,7 @@ int	parse_sphere(t_scene *scene)
 {
 	char	**rgb;
 
-	scene->tot_sp++;
+	scene->pars.tot_sp++;
 	if (!correct_amt_of_fields(scene->pars.elem_data, 4))
 		return (ERR_SP_FIELDS);
 	if (check_coordinates(scene->pars.elem_data[1], &scene->pars.error_code, \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/10 13:16:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:25:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	file_one_line(t_scene *scene)
 	return (0);
 }
 
-/*Uses get next line to get one line at a time (one element at a time). 
-Passes it to check_elements for each line. Returns 0 upon success, or 
+/*Uses get next line to get one line at a time (one element at a time).
+Passes it to check_elements for each line. Returns 0 upon success, or
 an error code indicating the issue upon error.*/
 int	file_line_by_line(t_scene *scene, char *str)
 {
@@ -68,13 +68,12 @@ static void	parsing(t_rt *rt, t_scene *scene, char *file)
 }
 
 /*Checks that the file that's passed as argument to the program is valid input.
-Both the file itself, but also its content. See more of what is 
+Both the file itself, but also its content. See more of what is
 looked for in 'parsing.h'.
 Prints an error message, and exits with a set error code upon error.
 Returns the t_scene struct upon success.*/
 void	parse_and_set_objects(t_rt *rt, int argc, char **argv)
 {
-	init_scene(&rt->scene);
 	if (argc != 2)
 		errors_file(ERR_USAGE, rt);
 	if (check_file_existence(argv[1]))
@@ -84,4 +83,5 @@ void	parse_and_set_objects(t_rt *rt, int argc, char **argv)
 	parsing(rt, &rt->scene, argv[1]);
 	if (rt->scene.pars.error_code != 0)
 		errors_parsing(rt, &rt->scene, &rt->scene.pars);
+	prepare_scene_objects(&rt);
 }

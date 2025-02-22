@@ -6,12 +6,29 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 13:14:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:41:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+/**
+The main function initializes and runs the `miniRT` ray tracing program.
+
+1.	Allocates and initializes memory for the scene structure (`t_rt`).
+2.	Parses the input arguments and sets up scene objects from the provided
+	`.rt` file.
+3.	Initializes the graphical window and sets up the rendering environment
+	using MLX.
+4.	Renders the scene by tracing rays, computing shading, and applying lighting.
+5.	Displays the rendered image in the window.
+6.	Starts the event loop to handle user input and window events.
+7.	Cleans up resources and exits the program.
+
+ @return	`0` upon successful execution. If an error occurs, the program exits
+ 			with an appropriate error code (see `parsing.h` for error codes set
+			during parsing).
+*/
 int	main(int argc, char **argv)
 {
 	t_rt	*rt;
@@ -26,4 +43,5 @@ int	main(int argc, char **argv)
 		rt->mlx.img.img_ptr, 0, 0);
 	start_event_loop(rt);
 	cleanup(&rt);
+	return (0);
 }

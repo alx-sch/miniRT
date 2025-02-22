@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:42 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 12:20:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:43:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ Checks the value of errno:
 
 In either case, all resources in the `rt` structure are freed before the
 program exits.
-
  @param msg 	Custom error message to print.
  @param rt 		Pointer to the main structure of the program.
 				Pass `NULL` if `rt` is not initialized.

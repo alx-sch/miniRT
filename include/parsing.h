@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/10 13:25:14 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/21 09:58:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ typedef struct s_scene			t_scene;
 typedef struct s_ambi_light		t_ambi_light;
 typedef struct s_camera			t_cam;
 typedef struct s_light			t_light;
-typedef union u_object_data		t_obj_data;
+typedef struct u_object			t_obj;
+typedef struct s_color			t_color;
 
 /*
 	ERROR CODES -- PARSING
@@ -247,6 +248,7 @@ indicate if they occure more than once.
 - char *element:		Used to store a line from the rt-file, using gnl.
 - char **elem_data:		Used to store a line from the rt-file, separated by
 spaces.
+- int 'tot_sp', 'tot_pl' and 'tot_cyl': Stores total count of each object.
 */
 typedef struct s_pars
 {
@@ -257,6 +259,9 @@ typedef struct s_pars
 	int		error_code;
 	char	*element;
 	char	**elem_data;
+	int		tot_sp;
+	int		tot_pl;
+	int		tot_cyl;
 }	t_pars;
 
 /*
@@ -264,105 +269,106 @@ typedef struct s_pars
 */
 
 // 0_parsing/parsing.c
-void		parse_and_set_objects(t_rt *rt, int argc, char **argv);
+void	parse_and_set_objects(t_rt *rt, int argc, char **argv);
 
 // 0_parsing/errors/errors_elements.c
-void		sphere_errors(t_pars *parsing, int count);
-void		plane_errors(t_pars *parsing, int count);
-void		cylinder_errors(t_pars *parsing, int count);
+void	sphere_errors(t_pars *parsing, int count);
+void	plane_errors(t_pars *parsing, int count);
+void	cylinder_errors(t_pars *parsing, int count);
 
 // 0_parsing/errors/errors_unique_elements.c
-void		ambience_errors(t_pars *parsing);
-void		camera_errors(t_pars *parsing);
-void		light_errors(t_pars *parsing);
+void	ambience_errors(t_pars *parsing);
+void	camera_errors(t_pars *parsing);
+void	light_errors(t_pars *parsing);
 
 // 0_parsing/errors/errors.c
-void		errors_file(int error_code, t_rt *rt);
-void		errors_parsing(t_rt *rt, t_scene *scene, t_pars *pars);
+void	errors_file(int error_code, t_rt *rt);
+void	errors_parsing(t_rt *rt, t_scene *scene, t_pars *pars);
 
 // 0_parsing/errors/set_error_and_return.c
-int			set_error_and_return(char **arr, int **parsing_error, \
-int error_code);
+int		set_error_and_return(char **arr, int **parsing_error, int error_code);
 
 // 0_parsing/free/free_array.c
-int			ft_freearray(char **arr);
+int		ft_freearray(char **arr);
 
 // 0_parsing/free/free_parsing.c
-void		free_parsing(t_pars *parsing);
+void	free_parsing(t_pars *parsing);
 
 // 0_parsing/free/free_scene.c
-void		free_scene_and_exit(t_scene *scene, t_rt *rt);
-void		free_scene(t_scene *scene);
+void	free_scene_and_exit(t_scene *scene, t_rt *rt);
+void	free_scene(t_scene *scene);
 
 // 0_parsing/init/init_scene.c
-void		init_parsing(t_pars *parsing);
-void		init_scene(t_scene *scene);
+void	init_parsing(t_pars *parsing);
+void	init_scene(t_scene *scene);
 
 // 0_parsing/init/init_unique_elements.c
-void		init_ambience(t_ambi_light *amb);
-void		init_camera(t_cam *cam);
-void		init_light(t_light *light);
+void	init_ambience(t_ambi_light *amb);
+void	init_camera(t_cam *cam);
+void	init_light(t_light *light);
 
 // 0_parsing/parse_and_set/check_data/check_color.c
-int			check_color(char **rgb, int *parsing_error, int error_code);
+int		check_color(char **rgb, int *parsing_error, int error_code);
 
 // 0_parsing/parse_and_set/check_data/check_coordinates.c
-int			check_coordinates(char *input_coords, int *parsing_error, \
-int error_code);
+int		check_coordinates(char *input_coords, int *parsing_error,
+			int error_code);
 
 // 0_parsing/parse_and_set/check_data/check_file.c
-int			check_file_existence(char *str);
-int			check_file_extension(char *str);
+int		check_file_existence(char *str);
+int		check_file_extension(char *str);
 
 // 0_parsing/parse_and_set/check_data/check_identifiers.c
-int			all_necessary_identifiers(t_pars *pars);
-int			check_unique_identifier(t_pars *parsing, char *str);
+int		all_necessary_identifiers(t_pars *pars);
+int		check_unique_identifier(t_pars *parsing, char *str);
 
 // 0_parsing/parse_and_set/check_data/check_orientation_vector.c
-int			check_orientation_vector(char *input_coords, int *parsing_error, \
-int error_code);
+int		check_orientation_vector(char *input_coords, int *parsing_error,
+			int error_code);
 
 // 0_parsing/parse_and_set/check_data/correct_amt_of_fields.c
-int			correct_amt_of_fields(char **arr, int expected_len);
+int		correct_amt_of_fields(char **arr, int expected_len);
 
 // 0_parsing/parse_and_set/elements/add_to_object_list.c
-int			add_to_object_list(t_scene **scene, t_obj_data **obj_data);
+int		add_to_object_list(t_scene **scene, t_obj **obj);
 
 // 0_parsing/parse_and_set/elements/check_and_set_single_element.c
-int			check_and_set_single_element(t_scene *scene);
+int		check_and_set_single_element(t_scene *scene);
 
 // 0_parsing/parse_and_set/elements/check_and_set (Directory)
-int			parse_and_set_ambience(t_scene *scene);
-int			parse_and_set_camera(t_scene *scene);
-int			parse_and_set_light(t_scene *scene);
-int			parse_sphere(t_scene *scene);
-int			parse_plane(t_scene *scene);
-int			parse_cylinder(t_scene *scene);
+int		parse_and_set_ambience(t_scene *scene);
+int		parse_and_set_camera(t_scene *scene);
+int		parse_and_set_light(t_scene *scene);
+int		parse_sphere(t_scene *scene);
+int		parse_plane(t_scene *scene);
+int		parse_cylinder(t_scene *scene);
 
 // 0_parsing/parse_and_set/set_data (Directory)
-int			set_coordinates(char *input_coords, double *x, double *y, \
-double *z);
-int			set_orientation_vector(char *input_coords, double *x, double *y, \
-double *z);
-void		set_color(char **rgb, unsigned char *r, unsigned char *g, \
-unsigned char *b);
+void	prepare_scene_objects(t_rt **rt);
+t_color	mix_ambient_light(t_color object_color, t_color ambient_color);
+double	adjust_to_color_range(double value, double min, double max);
+void	set_color(char **rgb, unsigned char *r, unsigned char *g,
+			unsigned char *b);
+int		set_coordinates(char *input_coords, double *x, double *y, double *z);
+int		set_orientation_vector(char *input_coords, double *x, double *y,
+			double *z);
 
 // 0_parsing/utils/array_length.c
-int			array_length(char **array);
+int		array_length(char **array);
 
 // 0_parsing/utils/ft_atod.c
-double		ft_atod(char *str);
+double	ft_atod(char *str);
 
 // 0_parsing/utils/ft_split_by_spaces.c
-char		**ft_split_by_spaces(const char *s);
+char	**ft_split_by_spaces(const char *s);
 
 // 0_parsing/utils/ft_strchr_index.c
-int			ft_strchr_index(char *str, char c);
+int		ft_strchr_index(char *str, char c);
 
 // 0_parsing/utils/only_numbers.c
-int			only_numbers_and_newline(char *str);
-int			only_numbers_dec_pt_and_newline(char *str);
-int			only_numbers_single_signs_and_dec_pt(char *str);
-int			only_numbers_and_dec_pt(char *str);
+int		only_numbers_and_newline(char *str);
+int		only_numbers_dec_pt_and_newline(char *str);
+int		only_numbers_single_signs_and_dec_pt(char *str);
+int		only_numbers_and_dec_pt(char *str);
 
 #endif

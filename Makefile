@@ -6,9 +6,13 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2024/12/09 12:22:34 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/22 08:48:23 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# Implement light attenuation (fading of light intensity with distance);
+# set FADE to 1 to enable, 0 to disable during compilation ('make FADE=0')
+FADE ?=			1
 
 NAME :=			miniRT
 
@@ -29,24 +33,23 @@ SRCS_DIR :=		src
 SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/1_mlx_initialization.c \
 				$(SRCS_DIR)/2_event_handling.c \
-				$(SRCS_DIR)/3_ray_plane_intersection.c \
-				$(SRCS_DIR)/3_ray_sphere_intersection.c \
-				$(SRCS_DIR)/3_ray_cylinder_intersection.c \
-				$(SRCS_DIR)/4_ray_intersections.c \
-				$(SRCS_DIR)/5_ray_render.c \
+				$(SRCS_DIR)/3_ray_hit_plane.c \
+				$(SRCS_DIR)/3_ray_hit_sphere.c \
+				$(SRCS_DIR)/3_ray_hit_cylinder.c \
+				$(SRCS_DIR)/4_find_intersection.c \
+				$(SRCS_DIR)/5_compute_rays.c \
+				$(SRCS_DIR)/6_pixel_shading.c \
+				$(SRCS_DIR)/7_render_scene.c \
 				$(SRCS_DIR)/utils/0_vector_utils_1.c \
 				$(SRCS_DIR)/utils/0_vector_utils_2.c \
 				$(SRCS_DIR)/utils/1_quadratic_utils.c \
-				$(SRCS_DIR)/utils/2_pixel_utils.c \
+				$(SRCS_DIR)/utils/2_color_utils.c \
 				$(SRCS_DIR)/utils/3_cleanup.c \
 				$(SRCS_DIR)/utils/4_error_exit.c \
-				\
 				$(SRCS_DIR)/0_parsing/errors/errors_elements.c \
 				$(SRCS_DIR)/0_parsing/errors/errors_unique_elements.c \
 				$(SRCS_DIR)/0_parsing/errors/errors.c \
 				$(SRCS_DIR)/0_parsing/errors/set_error_and_return.c \
-				$(SRCS_DIR)/0_parsing/init/init_scene.c \
-				$(SRCS_DIR)/0_parsing/init/init_unique_elements.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/check_data/check_orientation_vector.c \
@@ -57,10 +60,11 @@ SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set_single_element.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/amb_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cam_parse_and_set.c \
-				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/sp_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/pl_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/cyl_parse_and_set.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/elements/check_and_set/light_parse_and_set.c \
+				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/prepare_scene_objects.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_coordinates.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_color.c \
 				$(SRCS_DIR)/0_parsing/parse_and_set/set_data/set_orientation_vector.c \
@@ -113,13 +117,14 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
-CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)		# Look for headers in these directories
+CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) # Look for headers in these directories
+CFLAGS +=		-DFADE=$(FADE)
 CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
 
 CFLAGS +=		-g -Wpedantic						# Debugging flag, pedantic warnings
 
 ifeq ($(strip $(OS)),Darwin)						# Suppress some errors/warnings on MacOS (due to the way prototypes are defined in MiniLibX)
-	CFLAGS += 		-Wno-strict-prototypes
+	CFLAGS += 	-Wno-strict-prototypes
 endif
 
 ######################

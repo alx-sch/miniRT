@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:45:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/09 18:25:08 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:18:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ int	parse_and_set_ambience(t_scene *scene)
 	}
 	set_color(rgb, &scene->ambi_light.color.r, &scene->ambi_light.color.g, \
 	&scene->ambi_light.color.b);
-	scene->ambi_light.hex_color = color_to_hex(scene->ambi_light.color);
 	return (scene->pars.error_code);
 }

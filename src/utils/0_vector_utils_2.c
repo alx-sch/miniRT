@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:35:34 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 01:07:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:41:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ Utility functions for working with 3D vectors.
 
 t_vec3	vec3_new(double x, double y, double z);
 t_vec3	vec3_norm(t_vec3 vec);
+t_vec3	vec3_scale(t_vec3 v, double scalar);
 
 /**
 Function to create a new 3D vector with specified x, y, and z components.
-
  @param x	The x-component of the vector.
  @param y	The y-component of the vector.
  @param z	The z-component of the vector.
@@ -42,9 +42,7 @@ t_vec3	vec3_new(double x, double y, double z)
 
 /**
 Function to normalize a 3D vector.
-
 A vector is normalized when its length (or magnitude) is 1.0.
-
  @param v 	The vector to normalize.
 
  @return 	The normalized vector.
@@ -70,4 +68,32 @@ t_vec3	vec3_norm(t_vec3 vec)
 		vec.z *= inv_length;
 	}
 	return (vec);
+}
+
+/**
+Function to scale a 3D vector by a scalar value.
+ @param v 		The vector to scale.
+ @param scalar 	The scalar value to multiply the vector by.
+
+ @return 		The resulting scaled vector.
+*/
+t_vec3	vec3_scale(t_vec3 v, double scalar)
+{
+	t_vec3	result;
+
+	result.x = v.x * scalar;
+	result.y = v.y * scalar;
+	result.z = v.z * scalar;
+	return (result);
+}
+
+/**
+Function to calculate the length of a 3D vector (its magnitude).
+ @param v 	The vector to calculate the length of.
+
+ @return 	The length of the vector.
+*/
+double	vec3_length(t_vec3 v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }

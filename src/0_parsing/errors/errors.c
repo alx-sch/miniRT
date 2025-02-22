@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:59:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/18 00:29:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	non_element_errors(t_pars *parsing)
 }
 
 /*Identifies where the error is depending on the error code, and calls
-a function to the corresponding part. Also frees all allocated memory 
+a function to the corresponding part. Also frees all allocated memory
 and exits the program with an error code to indicate the issue.*/
 void	errors_parsing(t_rt *rt, t_scene *scene, t_pars *parsing)
 {
@@ -59,11 +59,11 @@ void	errors_parsing(t_rt *rt, t_scene *scene, t_pars *parsing)
 	else if (parsing->error_code >= 20 && parsing->error_code <= 25)
 		light_errors(parsing);
 	else if (parsing->error_code >= 26 && parsing->error_code <= 31)
-		sphere_errors(parsing, scene->tot_sp);
+		sphere_errors(parsing, parsing->tot_sp);
 	else if (parsing->error_code >= 32 && parsing->error_code <= 39)
-		plane_errors(parsing, scene->tot_pl);
+		plane_errors(parsing, parsing->tot_pl);
 	else if (parsing->error_code >= 40 && parsing->error_code <= 49)
-		cylinder_errors(parsing, scene->tot_cyl);
+		cylinder_errors(parsing, parsing->tot_cyl);
 	ft_putstr_fd(RESET, 2);
 	free_scene_and_exit(scene, rt);
 }

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2024/12/09 20:09:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:00:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,22 @@ and declaring all function prototypes.
 //#############
 
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
-# define BG_COLOR		0x2B2B2B // Anthracite (dark grey)
+# define BG_COLOR		0x303030	// Anthracite (dark grey)
+# define EPSILON 		1e-3	// Small value to avoid floating-point errors
+# define K_DIFFUSE		0.7		// Diffuse intensity factor [0.0, 1.0]
+# define K_SPECULAR		0.5		// Specular intensity factor [0.0, 1.0]
+
+// Shininess factor for specular reflection.
+// Controls of how glossy the specular reflection is (the bigger the value, the
+// smaller / more focused the highlight).
+// [0.0, INT_MAX], but values between 3.0 and 10.0 are recommended.
+# define K_SHININESS	5.0
+
+// Fade factor for light intensity.
+// Controls the rate at which light intensity diminishes as the distance
+// increases (the bigger the value, the farther the light reaches).
+// [0.0, INT_MAX], but values between 3.0 and 10.0 are recommended.
+# define K_FADE			7.0
 
 //##################
 //# FCT PROTOTYPES #
@@ -61,30 +76,42 @@ void	init_mlx(t_rt *rt);
 
 void	start_event_loop(t_rt *rt);
 
-// 3_ray_plane_intersection.c
+// 3_ray_hit_plane.c
 
-int		ray_intersect_plane(t_vec3 ray_dir, t_plane *plane, double *t);
+int		ray_hit_plane(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
 
-// 3_ray_sphere_intersection.c
+// 3_ray_hit_sphere.c
 
-int		ray_intersect_sphere(t_vec3 ray_dir, t_sphere *sphere, double *t);
+int		ray_hit_sphere(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t);
 
-// 3_ray_cylinder_intersection.c
+// 3_ray_hit_cylinder.c
 
-int		ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir,
-			t_cylinder *cylinder, double *t);
-int		ray_intersect_cap_top(t_vec3 ray_origin, t_vec3 ray_dir,
-			t_cylinder *cylinder, double *t);
-int		ray_intersect_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir,
-			t_cylinder *cylinder, double *t);
+int		ray_hit_cyl(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj, double *t);
+int		ray_hit_cap_top(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj,
+			double *t);
+int		ray_hit_cap_bottom(t_vec3 ray_origin, t_vec3 ray_dir, t_obj *obj,
+			double *t);
 
-// 4_ray_intersections.c
+// 4_find_intersection.c
 
-int		find_closest_intersection(t_vec3 ray_dir, t_rt *rt);
+void	find_ix(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ixr);
 
-// 5_ray_render.c
+// 5_compute_rays.c
+
+t_vec3	compute_camera_ray(int x, int y, t_cam cam);
+t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light);
+
+// 6_pixel_shading.c
+
+t_shade	get_shading(t_rt *rt, t_ix *ix);
+
+// 7_render_scene.c
 
 void	render_scene(t_rt *rt);
+
+//####################
+//# UTILS PROTOTYPES #
+//####################
 
 // utils/0_vector_utils_1.c
 
@@ -98,6 +125,8 @@ double	vec3_dot(t_vec3 v1, t_vec3 v2);
 
 t_vec3	vec3_new(double x, double y, double z);
 t_vec3	vec3_norm(t_vec3 vec);
+t_vec3	vec3_scale(t_vec3 v, double scalar);
+double	vec3_length(t_vec3 v);
 
 // utils/1_quadratic_utils.c
 
@@ -105,10 +134,11 @@ double	calculate_discriminant(double a, double b, double c);
 double	calculate_entry_distance(double a, double b, double discriminant);
 double	calculate_exit_distance(double a, double b, double discriminant);
 
-// utils/2_pixel_utils.c
+// utils/2_color_utils.c
 
 int		color_to_hex(t_color color);
 void	set_pixel_color(t_img *img, int x, int y, int color);
+double	clamp(double value, double max);
 
 // utils/3_cleanup.c
 

@@ -4,10 +4,31 @@
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
 </p>
 
-This project is a collaborative effort between:
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/miniRT_render.png" alt="miniRT_render.png" width="500"/>
+    <br>
+    <span>miniRT render of  <a href="https://github.com/Busedame/miniRT/blob/main/scenes/cam_inside_sphere.rt">this scene</a>.</span>
+</p>
+
+This project is a collaboration between:
 
 - **[Natalie](https://github.com/busedame)**: Responsible for the  `.rt` file parser and the implementation of lighting and shadows.
 - **[Alex](https://github.com/alx-sch)**: Focused on MiniLibX (graphical library) integration, ray-object intersections, the renderer, and this README.
+
+---
+
+## Overview
+
+- **[How to Use](https://github.com/Busedame/miniRT?tab=readme-ov-file#how-to-use)**: Building miniRT and defining scene elements in `.rt` files.
+- **[Introduction to Ray Tracing](https://github.com/Busedame/miniRT/edit/main/README.md#introduction-to-ray-tracing)**
+- **[Ray-Object Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT.
+  - [Ray Equation](https://github.com/Busedame/miniRT/edit/main/README.md#ray-equation)
+  - [Quadratic Equation](https://github.com/Busedame/miniRT/edit/main/README.md#quadratic-equation)
+  - [Plane Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#plane-intersection)
+  - [Sphere Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#sphere-intersection)
+  - [Cylinder Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#cylinder-intersection)
+
+---
 
 ## How to Use
 
@@ -16,20 +37,34 @@ This project is a collaborative effort between:
    git clone https://github.com/Busedame/miniRT miniRT && cd miniRT
    ```
    
-2. Build the project using the provided Makefile:
+2. Build the project:
    ```
    make
    ```
-
-3. Follow the instructions provided in the output to run the program.
+   
+3. **macOS Users:** Install X11 via XQuartz if needed:
+   ```
+   brew install xquartz
+   ```
+   If Homebrew is not installed, first run:
+   ```
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+   After installation, restart your Mac or run:
+   ```
+   export DISPLAY=:0
+   ```
+4. Run the program following the instructions in the output.
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
+[MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows and handling graphics/events.
 
 ---
 
-### Raytracing Files (.rt files)
+### Ray Tracing Files (.rt files)
 
-The `.rt` files define the elements and configurations for the scene to be rendered:
+Our miniRT implementation uses a left-handed coordinate system, meaning that increasing values of x move an object to the right, y moves it up, and z moves it away from the camera.
+The `.rt` files define the elements and configurations for the scene to be rendered: 
 
 #### Mandatory Elements
 
@@ -76,8 +111,336 @@ The `.rt` files define the elements and configurations for the scene to be rende
   * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
   * **Diameter**: `30`  
   * **Height**: `210.42`  
-  * **Color** in RGB ([0-255]): `0, 0, 255`
- 
+  * **Color** in RGB ([0-255]): `0, 0, 255`    
+
+---
+## Introduction to Ray Tracing
+
+Ray tracing is a rendering technique that simulates the way light interacts with objects to create realistic images. Here, algorithms compute the color of each pixel by figuring out where the light came from for that pixel: By tracing the path of individual rays of light as they bounce off surfaces, it can produce highly detailed reflections, shadows, and global illumination.[¹](#footnote1)  
+
+This method was popular in early static computer graphics —think of those iconic shiny spheres on checkerboard floors in 1980s / 1990s renders— but was somewhat niche due to its computational expense. However, with advancements in hardware, ray tracing is experiencing a renaissance in dynamic applications like real-time gaming, CGI, and architectural visualization.[¹](#footnote1)
+
+This project, **miniRT**, aims to build a simple yet functional ray tracer from scratch in C, exploring the fundamentals of vector calculations and rendering.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_tracing_process.png" alt="ray_tracing_process.png" width="400"/>
+    <br>
+    <span><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+			     
+---
+
+## Introduction to basic mathematical terms and concepts
+
+In this part, we will have a look at some important mathematical terms and concepts, needed to build the equations and calculations for miniRT.  
+This part is written while studying the book "The Ray Tracer Challenge" by Jamis Buck (2019), and it is a result of reading and taking notes from this book.
+
+### Epsilon
+
+Since we are dealing with floating point numbers (e.g. 1.5512) in our calculations, we need to account for floating point precision errors. This means that two numbers that should be seen as equivalent, can end up being shown as different. This happens because of round off errors happening on a binary level.  
+To take this into consideration, we can use an `EPSILON` value. This is a very small value (e.g. 1-e6 or 0.000001).
+```bash
+	Instead of this:
+	if (a < 0)
+
+	Do this:
+	if (a < EPSILON)
+```
+
+### Vectors
+
+In a 3D space (as in the real world or in our miniRT), we can use a coordinate system to determine a *point in space*. This essentially means *where* something is located in a certain space.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/coordinate_system.png" alt="coordinate_system.png" width="400"/>
+    <br>
+    <span>A coordinate system with x,y,z.</span>
+</p>
+
+`x` How far to the right or the left.  
+`y` How far up or down.  
+`z` How close or far away from the viewer.  
+
+A **vector** works similar, and can be seen as a line that's giving us information about two things:
+- The direction it is pointing to.
+- How long it is.
+
+A vector gets determined by its x,y,z coordinates, as in a 3D coordinate system.
+Since a vector needs two points to be defined, we can look at it like this:
+- `start point` is (0,0,0)
+- `vector point` is (2,4,1)
+- To visualize how this works: Draw one point at 0,0,0 and draw a line to point 2,4,1. The direction of the vector will be determined by in which direction this line is going, starting from start point.
+
+However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*. Note that this is only used in the first few examples, as it is not something we have implemented in the project. It is mostly used as a more visual example of how points and vectors can be distinguished.  
+- `w` If it is a point (set to 1), if it is a vector (set to 0).  
+
+##
+
+**Adding a vector direction to a point➕**
+
+Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector.  
+**We add the values of point a and vector together:**  
+- a.x (2) + v.x (3) = b.x (5)
+- a.y (5) + v.y (4) = b.y (9)
+- a.z (-1) + v.z (1) = b.z (0)
+- a.w (1) + v.w (0) = b.w (1)
+
+And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
+
+Code example:
+```bash
+t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
+	result.z = v1.z + v2.z;
+	return (result);
+}
+```
+
+##
+
+**Finding a vector direction between two points➖**
+
+Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are talking about miniRT, let's give them the following roles:
+- `point a` = Light source coordinates.
+- `point b` = Object coordinates.
+
+We want to find a vector that gives us the direction from object to light source.  
+The direction of a vector between two points can be seen as this formula:
+```bash
+	direction (x,y,z,0) = dest (x,y,z,1) - origin (x,y,z,1)
+```
+**We subtract the values of point b from point a == light_coords - object_coords == a - b.**  
+- a.x (2) - b.x (3) = v.x (-1)
+- a.y (5) - b.y (4) = v.y (1)
+- a.z (-1) - b.z (1) = v.z (-2)
+- a.w (1) - b.w (1) = v.w (0)
+
+In order to make the vector point from the object to the light source, subtract the object’s coordinates from the light source’s coordinates. This way, the vector will point in the direction from the object to the light source.
+
+💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
+**So:** In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
+
+Code example:
+```bash
+t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	return (result);
+}
+```
+
+##
+
+**Finding the opposite direction of a vector🔃**
+
+Say we have a vector pointing from a surface to the light source. What can we do to reverse the direction -- so make it point *from* the light source *to* the surface?  
+**We introduce a zero vector (0,0,0,0) subtract vector v (2,4,1,0) from vector zero, and get new vector:**  
+- zv.x (0) - v.x (2) = nv.x (-2)
+- zv.y (0) - v.y (4) = nv.y (-4)
+- zv.z (0) - v.z (1) = nv.z (-1)
+- zv.w (0) - v.w (0) = nv.w (0)
+
+Here we are essentially just reversing the *sign* of the different coordinates of vector v. Another (and much more straightforward) way to do this, would be just reversing the sign of vector v. **So + becomes -, and - becomes +**.
+
+##
+
+**Finding the distance from start to a point🏃‍♀️**
+
+If you have a vector, and you want to find a point that is 3.5 times further in the vector direction, e.g. to see where a ray intersects a sphere. 3.5 would be the *scalar* value. Multiplying with this value, *scales* the vector - meaning that each component (x,y,z,w) gets multiplied with the same value (3.5).  
+**We have a vector v (2,-1,3) and scale it by 3.5:**  
+- v.x (2) * 3.5 = 7
+- v.y (-1) * 3.5 = -3.5
+- v.z (3) * 3.5 = 10.5
+
+The result after scaling gives us a point (7,-3.5,10.5). This point will be 3.5 times further away from our original point, moved in the direction of vector v.
+
+Code example:
+```bash
+t_vec3	vec3_mult(t_vec3 vec, double scalar)
+{
+	t_vec3	result;
+
+	result.x = vec.x * scalar;
+	result.y = vec.y * scalar;
+	result.z = vec.z * scalar;
+	return (result);
+}
+```
+
+##
+
+**Finding the length of a vector📏**
+
+Until now, we have mainly looked at different ways to figure out vector directions. Now, what about the length, or the *magnitude* of a vector? This means how far you would travel in a straight line, if you were to walk from one end of the vector to the other.  
+
+Do you remember Pythagoras' theorem?  
+
+$$
+a² + b² = c²
+$$
+
+Pythagoras' theorem says this: "In a right-angled triangle, the square of the hypotenuse side is equal to the sum of squares of the other two sides“. I found it a bit hard to figure out exactly why this applies to finding the length of a vector, but I will show two very poorly made drawings. I have tried to show exactly why this makes sense.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_1.png" alt="Pythagoras_1.png" width="400"/>
+    <br>
+    <span>Pythagoras' in a 2D coordinate system. c or vector 1 is the unknown side/hypotenuse, and will tell us the length of the vector.</span>
+</p>
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_2.png" alt="Pythagoras_2.png" width="400"/>
+    <br>
+    <span>Pythagoras' in a 3D coordinate system. d is the unkown side/hypotenuse, and will tell us the length of the vector.</span>
+</p>
+
+We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
+1. v.x (1) = 1 * 1 = 1
+2. v.y (2) = 2 * 2 = 4
+3. v.z (3) = 3 * 3 = 9
+4. 1 + 4 + 9 = 14
+5. Since 14 is equivalent to x², and we want to find x, we need to take the *square root* of 14.
+6. The magnitude of vector v is 3.741657387.
+
+In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors/*normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
+
+Code example:
+```bash
+double	vec3_length(t_vec3 v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+```
+
+##
+
+**Normalization⚖️**
+
+Normalizing a vector keeps the correct direction, but reduces or increases its magnitude to 1. In miniRT we don't accept orientation vectors that are not normalized, but whenever a new vector is created - we make sure to normalize it each time.  
+
+**You normalize a vector by dividing each of its components by its magnitude:**
+1. In our previous example we had a vector v (1,2,3). After using Pythagoras' theorem (multiplying each value with itself one time, adding them together, then square root of the result), we figured out its magnitude was 3.741657387.
+2. We divide each of its components by the magnitude (1 / 3.741657387, 2 / 3.741657387, 3 / 3.741657387).
+3. Vector v now has the following coordinates (0.267261242, 0.534522484, 0.801783726).
+
+**Checking if the vector is normalized:**
+1. We use Pythagoras' on the new values of vector v.
+3. 0.267261242² + 0.534522484² + 0.801783726² = 1²
+4. 0.071428571 + 0.285714286 + 0.642857143 = 1
+5. Since the square root of 1 = 1, the vector v is now normalized.
+
+Code example:
+```bash
+t_vec3	vec3_norm(t_vec3 vec)
+{
+	double	length;
+	double	inv_length;
+
+	length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+	if (length > 1e-6)
+	{
+		inv_length = 1.0 / length;
+		vec.x *= inv_length;
+		vec.y *= inv_length;
+		vec.z *= inv_length;
+	}
+	return (vec);
+}
+```
+
+##
+
+**Dot product📍➡️📍**
+
+The dot product is also called a scalar product or inner product. It tells us *how aligned* two vectors are. This essentially means how big the angle between them are. Well, why not only use angles then, like 90°, 180°, etc.? That would be more computationally expensive, as it would require trigonometric functions. The dot product is a simple arithmetic operation, and serves the same purpose.  
+
+So how is it calculated? It takes two vectors and returns a *scalar value*. The dot product is computed as the *sum of the products of the corresponding components of each vector*.  
+It essentially looks like this (assuming both vectors are normalized):
+```bash
+	float	dot(vec a, vec b)
+	{
+		return (a.x * b.x + a.y * b.y + a.z * b.z);
+	}
+```
+It is a bit hard to understand what actually happens, but think about this:
+- If the *dot product is 0*, the vectors are perpendicular (90°).
+- If the *dot product is 1*, the vectors are *identical* (0°).
+- If the *dot product is -1*, the vectors are pointing in *opposite* directions (180°).
+- The *smaller* the dot product, the *larger* the angle between the two vectors.
+- The *greater* the dot product, the *smaller* the angle between the two vectors.
+
+💡 Note: Since we only operate with unit vectors (length of 1), the dot product is equivalent to the *cosine of the angle* between them. This also means that the *maximum* dot product is 1, and the *minimum* dot product is -1.  
+If the vectors were NOT normalized, we would have to also take the cosine of the result to keep it between the range of -1 and 1.  
+
+**Let's do some examples with two normalized vectors:**
+
+With vectors v1 (0,0,1) and v2 (1,0,0):
+- We do our dot product calculation, which leaves us with the result 0.
+- Since the result is 0, we know that these vectors are perpendicular to each other.
+
+With vectors v1 (1,0,0) and v2 (1,0,0)
+- We do our dot product calculation, which leaves us with the result 1.
+- Since the result is 1, we know that these vectors are identical.
+
+With vectors v1 (-1,0,0) and v2 (1,0,0)
+- We do our dot product calculation, which leaves us with the result -1.
+- Since the result is -1, we know that these vectors are pointing in opposite directions.
+
+Anything in between -1 and 1 will indicate the angle between the two vectors. The closer the dot product is to 1, the smaller the angle is (since 1 would make them identical). The closer the dot product is to -1, the greater the angle is (since -1 would make them opposite).
+
+**Let's do an example with two not-normalized vectors, v1 (2,1,4) and v2 (3,4,2):**  
+
+1. Find the *dot product* of v1 and v2, which is 18.
+2. Find the *magnitude* of *each vector*. v1 is 4.582575695 and v2 is 5.385164807.
+3. *Multiply* the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
+4. *Divide* the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
+5. We get 0.729396809.
+
+Our result "0.729396809" indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
+Converted to degrees, the angle between v1 and v2 is approximately 43.16°.
+
+##
+
+**Cross product✖️**
+
+The cross product is similar to the dot product, but instead of returning a scalar, it *returns another vector*. This new vector will be *perpendicular* to both the original vectors. This becomes very handy when setting up the *camera coordinate system*. This is further explained further down in this README, about *camera orientation vectors*.  
+
+To give a short introduction, finding the cross product makes sure that **no matter the camera orientation vector, right and up will always be relative to the orientation**.  
+
+It's maybe intuitive to think that right (x) would always mean (1,0,0) and up (y) would always mean (0,1,0). However this is only true if z is (0,0,1). If the camera orientation vector is facing diagonally upwards (1,1,1) -- these calculations would be wrong. That's why we need the cross product, to correctly determine what is left, right, up and down -- and that it stays perpendicular to wherever the camera is facing.  
+
+So:
+- If the camera was always fixed, Right = (1,0,0) and Up = (0,1,0) would work.
+- But since the camera can rotate and look in any direction, we use the cross product to ensure Right and Up stay properly aligned.
+- Note that the order of which the calculation happens is very important!
+
+**The calculation of the cross product looks like this:**
+- v3.x = v1.y * v2.z - v1.z * v2.y
+- v3.y = v1.z * v2.x - v1.x * v2.z
+- v3.z = v1.x * v2.y - v1.y * v2.x
+
+The calculation takes two vectors, and returns a new vector that is perpendicular to both original vectors.
+
+Code example:
+```bash
+t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = (v1.y * v2.z) - (v1.z * v2.y);
+	result.y = (v1.z * v2.x) - (v1.x * v2.z);
+	result.z = (v1.x * v2.y) - (v1.y * v2.x);
+	return (result);
+}
+```
+
 ---
 
 ## Ray-Object Intersection
@@ -89,7 +452,7 @@ This section outlines the mathematical approach to detecting intersections betwe
 A ray is represented as:
 
 $$
-P(t) = O + t \vec{D}
+P(t) = O + t \vec{d}
 $$
 
 Where:
@@ -97,7 +460,7 @@ Where:
 
 - **$O$:**  The ray's origin in 3D space. This point marks the location where the ray begins its journey through space (camera).
 
--  **$\vec{D}$:** The normalized direction vector of the ray. A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
+-  **$\vec{d}$:** The normalized direction vector of the ray. A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
 
 - **$t$:**  A scalar value indicating the distance along the ray. It scales the direction vector, determining how far along the ray the point $P(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
 
@@ -108,35 +471,47 @@ Where:
 To find the intersection of a ray with a plane, we use the plane equation:
 
 $$
-(P - P_0) \cdot \vec{N} = 0
+(P - P_0) \cdot \vec{n} = 0
 $$
 
 Where:
 - **$P$:** Is any point on the plane.
 - **$P_0$** Is a known point on the plane 
-- **$\vec{N} $:** The normal vector of the plane, which is perpendicular to the surface.
+- **$\vec{n} $:** The normal vector of the plane, which is perpendicular to the surface.
 
-Substitute the ray equation $P(t) = O + t \vec{D}$ into the plane equation:
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/plane_definition.png" alt="plane_definition.png" width="200"/>
+    <br>
+    <span>A plane is defined by a point <i>a</i>, which determines its location, and a normal <i>n</i>, which defines its orientation. The point <i>p</i> is any point on the plane, such as the intersection of a ray with the plane.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
+Substitute the ray equation $P(t) = O + t \vec{d}$ into the plane equation:
 
 $$
-(O + t \vec{D} - P_0) \cdot \vec{N} = 0
+(O + t \vec{d} - P_0) \cdot \vec{n} = 0
 $$
 
 Rearrange terms:
 
 $$
-(O - P_0) \cdot \vec{N} + t (\vec{D} \cdot \vec{N}) = 0
+(O - P_0) \cdot \vec{n} + t (\vec{d} \cdot \vec{n}) = 0
 $$
 
 Solve for *t*:
 
 $$
-t = \frac{(P_0 - O) \cdot \vec{N}}{\vec{D} \cdot \vec{N}}
+t = \frac{(P_0 - O) \cdot \vec{n}}{\vec{d} \cdot \vec{n}}
 $$
 
-- ($t$) will be **positive** if the denominator $(\vec{D} \cdot \vec{N} )$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
-- ($t$) will be **negative** if the denominator $(\vec{D} \cdot \vec{N})$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
-- If the denominator $(\vec{D} \cdot \vec{N} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+- ($t$) will be **positive** if the denominator $(\vec{d} \cdot \vec{n} )$ is positive, meaning that the ray is moving **towards** the plane. The ray will intersect the plane **in front of the camera**.
+- ($t$) will be **negative** if the denominator $(\vec{d} \cdot \vec{n})$ is negative, meaning that the ray is moving **away** from the plane. The ray will intersect the **behind the camera**.
+- If the denominator $(\vec{d} \cdot \vec{n} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_plane_intersection.png" alt="ray_plane_intersection.png" width="400"/>
+    <br>
+    <span>The plane becomes visible if the ray intersects it in front of the camera's origin (t > 0).<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 In the function, we first check if the ray is not parallel to the plane (*t* exists or is defined). If the ray is not parallel, we then check if the intersection happens in front of the camera (*t* is positive). The function returns successfully only if the intersection occurs in front of the camera.
 
@@ -178,7 +553,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 		*t = vec3_dot(difference, plane->normal) / denom;
 
 		// If the intersection distance is non-negative, the intersection is valid
-		if (*t >= 0.0)
+		if (*t > 0.0)
 			return (1);
 	}
 
@@ -189,7 +564,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 
 ### Quadratic Equation
 
-Intersection calculations with geometric objects like spheres and cylinders can be solved using **quadratic equations**. A quadratic equation has the general form:
+While planes are intersected by solving a linear equation, objects like spheres and cylinders require solving a **quadratic equations**. A quadratic equation has the general form:
 
 $$
 ax^2 + bx + c = 0
@@ -298,28 +673,34 @@ Where:
   
 - **$r$:** The radius of the sphere.
 
-Now, substitute the ray equation $P(t) = O + t \vec{D}$ into the sphere equation:
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/sphere_definition.png" alt="sphere_definition.png" width="200"/>
+    <br>
+    <span> A sphere is defined by its center <i>c</i> and radius <i>r</i>, which determine its size and position. The point <i>p</i> represents any point on the sphere's surface (potential intersection point).<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
+Now, substitute the ray equation $P(t) = O + t \vec{d}$ into the sphere equation:
 
 $$
-\left(O + t \vec{D} - C \right) \cdot \left( O + t \vec{D} - C \right) = r^2
+\left(O + t \vec{d} - C \right) \cdot \left( O + t \vec{d} - C \right) = r^2
 $$
 
-Let $\vec{OC} = O - C$, the vector from the sphere center to the ray origin. The equation becomes:
+Let $\vec{oc} = O - C$, the vector from the sphere center to the ray origin. The equation becomes:
 
 $$
-\left(\vec{OC} + t \vec{D} \right) \cdot \left( \vec{OC} + t \vec{D} \right) = r^2
+\left(\vec{oc} + t \vec{d} \right) \cdot \left( \vec{oc} + t \vec{d} \right) = r^2
 $$
 
 Expand the dot product:
 
 $$
-\left( \vec{OC} \cdot \vec{OC} \right) + 2t \left( \vec{OC} \cdot \vec{D} \right) + t^2 \left( \vec{D} \cdot \vec{D} \right) = r^2
+\left( \vec{oc} \cdot \vec{oc} \right) + 2t \left( \vec{oc} \cdot \vec{d} \right) + t^2 \left( \vec{d} \cdot \vec{d} \right) = r^2
 $$
 
-Since $\vec{D}$ is normalized ($\Vert \vec{D} \Vert=  \vec{D} \cdot \vec{D} = 1$), the equation simplifies into an quadratic equation: 
+Since $\vec{d}$ is normalized ($\Vert \vec{d} \Vert=  \vec{d} \cdot \vec{d} = 1$), the equation simplifies into an quadratic equation: 
 
 $$
-t^2 +  2t \left( \vec{OC} \cdot \vec{D} \right) + \left( \vec{OC} \cdot \vec{OC} \right) - r^2 = 0
+t^2 +  2t \left( \vec{oc} \cdot \vec{d} \right) + \left( \vec{oc} \cdot \vec{oc} \right) - r^2 = 0
 $$
 
 As explained [above](https://github.com/Busedame/miniRT/blob/main/README.md#quadratic-intersections-in-ray-tracing), this solves into:
@@ -331,8 +712,20 @@ $$
 Where the coefficients are:
 
 - **$a = 1$**
-- **$b = 2(\vec{OC} \cdot \vec{D}$)**
-- **$c = (\vec{OC} \cdot \vec{OC}) - r^2$**
+- **$b = 2(\vec{oc} \cdot \vec{d}$)**
+- **$c = (\vec{oc} \cdot \vec{oc}) - r^2$**
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_discriminante.png" alt="ray_sphere_discriminante.png" width="400"/>
+    <br>
+    <span>The discriminant indicates whether the ray intersects the sphere at zero, one, or two points.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_intersection_distance.png" alt="ray_sphere_intersection_distance.png" width="400"/>
+    <br>
+    <span>Rays do not register an intersection at their origin; the intersection requires t > 0.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 The following function first checks if there are any real solutions for ($t$) (discriminate >= 0).
 If so, the intersection distances are calculated.
@@ -378,14 +771,14 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 	*t = calculate_entry_distance(1.0, b, discriminant);
 
 	// Check if the entry point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	// Calculate the distance to the second intersection point (largest root)
 	*t = calculate_exit_distance(1.0, b, discriminant);
 
 	// Check if the exit point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	return (0);	// No valid intersection found
@@ -397,31 +790,36 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 ### Cylinder Intersection
 
 For a cylinder with:
+- a center point $C=(C_x, C_y, C_z)$ through which the cylinder's axis passes,
+- radius $r$,
+- and a normalized orientation vector $\vec{u}$, which represents the direction of the cylinder's axis,
 
-- An axis passing through a reference point $C=(C_x, C_y, C_z)$,
-- Radius $r$,
-- And a normalized orientation vector $\vec{U}$, which represents the direction of the cylinder's axis,
-
-The general equation for a point $P=(P_x , P_y, P_z)$ on the surface of the cylinder is:
+the general equation for a point $P=(P_x, P_y, P_z)$ on the surface of the cylinder is:
 
 $$    
-(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - \left( (P_x - C_x,  P_y - C_y,  P_z - C_z) \cdot \vec{U}\right)^2 = r^2
+(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 - \left( (P_x - C_x,  P_y - C_y,  P_z - C_z) \cdot \vec{u}\right)^2 = r^2
 $$
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/cylinder_definition.png" alt="cylinder_definition.png" width="200"/>
+    <br>
+    <span>A cylinder is defined by a point on its axis and a vector representing its direction (e.g., <i>(0,0,0)</i> as the point and <i>(0,1,0)</i> as the orientation vector along the y-axis in the figure above in the figure above), a radius, and a height given by $\Vert y_1 - y_0 \Vert$. The point  <i>p</i> can be any point on the cylinder's mantle.<sup><a href="#footnote1">[1]</a></sup></span>
+</p>
 
 Now define the vector from the reference point ($C$) (on the axis) to the point ($P$) (on the surface), which captures the spatial relationship between the axis and the surface point:
 
 $$    
-\vec{P} = (P_x - C_x,  P_y - C_y,  P_z - C_z)
+\vec{p} = (P_x - C_x,  P_y - C_y,  P_z - C_z)
 $$
 
-- $(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 = \Vert P \Vert^2$: The square of the distance from the axis reference point $C$ to the surface point $P$.
-- $(\vec{P} - \vec{U})^2$: The squared projection of $\vec{P}$ onto the axis direction $\vec{U}$, which measures the component of $\vec{P}$ along the cylinder's axis.
-- Subtracting $(\vec{P} - \vec{U})^2$ removes the contribution of $\vec{P}$ along the axis, leaving only the radial distance from the axis.
+- $(P_x - C_x)^2 + (P_y - C_y)^2 + (P_z - C_z)^2 = \Vert\vec{p}\Vert^2$: The square of the distance from the axis reference point $C$ to the surface point $P$.
+- $(\vec{p} - \vec{u})^2$: The squared projection of $\vec{p}$ onto the axis direction $\vec{u}$, which measures the component of $\vec{p}$ along the cylinder's axis.
+- Subtracting $(\vec{p} - \vec{u})^2$ removes the contribution of $\vec{p}$ along the axis, leaving only the radial distance from the axis.
 
 The cylinder’s surface is defined by ensuring the perpendicular (radial) distance from the axis equals the radius ($r$). The following equation ensures that this condition is met:
 
 $$
-\Vert \vec{P} \Vert^2 - (\vec{P} \cdot \vec{U})^2 = r^2
+\Vert \vec{p} \Vert^2 - (\vec{p} \cdot \vec{u})^2 = r^2
 $$
 
 The parametric form of the [ray equation](https://github.com/Busedame/miniRT/blob/main/README.md#ray-equation) is:
@@ -445,19 +843,19 @@ $$
 which is the same as:
 
 $$
-\left(\vec{OC} +t\vec{D}\right)^2 - \left(\vec{U} \cdot \vec{OC} + t( \vec{U} \cdot \vec{D})\right)^2 = r^2
+\left(\vec{oc} +t\vec{d}\right)^2 - \left(\vec{u} \cdot \vec{oc} + t( \vec{u} \cdot \vec{d})\right)^2 = r^2
 $$
 
-Let ($\text{axis-dot-oc} = \vec{U} \cdot \vec{OC}$) and ($\text{axis-dot-ray} = \vec{U} \cdot \vec{D}$):
+Let ($\text{axis-dot-oc} = \vec{u} \cdot \vec{oc}$) and ($\text{axis-dot-ray} = \vec{u} \cdot \vec{d}$):
 
 $$
-\left(\vec{OC} +t\vec{D}\right)^2 - \left(\text{axis-dot-oc} + t(\text{axis-dot-ray})\right)^2 = r^2
+\left(\vec{oc} +t\vec{d}\right)^2 - \left(\text{axis-dot-oc} + t(\text{axis-dot-ray})\right)^2 = r^2
 $$
 
 Expanding the two squared terms gives:
 
 $$
-\left( \vec{OC} \cdot \vec{OC} + 2t(\vec{OC} \cdot \vec{D}) + t^2(\vec{D} \cdot \vec{D})\right) - \left( (\text{axis-dot-oc})^2 + 2t(\text{axis-dot-oc} \times \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2 \right)
+\left( \vec{oc} \cdot \vec{oc} + 2t(\vec{oc} \cdot \vec{d}) + t^2(\vec{d} \cdot \vec{d})\right) - \left( (\text{axis-dot-oc})^2 + 2t(\text{axis-dot-oc} \times \text{axis-dot-ray}) + t^2(\text{axis-dot-ray})^2 \right)
 $$
 
 Expanding the squared terms of the **second part** of the equation gives:
@@ -468,11 +866,11 @@ $$
 
 Grouping all this into a quadratic form ($at^2+bt+c=0$) gives the following coefficients:
 
-- $a = (\vec{D} \cdot \vec{D}) - (\text{axis-dot-ray})^2$
+- $a = (\vec{d} \cdot \vec{d}) - (\text{axis-dot-ray})^2$
 
-- $b = 2\left( (\vec{OC} \cdot \vec{D}) - (\text{axis-dot-oc} \times \text{axis-dot-ray})\right)$
+- $b = 2\left( (\vec{oc} \cdot \vec{d}) - (\text{axis-dot-oc} \times \text{axis-dot-ray})\right)$
 
-- $c = (\vec{OC} \cdot \vec{OC}) - (\text{axis-dot-oc})^2 - r^2$
+- $c = (\vec{oc} \cdot \vec{oc}) - (\text{axis-dot-oc})^2 - r^2$
 
 The following function calculates the intersection of a ray with a cylinder using the above derivations. 
 
@@ -527,14 +925,14 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 	*t = calculate_entry_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the entry point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	// Calculate the exit distance along the ray (second root of the quadratic)
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the exit point is valid (distance must be non-negative)
-	if (*t >= 0.0)
+	if (*t > 0.0)
 		return (1);
 
 	return (0);	// No valid intersection found
@@ -544,7 +942,9 @@ Please note that this function calculates the intersection of a ray with an infi
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
-<p align="center">The blue and red objects are both infinite cylinders.</p>
+    <br>
+    <span>The blue and red objects are both infinite cylinders.</span>
+</p>
 
 ---
 
@@ -556,20 +956,20 @@ To account for the height boundaries of the cylinder, follow these steps:
    Use the ray equation with the calculated intersection distance ($t$) to find the intersection point ($P$):
    
 $$
-P(t) = O + t \vec{D}
+P(t) = O + t \vec{d}
 $$
 
 2. **Compute vector from cylinder's center to intersection point:**
 
 $$
-\vec{V} = P - C
+\vec{v} = P - C
 $$
 
 3. **Project this vector onto the cylinder's axis:**       
-   Find the component of ($\vec{V}$) along the cylinder's axis by projecting ($\vec{V}$) onto the normalized axis direction vector ($\vec{U}$):
+   Find the component of ($\vec{v}$) along the cylinder's axis by projecting ($\vec{v}$) onto the normalized axis direction vector ($\vec{u}$):
 
 $$
-\text{Projection Length} = \vec{V} \cdot \vec{U}
+\text{Projection Length} = \vec{v} \cdot \vec{u}
 $$
 
 4. **Compare the projection length to the height bounds:**  
@@ -628,14 +1028,14 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 	// [...] same as in `ray_intersect_cylinder()` above
 
 	// Check if the entry point is valid and lies within the cylinder's height bounds
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
 
 	// Calculate the exit distance along the ray
 	*t = calculate_exit_distance(cylinder->ixd.a, cylinder->ixd.b, cylinder->ixd.discriminant);
 
 	// Check if the exit point is valid and lies within the cylinder's height bounds
-	if (*t >= 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
+	if (*t > 0.0 && check_cylinder_height(ray_origin, ray_dir, *t, cylinder))
 		return (1);
 
 	return (0);	   // No valid intersection found
@@ -643,7 +1043,9 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 ```
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
-<p align="center">The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</p>
+    <br>
+    <span>The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</span>
+</p>
 
 ---
 
@@ -657,19 +1059,19 @@ To account for the cylinder's end caps, the goal is to check if a ray intersects
    Here:
    - $(P)$ is a point on the plane (we will test for the ray-cap intersection).
    - $(C)$ is the center of the cap (top or bottom).  
-   - $\(\vec{U}\)$ is the normalized orientation vector of the cylinder's axis.  
+   - $\(\vec{u}\)$ is the normalized orientation vector of the cylinder's axis.  
 
 3. **Find the ray-plane intersection:**     
-   Substitute the ray equation into the plane equation: $( O + t \vec{D} - C_\text{cap} ) \cdot \vec{U} = 0$
+   Substitute the ray equation into the plane equation: $( O + t \vec{d} - C_\text{cap} ) \cdot \vec{u} = 0$
 
    Where:
    - $(O)$ is the ray origin.  
-   - $(\vec{D})$ is the normalized direction vector of the ray
+   - $(\vec{d})$ is the normalized direction vector of the ray
    - $(t)$ is the distance from $(O)$ to the intersection point.
 
-   Simplify: $\left(\vec{OC}_\text{cap} \cdot \vec{U} + t(\vec{D} \cdot \vec{U}) \right) = 0$
+   Simplify: $\left(\vec{oc}_\text{cap} \cdot \vec{u} + t(\vec{d} \cdot \vec{u}) \right) = 0$
 
-   Solve for $t = - \frac{\vec{OC}_\text{cap} \cdot \vec{U}}{\vec{D} \cdot \vec{U}}$
+   Solve for $t = - \frac{\vec{oc}_\text{cap} \cdot \vec{u}}{\vec{d} \cdot \vec{u}}$
 
 4. **Check the intersection point against the cap's radius:**    
    Once ($t$) is computed, the intersection point $(P(t))$ can be calculated using the ray equation.
@@ -727,7 +1129,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	t_hit = - numerator / denominator;
 
 	// If the intersection is behind the ray's origin, discard it
-	if (t_hit < 0.0)
+	if (t_hit <= 0.0)
 		return (0);
 
 	// Compute the actual intersection point in 3D space
@@ -747,20 +1149,19 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
-<p align="center">Looking at the end cap of the closed blue cylinder.</p>
+    <br>
+    <span>Looking at the end cap of the closed blue cylinder.</span>
+</p>
 
 ---
 
-#### Intersection Constants
+## Perspective Viewing
 
-In the ray-object intersection detection functions above, several variables are independent of the ray's direction and remain constant for a given object (e.g., distance vectors such 
- as ($\vec{OC}$), the quadratic coefficient ($c$), some dot products like ($\vec{OC} \cdot \vec{U}$)). While calculating these within the functions helps to understand their role and derivation here, they should be precomputed once during object initialization rather than recalculated for every single ray (or pixel).    
-
-Precomputing these constants reduced my computation time by three-quarters for the simple scene shown in the figures above (1x plane, 2x spheres, 2x cylinders, 1440 x 900 resolution). This improvement is especially noticeable when using memory-checking tools such as Valgrind, reducing the compilation time from  ~68 sec to ~18 sec.
-
----
-
-## Projection of 3D scene onto 2D Screen
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/orthographic_perspective_viewing.png" alt="orthographic_perspective_viewing.png" width="500"/>
+    <br>
+    <span><strong>Top:</strong> In orthogonal viewing, each pixel is a separate camera ray, all running parallel to one another. This results in objects being the same size, regardless of their distance. Used in technical drawings and CAD. <br><strong>Bottom:</strong> Perspective viewing is more in line with how we perceive the world: Camera rays have a single point of origin. This way, objects have a vanishing point and appear smaller the farther they are away. Used in realistic 3D rendering. <br> Sources: Diagrams left <sup><a href="#footnote1">[1]</a></sup>; diagrams right<sup><a href="#footnote2">[2]</a></sup> </span>
+</p>
 
 ### The Geometry of Perspective Projection
 
@@ -771,11 +1172,15 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 
 <p align="center">
 	<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
-<p align="center">Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport). </p>
+	<br>
+	<span>Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport).</span>
+</p>
 
 <p align="center">
-	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">  
-<p align="center">Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</p>
+	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">
+	<br>
+	<span>Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</span>
+</p>
 
 ---
 
@@ -981,3 +1386,34 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	return (vec3_norm(ray_world_dir)); // Return normalized ray direction vector in world space
 }
 ```
+
+## Handling light and colors
+
+In miniRT there will be three colors taken into consideration. The color of the object, the color of the light source and the color of the ambient light. We move pixel by pixel, and we color each pixel. All the different color components have to be taken into consideration, since they are all present and will all blend together.
+All colors are represented by the values RGB (red, green, blue). Each value can range from 0-255. These components put together can represent any color you can think of.  
+
+Now, let's say we want to mix the object and ambient light color. The calculation would look like this:
+- new_color.r = obj.r * amb.r
+- new_color.g = obj.g * amb.g
+- new_color.b = obj.b * amb.b
+
+By multiplying the corresponding components, our end result with be a color that's the product of the color components of the original colors.  
+
+NOTE TO SELF!
+- Explain how specular light is computed
+- Explain how diffuse light is computed
+- Explain how it all comes together
+- Explain what happens if point is in shadow
+
+---
+
+## Acknowledgements
+
+The amazing book *Ray Tracing from the Ground Up* by Kevin Suffern is not only an excellent and exhaustive resource on the subject, but also an easy-to-follow guide to the concepts and mathematics behind ray tracing. Figures taken from this book are quoted accordingly. [¹](#footnote1)
+
+The project badge used is retrieved from [this repo](https://github.com/ayogun/42-project-badges) by Ali Ogun.
+
+## References
+
+<a name="footnote1">¹</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters.     
+<a name="footnote2">²</a> Datamine Software (2024). *Perspective and Orthogonal Views*: [https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm](https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm)
