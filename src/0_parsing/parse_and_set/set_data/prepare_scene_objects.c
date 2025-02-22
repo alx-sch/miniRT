@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/22 10:22:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/22 11:06:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	is_cam_inside_sphere(t_vec3 cam_pos, t_obj *obj)
 	oc = vec3_sub(cam_pos, obj->x.sp.center);
 	dist_sq = vec3_dot(oc, oc);
 	radius_sqrd = obj->x.sp.radius * obj->x.sp.radius;
-	return (dist_sq < radius_sqrd);
+	return (dist_sq <= radius_sqrd);
 }
 
 /**
@@ -72,7 +72,7 @@ static int	is_cam_inside_cylinder(t_vec3 cam_pos, t_obj *obj)
 	half_height = obj->x.cy.height_half;
 	if (axis_dot_oc < -half_height || axis_dot_oc > half_height)
 		return (0);
-	return (dist_sq < obj->x.cy.radius_sqrd);
+	return (dist_sq <= obj->x.cy.radius_sqrd);
 }
 
 /**
