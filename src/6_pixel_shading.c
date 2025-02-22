@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:10:11 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 09:04:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/22 08:52:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ properties.
  @param ix	Pointer to the ray/pixel intersection data.
 
  @return	A `t_pix_shade` struct with the computed shading components.
+
+ @note		`FADE` is a preprocessor macro (default: `1` -> fading on).
 */
 t_shade	get_shading(t_rt *rt, t_ix *ix)
 {
@@ -104,8 +106,9 @@ t_shade	get_shading(t_rt *rt, t_ix *ix)
 	pix.ambient = ix->hit_obj->color_in_amb;
 	pix.diff_coeff = get_diffuse_coefficient(rt, ix);
 	pix.spec_coeff = get_specular_coefficient(rt, ix);
-	pix.fade = K_FADE * 100 / (ix->light_dist * ix->light_dist);
-	pix.fade = clamp(pix.fade, 1.0);
+	pix.fade = 1.0;
+	if (FADE)
+		pix.fade = clamp(K_FADE * 100 / (ix->light_dist * ix->light_dist), 1.0);
 	pix.diffuse.r = pix.base.r * pix.light.r / 255 * pix.diff_coeff * pix.fade;
 	pix.diffuse.g = pix.base.g * pix.light.g / 255 * pix.diff_coeff * pix.fade;
 	pix.diffuse.b = pix.base.b * pix.light.b / 255 * pix.diff_coeff * pix.fade;
