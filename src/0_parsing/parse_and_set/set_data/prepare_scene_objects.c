@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:42:13 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/21 09:23:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:22:01 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /**
 Updates an object's color based on ambient light.
-
  @param obj:	Pointer to the object whose color will be updated.
  @param rt:		Pointer to the main rendering structure containing scene data.
 */
@@ -36,7 +35,6 @@ static void	apply_ambient_light_to_object(t_obj *obj, t_rt *rt)
 
 /**
 Checks if the camera is inside a given sphere.
-
  @param cam_pos:	The camera position in world coordinates.
  @param obj:		Pointer to the sphere object.
 
@@ -56,7 +54,6 @@ static int	is_cam_inside_sphere(t_vec3 cam_pos, t_obj *obj)
 
 /**
 Checks if the camera is inside a given finite cylinder.
-
  @param cam_pos:	The camera position in world coordinates.
  @param obj:		Pointer to the sphere object.
 
@@ -73,7 +70,7 @@ static int	is_cam_inside_cylinder(t_vec3 cam_pos, t_obj *obj)
 	axis_dot_oc = vec3_dot(oc, obj->x.cy.orientation);
 	dist_sq = vec3_dot(oc, oc) - (axis_dot_oc * axis_dot_oc);
 	half_height = obj->x.cy.height_half;
-	if (axis_dot_oc < half_height || axis_dot_oc > half_height)
+	if (axis_dot_oc < -half_height || axis_dot_oc > half_height)
 		return (0);
 	return (dist_sq < obj->x.cy.radius_sqrd);
 }
@@ -81,7 +78,6 @@ static int	is_cam_inside_cylinder(t_vec3 cam_pos, t_obj *obj)
 /**
  Iterates through all objects in the scene, applies ambient lighting,
 adjusts plane normals, and flags objects where the camera is inside.
-
  @param rt:		Double pointer to the main struct containing scene data.
 */
 void	prepare_scene_objects(t_rt **rt)
