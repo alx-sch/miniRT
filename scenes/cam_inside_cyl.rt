@@ -1,11 +1,11 @@
 A 0.1										255,255,255	# ambient light
 L -10,-10,-5						0.8		255,255,255	# light source
-C 10,-15,-15	0,0.7071,0.7071		80					# camera
+C 10,-15,-15	0,0.707,0.707		80					# camera
 
-cy 0,0,0	0.7071,0,0.7071		50	75	255,0,0			# BIG CYLINDER
+cy 0,0,0	0.707,0,0.707		50	75	255,0,0			# BIG CYLINDER
 
 cy 0,0,0	0,1,0				2	50	0,255,0			# green cylinder (vert)
-cy 0,0,0	0.7071,0,0.7071		1	100	255,100,200		# pink cylinder
+cy 0,0,0	0.707,0,0.707		1	100	255,100,200		# pink cylinder
 cy 0,0,0	1,0,0				1	100	0,255,0			# green cylinder (horiz)
 cy 0,0,0	0,1,0				5	10	0,0,255			# blue cylinder
 

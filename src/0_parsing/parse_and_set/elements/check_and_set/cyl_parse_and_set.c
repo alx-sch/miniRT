@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/21 08:20:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/22 12:03:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	set_cylinder(t_scene *scene)
 		&obj->x.cy.orientation.x, &obj->x.cy.orientation.y, \
 		&obj->x.cy.orientation.z))
 		return (ERR_MEM_ALLOC);
+	obj->x.cy.orientation = vec3_norm(obj->x.cy.orientation);
 	set_r_and_h(&obj, scene->pars.elem_data[3], scene->pars.elem_data[4]);
 	rgb = ft_split(scene->pars.elem_data[5], ',');
 	if (!rgb)
