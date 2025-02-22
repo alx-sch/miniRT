@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/19 11:13:07 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/22 12:01:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	parse_and_set_camera(t_scene *scene)
 		return (scene->pars.error_code);
 	set_orientation_vector(scene->pars.elem_data[2], &scene->cam.dir.x, \
 	&scene->cam.dir.y, &scene->cam.dir.z);
+	scene->cam.dir = vec3_norm(scene->cam.dir);
 	if (camera_field_of_view(scene, &scene->pars.error_code) != 0)
 		return (scene->pars.error_code);
 	scene->cam.scale = tan((scene->cam.fov / 2) * M_PI / 180.0);

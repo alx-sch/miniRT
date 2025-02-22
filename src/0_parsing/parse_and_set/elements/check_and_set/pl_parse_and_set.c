@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/19 11:04:12 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/22 12:03:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	set_plane(t_scene *scene)
 	if (set_orientation_vector(scene->pars.elem_data[2], \
 		&obj->x.pl.normal.x, &obj->x.pl.normal.y, &obj->x.pl.normal.z))
 		return (ERR_MEM_ALLOC);
+	obj->x.pl.normal = vec3_norm(obj->x.pl.normal);
 	rgb = ft_split(scene->pars.elem_data[3], ',');
 	if (!rgb)
 		return (ERR_MEM_ALLOC);
