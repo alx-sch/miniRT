@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_parse_and_set.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/01/14 14:55:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/23 09:33:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,30 @@ static int	light_color(t_scene *scene, char **rgb)
 	return (0);
 }
 
+/* Sets the light color from input or defaults to white if no color is given */
+static int	set_light_color(t_scene *scene, char *color_str)
+{
+	char	**rgb;
+
+	if (color_str && color_str[0] != '\n')
+	{
+		rgb = ft_split(color_str, ',');
+		if (!rgb)
+			return (ERR_MEM_ALLOC);
+		scene->pars.error_code = light_color(scene, rgb);
+		ft_freearray(rgb);
+		if (scene->pars.error_code != 0)
+			return (scene->pars.error_code);
+	}
+	else
+	{
+		scene->light.color.r = 255;
+		scene->light.color.g = 255;
+		scene->light.color.b = 255;
+	}
+	return (0);
+}
+
 /*Parses and sets a light object.
 1. Checks if there's a correct amount of fields (3 or 4).
 2. Checks if the coordinates are valid.
@@ -91,7 +115,8 @@ Sets all values and returns 0 upon success, and an error code upon error.*/
 int	parse_and_set_light(t_scene *scene)
 {
 	int		arr_len;
-	char	**rgb;
+	int		color_error;
+	char	*color_str;
 
 	arr_len = array_length(scene->pars.elem_data);
 	if (!correct_amt_of_fields(scene->pars.elem_data, 3)
@@ -104,15 +129,11 @@ int	parse_and_set_light(t_scene *scene)
 	&scene->light.position.y, &scene->light.position.z);
 	if (light_brightness(scene, &scene->pars.error_code) != 0)
 		return (scene->pars.error_code);
-	if (arr_len == 4 && scene->pars.elem_data[3][0] != '\n')
-	{
-		rgb = ft_split(scene->pars.elem_data[3], ',');
-		if (!rgb)
-			return (ERR_MEM_ALLOC);
-		scene->pars.error_code = light_color(scene, rgb);
-		ft_freearray(rgb);
-		if (scene->pars.error_code != 0)
-			return (scene->pars.error_code);
-	}
+	color_str = NULL;
+	if (arr_len == 4)
+		color_str = scene->pars.elem_data[3];
+	color_error = set_light_color(scene, color_str);
+	if (color_error != 0)
+		return (color_error);
 	return (0);
 }

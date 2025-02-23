@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:10:11 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/22 08:52:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/23 11:08:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 Functions for computing the shading of a pixel in a 3D scene.
 */
 
-#include "main.h"
+#ifdef BONUS
+# include "main_bonus.h"
+#else
+# include "main.h"
+#endif
 
 // IN_FILE:
 
@@ -105,7 +109,9 @@ t_shade	get_shading(t_rt *rt, t_ix *ix)
 	pix.light = rt->scene.light.color;
 	pix.ambient = ix->hit_obj->color_in_amb;
 	pix.diff_coeff = get_diffuse_coefficient(rt, ix);
-	pix.spec_coeff = get_specular_coefficient(rt, ix);
+	pix.spec_coeff = 0.0;
+	if (SPECULAR)
+		pix.spec_coeff = get_specular_coefficient(rt, ix);
 	pix.fade = 1.0;
 	if (FADE)
 		pix.fade = clamp(K_FADE * 100 / (ix->light_dist * ix->light_dist), 1.0);
