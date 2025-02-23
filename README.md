@@ -47,7 +47,7 @@ This project is a collaboration between:
    	make bonus
    	```
    
-4. **macOS Users:** Install X11 via XQuartz if needed:
+4. macOS Users: Install X11 via XQuartz if needed:
    ```
    brew install xquartz
    ```
