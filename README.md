@@ -76,22 +76,22 @@ The `.rt` files define the elements and configurations for the scene to be rende
 - **Ambient Light**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_A.png" width="500" />  
   * **Identifier**: `A`  
-  * **Ambient lighting ratio** (brightness, range: [0.0, 1.0]): `0.2`  
-  * **Color** in RGB ([0-255]): `255, 255, 255`
+  * **Ambient lighting ratio** (brightness) [0.0, 1.0]: `0.2`  
+  * **Color** in RGB [0, 255]: `255, 255, 255`
 
 - **Camera**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_C.png" width="500"/>  
   * **Identifier**: `C`  
   * **Position (XYZ coordinates)**: `60, 0, 0`  
-  * **Normalized orientation vector** (range: [-1.0, 1.0]): `1.0, 0.0, 0.0`  
-  * **Field of view (FOV)** in degrees ([0-180]): `170`
+  * **Normalized orientation vector**: `1.0, 0.0, 0.0`  
+  * **Field of view (FOV)** in degrees [0, 180]: `170`
 
 - **Light**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_L.png" width="500"/>  
   * **Identifier**: `L`  
   * **Position (XYZ coordinates)**: `90, 50, 70`  
-  * **Lighting ratio** (brightness, range: [0.0, 1.0]): `0.7`  
-  * *(Optional)* **Color** in RGB ([0-255]): `255, 255, 255` (default: white)
+  * **Lighting ratio** (brightness) [0.0, 1.0]: `0.7`  
+  * *(Optional)* **Color** in RGB [0, 255]: `255, 255, 255` (default: white)
 
 #### Optional Elements
 
@@ -99,24 +99,24 @@ The `.rt` files define the elements and configurations for the scene to be rende
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_pl.png" width="500"/>  
   * **Identifier**: `pl`  
   * **Position (XYZ coordinates)** of a point on the plane: `0.0, 0.0, -500.0`  
-  * **Normalized orientation vector** (range: [-1, 1]): `-1.0, 1.0, 1.0`  
-  * **Color** in RGB ([0-255]): `0, 0, 225`
+  * **Normalized orientation vector**: `-1.0, 1.0, 1.0`  
+  * **Color** in RGB [0, 255]: `0, 0, 225`
 
 - **Sphere**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_sp.png" width="500"/>  
   * **Identifier**: `sp`  
   * **Position (XYZ coordinates)** of the center: `90, 0.0, 0.0`  
   * **Diameter**: `60`  
-  * **Color** in RGB ([0-255]): `0, 0, 255`
+  * **Color** in RGB [0, 255]: `0, 0, 255`
 
 - **Cylinder**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
   * **Identifier**: `cy`  
   * **Position (XYZ coordinates)** of the center: `90.0, 0.0, 0.0`  
-  * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
+  * **Normalized orientation vector** (axis): `0.0, 1.0, 1.0`  
   * **Diameter**: `30`  
   * **Height**: `210.42`  
-  * **Color** in RGB ([0-255]): `0, 0, 255`
+  * **Color** in RGB [0, 255]: `0, 0, 255`
 
 To make it easier for the user, the orientation vectors do not need to be perfectly normalized. Vectors such as $(0.707, 0.707, 0)$ are accepted as well, instead of requiring exact values like $(1/\sqrt{2}, 1/\sqrt{2}, 0) = (0.707106\dots, 0.707106\dots, 0)$.
 
