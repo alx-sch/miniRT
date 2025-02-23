@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:15:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/23 09:26:12 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/23 09:33:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	parse_and_set_light(t_scene *scene)
 {
 	int		arr_len;
 	int		color_error;
-	char 	*color_str;
+	char	*color_str;
 
 	arr_len = array_length(scene->pars.elem_data);
 	if (!correct_amt_of_fields(scene->pars.elem_data, 3)
