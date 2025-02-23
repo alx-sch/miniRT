@@ -105,7 +105,7 @@ The `.rt` files define the elements and configurations for the scene to be rende
 - **Sphere**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_sp.png" width="500"/>  
   * **Identifier**: `sp`  
-  * **Position (XYZ coordinates)** of the center: `90, 0.0, 0.0`  
+  * **Position (XYZ coordinates)** of the center: `0.0, 0.0, 20.6`  
   * **Diameter**: `12.6`  
   * **Color** in RGB [0, 255]: `10, 0, 255`
 
