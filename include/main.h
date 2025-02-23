@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/23 10:49:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/23 18:34:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ and declaring all function prototypes.
 # define K_SPECULAR		0.7		// Specular intensity factor [0.0, 1.0]
 
 # define SPECULAR		0		// Display specular highlights (1) or not (0)
-// Shininess factor for specular reflection.
-// Controls of how glossy the specular reflection is (the bigger the value, the
+// Shininess factor for specular highlighting.
+// Controls of how glossy the specular highlight is (the bigger the value, the
 // smaller / more focused the highlight).
 // [0.0, INT_MAX], but values between 3.0 and 10.0 are recommended.
 # define K_SHININESS	5.0

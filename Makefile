@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/23 11:11:37 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/23 18:36:42 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,12 @@ NAME :=			miniRT
 
 OS := 			$(shell uname)			# Detect OS type
 
-#############################
-# PRE-COMPILATION CONSTANTS #
-#############################
+##########
+# MACROS #
+##########
 
 WINDOW_W ?=		1440 					# Default window width
 WINDOW_H ?=		900						# Default window height
-
-# Implement specular reflection (reflection of light off shiny surfaces).
-# Set SPECULAR to 1 to enable, 0 to disable during compilation ('make SPECULAR=0')
-#SPECULAR ?=		0
-
-# Implement light attenuation (fading of light intensity with distance).
-# Set FADE to 1 to enable, 0 to disable during compilation ('make FADE=0')
-#FADE ?=			0
 
 #########################
 # SOURCE & HEADER FILES #
@@ -122,7 +114,7 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
 CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)	# Look for headers in these directories
-CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
+CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with macros
 
 CFLAGS +=		-g -Wpedantic						# Debugging flag, pedantic warnings
 
