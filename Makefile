@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/23 18:36:42 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/24 12:25:15 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -278,9 +278,6 @@ clean:
 	@rm -rf $(MLX_DIR)/obj
 	@echo "$(BOLD)$(RED)Object files removed.$(RESET)"
 
-bonus:
-	@$(MAKE) BONUS=1 all
-
 # Target to remove all generated files and the program executable (NOT the compiled libraries).
 fclean:	clean
 	@rm -f $(NAME)
@@ -298,18 +295,22 @@ re:	fclean
 	@echo ""
 	@$(MAKE) -s all
 
-re_bonus:	fclean
-	@echo ""
-	@$(MAKE) -s bonus
-
 # Target to remove all object files, the program executable, and the compiled libraries,
 # and then rebuild the program.
 re_all:	fclean_all
 	@echo ""
 	@$(MAKE) -s all
 
+# Bonus rules
+bonus:
+	@$(MAKE) BONUS=1 all
+
+re_bonus:	fclean
+	@echo ""
+	@$(MAKE) -s bonus
+
 re_all_bonus:	fclean_all
 	@echo ""
 	@$(MAKE) -s bonus
 
-.PHONY:	all clean fclean re
+.PHONY:	all clean fclean fclean_all re re_all bonus re_bonus re_all_bonus
