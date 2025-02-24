@@ -1394,24 +1394,6 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 }
 ```
 
-## Handling light and colors
-
-In miniRT there will be three colors taken into consideration. The color of the object, the color of the light source and the color of the ambient light. We move pixel by pixel, and we color each pixel. All the different color components have to be taken into consideration, since they are all present and will all blend together.
-All colors are represented by the values RGB (red, green, blue). Each value can range from 0-255. These components put together can represent any color you can think of.  
-
-Now, let's say we want to mix the object and ambient light color. The calculation would look like this:
-- new_color.r = obj.r * amb.r
-- new_color.g = obj.g * amb.g
-- new_color.b = obj.b * amb.b
-
-By multiplying the corresponding components, our end result with be a color that's the product of the color components of the original colors.  
-
-NOTE TO SELF!
-- Explain how specular light is computed
-- Explain how diffuse light is computed
-- Explain how it all comes together
-- Explain what happens if point is in shadow
-
 ---
 
 ## Acknowledgements
