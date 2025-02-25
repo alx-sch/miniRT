@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/25 21:18:27 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/25 21:29:36 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -280,7 +280,7 @@ clean:
 
 # Target to remove all generated files and the program executable (NOT the compiled libraries).
 fclean:	clean
-	@rm -f $(NAME)*
+	@rm -f $(NAME)
 	@echo "$(BOLD)$(RED)$(NAME) removed.$(RESET)"
 
 # Target to remove all generated files and the program executable (NOT the compiled libraries).
@@ -291,15 +291,11 @@ fclean_all:	fclean
 
 # Target to remove all object files, the program executable,
 # and then rebuild the program.
-re:	fclean
-	@echo ""
-	@$(MAKE) -s all
+re:	fclean all
 
 # Target to remove all object files, the program executable, and the compiled libraries,
 # and then rebuild the program.
-re_all:	fclean_all
-	@echo ""
-	@$(MAKE) -s all
+re_all:	fclean_all all
 
 # Bonus rules
 bonus:
