@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/25 20:20:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/25 20:55:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ static int	camera_field_of_view(t_scene *scene, int *parsing_error)
 	being identical instead of spreading out.
 	To fix this, we fall back to a default right vector when the cross product
 	results in a zero vector.
+	-	If the camera is looking straight up or down, the right vector becomes
+		invalid (zero length).
+	-	In that case, it is manually set to (1,0,0) (rightward in world space).
 */
 static t_vec3	set_camera_right(t_scene *scene)
 {

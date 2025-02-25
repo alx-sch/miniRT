@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 11:41:06 by aschenk           #+#    #+#              #
-#    Updated: 2024/11/12 15:47:25 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/25 20:48:06 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,7 @@ clean:
 
 # Target 'fclean' depends on 'clean' and removes the library as well.
 fclean:	clean
-	@rm -f $(NAME)
+	@rm -f $(NAME)*
 	@echo "$(BOLD)$(RED)$(NAME) removed.$(RESET)"
 
 # Target 're' depends on 'fclean' and 'all', rebuilding the project from scratch.

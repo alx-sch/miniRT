@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 09:04:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/25 20:43:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light);
 /**
 Computes the camera ray direction for a given pixel,
 considering the camera's field of view (FOV), aspect ratio, and orientation.
+
+1.	Convert Pixel Coordinates to Normalized Device Coordinates (NDC)
+ -	`norm_x` and `norm_y` convert the pixel coordinates into a normalized range
+ 	from [−1 ,1] (centered around 0).
+ -	`norm_x` is adjusted based on the aspect ratio to maintain the correct
+  	proportions.
+ - 	`norm_y` is flipped because the screen coordinate system typically has
+ 	(0,0) at the top left.
+
+2.	Compute Ray Direction in Camera Space
+ -	The ray direction in camera space is assumed to be in front of the camera:
+	`ray_cam_dir  = vec3_new(norm_x, norm_y, 1.0)` (1.0 as to point forward).
+
+3.	Transform the Ray to World Space
+ - `ray_world_dir = cam.right * norm_x + cam.up * norm_y + cam.dir`
+ -	The x component moves the ray in the right direction.
+ -	The y component moves the ray in the up direction.
+ -	The z component moves the ray in the forward direction.
+
  @param x		The horizontal pixel coordinate on the screen.
  @param y		The vertical pixel coordinate on the screen.
  @param cam		The camera object containing the FOV, orientation vector,
