@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cam_parse_and_set.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/22 12:01:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/25 17:04:54 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ static int	camera_field_of_view(t_scene *scene, int *parsing_error)
 		return (set_error_and_return(NULL, &parsing_error, \
 		ERR_CAM_FIELD_OF_VIEW));
 	return (0);
+}
+
+/*
+	To take care of the problems of gimbal lock and singularities in 
+	vector math, this function makes sure to calculate 'camera right'
+	correctly. 
+	When the camera is looking straight up (0,1,0) or down (0,-1,0):
+	The standard cross product calculations for right and up vectors fail 
+	because they become parallel or undefined. This leads to all rays being 
+	identical instead of spreading out.
+*/
+static t_vec3	set_camera_right(t_scene *scene)
+{
+	if (scene->cam.dir.y == 1 || scene->cam.dir.y == -1)
+		return (vec3_norm(vec3_cross(scene->cam.dir, vec3_new(1, 0, 0))));
+	else
+		return (vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.dir)));
 }
 
 /*Parses and sets a camera object.
@@ -53,9 +70,7 @@ int	parse_and_set_camera(t_scene *scene)
 		return (scene->pars.error_code);
 	scene->cam.scale = tan((scene->cam.fov / 2) * M_PI / 180.0);
 	scene->cam.aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
-	scene->cam.right = vec3_norm(vec3_cross(\
-							vec3_new(0, 1, 0), \
-							scene->cam.dir));
+	scene->cam.right = set_camera_right(scene);
 	scene->cam.up = vec3_norm(vec3_cross(\
 							scene->cam.dir, \
 				scene->cam.right));
