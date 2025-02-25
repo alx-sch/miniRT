@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cam_parse_and_set.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/25 17:04:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:08:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@ static int	camera_field_of_view(t_scene *scene, int *parsing_error)
 }
 
 /*
-	To take care of the problems of gimbal lock and singularities in 
-	vector math, this function makes sure to calculate 'camera right'
-	correctly. 
-	When the camera is looking straight up (0,1,0) or down (0,-1,0):
-	The standard cross product calculations for right and up vectors fail 
-	because they become parallel or undefined. This leads to all rays being 
-	identical instead of spreading out.
+    To avoid issues with gimbal lock and singularities in vector math,
+    this function ensures the correct calculation of the 'camera right' vector.
+    When the camera is looking directly up (0, 1, 0) or down (0, -1, 0),
+    the standard cross product calculations for the right and up vectors fail
+    because they become parallel or undefined. This would result in all rays
+	being identical instead of spreading out.
+	To fix this, we fall back to a default right vector when the cross product
+	results in a zero vector.
 */
 static t_vec3	set_camera_right(t_scene *scene)
 {
-	if (scene->cam.dir.y == 1 || scene->cam.dir.y == -1)
-		return (vec3_norm(vec3_cross(scene->cam.dir, vec3_new(1, 0, 0))));
-	else
-		return (vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.dir)));
+	t_vec3	cam_right;
+
+	cam_right = vec3_cross(vec3_new(0, 1, 0), scene->cam.dir);
+	if (vec3_length(cam_right) < EPSILON)
+		cam_right = vec3_new(1, 0, 0);
+	return (vec3_norm(cam_right));
 }
 
 /*Parses and sets a camera object.

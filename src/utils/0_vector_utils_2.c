@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:35:34 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:41:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/25 19:07:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Utility functions for working with 3D vectors.
 t_vec3	vec3_new(double x, double y, double z);
 t_vec3	vec3_norm(t_vec3 vec);
 t_vec3	vec3_scale(t_vec3 v, double scalar);
+double	vec3_length(t_vec3 v);
 
 /**
 Function to create a new 3D vector with specified x, y, and z components.
