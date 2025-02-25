@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/25 19:08:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/25 20:20:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ int	parse_and_set_camera(t_scene *scene)
 	scene->cam.scale = tan((scene->cam.fov / 2) * M_PI / 180.0);
 	scene->cam.aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
 	scene->cam.right = set_camera_right(scene);
-	scene->cam.up = vec3_norm(vec3_cross(\
-							scene->cam.dir, \
-				scene->cam.right));
+	scene->cam.up = vec3_norm(vec3_cross(scene->cam.dir, scene->cam.right));
 	return (0);
 }
