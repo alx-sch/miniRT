@@ -449,7 +449,7 @@ t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
 ```
 💡 Note: When calculating the "camera right" for camera orientation (the right of the camera's view) - the standard way to do it looks like this:  
 `vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.dir))`.  
-However, there is an edge case happening in the case of the camera orientation vector being `0,1,0` or `0,-1,0` (camera looking up or down). The standard calculation would potentially do a cross product calculation of *two identical vectors*, making them parallel or undefined. This leds to all rays being identical instead of spreading out.  
+However, there is an edge case happening in the case of the camera orientation vector being `0,1,0` or `0,-1,0` (camera looking up or down). The standard calculation would potentially result in a cross product calculation of *two identical vectors*, making them parallel or undefined. This leads to all rays being identical instead of spreading out.  
 To handle this edge case, we need a different calculation:  
 `(vec3_norm(vec3_cross(scene->cam.dir, vec3_new(1, 0, 0)))`.
 
