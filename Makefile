@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/25 20:45:40 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/25 21:18:27 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -189,7 +189,7 @@ $(LIBMLX):
 		git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR) >/dev/null 2>&1; \
 	fi
 	@echo "Compiling MiniLibX..."
-	@make -s -C $(MLX_DIR) >/dev/null 2>&1;
+	@$(MAKE) -s -C $(MLX_DIR) >/dev/null 2>&1;
 	@echo "$(BOLD)MiniLibX compiled.$(RESET)"
 
 # Build libft library by calling 'make' in LIBFT_DIR.
@@ -246,7 +246,7 @@ $(LIBFT):	$(LIBFT_DIR)/libft.h \
 			$(LIBFT_DIR)/ft_printf_utils.c \
 			$(LIBFT_DIR)/ft_printf.c \
 			$(LIBFT_DIR)/ft_atoi_base.c
-	@make -s -C $(LIBFT_DIR)
+	@$(MAKE) -s -C $(LIBFT_DIR)
 	@echo ""
 
 # Compilation of program; depends on $(OBJS) and library files
@@ -274,7 +274,7 @@ $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
 # Target to remove all generated files BUT the program executable and compiled libraries.
 clean:
 	@rm -rf $(OBJS_DIR)
-	@make -s -C $(LIBFT_DIR) clean  >/dev/null 2>&1
+	@$(MAKE) -s -C $(LIBFT_DIR) clean  >/dev/null 2>&1
 	@rm -rf $(MLX_DIR)/obj
 	@echo "$(BOLD)$(RED)Object files removed.$(RESET)"
 
@@ -285,7 +285,7 @@ fclean:	clean
 
 # Target to remove all generated files and the program executable (NOT the compiled libraries).
 fclean_all:	fclean
-	@make -s -C $(LIBFT_DIR) fclean  >/dev/null 2>&1
+	@$(MAKE) -s -C $(LIBFT_DIR) fclean  >/dev/null 2>&1
 	@rm -rf $(MLX_DIR)
 	@echo "$(BOLD)$(RED)Library files removed.$(RESET)"
 
@@ -303,14 +303,10 @@ re_all:	fclean_all
 
 # Bonus rules
 bonus:
-	@$(MAKE) BONUS=1 all
+	@$(MAKE) BONUS=1
 
-re_bonus:	fclean
-	@echo ""
-	@$(MAKE) -s bonus
+re_bonus:	fclean bonus
 
-re_all_bonus:	fclean_all
-	@echo ""
-	@$(MAKE) -s bonus
+re_all_bonus:	fclean_all bonus
 
 .PHONY:	all clean fclean fclean_all re re_all bonus re_bonus re_all_bonus
