@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:24:44 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:44:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/26 15:49:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ Handles key press events:
 */
 static int	handle_keypress(int keycode, t_rt *rt)
 {
-	if (keycode == XK_Escape)
+	if (keycode == XK_ESCAPE)
 	{
 		cleanup(&rt);
 		exit(EXIT_SUCCESS);
@@ -67,6 +67,7 @@ program is terminated.
 void	start_event_loop(t_rt *rt)
 {
 	(void)mlx_key_hook(rt->mlx.win_ptr, &handle_keypress, rt);
-	(void)mlx_hook(rt->mlx.win_ptr, DestroyNotify, 0, &handle_window_close, rt);
+	(void)mlx_hook(rt->mlx.win_ptr, DESTROY_NOTIFY, 0, &handle_window_close,
+		rt);
 	(void)mlx_loop(rt->mlx.mlx_ptr);
 }

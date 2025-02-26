@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/23 18:34:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/26 15:51:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,6 @@ and declaring all function prototypes.
 # include <math.h>			// for math functions, expr, e.g. sqrt(), INFINITY
 # include <fcntl.h>			// for open() macros
 
-// X11 library headers
-# include <X11/keysym.h>	// Macros for key symbols, e.g. XK_Escape
-# include <X11/X.h>			// Macros for event names, e.g. DestroyNotify
-
 // Custom headers
 # include "libft.h"			// libft
 # include "mlx.h"			// mlx
@@ -43,6 +39,12 @@ and declaring all function prototypes.
 //#############
 
 # define WINDOW_TITLE	"miniRT by Natalie Holbrook & Alex Schenk @42Berlin"
+
+// To avoid including headers solely for macros (norminette):
+// <X11/keysym.h> and <X11/X.h>
+# define XK_ESCAPE		0xff1b	// Key code for the 'Esc' key
+# define DESTROY_NOTIFY	17		// Event code for window destruction
+
 # define BG_COLOR		0x303030	// Anthracite (dark grey)
 # define EPSILON 		1e-3	// Small value to avoid floating-point errors
 # define K_DIFFUSE		0.7		// Diffuse intensity factor [0.0, 1.0]
