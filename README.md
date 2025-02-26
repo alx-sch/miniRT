@@ -1390,7 +1390,7 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	// If the forward vector (ray_cam_dir) and upward vector are parallel to one another (camera looking straight up or down),
 	// the calculated 'right vector' becomes invalid (length of zero / non-existent).
 	// In such cases, use the z-axis instead of the y-axis to calculate the camera's 'right vector'.
-	if (vec3_length(cam_right) < EPSILON)
+	if (vec3_length(cam_right) < 1e-3)
 		cam_right = vec3_cross(ray_dir_camera_space, vec3_new(0, 0, 1));
 
 	// Normalize the 'right vector'
