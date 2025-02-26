@@ -1370,6 +1370,7 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	double	norm_y;		// Normalized y-coordinate in NDC
 	t_vec3	cam_right;	// The rightward direction vector of the camera in world space
 	t_vec3	cam_up;		// The upward direction vector of the camera in world space
+	t_vec3	cam_forward;	// The forward direction vector of the camera in world space
 	t_vec3	ray_dir_camera_space;	// The direction vector of the ray in camera space
 	t_vec3	ray_dir_world_space;	// The direction vector of the ray in world space
 
@@ -1399,12 +1400,15 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	// Compute the up vector in world space by crossing the camera's direction with the right vector 
 	cam_up = vec3_norm(vec3_cross(cam.direction, cam_right));
 
+	// As defined by the .rt file
+	cam_forward = cam.direction;
+
 	// Transform the ray direction in camera space to world space:   
 	ray_dir_world_space = vec3_add(
 				vec3_add(
-					vec3_mult(cam.right, ray_dir_camera_space.x),
-					vec3_mult(cam.up, ray_dir_camera_space.y)),
-				vec3_mult(cam.direction, ray_dir_camera_space.z));
+					vec3_mult(cam_right, ray_dir_camera_space.x),
+					vec3_mult(cam_up, ray_dir_camera_space.y)),
+				vec3_mult(cam_forward, ray_dir_camera_space.z));
 
 	return (vec3_norm(ray_dir_world_space)); // Return normalized ray direction vector in world space
 }
