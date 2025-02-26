@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:45:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/25 20:55:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/26 03:19:00 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ static int	camera_field_of_view(t_scene *scene, int *parsing_error)
 }
 
 /*
-    To avoid issues with gimbal lock and singularities in vector math,
-    this function ensures the correct calculation of the 'camera right' vector.
-    When the camera is looking directly up (0, 1, 0) or down (0, -1, 0),
-    the standard cross product calculations for the right and up vectors fail
-    because they become parallel or undefined. This would result in all rays
+	right_vector = up_vector x forward_vector
+
+	To avoid issues with gimbal lock and singularities in vector math,
+	this function ensures the correct calculation of the 'camera right' vector.
+	When the camera is looking directly up (0, 1, 0) or down (0, -1, 0),
+	the standard cross product calculations for the right and up vectors fail
+	because they become parallel or undefined. This would result in all rays
 	being identical instead of spreading out.
 	To fix this, we fall back to a default right vector when the cross product
 	results in a zero vector.
@@ -47,7 +49,7 @@ static t_vec3	set_camera_right(t_scene *scene)
 
 	cam_right = vec3_cross(vec3_new(0, 1, 0), scene->cam.dir);
 	if (vec3_length(cam_right) < EPSILON)
-		cam_right = vec3_new(1, 0, 0);
+		cam_right = vec3_cross(scene->cam.dir, vec3_new(0, 0, 1));
 	return (vec3_norm(cam_right));
 }
 

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:26:27 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/25 20:43:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/26 02:55:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ considering the camera's field of view (FOV), aspect ratio, and orientation.
 
 1.	Convert Pixel Coordinates to Normalized Device Coordinates (NDC)
  -	`norm_x` and `norm_y` convert the pixel coordinates into a normalized range
- 	from [−1 ,1] (centered around 0).
+ 	from [−1,1] (centered around 0).
  -	`norm_x` is adjusted based on the aspect ratio to maintain the correct
   	proportions.
  - 	`norm_y` is flipped because the screen coordinate system typically has
