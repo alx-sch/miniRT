@@ -13,7 +13,7 @@
 This project is a collaboration between:
 
 - **[Natalie](https://github.com/busedame)**: Responsible for the  `.rt` file parser.
-- **[Alex](https://github.com/alx-sch)**: Focused on MiniLibX (graphical library) integration, ray-object intersections, shading & shadowing, and this README.
+- **[Alex](https://github.com/alx-sch)**: Focused on MiniLibX integration, ray-object intersections, shading & shadowing, and this README.
   
 ---
 
