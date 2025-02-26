@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:17:45 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/12/06 15:39:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:08:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_scene(t_scene *scene)
 
 /*Frees the scene struct, the parsing struct within the scene struct, and 
 exits with correct error code.*/
-void	free_scene_and_exit(t_scene *scene, t_rt *rt)
+void	free_scene_and_exit(t_scene *scene, t_rt *rt, int missing_id)
 {
 	t_list	*temp;
 	int		exit_code;
@@ -40,7 +40,8 @@ void	free_scene_and_exit(t_scene *scene, t_rt *rt)
 	exit_code = scene->pars.error_code;
 	if (scene)
 	{
-		free_parsing(&scene->pars);
+		if (!missing_id)
+			free_parsing(&scene->pars);
 		while (scene->objs)
 		{
 			temp = scene->objs->next;

@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   errors_unique_elements.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:45:05 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/26 16:49:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/23 11:08:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#ifdef BONUS
+# include "main_bonus.h"
+#else
+# include "main.h"
+#endif
 
 /*Prints out a parsing related error message for an ambience object.*/
 void	ambience_errors(t_pars *parsing)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/21 09:58:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:07:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,17 +295,8 @@ int		ft_freearray(char **arr);
 void	free_parsing(t_pars *parsing);
 
 // 0_parsing/free/free_scene.c
-void	free_scene_and_exit(t_scene *scene, t_rt *rt);
+void	free_scene_and_exit(t_scene *scene, t_rt *rt, int missing_id);
 void	free_scene(t_scene *scene);
-
-// 0_parsing/init/init_scene.c
-void	init_parsing(t_pars *parsing);
-void	init_scene(t_scene *scene);
-
-// 0_parsing/init/init_unique_elements.c
-void	init_ambience(t_ambi_light *amb);
-void	init_camera(t_cam *cam);
-void	init_light(t_light *light);
 
 // 0_parsing/parse_and_set/check_data/check_color.c
 int		check_color(char **rgb, int *parsing_error, int error_code);
@@ -345,8 +336,6 @@ int		parse_cylinder(t_scene *scene);
 
 // 0_parsing/parse_and_set/set_data (Directory)
 void	prepare_scene_objects(t_rt **rt);
-t_color	mix_ambient_light(t_color object_color, t_color ambient_color);
-double	adjust_to_color_range(double value, double min, double max);
 void	set_color(char **rgb, unsigned char *r, unsigned char *g,
 			unsigned char *b);
 int		set_coordinates(char *input_coords, double *x, double *y, double *z);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:10:11 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/22 08:52:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/23 18:37:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 Functions for computing the shading of a pixel in a 3D scene.
 */
 
-#include "main.h"
+#ifdef BONUS
+# include "main_bonus.h"
+#else
+# include "main.h"
+#endif
 
 // IN_FILE:
 
@@ -61,9 +65,9 @@ static t_vec3	get_reflection(t_vec3 vec_in, t_vec3 normal)
 }
 
 /**
-Calculates the specular reflection coefficient at an intersection point based
+Calculates the specular highlighting coefficient at an intersection point based
 on the Phong shading model.
-The specular coefficient defines the intensity of the specular reflection,
+The specular coefficient defines the intensity of the specular highlight,
 which contributes to the shiny appearance of a surface.
  @param rt 		Pointer to the main structure.
  @param ix 		Pointer to the intersection data.
@@ -105,7 +109,9 @@ t_shade	get_shading(t_rt *rt, t_ix *ix)
 	pix.light = rt->scene.light.color;
 	pix.ambient = ix->hit_obj->color_in_amb;
 	pix.diff_coeff = get_diffuse_coefficient(rt, ix);
-	pix.spec_coeff = get_specular_coefficient(rt, ix);
+	pix.spec_coeff = 0.0;
+	if (SPECULAR)
+		pix.spec_coeff = get_specular_coefficient(rt, ix);
 	pix.fade = 1.0;
 	if (FADE)
 		pix.fade = clamp(K_FADE * 100 / (ix->light_dist * ix->light_dist), 1.0);

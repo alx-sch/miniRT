@@ -6,21 +6,17 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/22 08:48:23 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/26 12:08:29 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# Implement light attenuation (fading of light intensity with distance);
-# set FADE to 1 to enable, 0 to disable during compilation ('make FADE=0')
-FADE ?=			1
 
 NAME :=			miniRT
 
 OS := 			$(shell uname)			# Detect OS type
 
-#############################
-# PRE-COMPILATION CONSTANTS #
-#############################
+##########
+# MACROS #
+##########
 
 WINDOW_W ?=		1440 					# Default window width
 WINDOW_H ?=		900						# Default window height
@@ -117,14 +113,21 @@ LIB_FLAGS :=	$(LIBFT_FLAGS) $(MLX_FLAGS)
 
 CC :=			cc
 CFLAGS :=		-Wall -Wextra -Werror
-CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) # Look for headers in these directories
-CFLAGS +=		-DFADE=$(FADE)
-CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with pre-compilation constants
+CFLAGS +=		-I$(HDRS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)	# Look for headers in these directories
+CFLAGS +=		-DWINDOW_H=$(WINDOW_H) -DWINDOW_W=$(WINDOW_W)	# Define window dimensions with macros
 
 CFLAGS +=		-g -Wpedantic						# Debugging flag, pedantic warnings
 
 ifeq ($(strip $(OS)),Darwin)						# Suppress some errors/warnings on MacOS (due to the way prototypes are defined in MiniLibX)
 	CFLAGS += 	-Wno-strict-prototypes
+endif
+
+##########
+# BONUS #
+#########
+
+ifdef BONUS
+	CFLAGS += -DBONUS=1
 endif
 
 ######################
@@ -186,7 +189,7 @@ $(LIBMLX):
 		git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR) >/dev/null 2>&1; \
 	fi
 	@echo "Compiling MiniLibX..."
-	@make -s -C $(MLX_DIR) >/dev/null 2>&1;
+	@$(MAKE) -s -C $(MLX_DIR) >/dev/null 2>&1;
 	@echo "$(BOLD)MiniLibX compiled.$(RESET)"
 
 # Build libft library by calling 'make' in LIBFT_DIR.
@@ -243,7 +246,7 @@ $(LIBFT):	$(LIBFT_DIR)/libft.h \
 			$(LIBFT_DIR)/ft_printf_utils.c \
 			$(LIBFT_DIR)/ft_printf.c \
 			$(LIBFT_DIR)/ft_atoi_base.c
-	@make -s -C $(LIBFT_DIR)
+	@$(MAKE) -s -C $(LIBFT_DIR)
 	@echo ""
 
 # Compilation of program; depends on $(OBJS) and library files
@@ -261,7 +264,7 @@ $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
 
 	@echo "$(RESET)"
 
-	@echo "by Natalie Holbrook & Alex Schenk @42Berlin, December 2024"
+	@echo "by Natalie Holbrook & Alex Schenk @42Berlin, February 2025"
 	@echo "\n$(BOLD)$(YELLOW)Usage: './$(NAME) <scene.rt>'$(RESET)"
 
 ##########
@@ -271,7 +274,7 @@ $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
 # Target to remove all generated files BUT the program executable and compiled libraries.
 clean:
 	@rm -rf $(OBJS_DIR)
-	@make -s -C $(LIBFT_DIR) clean  >/dev/null 2>&1
+	@$(MAKE) -s -C $(LIBFT_DIR) clean  >/dev/null 2>&1
 	@rm -rf $(MLX_DIR)/obj
 	@echo "$(BOLD)$(RED)Object files removed.$(RESET)"
 
@@ -282,20 +285,24 @@ fclean:	clean
 
 # Target to remove all generated files and the program executable (NOT the compiled libraries).
 fclean_all:	fclean
-	@make -s -C $(LIBFT_DIR) fclean  >/dev/null 2>&1
+	@$(MAKE) -s -C $(LIBFT_DIR) fclean  >/dev/null 2>&1
 	@rm -rf $(MLX_DIR)
 	@echo "$(BOLD)$(RED)Library files removed.$(RESET)"
 
 # Target to remove all object files, the program executable,
 # and then rebuild the program.
-re:	fclean
-	@echo ""
-	@$(MAKE) -s all
+re:	fclean all
 
 # Target to remove all object files, the program executable, and the compiled libraries,
 # and then rebuild the program.
-re_all:	fclean_all
-	@echo ""
-	@$(MAKE) -s all
+re_all:	fclean_all all
 
-.PHONY:	all clean fclean re
+# Bonus rules
+bonus:
+	@$(MAKE) -s BONUS=1
+
+re_bonus:	fclean bonus
+
+re_all_bonus:	fclean_all bonus
+
+.PHONY:	all clean fclean fclean_all re re_all bonus re_bonus re_all_bonus

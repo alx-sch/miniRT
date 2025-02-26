@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:38:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/18 00:29:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:08:41 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	errors_file(int error_code, t_rt *rt)
 	else if (error_code == ERR_FILE_ACCESS)
 		perror(ERR_MSG_FILE_ACCESS);
 	else if (error_code == ERR_MISSING_IDENTIFIER)
+	{
 		ft_putstr_fd(ERR_MSG_MISSING_IDENTIFIER, 2);
+		ft_putstr_fd(RESET, 2);
+		free_scene_and_exit(&rt->scene, rt, 1);
+	}
 	ft_putstr_fd(RESET, 2);
 	free(rt);
 	exit(error_code);
@@ -65,5 +69,5 @@ void	errors_parsing(t_rt *rt, t_scene *scene, t_pars *parsing)
 	else if (parsing->error_code >= 40 && parsing->error_code <= 49)
 		cylinder_errors(parsing, parsing->tot_cyl);
 	ft_putstr_fd(RESET, 2);
-	free_scene_and_exit(scene, rt);
+	free_scene_and_exit(scene, rt, 0);
 }

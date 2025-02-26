@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 01:24:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/25 19:08:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,7 +335,7 @@ Structure representing the camera in the scene.
  - double `fov`:			Horizontal field of view [0, 180].
  - double `scale`:			Scaling factor, derived from FOV.
  - double `aspect_ratio`:	Screen aspect ratio.
-  - t_vec3 `right`:			Right vector, perpendicular to orientation and up
+ - t_vec3 `right`:			Right vector, perpendicular to orientation and up
 							(used for world-space orientation).
  - t_vec3 `up`:				Up vector perpendicular to right and orientation
 							(used for world-space orientation).

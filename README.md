@@ -13,8 +13,13 @@
 This project is a collaboration between:
 
 - **[Natalie](https://github.com/busedame)**: Responsible for the  `.rt` file parser.
+<<<<<<< HEAD
 - **[Alex](https://github.com/alx-sch)**: Focused on MiniLibX (graphical library) integration, ray-object intersections, shading & shadowing, and this README.
   
+=======
+- **[Alex](https://github.com/alx-sch)**: Focused on MiniLibX (graphical library) integration, ray-object intersections, shading and shadowing.
+
+>>>>>>> upstream/main
 ---
 
 ## Overview
@@ -38,11 +43,16 @@ This project is a collaboration between:
    ```
    
 2. Build the project:
-   ```
-   make
-   ```
+ - Without specular highlighting and light fading:
+	```
+   	make
+   	```
+  - With specular highlighting and light fading:
+	```
+   	make bonus
+   	```
    
-3. **macOS Users:** Install X11 via XQuartz if needed:
+4. macOS Users: Install X11 via XQuartz if needed:
    ```
    brew install xquartz
    ```
@@ -54,7 +64,7 @@ This project is a collaboration between:
    ```
    export DISPLAY=:0
    ```
-4. Run the program following the instructions in the output.
+5. Run the program following the instructions in the output.
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
 [MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows and handling graphics/events.
@@ -71,48 +81,57 @@ The `.rt` files define the elements and configurations for the scene to be rende
 - **Ambient Light**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_A.png" width="500" />  
   * **Identifier**: `A`  
-  * **Ambient lighting ratio** (brightness, range: [0.0, 1.0]): `0.2`  
-  * **Color** in RGB ([0-255]): `255, 255, 255`
+  * **Ambient lighting ratio** (brightness) [0.0, 1.0]: `0.2`  
+  * **Color** in RGB [0, 255]: `255, 255, 255`
 
 - **Camera**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_C.png" width="500"/>  
   * **Identifier**: `C`  
-  * **Position (XYZ coordinates)**: `60, 0, 0`  
-  * **Normalized orientation vector** (range: [-1.0, 1.0]): `1.0, 0.0, 0.0`  
-  * **Field of view (FOV)** in degrees ([0-180]): `170`
+  * **Position (XYZ coordinates)**: `-50.0, 0, 20`  
+  * **Normalized orientation vector**: `0, 0, 1`  
+  * **Field of view (FOV)** in degrees [0, 180]: `70`
 
 - **Light**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_L.png" width="500"/>  
   * **Identifier**: `L`  
-  * **Position (XYZ coordinates)**: `90, 50, 70`  
-  * **Lighting ratio** (brightness, range: [0.0, 1.0]): `0.7`  
-  * *(Optional)* **Color** in RGB ([0-255]): `255, 255, 255` (default: white)
+  * **Position (XYZ coordinates)**: `-40.0, 50.0, 0.0`  
+  * **Lighting ratio** (brightness) [0.0, 1.0]: `0.6`  
+  * *(Optional)* **Color** in RGB [0, 255]: `10, 0, 255` (default: white)
 
 #### Optional Elements
 
 - **Plane**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_pl.png" width="500"/>  
   * **Identifier**: `pl`  
-  * **Position (XYZ coordinates)** of a point on the plane: `0.0, 0.0, -500.0`  
-  * **Normalized orientation vector** (range: [-1, 1]): `-1.0, 1.0, 1.0`  
-  * **Color** in RGB ([0-255]): `0, 0, 225`
+  * **Position (XYZ coordinates)** of a point on the plane: `0.0, 0.0, -10.0`  
+  * **Normalized orientation vector**: `0.0, 1.0, 0.0`  
+  * **Color** in RGB [0, 255]: `0, 0, 225`
 
 - **Sphere**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_sp.png" width="500"/>  
   * **Identifier**: `sp`  
-  * **Position (XYZ coordinates)** of the center: `90, 0.0, 0.0`  
-  * **Diameter**: `60`  
-  * **Color** in RGB ([0-255]): `0, 0, 255`
+  * **Position (XYZ coordinates)** of the center: `0.0, 0.0, 20.6`  
+  * **Diameter**: `12.6`  
+  * **Color** in RGB [0, 255]: `10, 0, 255`
 
 - **Cylinder**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
   * **Identifier**: `cy`  
+<<<<<<< HEAD
   * **Position (XYZ coordinates)** of the center: `90.0, 0.0, 0.0`  
   * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
   * **Diameter**: `30`  
   * **Height**: `210.42`  
   * **Color** in RGB ([0-255]): `0, 0, 255`
  
+=======
+  * **Position (XYZ coordinates)** of the center: `50.0, 0.0, 20.6`  
+  * **Normalized orientation vector** (axis): `0.0, 0.0, 1.0`  
+  * **Diameter**: `14.2`  
+  * **Height**: `21.42`  
+  * **Color** in RGB [0, 255]: `10, 0, 255`
+
+>>>>>>> upstream/main
 To make it easier for the user, the orientation vectors do not need to be perfectly normalized. Vectors such as $(0.707, 0.707, 0)$ are accepted as well, instead of requiring exact values like $(1/\sqrt{2}, 1/\sqrt{2}, 0) = (0.707106\dots, 0.707106\dots, 0)$.
 
 ---
@@ -132,6 +151,327 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 			     
 ---
 
+<<<<<<< HEAD
+=======
+## Introduction to basic mathematical terms and concepts
+
+In this part, we will have a look at some important mathematical terms and concepts, needed to build the equations and calculations for miniRT.  
+This part is written while studying the book "The Ray Tracer Challenge" by Jamis Buck (2019), and it is a result of reading and taking notes from this book.
+
+### Epsilon
+
+Since we are dealing with floating point numbers (e.g. 1.5512) in our calculations, we need to account for floating point precision errors. This means that two numbers that should be seen as equivalent, can end up being shown as different. This happens because of round off errors happening on a binary level.  
+To take this into consideration, we can use an `EPSILON` value. This is a very small value (e.g. 1-e6 or 0.000001).
+```bash
+	Instead of this:
+	if (a < 0)
+
+	Do this:
+	if (a < EPSILON)
+```
+
+### Vectors
+
+In a 3D space (as in the real world or in our miniRT), we can use a coordinate system to determine a *point in space*. This essentially means *where* something is located in a certain space.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/coordinate_system.png" alt="coordinate_system.png" width="400"/>
+    <br>
+    <span>A coordinate system with x,y,z.</span>
+</p>
+
+`x` How far to the right or the left.  
+`y` How far up or down.  
+`z` How close or far away from the viewer.  
+
+A **vector** works similar, and can be seen as a line that's giving us information about two things:
+- The direction it is pointing to.
+- How long it is.
+
+A vector gets determined by its x,y,z coordinates, as in a 3D coordinate system.
+Since a vector needs two points to be defined, we can look at it like this:
+- `start point` is (0,0,0)
+- `vector point` is (2,4,1)
+- To visualize how this works: Draw one point at 0,0,0 and draw a line to point 2,4,1. The direction of the vector will be determined by in which direction this line is going, starting from start point.
+
+However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*. Note that this is only used in the first few examples, as it is not something we have implemented in the project. It is mostly used as a more visual example of how points and vectors can be distinguished.  
+- `w` If it is a point (set to 1), if it is a vector (set to 0).  
+
+##
+
+**Adding a vector direction to a point➕**
+
+Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector.  
+**We add the values of point a and vector together:**  
+- a.x (2) + v.x (3) = b.x (5)
+- a.y (5) + v.y (4) = b.y (9)
+- a.z (-1) + v.z (1) = b.z (0)
+- a.w (1) + v.w (0) = b.w (1)
+
+And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
+
+Code example:
+```bash
+t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
+	result.z = v1.z + v2.z;
+	return (result);
+}
+```
+
+##
+
+**Finding a vector direction between two points➖**
+
+Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are talking about miniRT, let's give them the following roles:
+- `point a` = Light source coordinates.
+- `point b` = Object coordinates.
+
+We want to find a vector that gives us the direction from object to light source.  
+The direction of a vector between two points can be seen as this formula:
+```bash
+	direction (x,y,z,0) = dest (x,y,z,1) - origin (x,y,z,1)
+```
+**We subtract the values of point b from point a == light_coords - object_coords == a - b.**  
+- a.x (2) - b.x (3) = v.x (-1)
+- a.y (5) - b.y (4) = v.y (1)
+- a.z (-1) - b.z (1) = v.z (-2)
+- a.w (1) - b.w (1) = v.w (0)
+
+In order to make the vector point from the object to the light source, subtract the object’s coordinates from the light source’s coordinates. This way, the vector will point in the direction from the object to the light source.
+
+💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
+**So:** In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
+
+Code example:
+```bash
+t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	return (result);
+}
+```
+
+##
+
+**Finding the opposite direction of a vector🔃**
+
+Say we have a vector pointing from a surface to the light source. What can we do to reverse the direction -- so make it point *from* the light source *to* the surface?  
+**We introduce a zero vector (0,0,0,0) subtract vector v (2,4,1,0) from vector zero, and get new vector:**  
+- zv.x (0) - v.x (2) = nv.x (-2)
+- zv.y (0) - v.y (4) = nv.y (-4)
+- zv.z (0) - v.z (1) = nv.z (-1)
+- zv.w (0) - v.w (0) = nv.w (0)
+
+Here we are essentially just reversing the *sign* of the different coordinates of vector v. Another (and much more straightforward) way to do this, would be just reversing the sign of vector v. **So + becomes -, and - becomes +**.
+
+##
+
+**Finding the distance from start to a point🏃‍♀️**
+
+If you have a vector, and you want to find a point that is 3.5 times further in the vector direction, e.g. to see where a ray intersects a sphere. 3.5 would be the *scalar* value. Multiplying with this value, *scales* the vector - meaning that each component (x,y,z,w) gets multiplied with the same value (3.5).  
+**We have a vector v (2,-1,3) and scale it by 3.5:**  
+- v.x (2) * 3.5 = 7
+- v.y (-1) * 3.5 = -3.5
+- v.z (3) * 3.5 = 10.5
+
+The result after scaling gives us a point (7,-3.5,10.5). This point will be 3.5 times further away from our original point, moved in the direction of vector v.
+
+Code example:
+```bash
+t_vec3	vec3_mult(t_vec3 vec, double scalar)
+{
+	t_vec3	result;
+
+	result.x = vec.x * scalar;
+	result.y = vec.y * scalar;
+	result.z = vec.z * scalar;
+	return (result);
+}
+```
+
+##
+
+**Finding the length of a vector📏**
+
+Until now, we have mainly looked at different ways to figure out vector directions. Now, what about the length, or the *magnitude* of a vector? This means how far you would travel in a straight line, if you were to walk from one end of the vector to the other.  
+
+Do you remember Pythagoras' theorem?  
+
+$$
+a² + b² = c²
+$$
+
+Pythagoras' theorem says this: "In a right-angled triangle, the square of the hypotenuse side is equal to the sum of squares of the other two sides“. I found it a bit hard to figure out exactly why this applies to finding the length of a vector, but I will show two very poorly made drawings. I have tried to show exactly why this makes sense.
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_1.png" alt="Pythagoras_1.png" width="400"/>
+    <br>
+    <span>Pythagoras' in a 2D coordinate system. c or vector 1 is the unknown side/hypotenuse, and will tell us the length of the vector.</span>
+</p>
+
+<p align="center">
+    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_2.png" alt="Pythagoras_2.png" width="400"/>
+    <br>
+    <span>Pythagoras' in a 3D coordinate system. d is the unkown side/hypotenuse, and will tell us the length of the vector.</span>
+</p>
+
+We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
+1. v.x (1) = 1 * 1 = 1
+2. v.y (2) = 2 * 2 = 4
+3. v.z (3) = 3 * 3 = 9
+4. 1 + 4 + 9 = 14
+5. Since 14 is equivalent to x², and we want to find x, we need to take the *square root* of 14.
+6. The magnitude of vector v is 3.741657387.
+
+In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors/*normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
+
+Code example:
+```bash
+double	vec3_length(t_vec3 v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+```
+
+##
+
+**Normalization⚖️**
+
+Normalizing a vector keeps the correct direction, but reduces or increases its magnitude to 1. In miniRT we don't accept orientation vectors that are not normalized, but whenever a new vector is created - we make sure to normalize it each time.  
+
+**You normalize a vector by dividing each of its components by its magnitude:**
+1. In our previous example we had a vector v (1,2,3). After using Pythagoras' theorem (multiplying each value with itself one time, adding them together, then square root of the result), we figured out its magnitude was 3.741657387.
+2. We divide each of its components by the magnitude (1 / 3.741657387, 2 / 3.741657387, 3 / 3.741657387).
+3. Vector v now has the following coordinates (0.267261242, 0.534522484, 0.801783726).
+
+**Checking if the vector is normalized:**
+1. We use Pythagoras' on the new values of vector v.
+3. 0.267261242² + 0.534522484² + 0.801783726² = 1²
+4. 0.071428571 + 0.285714286 + 0.642857143 = 1
+5. Since the square root of 1 = 1, the vector v is now normalized.
+
+Code example:
+```bash
+t_vec3	vec3_norm(t_vec3 vec)
+{
+	double	length;
+	double	inv_length;
+
+	length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+	if (length > -6)
+	{
+		inv_length = 1.0 / length;
+		vec.x *= inv_length;
+		vec.y *= inv_length;
+		vec.z *= inv_length;
+	}
+	return (vec);
+}
+```
+
+##
+
+**Dot product📍➡️📍**
+
+The dot product is also called a scalar product or inner product. It tells us *how aligned* two vectors are. This essentially means how big the angle between them are. Well, why not only use angles then, like 90°, 180°, etc.? That would be more computationally expensive, as it would require trigonometric functions. The dot product is a simple arithmetic operation, and serves the same purpose.  
+
+So how is it calculated? It takes two vectors and returns a *scalar value*. The dot product is computed as the *sum of the products of the corresponding components of each vector*.  
+It essentially looks like this (assuming both vectors are normalized):
+```bash
+	float	dot(vec a, vec b)
+	{
+		return (a.x * b.x + a.y * b.y + a.z * b.z);
+	}
+```
+It is a bit hard to understand what actually happens, but think about this:
+- If the *dot product is 0*, the vectors are perpendicular (90°).
+- If the *dot product is 1*, the vectors are *identical* (0°).
+- If the *dot product is -1*, the vectors are pointing in *opposite* directions (180°).
+- The *smaller* the dot product, the *larger* the angle between the two vectors.
+- The *greater* the dot product, the *smaller* the angle between the two vectors.
+
+💡 Note: Since we only operate with unit vectors (length of 1), the dot product is equivalent to the *cosine of the angle* between them. This also means that the *maximum* dot product is 1, and the *minimum* dot product is -1.  
+If the vectors were NOT normalized, we would have to also take the cosine of the result to keep it between the range of -1 and 1.  
+
+**Let's do some examples with two normalized vectors:**
+
+With vectors v1 (0,0,1) and v2 (1,0,0):
+- We do our dot product calculation, which leaves us with the result 0.
+- Since the result is 0, we know that these vectors are perpendicular to each other.
+
+With vectors v1 (1,0,0) and v2 (1,0,0)
+- We do our dot product calculation, which leaves us with the result 1.
+- Since the result is 1, we know that these vectors are identical.
+
+With vectors v1 (-1,0,0) and v2 (1,0,0)
+- We do our dot product calculation, which leaves us with the result -1.
+- Since the result is -1, we know that these vectors are pointing in opposite directions.
+
+Anything in between -1 and 1 will indicate the angle between the two vectors. The closer the dot product is to 1, the smaller the angle is (since 1 would make them identical). The closer the dot product is to -1, the greater the angle is (since -1 would make them opposite).
+
+**Let's do an example with two not-normalized vectors, v1 (2,1,4) and v2 (3,4,2):**  
+
+1. Find the *dot product* of v1 and v2, which is 18.
+2. Find the *magnitude* of *each vector*. v1 is 4.582575695 and v2 is 5.385164807.
+3. *Multiply* the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
+4. *Divide* the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
+5. We get 0.729396809.
+
+Our result "0.729396809" indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
+Converted to degrees, the angle between v1 and v2 is approximately 43.16°.
+
+##
+
+**Cross product✖️**
+
+The cross product is similar to the dot product, but instead of returning a scalar, it *returns another vector*. This new vector will be *perpendicular* to both the original vectors. This becomes very handy when setting up the *camera coordinate system*. This is further explained further down in this README, about *camera orientation vectors*.  
+
+To give a short introduction, finding the cross product makes sure that **no matter the camera orientation vector, right and up will always be relative to the orientation**.  
+
+It's maybe intuitive to think that right (x) would always mean (1,0,0) and up (y) would always mean (0,1,0). However this is only true if z is (0,0,1). If the camera orientation vector is facing diagonally upwards (1,1,1) -- these calculations would be wrong. That's why we need the cross product, to correctly determine what is left, right, up and down -- and that it stays perpendicular to wherever the camera is facing.  
+
+So:
+- If the camera was always fixed, Right = (1,0,0) and Up = (0,1,0) would work.
+- But since the camera can rotate and look in any direction, we use the cross product to ensure Right and Up stay properly aligned.
+- Note that the order of which the calculation happens is very important!
+
+**The calculation of the cross product looks like this:**
+- v3.x = v1.y * v2.z - v1.z * v2.y
+- v3.y = v1.z * v2.x - v1.x * v2.z
+- v3.z = v1.x * v2.y - v1.y * v2.x
+
+The calculation takes two vectors, and returns a new vector that is perpendicular to both original vectors.
+
+Code example:
+```bash
+t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	result;
+
+	result.x = (v1.y * v2.z) - (v1.z * v2.y);
+	result.y = (v1.z * v2.x) - (v1.x * v2.z);
+	result.z = (v1.x * v2.y) - (v1.y * v2.x);
+	return (result);
+}
+```
+💡 Note: When calculating the "camera right" for camera orientation (the right of the camera's view) - the standard way to do it looks like this:  
+`vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.dir))`.  
+However, there is an edge case happening in the case of the camera orientation vector being `0,1,0` or `0,-1,0` (camera looking up or down). The standard calculation would potentially result in a cross product calculation of *two identical vectors*, making them parallel or undefined. This leads to all rays being identical instead of spreading out.  
+To handle this edge case, we need a different calculation:  
+`(vec3_norm(vec3_cross(scene->cam.dir, vec3_new(1, 0, 0)))`.
+
+---
+
+>>>>>>> upstream/main
 ## Ray-Object Intersection
 
 This section outlines the mathematical approach to detecting intersections between rays and various geometric objects. While this [overview document](https://github.com/josephcheel/42-MiniRT/blob/87dd9a09ded69ea9fbc0ae50bf085517908b9f85/Resources/Math/Intersection%20points%20calculations.pdf) was not directly used for deriving all the mathematical formulations and functions presented here, it provides an excellent summary of the fundamental concepts and calculations.
@@ -220,7 +560,7 @@ Function to find the intersection of a ray with a plane.
 
  @note
 Due to floating-point precision limitations, directly comparing a dot product to zero can be
-unreliable. A small threshold (1e-6) is used to determine if the ray is parallel to the plane.
+unreliable. A small threshold (1e-3) is used to determine if the ray is parallel to the plane.
 Values below this threshold are considered too close to zero, indicating parallelism or
 preventing division by very small numbers, which could lead to inaccuracies.
 */
@@ -233,7 +573,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 	denom = vec3_dot(ray_dir, plane->normal);
 
 	// Check if the ray is not parallel to the plane (denom > small threshold)
-	if (fabs(denom) > 1e-6)
+	if (fabs(denom) > 1e-3)
 	{
 		// Compute the vector from ray origin to a point on the plane
 		difference = vec3_sub(plane->point_in_plane, ray_origin);
@@ -810,7 +1150,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	denominator = vec3_dot(ray_dir, cap_normal);
 
 	// If the denominator is near zero, the ray is parallel to the cap and cannot intersect
-	if (fabs(denominator) < 1e-6)
+	if (fabs(denominator) < -3)
 		return (0);
 
 	// Calculate the distance t_cap to the intersection point on the cap plane
@@ -980,7 +1320,7 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 
 	aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
 
-	// Map pixel coordinates to normalized device coordinates (NDC)
+	// Convert the pixel coordinates into a normalized range from [−1,1] 
 	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio * scale;
 	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * scale;
 
@@ -1047,32 +1387,47 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	double	norm_y;		// Normalized y-coordinate in NDC
 	t_vec3	cam_right;	// The rightward direction vector of the camera in world space
 	t_vec3	cam_up;		// The upward direction vector of the camera in world space
-	t_vec3	ray_cam_dir;	// The direction vector of the ray in camera space
-	t_vec3	ray_world_dir;	// The direction vector of the ray in world space
+	t_vec3	cam_forward;	// The forward direction vector of the camera in world space
+	t_vec3	ray_dir_camera_space;	// The direction vector of the ray in camera space
+	t_vec3	ray_dir_world_space;	// The direction vector of the ray in world space
 
 	scale = tan((cam.fov / 2) * M_PI / 180.0);
 
 	aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
 
-	// Map pixel coordinates to normalized device coordinates (NDC)
+	// Convert the pixel coordinates into a normalized range from [−1,1] 
 	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio * scale;
 	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * scale;
 
-	// Ray direction in camera space
-	ray_cam_dir = vec3_new(norm_x, norm_y, 1.0);
+	// Ray direction in camera space points forward (z: 1.0)
+	ray_dir_camera_space = vec3_new(norm_x, norm_y, 1.0);
 
-	// The cross product produces a vector that is orthogonal to both input vectors.
-	cam_right = vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.ori)); 
-	cam_up = vec3_norm(vec3_cross(scene->cam.ori, scene->cam.right));
+	// The right vector is orthogonal to both the upward vector (0, 1, 0) and forward vector (ray_dir_camera_space)
+	cam_right = vec3_norm(vec3_cross(vec3_new(0, 1, 0), ray_dir_camera_space));
+
+	// If the forward vector (ray_cam_dir) and upward vector are parallel to one another (camera looking straight up or down),
+	// the calculated right vector becomes invalid (length of zero / non-existent).
+	// In such cases, use the z-axis instead of the y-axis to calculate the camera's right vector.
+	if (vec3_length(cam_right) < 1e-3)
+		cam_right = vec3_cross(ray_dir_camera_space, vec3_new(0, 0, 1));
+
+	// Normalize the right vector
+	cam_right = vec3_norm(cam_right);
+
+	// Compute the up vector in world space by crossing the camera's direction with the right vector 
+	cam_up = vec3_norm(vec3_cross(cam.direction, cam_right));
+
+	// As defined by the .rt file
+	cam_forward = cam.direction;
 
 	// Transform the ray direction in camera space to world space:   
-	ray_world_dir = vec3_add(
+	ray_dir_world_space = vec3_add(
 				vec3_add(
-					vec3_mult(cam.right, ray_cam_dir.x),
-					vec3_mult(cam.up, ray_cam_dir.y)),
-				vec3_mult(cam.ori, ray_cam_dir.z));
+					vec3_mult(cam_right, ray_dir_camera_space.x),
+					vec3_mult(cam_up, ray_dir_camera_space.y)),
+				vec3_mult(cam_forward, ray_dir_camera_space.z));
 
-	return (vec3_norm(ray_world_dir)); // Return normalized ray direction vector in world space
+	return (vec3_norm(ray_dir_world_space)); // Return normalized ray direction vector in world space
 }
 ```
 
