@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 16:20:40 by aschenk           #+#    #+#              #
-#    Updated: 2025/02/25 21:29:36 by aschenk          ###   ########.fr        #
+#    Updated: 2025/02/26 12:15:26 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -299,7 +299,7 @@ re_all:	fclean_all all
 
 # Bonus rules
 bonus:
-	@$(MAKE) BONUS=1
+	@$(MAKE) --no-print-directory BONUS=1
 
 re_bonus:	fclean bonus
 
