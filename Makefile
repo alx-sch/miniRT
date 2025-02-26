@@ -299,7 +299,7 @@ re_all:	fclean_all all
 
 # Bonus rules
 bonus:
-	@$(MAKE) BONUS=1
+	@$(MAKE) --no-print-directory BONUS=1
 
 re_bonus:	fclean bonus
 
