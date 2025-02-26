@@ -351,7 +351,7 @@ t_vec3	vec3_norm(t_vec3 vec)
 	double	inv_length;
 
 	length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-	if (length > 1e-6)
+	if (length > -6)
 	{
 		inv_length = 1.0 / length;
 		vec.x *= inv_length;
@@ -543,7 +543,7 @@ Function to find the intersection of a ray with a plane.
 
  @note
 Due to floating-point precision limitations, directly comparing a dot product to zero can be
-unreliable. A small threshold (1e-6) is used to determine if the ray is parallel to the plane.
+unreliable. A small threshold (1e-3) is used to determine if the ray is parallel to the plane.
 Values below this threshold are considered too close to zero, indicating parallelism or
 preventing division by very small numbers, which could lead to inaccuracies.
 */
@@ -556,7 +556,7 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 	denom = vec3_dot(ray_dir, plane->normal);
 
 	// Check if the ray is not parallel to the plane (denom > small threshold)
-	if (fabs(denom) > 1e-6)
+	if (fabs(denom) > 1e-3)
 	{
 		// Compute the vector from ray origin to a point on the plane
 		difference = vec3_sub(plane->point_in_plane, ray_origin);
@@ -1133,7 +1133,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	denominator = vec3_dot(ray_dir, cap_normal);
 
 	// If the denominator is near zero, the ray is parallel to the cap and cannot intersect
-	if (fabs(denominator) < 1e-6)
+	if (fabs(denominator) < -3)
 		return (0);
 
 	// Calculate the distance t_cap to the intersection point on the cap plane
@@ -1303,7 +1303,7 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 
 	aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
 
-	// Map pixel coordinates to normalized device coordinates (NDC)
+	// Convert the pixel coordinates into a normalized range from [−1,1] 
 	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio * scale;
 	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * scale;
 
@@ -1370,32 +1370,43 @@ static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 	double	norm_y;		// Normalized y-coordinate in NDC
 	t_vec3	cam_right;	// The rightward direction vector of the camera in world space
 	t_vec3	cam_up;		// The upward direction vector of the camera in world space
-	t_vec3	ray_cam_dir;	// The direction vector of the ray in camera space
-	t_vec3	ray_world_dir;	// The direction vector of the ray in world space
+	t_vec3	ray_dir_camera_space;	// The direction vector of the ray in camera space
+	t_vec3	ray_dir_world_space;	// The direction vector of the ray in world space
 
 	scale = tan((cam.fov / 2) * M_PI / 180.0);
 
 	aspect_ratio = (double)WINDOW_W / (double)WINDOW_H;
 
-	// Map pixel coordinates to normalized device coordinates (NDC)
+	// Convert the pixel coordinates into a normalized range from [−1,1] 
 	norm_x = ((2.0 * (x + 0.5) / WINDOW_W) - 1.0) * aspect_ratio * scale;
 	norm_y = (1.0 - (2.0 * (y + 0.5) / WINDOW_H)) * scale;
 
-	// Ray direction in camera space
-	ray_cam_dir = vec3_new(norm_x, norm_y, 1.0);
+	// Ray direction in camera space points forward (z: 1.0)
+	ray_dir_camera_space = vec3_new(norm_x, norm_y, 1.0);
 
-	// The cross product produces a vector that is orthogonal to both input vectors.
-	cam_right = vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.ori)); 
-	cam_up = vec3_norm(vec3_cross(scene->cam.ori, scene->cam.right));
+	// The right vector is orthogonal to both the upward vector (0, 1, 0) and forward vector (ray_dir_camera_space)
+	cam_right = vec3_norm(vec3_cross(vec3_new(0, 1, 0), ray_dir_camera_space));
+
+	// If the forward vector (ray_cam_dir) and upward vector are parallel to one another (camera looking straight up or down),
+	// the calculated 'right vector' becomes invalid (length of zero / non-existent).
+	// In such cases, use the z-axis instead of the y-axis to calculate the camera's 'right vector'.
+	if (vec3_length(cam_right) < EPSILON)
+		cam_right = vec3_cross(ray_dir_camera_space, vec3_new(0, 0, 1));
+
+	// Normalize the 'right vector'
+	cam_right = vec3_norm(cam_right);
+
+	// Compute the up vector in world space by crossing the camera's direction with the right vector 
+	cam_up = vec3_norm(vec3_cross(cam.direction, cam_right));
 
 	// Transform the ray direction in camera space to world space:   
-	ray_world_dir = vec3_add(
+	ray_dir_world_space = vec3_add(
 				vec3_add(
-					vec3_mult(cam.right, ray_cam_dir.x),
-					vec3_mult(cam.up, ray_cam_dir.y)),
-				vec3_mult(cam.ori, ray_cam_dir.z));
+					vec3_mult(cam.right, ray_dir_camera_space.x),
+					vec3_mult(cam.up, ray_dir_camera_space.y)),
+				vec3_mult(cam.direction, ray_dir_camera_space.z));
 
-	return (vec3_norm(ray_world_dir)); // Return normalized ray direction vector in world space
+	return (vec3_norm(ray_dir_world_space)); // Return normalized ray direction vector in world space
 }
 ```
 
