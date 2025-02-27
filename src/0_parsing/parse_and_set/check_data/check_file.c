@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:47:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/11/19 17:21:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:22:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 /*Checks if the rt-file exists, and has the required permissions.*/
 int	check_file_existence(char *str)
 {
-	if (access(str, R_OK) != 0)
+	int	fd;
+
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
 		return (1);
+	close(fd);
 	return (0);
 }
 
