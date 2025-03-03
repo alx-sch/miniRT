@@ -1375,14 +1375,13 @@ t_shade	get_shading(t_rt *rt, t_ix *ix)
 }
 ```
 
-
-
-## Render the Scene
-
-To render the whole scene with the above mentioned functions for ray direction computation, intersection determination, shadowing, and shading 
+<p align="center">
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/diffuse_shading.png" alt="diffuse_shading.png" width="400"/> <br> (a) <br> 
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/spec_no_fading.png" alt="spec_no_fading.png" width="400"/> <br> (b) <br> 
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/spec_fading.png" alt="spec_fading.png" width="400"/> <br> (c) <br> 
+    <span>The same scene with: ambient light and diffuse shading <strong>(a)</strong>, specular highlighting <strong>(b)</strong>, and light fading <strong>(c)</strong>, resulting in a fully shaded render.</span>
+</p>
    
-
-
 ---
 
 ## Acknowledgements
