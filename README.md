@@ -1013,7 +1013,7 @@ The camera's orientation in 3D space is defined by three mutually orthogonal vec
 - `cam_up`: Points upward from the camera's perspective (y-axis).
 - `cam_orientation` (provided by .rt file): Points forward along the camera's line of sight (z-axis).
 
-These vectors form a **basis** for the camera's local coordinate system. To transform a direction vector from camera space to world space, you combine these basis vectors weighted by the direction's components in camera space.
+These vectors form a basis for the camera's local coordinate system. To transform a direction vector from camera space to world space, you combine these basis vectors weighted by the direction's components in camera space.
 
 #### Steps for Orientation Transformation
 
