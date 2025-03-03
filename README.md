@@ -815,7 +815,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	denominator = vec3_dot(ray_dir, cap_normal);
 
 	// If the denominator is near zero, the ray is parallel to the cap and cannot intersect
-	if (fabs(denominator) < -3)
+	if (fabs(denominator) < 1e-3)
 		return (0);
 
 	// Calculate the distance t_cap to the intersection point on the cap plane
@@ -849,13 +849,19 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 ---
 
-## Perspective Viewing
+## The Camera Ray
+
+---
+
+### Perspective Viewing
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/orthographic_perspective_viewing.png" alt="orthographic_perspective_viewing.png" width="500"/>
     <br>
     <span><strong>Top:</strong> In orthogonal viewing, each pixel is a separate camera ray, all running parallel to one another. This results in objects being the same size, regardless of their distance. Used in technical drawings and CAD. <br><strong>Bottom:</strong> Perspective viewing is more in line with how we perceive the world: Camera rays have a single point of origin. This way, objects have a vanishing point and appear smaller the farther they are away. Used in realistic 3D rendering. <br> Sources: Diagrams left <sup><a href="#footnote1">[1]</a></sup>; diagrams right<sup><a href="#footnote2">[2]</a></sup> </span>
 </p>
+
+---
 
 ### The Geometry of Perspective Projection
 
@@ -878,7 +884,7 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 
 ---
 
-### Ray Direction Calculation
+### Calculating the Camera Ray
 
 The **Field of View (FOV)** represents how much of the 3D scene is visible to the camera. Depending on the orientation of the camera, the FOV could be horizontal or vertical:
 
@@ -959,21 +965,16 @@ $$
 
 ```C
 /**
-Compute the direction vector of a ray passing through a given pixel in the camera's view.
+Computes the camera ray direction for a given pixel,
+considering the camera's field of view (FOV), aspect ratio, and orientation
 
  @param x	The horizontal pixel coordinate on the screen.
  @param y	The vertical pixel coordinate on the screen.
- @param cam	The camera object containing the FOV in degrees.
+ @param cam	The camera object containing the FOV.
 
- @return	The normalized direction vector of the ray in camera space.
-
- @note
-The z-component of the ray direction is conventionally set to 1.0
-This positions the projection plane (or screen) at z = 1.0 in camera space, simplifying the
-perspective projection calculations. The resulting vector is then normalized to ensure it has
-a unit length, making it independent of the initial choice for the z-component.
+ @return	The normalized direction vector of the ray passing through the pixel, in camera space.
 */
-t_vec3	compute_ray_direction(int x, int y, t_cam cam)
+t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 {
 	double	scale;		// Scaling factor from the vertical FOV
 	double	aspect_ratio;	// Ratio of screen width to height
@@ -1030,20 +1031,20 @@ These vectors form a basis for the camera's local coordinate system. To transfor
 3. Normalize the Resulting Vector:    
    To ensure that the ray direction is a unit vector, normalize the resulting world-space vector.
 
-This `compute_ray_direction` function fully transforms a ray from camera space to world space:
+This `compute_camera_ray` function fully transforms a ray from camera space to world space:
 
 ```C
 /**
-Function to compute the ray direction for a given pixel in a camera's view,
-considering the camera's field of view (FOV), aspect ratio, and orientation.
+Computes the camera ray direction for a given pixel,
+considering the camera's field of view (FOV), aspect ratio, and orientation
 
- @param x		The horizontal pixel coordinate on the screen.
- @param y		The vertical pixel coordinate on the screen.
- @param cam		The camera object containing the FOV, orientation vector, and position.
+ @param x	The horizontal pixel coordinate on the screen.
+ @param y	The vertical pixel coordinate on the screen.
+ @param cam	The camera object containing the FOV.
 
- @return		The normalized direction vector of the ray passing through the pixel, in world space.
+ @return	The normalized direction vector of the ray passing through the pixel, in camera space.
 */
-static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
+static t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 {
 	double	scale;		// Scaling factor from the vertical FOV
 	double	aspect_ratio;	// Ratio of screen width to height
