@@ -1174,10 +1174,10 @@ Also updates the provided intersection data with the light direction and distanc
 */
 t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 {
-	t_vec3	hit_point;
-	t_shdw	shadow_ray;
-	t_vec3	offset;
-	t_vec3	normal;
+	t_vec3	hit_point;	// Intersection point where the ray hits the object
+	t_shdw	shadow_ray;	// Structure to store the shadow ray (origin, direction, and length)
+	t_vec3	offset;		// Small offset vector to prevent self-intersection issues
+	t_vec3	normal;		// Surface normal at the intersection poin
 
 	// Get the intersection point
 	hit_point = camera_ray_ix->hit_point;
@@ -1238,6 +1238,89 @@ To improve this, we can use the Phong Reflection Model, which simulates how ligh
     <br>
     <span><strong>Phong Reflection Model</strong>: Ambient Lighting + Diffuse Shading + Specular Reflection = Complete Shading Model.<sup><a href="#footnote3">[3]</a></sup></span>
 </p>
+
+### Diffuse Shading
+
+Lambert's Cosine Law explains how light reflects off rough or matte surfaces. It states that the amount of light reflected is proportional to the cosine of the angle between the surface normal and the light direction. This means that light striking a surface head-on is reflected most strongly, while light at an angle produces weaker reflections. This law is used to simulate how materials appear brighter when facing the light and darker at steeper angles.   
+
+The following function calculates the diffuse reflection coefficient
+
+```C
+/**
+Calculates the diffuse reflection coefficient at an intersection point using Lambert's Cosine Law.
+The diffuse coefficient determines how much light a surface receives based on the angle between the surface normal and the light source direction.
+ 
+@param rt 		Pointer to the main structure.
+@param ix 		Pointer to the intersection data.
+
+@return		The diffuse lighting coefficient value [0.0, 1.0].
+*/
+static double	get_diffuse_coefficient(t_rt *rt, t_ix *ix)
+{
+	double	diffuse;            // Variable to store the diffuse lighting coefficient
+	double	dot;                // Dot product of the surface normal and the light direction
+
+	// Calculate the dot product between the surface normal and the light direction
+	dot = vec3_dot(ix->normal, ix->light_dir);
+	
+	// If the dot product is negative, set it to zero (no diffuse reflection)
+	if (dot < 0)
+		dot = 0;
+	
+	// Apply the diffuse shading formula: dot product * light intensity * diffuse constant
+	// 'K_DIFFUSE' controls the intensity of the diffuse shading [0.0, 1.0].
+	diffuse = dot * rt->scene.light.ratio * K_DIFFUSE;
+
+	return (diffuse);  // Return the diffuse lighting coefficient value [0.0, 1.0]
+}
+```
+
+
+
+### Specular Reflection
+
+The following function calculates the specular reflection (or highlight) coefficient based on the Phong shading model. This component simulates the shiny appearance of a surface, contributing to the overall realism by adding reflections of light.
+
+```C
+/**
+Calculates the specular highlighting coefficient at an intersection point based on the Phong shading model.
+The specular coefficient defines the intensity of the specular highlight, which contributes to the shiny appearance of a surface.
+
+ @param rt 		Pointer to the main structure.
+ @param ix 		Pointer to the intersection data.
+
+ @return		The specular lighting coefficient value [0.0, 1.0].
+*/
+static double	get_specular_coefficient(t_rt *rt, t_ix *ix)
+{
+	double	specular;		// Variable to store the specular lighting coefficient
+	double	dot;			// The dot product between the reflection vector and the view direction
+	t_vec3	reflection_dir;		// The reflection direction vector
+	t_vec3	view_dir;	 	// The view direction from the intersection to the camera
+
+	// Calculate the reflection direction using the light direction and the surface normal
+	reflection_dir = get_reflection(ix->light_dir, ix->normal);
+
+  	// Calculate the view direction from the intersection point to the camera
+	view_dir = vec3_sub(rt->scene.cam.pos, ix->hit_point);
+	view_dir = vec3_norm(view_dir);
+
+	// Calculate the dot product between the reflection direction and view direction
+	dot = vec3_dot(reflection_dir, view_dir);
+
+	// If the dot product is negative, set it to zero (no reflection)
+	if (dot < 0)
+		dot = 0;
+
+	// Calculate the specular intensity using the Phong model: (dot^shininess) * light ratio * specular constant
+	// 'K_SHININESS' controls the glossiness of the specular highlight (higher values result in a smaller, more focused highlight);
+	// values between 3.0 and 10.0 are recommended.
+	// 'K_SPECULAR' controls the intensity of the specular highlight [0.0, 1.0].
+	specular = pow(dot, K_SHININESS) * rt->scene.light.ratio * K_SPECULAR;
+
+	return (specular);
+}
+```
    
 
 
