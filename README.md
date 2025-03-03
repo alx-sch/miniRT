@@ -30,7 +30,11 @@ This project is a collaboration between:
   - [Finding Intersections with Objects](https://github.com/alx-sch/42_miniRT/tree/main?tab=readme-ov-file#finding-intersections-with-objects)
 - **[Camera Ray](https://github.com/alx-sch/42_miniRT/blob/main/README.md#the-camera-ray)**: Computing the direction of camera rays and transforming them into world space.
 - **[Shadow Ray](https://github.com/alx-sch/42_miniRT/blob/main/README.md#the-shadow-ray)**: Check if the intersection point is in shadow by verifying if the light source is blocked.
-
+- **[Shading](https://github.com/alx-sch/42_miniRT/blob/main/README.md#shading)**: Calculate the color at the intersection point based on its surface properties and its orientation relative to the light source.
+ - [Phone Reflection Model](https://github.com/alx-sch/42_miniRT/blob/main/README.md#phong-reflection-model)
+ - [Diffuse Shading](https://github.com/alx-sch/42_miniRT/blob/main/README.md#diffuse-shading)
+ - [Specula Reflection](https://github.com/alx-sch/42_miniRT/blob/main/README.md#specular-reflection)
+ - [Combining Shading Components](https://github.com/alx-sch/42_miniRT/blob/main/README.md#combining-shading-components)
 ---
 
 ## How to Use
