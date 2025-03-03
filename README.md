@@ -21,13 +21,15 @@ This project is a collaboration between:
 
 - **[How to Use](https://github.com/alx-sch/42_miniRT/blob/main/README.md#overview)**: Building miniRT and defining scene elements in `.rt` files.
 - **[Introduction to Ray Tracing](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#introduction-to-ray-tracing)**
-- **[Ray-Object Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-object-intersection)**: 
+- **[Ray-Object Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-object-intersection)**: Mathematical definitions of object surfaces and functions for finding intersections.
   - [Ray Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-equation)
   - [Quadratic Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#quadratic-equation)
   - [Plane Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#plane-intersection)
   - [Sphere Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#sphere-intersection)
   - [Cylinder Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#cylinder-intersection)
   - [Finding Intersections with Objects](https://github.com/alx-sch/42_miniRT/tree/main?tab=readme-ov-file#finding-intersections-with-objects)
+- **[Camera Ray](https://github.com/alx-sch/42_miniRT/blob/main/README.md#the-camera-ray)**: Computing the direction of camera rays and transforming them into world space.
+- **[Shadow Ray](https://github.com/alx-sch/42_miniRT/blob/main/README.md#the-shadow-ray)**: Check if the intersection point is in shadow by verifying if the light source is blocked.
 
 ---
 
