@@ -19,7 +19,7 @@ This project is a collaboration between:
 
 ## Overview
 
-- **[How to Use](https://github.com/Busedame/miniRT?tab=readme-ov-file#how-to-use)**: Building miniRT and defining scene elements in `.rt` files.
+- **[How to Use](https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/miniRT_render.png)**: Building miniRT and defining scene elements in `.rt` files.
 - **[Introduction to Ray Tracing](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#introduction-to-ray-tracing)**
 - **[Ray-Object Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT. 
   - [Ray Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-equation)
