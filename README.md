@@ -926,7 +926,7 @@ In C, trigonometric functions expect their input angles to be in radians, not de
 
 ---
 
-### Computing Ray Directions
+### Computing Camera Ray Directions
 
 The direction of a camera ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
 
@@ -1004,7 +1004,7 @@ t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 
 ---
 
-### Computing Ray Directions in World Space
+### Computing Camera Ray Directions in World Space
 
 In a ray-tracing system, the camera's orientation defines how the rays originating from the camera are aligned with the 3D scene. To compute ray directions in world space, you must transform the rays from camera space, where the z-axis points forward, to the orientation defined by the camera's position and rotation in the scene.
 
