@@ -1320,7 +1320,60 @@ static double	get_specular_coefficient(t_rt *rt, t_ix *ix)
 }
 ```
 
-### Combine all Shading Components
+### Combine Shading Components
+
+The final shaded color for a pixel is calculated by combining the ambient, diffuse, and specular components for each RGB channel, with the result clamped to a maximum of 255 to prevent overflow. An additional light fading effect further enhances the realism of the render.
+
+```C
+/**
+Computes the shading for a pixel based on the object's color and light
+properties.
+ @param rt	Pointer to the main struct containing scene and light properties.
+ @param ix	Pointer to the ray/pixel intersection data containing object and light information.
+
+ @return	A `t_shade` struct with the computed shading components (ambient, diffuse, specular).
+*/
+t_shade	get_shading(t_rt *rt, t_ix *ix)
+{
+	t_shade	pix;
+
+	// Set base color of the object from the intersection data
+	pix.base = ix->hit_obj->color;
+
+	// Set the light color from the scene light properties
+	pix.light = rt->scene.light.color;
+
+	// Set ambient color of the object (how it interacts with ambient light)
+	pix.ambient = ix->hit_obj->color_in_amb;
+
+	// Compute the diffuse reflection coefficient
+	pix.diff_coeff = get_diffuse_coefficient(rt, ix);
+
+	// Compute specular reflection coefficient
+	pix.spec_coeff = get_specular_coefficient(rt, ix);
+
+	// compute distance-based fade factor
+	pix.fade = clamp(K_FADE * 100 / (ix->light_dist * ix->light_dist), 1.0);
+
+	// Compute the diffuse component for each color channel (RGB)
+	pix.diffuse.r = pix.base.r * pix.light.r / 255 * pix.diff_coeff * pix.fade;
+	pix.diffuse.g = pix.base.g * pix.light.g / 255 * pix.diff_coeff * pix.fade;
+	pix.diffuse.b = pix.base.b * pix.light.b / 255 * pix.diff_coeff * pix.fade;
+
+	// Compute the specular component for each color channel (RGB)
+	pix.specular.r = pix.light.r * pix.spec_coeff * pix.fade;
+	pix.specular.g = pix.light.g * pix.spec_coeff * pix.fade;
+	pix.specular.b = pix.light.b * pix.spec_coeff * pix.fade;
+
+	// Compute the final shaded color by adding ambient, diffuse, and specular components
+	// Clamp each color channel to a maximum of 255 to avoid overflow
+	pix.shaded.r = clamp(pix.ambient.r + pix.diffuse.r + pix.specular.r, 255);
+	pix.shaded.g = clamp(pix.ambient.g + pix.diffuse.g + pix.specular.g, 255);
+	pix.shaded.b = clamp(pix.ambient.b + pix.diffuse.b + pix.specular.b, 255);
+
+	return (pix);
+}
+```
 
 
 
