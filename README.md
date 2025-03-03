@@ -905,8 +905,6 @@ While the origins of the camera rays are known, the following chapter will expla
 
 Following the camera ray (or primary ray) for a given pixel is the first step in ray tracing. Calculating the camera ray involves several steps, which will be described in the chapters below.
 
----
-
 ### Perspective Viewing
 
 <p align="center">
