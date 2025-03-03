@@ -849,6 +849,55 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 ---
 
+### Finding Intersections with Objects
+
+The function `find_intersection` finds the closest intersection between a camera ray and objects in the scene. Here's how it works:    
+```C
+/**
+Updates the intersection struct with the closest intersection data found in the
+scene (object and distance) for a given camera ray.
+ @param ray_ori 	The origin of the ray.
+ @param ray_dir		The normalized direction vector of the ray.
+ @param obj		Pointer to the object data.
+ @param ix		Pointer to the 'intersection data' struct to update.
+
+ @return 		ixr struct containing the closest intersection data.
+*/
+void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ix)
+{
+	t_list	*current_obj;
+	t_obj	*obj;
+
+	current_obj = rt->scene.objs;
+	ix->hit_obj = NULL;
+	ix->t_hit = INFINITY;
+	while (current_obj)
+	{
+		obj = (t_obj *)current_obj->content;
+		if (obj->object_type == PLANE)
+			plane_ix(ray_ori, ray_dir, obj, ix);
+		else if (obj->object_type == SPHERE)
+			sphere_ix(ray_ori, ray_dir, obj, ix);
+		else if (obj->object_type == CYLINDER)
+			cyl_ix(ray_ori, ray_dir, obj, ix);
+		current_obj = current_obj->next;
+	}
+	if (ix->hit_obj != NULL)
+		ix->hit_point = vec3_add(ray_ori, vec3_mult(ray_dir, ix->t_hit));
+}
+```
+
+1. **Loop Through Objects:**:    
+   The function iterates through all objects in the scene (`current_obj`). For each object, it checks its type (e.g., plane, sphere, or cylinder).
+
+2. **Compute Intersection for Each Object:**   
+   For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c])) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
+   
+3. **Calculate the hitpoint**   
+   After all objects have been checked for a potential intersection with the ray, the hit point is calculated by applying the ray's direction to the closest intersection's distance.
+
+While the origins of the camera rays are known, the following chapter will explain how to calculate the direction of each camera ray.
+
 ## The Camera Ray
 
 Following the camera ray (or primary ray) for a given pixel is the first step in ray tracing. Calculating the camera ray involves several steps, which will be described in the chapters below.
@@ -1097,6 +1146,12 @@ static t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 	return (vec3_norm(ray_dir_world_space)); // Return normalized ray direction vector in world space
 }
 ```
+
+---
+
+## The Shadow Ray
+
+When the camera ray hits an object, we know that the respective pixel will display that object's color. However, to determine whether the object is in shadow, we cast a **shadow ray**. A shadow ray is sent from the point of intersection on the object towards the light sources. If the shadow ray is blocked by another object before reaching a light, the point is considered in shadow and is only illuminated by the ambient light.
 
 ---
 
