@@ -1203,6 +1203,10 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 }
 ```
 
+### Avoiding "Shadow Acne"
+
+
+If the origin of the shadow ray (the intersection between the camera ray and the object) is not moved slightly above the surface, an effect called "shadow acne" can be observed. Because computers cannot represent floating-point numbers with perfect precision, the hit point falls within a small margin of error around the surface. This means some calculated hit points end up slightly below the surface. As a result, the shadow ray incorrectly intersects the object itself, causing it to cast a shadow on its own intersection point.
 
 ---
 
