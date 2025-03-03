@@ -1205,8 +1205,17 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 
 ### Avoiding "Shadow Acne"
 
-
 If the origin of the shadow ray (the intersection between the camera ray and the object) is not moved slightly above the surface, an effect called "shadow acne" can be observed. Because computers cannot represent floating-point numbers with perfect precision, the hit point falls within a small margin of error around the surface. This means some calculated hit points end up slightly below the surface. As a result, the shadow ray incorrectly intersects the object itself, causing it to cast a shadow on its own intersection point.
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_0.png" alt="miniRT_render.png" width="400"/> <br> (a) <br> 
+    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_1.png" alt="miniRT_render.png" width="400"/> <br> (b) <br> 
+    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_2.png" alt="miniRT_render.png" width="400"/> <br> (c) <br> 
+    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_3.png" alt="miniRT_render.png" width="400"/> <br> (d) <br> 
+    <span>The same scene without any shadowing <strong>(a)</strong>; shadowing without ensuring that the shadow ray-object intersection occurs in front of the light source <strong>(b)</strong>; shadowing without offsetting the shadow ray origin, resulting in shadow acne <strong>(c)</strong>, correct shadowing <strong>(d)</strong>. Note that no shading has been applied yet, and shadows are still rendered as black.</span>
+</p>
+
+
 
 ---
 
