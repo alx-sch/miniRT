@@ -21,12 +21,13 @@ This project is a collaboration between:
 
 - **[How to Use](https://github.com/alx-sch/42_miniRT/blob/main/README.md#overview)**: Building miniRT and defining scene elements in `.rt` files.
 - **[Introduction to Ray Tracing](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#introduction-to-ray-tracing)**
-- **[Ray-Object Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT. 
+- **[Ray-Object Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-object-intersection)**: 
   - [Ray Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-equation)
   - [Quadratic Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#quadratic-equation)
   - [Plane Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#plane-intersection)
   - [Sphere Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#sphere-intersection)
   - [Cylinder Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#cylinder-intersection)
+  - [Finding Intersections with Objects](https://github.com/alx-sch/42_miniRT/tree/main?tab=readme-ov-file#finding-intersections-with-objects)
 
 ---
 
@@ -887,16 +888,18 @@ void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ix)
 }
 ```
 
-1. **Loop Through Objects:**:    
+1. **Loop Through Objects:**   
    The function iterates through all objects in the scene (`current_obj`). For each object, it checks its type (e.g., plane, sphere, or cylinder).
 
 2. **Compute Intersection for Each Object:**   
    For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c])) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
    
-3. **Calculate the hitpoint**   
+3. **Calculate the Hitpoint:**   
    After all objects have been checked for a potential intersection with the ray, the hit point is calculated by applying the ray's direction to the closest intersection's distance.
 
 While the origins of the camera rays are known, the following chapter will explain how to calculate the direction of each camera ray.
+
+---
 
 ## The Camera Ray
 
