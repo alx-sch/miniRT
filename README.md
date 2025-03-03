@@ -884,7 +884,7 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 
 ---
 
-### Calculating the Camera Ray
+### Field of View
 
 The **Field of View (FOV)** represents how much of the 3D scene is visible to the camera. Depending on the orientation of the camera, the FOV could be horizontal or vertical:
 
@@ -897,7 +897,7 @@ We employ trigonometric functions, specifically the tangent function, to calcula
 
 ---
 
-### Geometric Relationship Using Tangent
+#### FOV and Tangent Relationship
 
 Imagine a right triangle formed by:
 1. The **camera's position** (the "eye") as the vertex.
@@ -924,9 +924,9 @@ In C, trigonometric functions expect their input angles to be in radians, not de
 
 ---
 
-### Ray Direction Calculation
+### Computing Ray Directions
 
-The direction of a ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
+The direction of a camera ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
 
 **Steps to Calculate Ray Direction:**
 
@@ -1002,7 +1002,7 @@ t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 
 ---
 
-### Handling Camera Orientation
+### Computing Ray Directions in World Space
 
 In a ray-tracing system, the camera's orientation defines how the rays originating from the camera are aligned with the 3D scene. To compute ray directions in world space, you must transform the rays from camera space, where the z-axis points forward, to the orientation defined by the camera's position and rotation in the scene.
 
