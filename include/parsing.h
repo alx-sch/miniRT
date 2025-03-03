@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:58:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/24 15:07:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:47:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 			C -50.0,0,20 0,0,1 70
 			∗ identifier: C
 			∗ x,y,z coordinates of the view point: -50.0,0,20
-			∗ 3d normalized orientation vector. In range [-1,1] for each x,y,z axis:
+			∗ 3d normalized orientation vector. In range [-1,1] for each axis:
 			0.0,0.0,1.0
 			∗ FOV : Horizontal field of view in degrees in range [0,180]: 70
 		Light:
@@ -66,8 +66,8 @@
 			∗ the sphere diameter: 12.6
 			∗ R,G,B colors in range [0-255]: 10, 0, 255
 
-	The program will show a descriptive error message and exit with an error code,
-	depending on what the issue was.
+	The program will show a descriptive error message and exit with an error
+	code, depending on what the issue was.
 
 	The main structure of the parsing is as follows:
 	1. Checks file related errors -- like file permissions, existence etc.

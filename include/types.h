@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:55:37 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/25 19:08:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/02/26 15:46:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,7 @@ typedef struct s_scene
 /**
 Data structure holding all raytracing-related data.
 - t_mlx `mlx`:		Struct with rendering context containing MiniLibX components.
-- t_scene `scene`:	Struct with scene data, including objects, lights, and camera.
+- t_scene `scene`:	Struct with scene data, including objects, lights, and cam.
 */
 typedef struct s_rt
 {
