@@ -853,7 +853,9 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 ### Finding Intersections with Objects
 
 The function `find_intersection` finds the closest intersection between a camera ray and objects in the scene. Here's how it works:    
+
 ```C
+
 /**
 Updates the intersection struct with the closest intersection data found in the
 scene (object and distance) for a given camera ray.
@@ -861,20 +863,23 @@ scene (object and distance) for a given camera ray.
  @param ray_dir		The normalized direction vector of the ray.
  @param obj		Pointer to the object data.
  @param ix		Pointer to the 'intersection data' struct to update.
-
- @return 		ixr struct containing the closest intersection data.
 */
 void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ix)
 {
 	t_list	*current_obj;
 	t_obj	*obj;
 
+	// Initialize intersection data
 	current_obj = rt->scene.objs;
 	ix->hit_obj = NULL;
 	ix->t_hit = INFINITY;
+
+	// Loop through all objects in the scene
 	while (current_obj)
 	{
 		obj = (t_obj *)current_obj->content;
+
+		// Call the appropriate intersection function based on object type
 		if (obj->object_type == PLANE)
 			plane_ix(ray_ori, ray_dir, obj, ix);
 		else if (obj->object_type == SPHERE)
@@ -883,20 +888,15 @@ void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ix)
 			cyl_ix(ray_ori, ray_dir, obj, ix);
 		current_obj = current_obj->next;
 	}
+
+	// Compute the hit point if an intersection was found
 	if (ix->hit_obj != NULL)
 		ix->hit_point = vec3_add(ray_ori, vec3_mult(ray_dir, ix->t_hit));
 }
 ```
 
-1. **Loop Through Objects:**   
-   The function iterates through all objects in the scene (`current_obj`). For each object, it checks its type (e.g., plane, sphere, or cylinder).
-
-2. **Compute Intersection for Each Object:**   
-   For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c])) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
-   
-3. **Calculate the Hitpoint:**   
-   After all objects have been checked for a potential intersection with the ray, the hit point is calculated by applying the ray's direction to the closest intersection's distance.
-
+For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c])) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
+    
 While the origins of the camera rays are known, the following chapter will explain how to calculate the direction of each camera ray.
 
 ---
@@ -1152,7 +1152,57 @@ static t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 
 ## The Shadow Ray
 
-When the camera ray hits an object, we know that the respective pixel will display that object's color. However, to determine whether the object is in shadow, we cast a **shadow ray**. A shadow ray is sent from the point of intersection on the object towards the light sources. If the shadow ray is blocked by another object before reaching a light, the point is considered in shadow and is only illuminated by the ambient light.
+When the camera ray hits an object, we determine that the respective pixel will display that object's color. However, to accurately compute lighting and shading, we need to check whether the point is in shadow. This is done using a **shadow ray**.
+
+A shadow ray is cast from the intersection point towards the light source. If another object blocks the shadow ray before it reaches the light, the point is considered in shadow and is only affected by ambient lighting. Otherwise, the point is directly illuminated by the light source, contributing to diffuse and specular shading. 
+
+### Computing the Shadow Ray
+
+The function `compute_shadow_ray` constructs the shadow ray for a given intersection point and light source. 
+
+```C
+/**
+Computes the shadow ray for a given intersection point and light source.
+Also updates the provided intersection data with the light direction and distance as well as the surface normal.
+
+ @param camera_ray_ix	Pointer to the intersection data of the camera ray.
+ @param light		Light source data.
+
+ @return		Shadow ray structure containing an offset origin, direction, and length.
+*/
+t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
+{
+	t_vec3	hit_point;
+	t_shdw	shadow_ray;
+	t_vec3	offset;
+	t_vec3	normal;
+
+	// Get the intersection point
+	hit_point = camera_ray_ix->hit_point;
+
+	// Compute direction towards the light source and store it in intersection data
+	shadow_ray.dir = vec3_norm(vec3_sub(light.position, hit_point));
+	camera_ray_ix->light_dir = shadow_ray.dir;
+
+	// Compute distance from intersection point to light source and store it in intersection data
+	shadow_ray.len = vec3_length(vec3_sub(light.position, hit_point));
+	camera_ray_ix->light_dist = shadow_ray.len;
+
+	// Compute surface normal, flip normal if camera is inside the object, and store in intersetion data
+	normal = compute_normal(camera_ray_ix);
+	if (camera_ray_ix->hit_obj->cam_in_obj)
+		normal = vec3_mult(normal, -1.0);
+	camera_ray_ix->normal = normal;
+
+	// Apply small offset along the normal to avoid self-intersections
+	offset = vec3_mult(normal, 1e-3);
+	shadow_ray.ori = vec3_add(hit_point, offset);
+
+	// Return the shadow ray structure
+	return (shadow_ray);
+}
+```
+
 
 ---
 
