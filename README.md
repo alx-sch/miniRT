@@ -1020,18 +1020,17 @@ These vectors form a basis for the camera's local coordinate system. To transfor
 1. Calculate the Ray Direction in Camera Space:    
    The ray direction in camera space is computed from the pixel's normalized coordinates and the field of view, as shown in the earlier function above:
    - $\text{ray-cam-dir} = (x', y', z')$, where:
-      - ($x'$): Scaled and aspect-ratio-adjusted horizontal NDC coordinate.
-      - ($y'$): Scaled vertical NDC coordinate.
+      - ($x'$) and ($y'$) are scaled screen coordinates.
       - ($z'$): Always 1.0, pointing forward in camera space
     
 2. Transform the Ray Direction in Camera Space to World Space:    
    After calculating the ray's direction in camera space, we need to transform this direction into world space, where the entire 3D scene is defined. The formula for this transformation is:
-   - $\text{ray-world-dir} = (x' \times cam-right) + (y' \times cam-up) + (z' \times cam-orientation)$
+   - $\text{ray-world-dir} = (x' \times \text{cam-right}) + (y' \times \text{cam-up}) + (z' \times \text{cam-orientation})$
 
-3. Normalize the Resulting Vector:
+3. Normalize the Resulting Vector:    
    To ensure that the ray direction is a unit vector, normalize the resulting world-space vector.
 
-This full implementation of the `compute_ray_direction` function incorporates the camera orientation:
+This `compute_ray_direction` function fully transforms a ray from camera space to world space:
 
 ```C
 /**
