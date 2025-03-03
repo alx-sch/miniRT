@@ -19,14 +19,14 @@ This project is a collaboration between:
 
 ## Overview
 
-- **[How to Use](https://github.com/Busedame/miniRT?tab=readme-ov-file#how-to-use)**: Building miniRT and defining scene elements in `.rt` files.
-- **[Introduction to Ray Tracing](https://github.com/Busedame/miniRT/edit/main/README.md#introduction-to-ray-tracing)**
-- **[Ray-Object Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT.
-  - [Ray Equation](https://github.com/Busedame/miniRT/edit/main/README.md#ray-equation)
-  - [Quadratic Equation](https://github.com/Busedame/miniRT/edit/main/README.md#quadratic-equation)
-  - [Plane Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#plane-intersection)
-  - [Sphere Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#sphere-intersection)
-  - [Cylinder Intersection](https://github.com/Busedame/miniRT/edit/main/README.md#cylinder-intersection)
+- **[How to Use](https://github.com/alx-sch/42_miniRT/blob/main/README.md#overview)**: Building miniRT and defining scene elements in `.rt` files.
+- **[Introduction to Ray Tracing](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#introduction-to-ray-tracing)**
+- **[Ray-Object Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT. 
+  - [Ray Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-equation)
+  - [Quadratic Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#quadratic-equation)
+  - [Plane Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#plane-intersection)
+  - [Sphere Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#sphere-intersection)
+  - [Cylinder Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#cylinder-intersection)
 
 ---
 
@@ -53,7 +53,7 @@ This project is a collaboration between:
    ```
    If Homebrew is not installed, first run:
    ```
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install//install.sh)"
    ```
    After installation, restart your Mac or run:
    ```
@@ -112,21 +112,12 @@ The `.rt` files define the elements and configurations for the scene to be rende
 - **Cylinder**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
   * **Identifier**: `cy`  
-<<<<<<< HEAD
-  * **Position (XYZ coordinates)** of the center: `90.0, 0.0, 0.0`  
-  * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
-  * **Diameter**: `30`  
-  * **Height**: `210.42`  
-  * **Color** in RGB ([0-255]): `0, 0, 255`
- 
-=======
   * **Position (XYZ coordinates)** of the center: `50.0, 0.0, 20.6`  
   * **Normalized orientation vector** (axis): `0.0, 0.0, 1.0`  
   * **Diameter**: `14.2`  
   * **Height**: `21.42`  
   * **Color** in RGB [0, 255]: `10, 0, 255`
 
->>>>>>> upstream/main
 To make it easier for the user, the orientation vectors do not need to be perfectly normalized. Vectors such as $(0.707, 0.707, 0)$ are accepted as well, instead of requiring exact values like $(1/\sqrt{2}, 1/\sqrt{2}, 0) = (0.707106\dots, 0.707106\dots, 0)$.
 
 ---
@@ -146,327 +137,6 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 			     
 ---
 
-<<<<<<< HEAD
-=======
-## Introduction to basic mathematical terms and concepts
-
-In this part, we will have a look at some important mathematical terms and concepts, needed to build the equations and calculations for miniRT.  
-This part is written while studying the book "The Ray Tracer Challenge" by Jamis Buck (2019), and it is a result of reading and taking notes from this book.
-
-### Epsilon
-
-Since we are dealing with floating point numbers (e.g. 1.5512) in our calculations, we need to account for floating point precision errors. This means that two numbers that should be seen as equivalent, can end up being shown as different. This happens because of round off errors happening on a binary level.  
-To take this into consideration, we can use an `EPSILON` value. This is a very small value (e.g. 1-e6 or 0.000001).
-```bash
-	Instead of this:
-	if (a < 0)
-
-	Do this:
-	if (a < EPSILON)
-```
-
-### Vectors
-
-In a 3D space (as in the real world or in our miniRT), we can use a coordinate system to determine a *point in space*. This essentially means *where* something is located in a certain space.
-
-<p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/coordinate_system.png" alt="coordinate_system.png" width="400"/>
-    <br>
-    <span>A coordinate system with x,y,z.</span>
-</p>
-
-`x` How far to the right or the left.  
-`y` How far up or down.  
-`z` How close or far away from the viewer.  
-
-A **vector** works similar, and can be seen as a line that's giving us information about two things:
-- The direction it is pointing to.
-- How long it is.
-
-A vector gets determined by its x,y,z coordinates, as in a 3D coordinate system.
-Since a vector needs two points to be defined, we can look at it like this:
-- `start point` is (0,0,0)
-- `vector point` is (2,4,1)
-- To visualize how this works: Draw one point at 0,0,0 and draw a line to point 2,4,1. The direction of the vector will be determined by in which direction this line is going, starting from start point.
-
-However, since these coordinates are also defining a *point* in a coordinate system, we need a way to distinguish a point from a vector. We can therefore add another variable, let's call it *w*. Note that this is only used in the first few examples, as it is not something we have implemented in the project. It is mostly used as a more visual example of how points and vectors can be distinguished.  
-- `w` If it is a point (set to 1), if it is a vector (set to 0).  
-
-##
-
-**Adding a vector direction to a point➕**
-
-Let's say we have a point a (2,5,-1,1) and a vector v(3,4,1,0). We want to figure out where you would be if you followed the direction of vector v, starting from point a. This essentially means that point a and point b together creates a vector that goes in the same direction as vector v. This follows the same logic as mentioned before, when drawing a vector.  
-**We add the values of point a and vector together:**  
-- a.x (2) + v.x (3) = b.x (5)
-- a.y (5) + v.y (4) = b.y (9)
-- a.z (-1) + v.z (1) = b.z (0)
-- a.w (1) + v.w (0) = b.w (1)
-
-And we are left with a new point b (5,9,0,1). Point (b) is in the direction of vector (v) from point (a) -- not from start point 0,0,0.
-
-Code example:
-```bash
-t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
-{
-	t_vec3	result;
-
-	result.x = v1.x + v2.x;
-	result.y = v1.y + v2.y;
-	result.z = v1.z + v2.z;
-	return (result);
-}
-```
-
-##
-
-**Finding a vector direction between two points➖**
-
-Let's say we have a point a (2,5,-1,1) and a point b (3,4,1,1). Since we are talking about miniRT, let's give them the following roles:
-- `point a` = Light source coordinates.
-- `point b` = Object coordinates.
-
-We want to find a vector that gives us the direction from object to light source.  
-The direction of a vector between two points can be seen as this formula:
-```bash
-	direction (x,y,z,0) = dest (x,y,z,1) - origin (x,y,z,1)
-```
-**We subtract the values of point b from point a == light_coords - object_coords == a - b.**  
-- a.x (2) - b.x (3) = v.x (-1)
-- a.y (5) - b.y (4) = v.y (1)
-- a.z (-1) - b.z (1) = v.z (-2)
-- a.w (1) - b.w (1) = v.w (0)
-
-In order to make the vector point from the object to the light source, subtract the object’s coordinates from the light source’s coordinates. This way, the vector will point in the direction from the object to the light source.
-
-💡 Note: If you picture every vector to start from coordinates (0,0,0). If a vector has the coordinates (2,4,2) - it shows that everytime the vector moves -- move 2 positions to the right, 4 positions up and 2 positions away from you. With this example: Draw a line between point1 (0,0,0) and point2 (2,4,2).  
-**So:** In the above example of having two points (a and b) and creating a vector, the vector is going to tell us "how to move" from one point to ultimately reach the other point.
-
-Code example:
-```bash
-t_vec3	vec3_sub(t_vec3 v1, t_vec3 v2)
-{
-	t_vec3	result;
-
-	result.x = v1.x - v2.x;
-	result.y = v1.y - v2.y;
-	result.z = v1.z - v2.z;
-	return (result);
-}
-```
-
-##
-
-**Finding the opposite direction of a vector🔃**
-
-Say we have a vector pointing from a surface to the light source. What can we do to reverse the direction -- so make it point *from* the light source *to* the surface?  
-**We introduce a zero vector (0,0,0,0) subtract vector v (2,4,1,0) from vector zero, and get new vector:**  
-- zv.x (0) - v.x (2) = nv.x (-2)
-- zv.y (0) - v.y (4) = nv.y (-4)
-- zv.z (0) - v.z (1) = nv.z (-1)
-- zv.w (0) - v.w (0) = nv.w (0)
-
-Here we are essentially just reversing the *sign* of the different coordinates of vector v. Another (and much more straightforward) way to do this, would be just reversing the sign of vector v. **So + becomes -, and - becomes +**.
-
-##
-
-**Finding the distance from start to a point🏃‍♀️**
-
-If you have a vector, and you want to find a point that is 3.5 times further in the vector direction, e.g. to see where a ray intersects a sphere. 3.5 would be the *scalar* value. Multiplying with this value, *scales* the vector - meaning that each component (x,y,z,w) gets multiplied with the same value (3.5).  
-**We have a vector v (2,-1,3) and scale it by 3.5:**  
-- v.x (2) * 3.5 = 7
-- v.y (-1) * 3.5 = -3.5
-- v.z (3) * 3.5 = 10.5
-
-The result after scaling gives us a point (7,-3.5,10.5). This point will be 3.5 times further away from our original point, moved in the direction of vector v.
-
-Code example:
-```bash
-t_vec3	vec3_mult(t_vec3 vec, double scalar)
-{
-	t_vec3	result;
-
-	result.x = vec.x * scalar;
-	result.y = vec.y * scalar;
-	result.z = vec.z * scalar;
-	return (result);
-}
-```
-
-##
-
-**Finding the length of a vector📏**
-
-Until now, we have mainly looked at different ways to figure out vector directions. Now, what about the length, or the *magnitude* of a vector? This means how far you would travel in a straight line, if you were to walk from one end of the vector to the other.  
-
-Do you remember Pythagoras' theorem?  
-
-$$
-a² + b² = c²
-$$
-
-Pythagoras' theorem says this: "In a right-angled triangle, the square of the hypotenuse side is equal to the sum of squares of the other two sides“. I found it a bit hard to figure out exactly why this applies to finding the length of a vector, but I will show two very poorly made drawings. I have tried to show exactly why this makes sense.
-
-<p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_1.png" alt="Pythagoras_1.png" width="400"/>
-    <br>
-    <span>Pythagoras' in a 2D coordinate system. c or vector 1 is the unknown side/hypotenuse, and will tell us the length of the vector.</span>
-</p>
-
-<p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/Pythagoras_2.png" alt="Pythagoras_2.png" width="400"/>
-    <br>
-    <span>Pythagoras' in a 3D coordinate system. d is the unkown side/hypotenuse, and will tell us the length of the vector.</span>
-</p>
-
-We have a vector v (1, 2, 3). The equation would look like this -> 1² + 2² + 3² = x²:
-1. v.x (1) = 1 * 1 = 1
-2. v.y (2) = 2 * 2 = 4
-3. v.z (3) = 3 * 3 = 9
-4. 1 + 4 + 9 = 14
-5. Since 14 is equivalent to x², and we want to find x, we need to take the *square root* of 14.
-6. The magnitude of vector v is 3.741657387.
-
-In our miniRT project, we don't want to operate with vectors with a different magnitude than 1. These vectors are called *unit vectors*. If we don't work with unit vectors/*normalized* vectors - the calculations would be scaled differently for every ray casted. By using normalized vectors, all calculations will be done relative to a common scale (the unit vector which is 1).
-
-Code example:
-```bash
-double	vec3_length(t_vec3 v)
-{
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-}
-```
-
-##
-
-**Normalization⚖️**
-
-Normalizing a vector keeps the correct direction, but reduces or increases its magnitude to 1. In miniRT we don't accept orientation vectors that are not normalized, but whenever a new vector is created - we make sure to normalize it each time.  
-
-**You normalize a vector by dividing each of its components by its magnitude:**
-1. In our previous example we had a vector v (1,2,3). After using Pythagoras' theorem (multiplying each value with itself one time, adding them together, then square root of the result), we figured out its magnitude was 3.741657387.
-2. We divide each of its components by the magnitude (1 / 3.741657387, 2 / 3.741657387, 3 / 3.741657387).
-3. Vector v now has the following coordinates (0.267261242, 0.534522484, 0.801783726).
-
-**Checking if the vector is normalized:**
-1. We use Pythagoras' on the new values of vector v.
-3. 0.267261242² + 0.534522484² + 0.801783726² = 1²
-4. 0.071428571 + 0.285714286 + 0.642857143 = 1
-5. Since the square root of 1 = 1, the vector v is now normalized.
-
-Code example:
-```bash
-t_vec3	vec3_norm(t_vec3 vec)
-{
-	double	length;
-	double	inv_length;
-
-	length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-	if (length > -6)
-	{
-		inv_length = 1.0 / length;
-		vec.x *= inv_length;
-		vec.y *= inv_length;
-		vec.z *= inv_length;
-	}
-	return (vec);
-}
-```
-
-##
-
-**Dot product📍➡️📍**
-
-The dot product is also called a scalar product or inner product. It tells us *how aligned* two vectors are. This essentially means how big the angle between them are. Well, why not only use angles then, like 90°, 180°, etc.? That would be more computationally expensive, as it would require trigonometric functions. The dot product is a simple arithmetic operation, and serves the same purpose.  
-
-So how is it calculated? It takes two vectors and returns a *scalar value*. The dot product is computed as the *sum of the products of the corresponding components of each vector*.  
-It essentially looks like this (assuming both vectors are normalized):
-```bash
-	float	dot(vec a, vec b)
-	{
-		return (a.x * b.x + a.y * b.y + a.z * b.z);
-	}
-```
-It is a bit hard to understand what actually happens, but think about this:
-- If the *dot product is 0*, the vectors are perpendicular (90°).
-- If the *dot product is 1*, the vectors are *identical* (0°).
-- If the *dot product is -1*, the vectors are pointing in *opposite* directions (180°).
-- The *smaller* the dot product, the *larger* the angle between the two vectors.
-- The *greater* the dot product, the *smaller* the angle between the two vectors.
-
-💡 Note: Since we only operate with unit vectors (length of 1), the dot product is equivalent to the *cosine of the angle* between them. This also means that the *maximum* dot product is 1, and the *minimum* dot product is -1.  
-If the vectors were NOT normalized, we would have to also take the cosine of the result to keep it between the range of -1 and 1.  
-
-**Let's do some examples with two normalized vectors:**
-
-With vectors v1 (0,0,1) and v2 (1,0,0):
-- We do our dot product calculation, which leaves us with the result 0.
-- Since the result is 0, we know that these vectors are perpendicular to each other.
-
-With vectors v1 (1,0,0) and v2 (1,0,0)
-- We do our dot product calculation, which leaves us with the result 1.
-- Since the result is 1, we know that these vectors are identical.
-
-With vectors v1 (-1,0,0) and v2 (1,0,0)
-- We do our dot product calculation, which leaves us with the result -1.
-- Since the result is -1, we know that these vectors are pointing in opposite directions.
-
-Anything in between -1 and 1 will indicate the angle between the two vectors. The closer the dot product is to 1, the smaller the angle is (since 1 would make them identical). The closer the dot product is to -1, the greater the angle is (since -1 would make them opposite).
-
-**Let's do an example with two not-normalized vectors, v1 (2,1,4) and v2 (3,4,2):**  
-
-1. Find the *dot product* of v1 and v2, which is 18.
-2. Find the *magnitude* of *each vector*. v1 is 4.582575695 and v2 is 5.385164807.
-3. *Multiply* the two magnitudes 4.582575695 and 5.385164807. We get 24.677925359.
-4. *Divide* the dot product by the product (multiplication) of the two magnitudes. 18 / 24.677925359.
-5. We get 0.729396809.
-
-Our result "0.729396809" indicates that the angle is less than 90 degrees, but greater than 0 degrees.  
-Converted to degrees, the angle between v1 and v2 is approximately 43.16°.
-
-##
-
-**Cross product✖️**
-
-The cross product is similar to the dot product, but instead of returning a scalar, it *returns another vector*. This new vector will be *perpendicular* to both the original vectors. This becomes very handy when setting up the *camera coordinate system*. This is further explained further down in this README, about *camera orientation vectors*.  
-
-To give a short introduction, finding the cross product makes sure that **no matter the camera orientation vector, right and up will always be relative to the orientation**.  
-
-It's maybe intuitive to think that right (x) would always mean (1,0,0) and up (y) would always mean (0,1,0). However this is only true if z is (0,0,1). If the camera orientation vector is facing diagonally upwards (1,1,1) -- these calculations would be wrong. That's why we need the cross product, to correctly determine what is left, right, up and down -- and that it stays perpendicular to wherever the camera is facing.  
-
-So:
-- If the camera was always fixed, Right = (1,0,0) and Up = (0,1,0) would work.
-- But since the camera can rotate and look in any direction, we use the cross product to ensure Right and Up stay properly aligned.
-- Note that the order of which the calculation happens is very important!
-
-**The calculation of the cross product looks like this:**
-- v3.x = v1.y * v2.z - v1.z * v2.y
-- v3.y = v1.z * v2.x - v1.x * v2.z
-- v3.z = v1.x * v2.y - v1.y * v2.x
-
-The calculation takes two vectors, and returns a new vector that is perpendicular to both original vectors.
-
-Code example:
-```bash
-t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
-{
-	t_vec3	result;
-
-	result.x = (v1.y * v2.z) - (v1.z * v2.y);
-	result.y = (v1.z * v2.x) - (v1.x * v2.z);
-	result.z = (v1.x * v2.y) - (v1.y * v2.x);
-	return (result);
-}
-```
-💡 Note: When calculating the "camera right" for camera orientation (the right of the camera's view) - the standard way to do it looks like this:  
-`vec3_norm(vec3_cross(vec3_new(0, 1, 0), scene->cam.dir))`.  
-However, there is an edge case happening in the case of the camera orientation vector being `0,1,0` or `0,-1,0` (camera looking up or down). The standard calculation would potentially result in a cross product calculation of *two identical vectors*, making them parallel or undefined. This leads to all rays being identical instead of spreading out.  
-To handle this edge case, we need a different calculation:  
-`(vec3_norm(vec3_cross(scene->cam.dir, vec3_new(1, 0, 0)))`.
-
----
-
->>>>>>> upstream/main
 ## Ray-Object Intersection
 
 This section outlines the mathematical approach to detecting intersections between rays and various geometric objects. While this [overview document](https://github.com/josephcheel/42-MiniRT/blob/87dd9a09ded69ea9fbc0ae50bf085517908b9f85/Resources/Math/Intersection%20points%20calculations.pdf) was not directly used for deriving all the mathematical formulations and functions presented here, it provides an excellent summary of the fundamental concepts and calculations.
@@ -1145,7 +815,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 	denominator = vec3_dot(ray_dir, cap_normal);
 
 	// If the denominator is near zero, the ray is parallel to the cap and cannot intersect
-	if (fabs(denominator) < -3)
+	if (fabs(denominator) < 1e-3)
 		return (0);
 
 	// Calculate the distance t_cap to the intersection point on the cap plane
@@ -1179,13 +849,19 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 ---
 
-## Perspective Viewing
+## The Camera Ray
+
+---
+
+### Perspective Viewing
 
 <p align="center">
     <img src="https://github.com/Busedame/miniRT/blob/main/.assets/orthographic_perspective_viewing.png" alt="orthographic_perspective_viewing.png" width="500"/>
     <br>
     <span><strong>Top:</strong> In orthogonal viewing, each pixel is a separate camera ray, all running parallel to one another. This results in objects being the same size, regardless of their distance. Used in technical drawings and CAD. <br><strong>Bottom:</strong> Perspective viewing is more in line with how we perceive the world: Camera rays have a single point of origin. This way, objects have a vanishing point and appear smaller the farther they are away. Used in realistic 3D rendering. <br> Sources: Diagrams left <sup><a href="#footnote1">[1]</a></sup>; diagrams right<sup><a href="#footnote2">[2]</a></sup> </span>
 </p>
+
+---
 
 ### The Geometry of Perspective Projection
 
@@ -1208,7 +884,7 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 
 ---
 
-### Ray Direction Calculation
+### Field of View
 
 The **Field of View (FOV)** represents how much of the 3D scene is visible to the camera. Depending on the orientation of the camera, the FOV could be horizontal or vertical:
 
@@ -1221,7 +897,7 @@ We employ trigonometric functions, specifically the tangent function, to calcula
 
 ---
 
-### Geometric Relationship Using Tangent
+#### FOV and Tangent Relationship
 
 Imagine a right triangle formed by:
 1. The **camera's position** (the "eye") as the vertex.
@@ -1248,9 +924,9 @@ In C, trigonometric functions expect their input angles to be in radians, not de
 
 ---
 
-### Ray Direction Calculation
+### Computing Ray Directions
 
-The direction of a ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
+The direction of a camera ray corresponding to a pixel on the viewport is calculated using normalized device coordinates. These calculations map the 2D screen space into 3D world-space rays.
 
 **Steps to Calculate Ray Direction:**
 
@@ -1289,21 +965,16 @@ $$
 
 ```C
 /**
-Compute the direction vector of a ray passing through a given pixel in the camera's view.
+Computes the camera ray direction for a given pixel,
+considering the camera's field of view (FOV), aspect ratio, and orientation
 
  @param x	The horizontal pixel coordinate on the screen.
  @param y	The vertical pixel coordinate on the screen.
- @param cam	The camera object containing the FOV in degrees.
+ @param cam	The camera object containing the FOV.
 
- @return	The normalized direction vector of the ray in camera space.
-
- @note
-The z-component of the ray direction is conventionally set to 1.0
-This positions the projection plane (or screen) at z = 1.0 in camera space, simplifying the
-perspective projection calculations. The resulting vector is then normalized to ensure it has
-a unit length, making it independent of the initial choice for the z-component.
+ @return	The normalized direction vector of the ray passing through the pixel, in camera space.
 */
-t_vec3	compute_ray_direction(int x, int y, t_cam cam)
+t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 {
 	double	scale;		// Scaling factor from the vertical FOV
 	double	aspect_ratio;	// Ratio of screen width to height
@@ -1331,7 +1002,7 @@ t_vec3	compute_ray_direction(int x, int y, t_cam cam)
 
 ---
 
-### Handling Camera Orientation
+### Computing Ray Directions in World Space
 
 In a ray-tracing system, the camera's orientation defines how the rays originating from the camera are aligned with the 3D scene. To compute ray directions in world space, you must transform the rays from camera space, where the z-axis points forward, to the orientation defined by the camera's position and rotation in the scene.
 
@@ -1343,38 +1014,37 @@ The camera's orientation in 3D space is defined by three mutually orthogonal vec
 - `cam_up`: Points upward from the camera's perspective (y-axis).
 - `cam_orientation` (provided by .rt file): Points forward along the camera's line of sight (z-axis).
 
-These vectors form a **basis** for the camera's local coordinate system. To transform a direction vector from camera space to world space, you combine these basis vectors weighted by the direction's components in camera space.
+These vectors form a basis for the camera's local coordinate system. To transform a direction vector from camera space to world space, you combine these basis vectors weighted by the direction's components in camera space.
 
 #### Steps for Orientation Transformation
 
 1. Calculate the Ray Direction in Camera Space:    
    The ray direction in camera space is computed from the pixel's normalized coordinates and the field of view, as shown in the earlier function above:
    - $\text{ray-cam-dir} = (x', y', z')$, where:
-      - ($x'$): Scaled and aspect-ratio-adjusted horizontal NDC coordinate.
-      - ($y'$): Scaled vertical NDC coordinate.
+      - ($x'$) and ($y'$) are scaled screen coordinates.
       - ($z'$): Always 1.0, pointing forward in camera space
     
 2. Transform the Ray Direction in Camera Space to World Space:    
    After calculating the ray's direction in camera space, we need to transform this direction into world space, where the entire 3D scene is defined. The formula for this transformation is:
-   - $\text{ray-world-dir} = (x' \times cam-right) + (y' \times cam-up) + (z' \times cam-orientation)$
+   - $\text{ray-world-dir} = (x' \cdot \text{cam-right}) + (y' \cdot \text{cam-up}) + (z' \cdot \text{cam-orientation})$
 
-3. Normalize the Resulting Vector:
+3. Normalize the Resulting Vector:    
    To ensure that the ray direction is a unit vector, normalize the resulting world-space vector.
 
-This full implementation of the `compute_ray_direction` function incorporates the camera orientation:
+This `compute_camera_ray` function fully transforms a ray from camera space to world space:
 
 ```C
 /**
-Function to compute the ray direction for a given pixel in a camera's view,
-considering the camera's field of view (FOV), aspect ratio, and orientation.
+Computes the camera ray direction for a given pixel,
+considering the camera's field of view (FOV), aspect ratio, and orientation
 
- @param x		The horizontal pixel coordinate on the screen.
- @param y		The vertical pixel coordinate on the screen.
- @param cam		The camera object containing the FOV, orientation vector, and position.
+ @param x	The horizontal pixel coordinate on the screen.
+ @param y	The vertical pixel coordinate on the screen.
+ @param cam	The camera object containing the FOV.
 
- @return		The normalized direction vector of the ray passing through the pixel, in world space.
+ @return	The normalized direction vector of the ray passing through the pixel, in camera space.
 */
-static t_vec3	compute_ray_direction(int x, int y, t_cam cam)
+static t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 {
 	double	scale;		// Scaling factor from the vertical FOV
 	double	aspect_ratio;	// Ratio of screen width to height
