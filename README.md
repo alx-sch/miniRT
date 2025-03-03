@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/miniRT_render.png" alt="miniRT_render.png" width="500"/>
+    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/s/main/.assets/miniRT_render.png" alt="miniRT_render.png" width="500"/>
     <br>
     <span>miniRT render of  <a href="https://github.com/Busedame/miniRT/blob/main/scenes/cam_inside_sphere.rt">this scene</a>.</span>
 </p>
@@ -53,7 +53,7 @@ This project is a collaboration between:
    ```
    If Homebrew is not installed, first run:
    ```
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install//install.sh)"
    ```
    After installation, restart your Mac or run:
    ```
@@ -112,7 +112,6 @@ The `.rt` files define the elements and configurations for the scene to be rende
 - **Cylinder**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
   * **Identifier**: `cy`  
-<<<<<<< HEAD
   * **Position (XYZ coordinates)** of the center: `90.0, 0.0, 0.0`  
   * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
   * **Diameter**: `30`  
@@ -126,7 +125,6 @@ The `.rt` files define the elements and configurations for the scene to be rende
   * **Height**: `21.42`  
   * **Color** in RGB [0, 255]: `10, 0, 255`
 
->>>>>>> upstream/main
 To make it easier for the user, the orientation vectors do not need to be perfectly normalized. Vectors such as $(0.707, 0.707, 0)$ are accepted as well, instead of requiring exact values like $(1/\sqrt{2}, 1/\sqrt{2}, 0) = (0.707106\dots, 0.707106\dots, 0)$.
 
 ---
@@ -146,8 +144,6 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
 			     
 ---
 
-<<<<<<< HEAD
-=======
 ## Introduction to basic mathematical terms and concepts
 
 In this part, we will have a look at some important mathematical terms and concepts, needed to build the equations and calculations for miniRT.  
