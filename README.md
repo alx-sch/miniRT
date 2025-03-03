@@ -1221,6 +1221,8 @@ If the origin of the shadow ray (the intersection between the camera ray and the
 
 ## Shading
 
+### Phong Reflection Model
+
 As seen in the renders above, adding shadows helps enhance the sense of depth. However, the objects still appear relatively flat, as shadows alone don't fully account for how light interacts with surfaces.   
 
 To improve this, we can use the Phong Reflection Model, which simulates how light interacts with surfaces in three components:   
