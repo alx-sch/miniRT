@@ -112,13 +112,6 @@ The `.rt` files define the elements and configurations for the scene to be rende
 - **Cylinder**  
   <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
   * **Identifier**: `cy`  
-  * **Position (XYZ coordinates)** of the center: `90.0, 0.0, 0.0`  
-  * **Normalized orientation vector** (axis, range: [-1, 1]): `0.0, 1.0, 1.0`  
-  * **Diameter**: `30`  
-  * **Height**: `210.42`  
-  * **Color** in RGB ([0-255]): `0, 0, 255`
- 
-=======
   * **Position (XYZ coordinates)** of the center: `50.0, 0.0, 20.6`  
   * **Normalized orientation vector** (axis): `0.0, 0.0, 1.0`  
   * **Diameter**: `14.2`  
