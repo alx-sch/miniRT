@@ -851,6 +851,8 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 
 ## The Camera Ray
 
+Following the camera ray (or primary ray) for a given pixel is the first step in ray tracing. Calculating the camera ray involves several steps, which will be described in the chapters below.
+
 ---
 
 ### Perspective Viewing
