@@ -1245,12 +1245,12 @@ To improve this, we can use the Phong Reflection Model, which simulates how ligh
 
 ## Acknowledgements
 
-The amazing book *Ray Tracing from the Ground Up* by Kevin Suffern is not only an excellent and exhaustive resource on the subject, but also an easy-to-follow guide to the concepts and mathematics behind ray tracing. Figures taken from this book are quoted accordingly. [¹](#footnote1)
+The incredible books *Ray Tracing from the Ground Up* by Kevin Suffern<sup><a href="#footnote1">[1]</a></sup> and *The Ray Tracer Challenge* by Jamis Buck<sup><a href="#footnote3">[3]</a></sup> are not only excellent and comprehensive resources on the subject, but also accessible guides to the concepts and mathematics behind ray tracing. Figures taken from these books are referenced accordingly.
 
 The project badge used is retrieved from [this repo](https://github.com/ayogun/42-project-badges) by Ali Ogun.
 
 ## References
 
-<a name="footnote1">¹</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters.     
-<a name="footnote2">²</a> Buck, J. (2024). *Perspective and Orthogonal Views*: [https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm](https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm)
-<a name="footnote3">³</a> Datamine Software (2019). *The Ray Tracer Challenge*. The Pragmatic Programmers, LLC.
+<a name="footnote1">[1]</a> Suffern, K. (2007). *Ray Tracing from the Ground Up*. A K Peters. <br>
+<a name="footnote2">[2]</a> Buck, J. (2024). *Perspective and Orthogonal Views*. Available at: <a href="https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm" target="_blank">https://docs.dataminesoftware.com/StudioEM/Latest/VR_Help/Perpective%20and%20Orthogonal%20Modes.htm</a> <br>
+<a name="footnote3">[3]</a> Datamine Software (2019). *The Ray Tracer Challenge*. The Pragmatic Programmers, LLC.
