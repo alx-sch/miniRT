@@ -1,13 +1,13 @@
 # miniRT
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/minirt_badge.png" alt="minirt_badge.png" />
 </p>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/miniRT_render.png" alt="miniRT_render.png" width="500"/>
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/miniRT_render.png" alt="miniRT_render.png" width="500"/>
     <br>
-    <span>miniRT render of  <a href="https://github.com/Busedame/miniRT/blob/main/scenes/cam_inside_sphere.rt">this scene</a>.</span>
+    <span>miniRT render of <a href="https://github.com/alx-sch/miniRT/blob/main/scenes/cam_inside_sphere.rt">this scene</a>.</span>
 </p>
 
 This project is a collaboration between:
@@ -37,7 +37,7 @@ This project is a collaboration between:
 
 1. Clone the repository and navigate into the project directory:    
    ```
-   git clone https://github.com/Busedame/miniRT miniRT && cd miniRT
+   git clone https://github.com/alx-sch/miniRT miniRT && cd miniRT
    ```
    
 2. Build the project:
@@ -77,20 +77,20 @@ The `.rt` files define the elements and configurations for the scene to be rende
 #### Mandatory Elements
 
 - **Ambient Light**  
-  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_A.png" width="500" />  
+  <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/rt_A.png" width="500" />  
   * **Identifier**: `A`  
   * **Ambient lighting ratio** (brightness) [0.0, 1.0]: `0.2`  
   * **Color** in RGB [0, 255]: `255, 255, 255`
 
 - **Camera**  
-  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_C.png" width="500"/>  
+  <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/rt_C.png" width="500"/>  
   * **Identifier**: `C`  
   * **Position (XYZ coordinates)**: `-50.0, 0, 20`  
   * **Normalized orientation vector**: `0, 0, 1`  
   * **Field of view (FOV)** in degrees [0, 180]: `70`
 
 - **Light**  
-  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_L.png" width="500"/>  
+  <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/rt_L.png" width="500"/>  
   * **Identifier**: `L`  
   * **Position (XYZ coordinates)**: `-40.0, 50.0, 0.0`  
   * **Lighting ratio** (brightness) [0.0, 1.0]: `0.6`  
@@ -99,21 +99,21 @@ The `.rt` files define the elements and configurations for the scene to be rende
 #### Optional Elements
 
 - **Plane**  
-  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_pl.png" width="500"/>  
+  <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/rt_pl.png" width="500"/>  
   * **Identifier**: `pl`  
   * **Position (XYZ coordinates)** of a point on the plane: `0.0, 0.0, -10.0`  
   * **Normalized orientation vector**: `0.0, 1.0, 0.0`  
   * **Color** in RGB [0, 255]: `0, 0, 225`
 
 - **Sphere**  
-  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_sp.png" width="500"/>  
+  <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/rt_sp.png" width="500"/>  
   * **Identifier**: `sp`  
   * **Position (XYZ coordinates)** of the center: `0.0, 0.0, 20.6`  
   * **Diameter**: `12.6`  
   * **Color** in RGB [0, 255]: `10, 0, 255`
 
 - **Cylinder**  
-  <img src="https://github.com/Busedame/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
+  <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/rt_cy.png" width="500"/>  
   * **Identifier**: `cy`  
   * **Position (XYZ coordinates)** of the center: `50.0, 0.0, 20.6`  
   * **Normalized orientation vector** (axis): `0.0, 0.0, 1.0`  
@@ -133,7 +133,7 @@ This method was popular in early static computer graphics —think of those icon
 This project, **miniRT**, aims to build a simple yet functional ray tracer from scratch in C, exploring the fundamentals of vector calculations and rendering.
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_tracing_process.png" alt="ray_tracing_process.png" width="400"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/ray_tracing_process.png" alt="ray_tracing_process.png" width="400"/>
     <br>
     <span><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
@@ -177,7 +177,7 @@ Where:
 - **$\vec{n} $:** The normal vector of the plane, which is perpendicular to the surface.
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/plane_definition.png" alt="plane_definition.png" width="200"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/plane_definition.png" alt="plane_definition.png" width="200"/>
     <br>
     <span>A plane is defined by a point <i>a</i>, which determines its location, and a normal <i>n</i>, which defines its orientation. The point <i>p</i> is any point on the plane, such as the intersection of a ray with the plane.<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
@@ -205,7 +205,7 @@ $$
 - If the denominator $(\vec{d} \cdot \vec{n} )$ is zero  (*t* is undefined or infinite), it means the ray is **parallel** to the plane and does not intersect it.
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_plane_intersection.png" alt="ray_plane_intersection.png" width="400"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/ray_plane_intersection.png" alt="ray_plane_intersection.png" width="400"/>
     <br>
     <span>The plane becomes visible if the ray intersects it in front of the camera's origin (t > 0).<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
@@ -371,7 +371,7 @@ Where:
 - **$r$:** The radius of the sphere.
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/sphere_definition.png" alt="sphere_definition.png" width="200"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/sphere_definition.png" alt="sphere_definition.png" width="200"/>
     <br>
     <span> A sphere is defined by its center <i>c</i> and radius <i>r</i>, which determine its size and position. The point <i>p</i> represents any point on the sphere's surface (potential intersection point).<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
@@ -400,7 +400,7 @@ $$
 t^2 +  2t \left( \vec{oc} \cdot \vec{d} \right) + \left( \vec{oc} \cdot \vec{oc} \right) - r^2 = 0
 $$
 
-As explained [above](https://github.com/Busedame/miniRT/blob/main/README.md#quadratic-intersections-in-ray-tracing), this solves into:
+As explained [above](https://github.com/alx-sch/miniRT/blob/main/README.md#quadratic-intersections-in-ray-tracing), this solves into:
 
 $$
 t = \frac{-b \pm \sqrt{b^2 - 4c}}{2}
@@ -413,13 +413,13 @@ Where the coefficients are:
 - **$c = (\vec{oc} \cdot \vec{oc}) - r^2$**
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_discriminante.png" alt="ray_sphere_discriminante.png" width="400"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/ray_sphere_discriminante.png" alt="ray_sphere_discriminante.png" width="400"/>
     <br>
     <span>The discriminant indicates whether the ray intersects the sphere at zero, one, or two points.<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_sphere_intersection_distance.png" alt="ray_sphere_intersection_distance.png" width="400"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/ray_sphere_intersection_distance.png" alt="ray_sphere_intersection_distance.png" width="400"/>
     <br>
     <span>Rays do not register an intersection at their origin; the intersection requires t > 0.<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
@@ -498,7 +498,7 @@ $$
 $$
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/cylinder_definition.png" alt="cylinder_definition.png" width="200"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/cylinder_definition.png" alt="cylinder_definition.png" width="200"/>
     <br>
     <span>A cylinder is defined by a point on its axis and a vector representing its direction (e.g., <i>(0,0,0)</i> as the point and <i>(0,1,0)</i> as the orientation vector along the y-axis in the figure above in the figure above), a radius, and a height given by $\Vert y_1 - y_0 \Vert$. The point  <i>p</i> can be any point on the cylinder's mantle.<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
@@ -519,7 +519,7 @@ $$
 \Vert \vec{p} \Vert^2 - (\vec{p} \cdot \vec{u})^2 = r^2
 $$
 
-The parametric form of the [ray equation](https://github.com/Busedame/miniRT/blob/main/README.md#ray-equation) is:
+The parametric form of the [ray equation](https://github.com/alx-sch/miniRT/blob/main/README.md#ray-equation) is:
 
 $$
 P_x(t) = O_x + tD_x
@@ -638,7 +638,7 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 Please note that this function calculates the intersection of a ray with an infinite cylinder, not yet considering the cylinder's height and end caps. So far, it only detects intersections with the cylinder's lateral surface:
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/scene_no_height.png" alt="scene_no_height.png" width="500"/>
     <br>
     <span>The blue and red objects are both infinite cylinders.</span>
 </p>
@@ -677,7 +677,7 @@ $$
 $$
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/ray_cyl_height.png" alt="ray_cyl_height.png" width="350"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/ray_cyl_height.png" alt="ray_cyl_height.png" width="350"/>
 </p>
 
 ```C
@@ -739,7 +739,7 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 }
 ```
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/scene_no_caps.png" alt="scene_no_caps.png" width="500"/>
     <br>
     <span>The blue and red cylinders are finite in height but have no caps. Looking through the blue cylinder.</span>
 </p>
@@ -845,7 +845,7 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
 ```
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/scene_complete_cyl.png" alt="scene_complete_cyl.png" width="500"/>
     <br>
     <span>Looking at the end cap of the closed blue cylinder.</span>
 </p>
@@ -910,7 +910,7 @@ Following the camera ray (or primary ray) for a given pixel is the first step in
 ### Perspective Viewing
 
 <p align="center">
-    <img src="https://github.com/Busedame/miniRT/blob/main/.assets/orthographic_perspective_viewing.png" alt="orthographic_perspective_viewing.png" width="500"/>
+    <img src="https://github.com/alx-sch/miniRT/blob/main/.assets/orthographic_perspective_viewing.png" alt="orthographic_perspective_viewing.png" width="500"/>
     <br>
     <span><strong>Top:</strong> In orthogonal viewing, each pixel is a separate camera ray, all running parallel to one another. This results in objects being the same size, regardless of their distance. Used in technical drawings and CAD. <br><strong>Bottom:</strong> Perspective viewing is more in line with how we perceive the world: Camera rays have a single point of origin. This way, objects have a vanishing point and appear smaller the farther they are away. Used in realistic 3D rendering. <br> Sources: Diagrams left <sup><a href="#footnote1">[1]</a></sup>; diagrams right<sup><a href="#footnote2">[2]</a></sup> </span>
 </p>
@@ -925,13 +925,13 @@ A **pinhole camera model** can be used to describe how a 3D scene is projected o
 - The **view frustum** is a truncated pyramid extending from the camera's position toward the viewport. The rectangular screen at the base of the frustum defines the visible scene.
 
 <p align="center">
-	<img width="600" alt="FOV_frustum" src="https://github.com/Busedame/miniRT/blob/main/.assets/FOV_frustum.png">  
+	<img width="600" alt="FOV_frustum" src="https://github.com/alx-sch/miniRT/blob/main/.assets/FOV_frustum.png">  
 	<br>
 	<span>Pinhole camera model illustrating the FOV frustum and the rectangular screen for 2D projection (viewport).</span>
 </p>
 
 <p align="center">
-	<img width="350" alt="Viewpoint_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/Viewport_Field_of_View.png">
+	<img width="350" alt="Viewpoint_FOV" src="https://github.com/alx-sch/miniRT/blob/main/.assets/Viewport_Field_of_View.png">
 	<br>
 	<span>Top: Camera's FOV viewed from above. Bottom: 2D projection onto the screen.</span>
 </p>
@@ -967,7 +967,7 @@ $$
 $$
 
 <p align="center">
-	<img width="350" alt="tan_FOV" src="https://github.com/Busedame/miniRT/blob/main/.assets/tan_FOV.png">  
+	<img width="350" alt="tan_FOV" src="https://github.com/alx-sch/miniRT/blob/main/.assets/tan_FOV.png">  
 <p align="center"> </p>
 
 
@@ -1210,10 +1210,10 @@ t_shdw	compute_shadow_ray(t_ix *camera_ray_ix, t_light light)
 If the origin of the shadow ray (the intersection between the camera ray and the object) is not moved slightly above the surface, an effect called "shadow acne" can be observed. Because computers cannot represent floating-point numbers with perfect precision, the hit point falls within a small margin of error around the surface. This means some calculated hit points end up slightly below the surface. As a result, the shadow ray incorrectly intersects the object itself, causing it to cast a shadow on its own intersection point.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_0.png" alt="shadow_0.png" width="400"/> <br> (a) <br> 
-    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_1.png" alt="shadow_1.png" width="400"/> <br> (b) <br> 
-    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_2.png" alt="shadow_2.png" width="400"/> <br> (c) <br> 
-    <img src="https://raw.githubusercontent.com/Busedame/miniRT/refs/heads/main/.assets/shadow_3.png" alt="shadow_3.png" width="400"/> <br> (d) <br> 
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/shadow_0.png" alt="shadow_0.png" width="400"/> <br> (a) <br> 
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/shadow_1.png" alt="shadow_1.png" width="400"/> <br> (b) <br> 
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/shadow_2.png" alt="shadow_2.png" width="400"/> <br> (c) <br> 
+    <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/shadow_3.png" alt="shadow_3.png" width="400"/> <br> (d) <br> 
     <span>The same scene without any shadowing <strong>(a)</strong>; shadowing without ensuring that the shadow ray-object intersection occurs in front of the light source <strong>(b)</strong>; shadowing without offsetting the shadow ray origin, resulting in shadow acne <strong>(c)</strong>, correct shadowing <strong>(d)</strong>. Note that no shading has been applied yet, and shadows are still rendered as black.</span>
 </p>
 
@@ -1243,7 +1243,7 @@ To improve this, we can use the Phong Reflection Model, which simulates how ligh
 
 Lambert's Cosine Law explains how light reflects off rough or matte surfaces. It states that the amount of light reflected is proportional to the cosine of the angle between the surface normal and the light direction. This means that light striking a surface head-on is reflected most strongly, while light at an angle produces weaker reflections. This law is used to simulate how materials appear brighter when facing the light and darker at steeper angles.   
 
-The following function calculates the diffuse reflection coefficient
+The following function calculates the diffuse reflection coefficient, which is used to simulate how light interacts with matte surfaces.
 
 ```C
 /**
@@ -1274,8 +1274,6 @@ static double	get_diffuse_coefficient(t_rt *rt, t_ix *ix)
 	return (diffuse);  // Return the diffuse lighting coefficient value [0.0, 1.0]
 }
 ```
-
-
 
 ### Specular Reflection
 
@@ -1321,6 +1319,14 @@ static double	get_specular_coefficient(t_rt *rt, t_ix *ix)
 	return (specular);
 }
 ```
+
+### Combine all Shading Components
+
+
+
+## Render the Scene
+
+To render the whole scene with the above mentioned functions for ray direction computation, intersection determination, shadowing, and shading 
    
 
 
