@@ -1025,7 +1025,7 @@ These vectors form a basis for the camera's local coordinate system. To transfor
     
 2. Transform the Ray Direction in Camera Space to World Space:    
    After calculating the ray's direction in camera space, we need to transform this direction into world space, where the entire 3D scene is defined. The formula for this transformation is:
-   - $\text{ray-world-dir} = (x' \times \text{cam-right}) + (y' \times \text{cam-up}) + (z' \times \text{cam-orientation})$
+   - $\text{ray-world-dir} = (x' \cdot \text{cam-right}) + (y' \cdot \text{cam-up}) + (z' \cdot \text{cam-orientation})$
 
 3. Normalize the Resulting Vector:    
    To ensure that the ray direction is a unit vector, normalize the resulting world-space vector.
