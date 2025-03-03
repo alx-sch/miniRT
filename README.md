@@ -915,7 +915,7 @@ Following the camera ray (or primary ray) for a given pixel is the first step in
 
 ---
 
-### The Geometry of Perspective Projection
+#### The Geometry of Perspective Projection
 
 A **pinhole camera model** can be used to describe how a 3D scene is projected onto a 2D screen (viewport). The pinhole model has the following properties
 - Rays originate from the camera's position (the "eye") and pass through a virtual screen plane (the viewport).
