@@ -23,6 +23,7 @@ This project is a collaboration between:
 - **[Introduction to Ray Tracing](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#introduction-to-ray-tracing)**
 - **[Ray-Object Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-object-intersection)**: Explains the mathematics behind detecting ray intersections with geometric objects, forming the basis for functions used in miniRT. 
   - [Ray Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#ray-equation)
+  - [Quadratic Equation](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#quadratic-equation)
   - [Plane Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#plane-intersection)
   - [Sphere Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#sphere-intersection)
   - [Cylinder Intersection](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#cylinder-intersection)
