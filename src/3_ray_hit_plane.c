@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/22 12:20:07 by aschenk          ###   ########.fr       */
+/*   Updated: 2025/03/03 15:53:00 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ to zero can be unreliable. A small threshold (EPSILON -> 1e-6) is used to
 determine if the ray is parallel to the plane. Values below this threshold are
 considered too close to zero, indicating parallelism or preventing division by
 very small numbers, which could lead to inaccuracies.
->>>>>>> upstream/main:src/3_ray_hit_plane.c
 */
 int	ray_hit_plane(t_vec3 ray_ori, t_vec3 ray_dir, t_obj *obj, double *t)
 {
