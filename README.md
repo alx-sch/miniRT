@@ -1320,7 +1320,7 @@ static double	get_specular_coefficient(t_rt *rt, t_ix *ix)
 }
 ```
 
-### Combine Shading Components
+### Combining Shading Components
 
 The final shaded color for a pixel is calculated by combining the ambient, diffuse, and specular components for each RGB channel, with the result clamped to a maximum of 255 to prevent overflow. An additional light fading effect further enhances the realism of the render.
 
