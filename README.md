@@ -1219,7 +1219,7 @@ If the origin of the shadow ray (the intersection between the camera ray and the
 
 ---
 
-## Shading using the Phong Reflection Model
+## Shading
 
 As seen in the renders above, adding shadows helps enhance the sense of depth. However, the objects still appear relatively flat, as shadows alone don't fully account for how light interacts with surfaces.   
 
