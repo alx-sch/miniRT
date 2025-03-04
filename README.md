@@ -69,7 +69,7 @@ This project is a collaboration between:
 4. Run the program following the instructions in the output.
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
-[MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows and handling graphics/events.
+[MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows, handling pixel coloration, and managing events.
 
 ---
 
