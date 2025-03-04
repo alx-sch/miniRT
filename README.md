@@ -54,7 +54,7 @@ This project is a collaboration between:
    	make bonus
    	```
    
-4. macOS Users: Install X11 via XQuartz if needed:
+3. macOS Users: Install X11 via XQuartz if needed:
    ```
    brew install xquartz
    ```
@@ -66,7 +66,7 @@ This project is a collaboration between:
    ```
    export DISPLAY=:0
    ```
-5. Run the program following the instructions in the output.
+4. Run the program following the instructions in the output.
 
 The `Makefile` automatically detects your OS and selects the correct MiniLibX library for compilation.
 [MiniLibX](https://github.com/42Paris/minilibx-linux) is a simple graphics library for creating windows and handling graphics/events.
