@@ -33,7 +33,7 @@ This project is a collaboration between:
 - **[Shading](https://github.com/alx-sch/42_miniRT/blob/main/README.md#shading)**: Calculate the color at the intersection point based on its surface properties and its orientation relative to the light source.
   - [Phong Reflection Model](https://github.com/alx-sch/42_miniRT/blob/main/README.md#phong-reflection-model)
   - [Diffuse Shading](https://github.com/alx-sch/42_miniRT/blob/main/README.md#diffuse-shading)
-  - [Specula Reflection](https://github.com/alx-sch/42_miniRT/blob/main/README.md#specular-reflection)
+  - [Specular Reflection](https://github.com/alx-sch/42_miniRT/blob/main/README.md#specular-reflection)
   - [Combining Shading Components](https://github.com/alx-sch/42_miniRT/blob/main/README.md#combining-shading-components)
 ---
 
