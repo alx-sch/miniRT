@@ -598,7 +598,6 @@ int	ray_intersect_cylinder(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cylind
 	double	c;
 	double	discriminant;
 	
-
 	// Compute the vector from ray origin to the cylinder center
 	oc = vec3_sub(ray_origin, cylinder->center);
 
