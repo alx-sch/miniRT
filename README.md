@@ -1215,7 +1215,7 @@ If the origin of the shadow ray (the intersection between the camera ray and the
     <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/shadow_1.png" alt="shadow_1.png" width="400"/> <br> (b) <br> 
     <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/shadow_2.png" alt="shadow_2.png" width="400"/> <br> (c) <br> 
     <img src="https://raw.githubusercontent.com/alx-sch/miniRT/refs/heads/main/.assets/shadow_3.png" alt="shadow_3.png" width="400"/> <br> (d) <br> 
-    <span>The same scene without any shadowing <strong>(a)</strong>; shadowing without ensuring that the shadow ray-object intersection occurs in front of the light source <strong>(b)</strong>; shadowing without offsetting the shadow ray origin, resulting in shadow acne <strong>(c)</strong>, correct shadowing <strong>(d)</strong>. Note that no shading has been applied yet, and shadows are still rendered as black.</span>
+    <span>The same scene without any shadowing <strong>(a)</strong>; shadowing without ensuring that the shadow ray-object intersection occurs in front of the light source <strong>(b)</strong>; shadowing without offsetting the shadow ray origin, resulting in shadow acne <strong>(c)</strong>, correct shadowing <strong>(d)</strong>. Note that no shading has been applied yet and shadows are still rendered as black.</span>
 </p>
 
 ---
