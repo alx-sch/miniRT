@@ -765,9 +765,13 @@ To account for the cylinder's end caps, the goal is to check if a ray intersects
 
    Simplify: $\left(\vec{oc}_\text{cap} \cdot \vec{u} + t(\vec{d} \cdot \vec{u}) \right) = 0$
 
-   Solve for $t = - \frac{\vec{oc}_\text{cap} \cdot \vec{u}}{\vec{d} \cdot \vec{u}}$
+   Solve for
 
-4. **Check the intersection point against the cap's radius:**    
+$$
+   t = - \frac{\vec{oc}_\text{cap} \cdot \vec{u}}{\vec{d} \cdot \vec{u}}
+$$
+
+5. **Check the intersection point against the cap's radius:**    
    Once ($t$) is computed, the intersection point $(P(t))$ can be calculated using the ray equation.
    The intersection point lies within the cap if the squared length of this vector is less than or equal to the squared radius of the cap:
    $\Vert P(t) - C_{\text{cap}}  \Vert^2 \leq r^2$
