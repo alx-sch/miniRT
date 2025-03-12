@@ -1391,7 +1391,7 @@ t_shade	get_shading(t_rt *rt, t_ix *ix)
 
 The incredible books *Ray Tracing from the Ground Up* by Kevin Suffern<sup><a href="#footnote1">[1]</a></sup> and *The Ray Tracer Challenge* by Jamis Buck<sup><a href="#footnote3">[3]</a></sup> are not only excellent and comprehensive resources on the subject, but also accessible guides to the concepts and mathematics behind ray tracing. Figures taken from these books are referenced accordingly.
 
-The project badge used is retrieved from [this repo](https://github.com/ayogun/42-project-badges) by Ali Ogun.
+The project badge is from [this repository](https://github.com/ayogun/42-project-badges) by Ali Ogun.
 
 ## References
 
