@@ -43,7 +43,7 @@ This project is a collaboration between:
 
 1. Clone the repository and navigate into the project directory:    
    ```
-   git clone https://github.com/alx-sch/miniRT miniRT && cd miniRT
+   git clone https://github.com/alx-sch/42_miniRT miniRT && cd miniRT
    ```
    
 2. Build the project:
@@ -933,7 +933,7 @@ void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ix)
 }
 ```
 
-For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c])) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
+For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c)) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
     
 While the origins of the camera rays are known, the following chapter will explain how to calculate the direction of each camera ray.
 
