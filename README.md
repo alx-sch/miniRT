@@ -515,6 +515,7 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 <div align="right">
   <b><a href="#top">↥ back to top</a></b>
 </div>
+
 ---
 
 ### Cylinder Intersection
