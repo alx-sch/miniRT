@@ -18,6 +18,7 @@ This project is a collaboration between:
 ---
 
 ## Overview
+<div id="top"></div>
 
 - **[How to Use](https://github.com/alx-sch/42_miniRT/blob/main/README.md#overview)**: Building miniRT and defining scene elements in `.rt` files.
 - **[Introduction to Ray Tracing](https://github.com/alx-sch/42_miniRT?tab=readme-ov-file#introduction-to-ray-tracing)**
@@ -127,6 +128,10 @@ The `.rt` files define the elements and configurations for the scene to be rende
 
 To make it easier for the user, the orientation vectors do not need to be perfectly normalized. Vectors such as $(0.707, 0.707, 0)$ are accepted as well, instead of requiring exact values like $(\sqrt{1/2}, \sqrt{1/2}, 0) = (0.707106\dots, 0.707106\dots, 0)$.
 
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
+
 ---
 ## Introduction to Ray Tracing
 
@@ -141,6 +146,10 @@ This project, **miniRT**, aims to build a simple yet functional ray tracer from 
     <br>
     <span><strong>Ray-tracing process:</strong> The ray goes from the camera through a pixel of the window and is tested for intersection with the objects. When a ray hits an object, the ray tracer works out how much light is reflected back along the ray to determine the pixel's color.<sup><a href="#footnote1">[1]</a></sup></span>
 </p>
+
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
 			     
 ---
 
@@ -164,6 +173,10 @@ Where:
 -  **$\vec{d}$:** The normalized direction vector of the ray. A normalized vector has a magnitude (or length) of 1, ensuring that the scalar $(t)$ directly corresponds to the distance traveled along the ray.  
 
 - **$t$:**  A scalar value indicating the distance along the ray. It scales the direction vector, determining how far along the ray the point $P(t)$ is. When the direction vector is normalized, the value of $(t)$ directly represents the magnitude of the distance from the ray’s origin.
+
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
 
 ---
 
@@ -261,6 +274,11 @@ int	ray_intersect_plane(t_vec3 ray_origin, t_vec3 ray_dir, t_plane *plane, doubl
 	return (0);	// No valid intersection is found
 }
 ```
+
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
+
 ---
 
 ### Quadratic Equation
@@ -283,7 +301,9 @@ $$
 
 For a detailed derivation of the quadratic formula, please refer to [ChiliMath Quadratic Formula Derivation](https://www.chilimath.com/lessons/intermediate-algebra/derive-quadratic-formula/).
 
-### Quadratic Intersections in Ray Tracing
+---
+
+#### Quadratic Intersections in Ray Tracing
 
 In context of the miniRT project, calculating intersections with objects like **spheres** or **cylinders** involves solving a quadratic equation of the form
 
@@ -300,6 +320,8 @@ $$
 Where:
 - **$t$:** The unknown variable representing the **distance from the ray's origin** to the intersection points.
 - **$a$, $b$, $c$:** Coefficients determined by the ray and object properties (e.g., direction vectors, centers, and radius).
+
+---
 
 #### Role of the Discriminant (Δ):    
 
@@ -343,6 +365,7 @@ double	calculate_discriminant(double a, double b, double c)
 	return (discriminant);	// Return the computed discriminant
 }
 ```
+---
 
 #### Special case: Camera Inside the Object
 
@@ -356,6 +379,10 @@ t_2 = \frac{-b + \sqrt{b^2 - 4ac}}{2a}
 $$
 
 If ($t_1 < 0$) and ($t_2 >0$), the ray starts **within** the object and the valid intersection point is ($t_2$) (the exit point), which is **in front of the camera**. ($t_1$) is negative, corresponding to an intersection **behind the camera**, making it invalid.
+
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
 
 ---
 
@@ -485,7 +512,9 @@ int	ray_intersect_sphere(t_vec3 ray_origin, t_vec3 ray_dir, t_sphere *sphere, do
 	return (0);	// No valid intersection found
 }
 ```
-
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
 ---
 
 ### Cylinder Intersection
@@ -851,6 +880,10 @@ int	ray_intersect_cap(t_vec3 ray_origin, t_vec3 ray_dir, t_cylinder *cyl, double
     <span>Looking at the end cap of the closed blue cylinder.</span>
 </p>
 
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
+
 ---
 
 ### Finding Intersections with Objects
@@ -901,6 +934,10 @@ void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ix)
 For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c])) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
     
 While the origins of the camera rays are known, the following chapter will explain how to calculate the direction of each camera ray.
+
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
 
 ---
 
@@ -1151,6 +1188,10 @@ static t_vec3	compute_camera_ray(int x, int y, t_cam cam)
 }
 ```
 
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
+
 ---
 
 ## The Shadow Ray
@@ -1217,6 +1258,10 @@ If the origin of the shadow ray (the intersection between the camera ray and the
     <img src="https://raw.githubusercontent.com/alx-sch/42_miniRT/refs/heads/main/.assets/shadow_3.png" alt="shadow_3.png" width="400"/> <br> (d) <br> 
     <span>The same scene without any shadowing <strong>(a)</strong>; shadowing without ensuring that the shadow ray-object intersection occurs in front of the light source <strong>(b)</strong>; shadowing without offsetting the shadow ray origin, resulting in shadow acne <strong>(c)</strong>, correct shadowing <strong>(d)</strong>. Note that no shading has been applied yet and shadows are still rendered as black.</span>
 </p>
+
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
 
 ---
 
@@ -1384,6 +1429,10 @@ t_shade	get_shading(t_rt *rt, t_ix *ix)
     <img src="https://raw.githubusercontent.com/alx-sch/42_miniRT/refs/heads/main/.assets/spec_fading.png" alt="spec_fading.png" width="400"/> <br> (c) <br> 
     <span>The same scene with: ambient light and diffuse shading <strong>(a)</strong>, specular highlighting <strong>(b)</strong>, and light fading <strong>(c)</strong>, resulting in a fully shaded render.</span>
 </p>
+
+<div align="right">
+  <b><a href="#top">↥ back to top</a></b>
+</div>
    
 ---
 
