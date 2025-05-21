@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   3_ray_hit_cylinder.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 16:47:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/21 09:06:20 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /*
 This file contains functions to calculate the intersection of a ray with a
 cylinder object in 3D space. As a cylinder is a combination of a tube and

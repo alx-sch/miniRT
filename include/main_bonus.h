@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_bonus.h                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 18:13:07 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/26 15:51:15 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /*
 The primary inclusion point for the project, including all necessary libraries
 and declaring all function prototypes.

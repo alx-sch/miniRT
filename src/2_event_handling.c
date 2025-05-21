@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   2_event_handling.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 17:24:44 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/26 15:49:19 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /*
 This file contains hook functions to intercept and respond to user input,
 including key input and window interaction events.

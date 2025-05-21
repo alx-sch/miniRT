@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pl_parse_and_set.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 19:50:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/22 12:03:49 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "main.h"
 
 /*Stores all the data of the current plane in the linked list of objects.*/

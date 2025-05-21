@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   4_error_exit.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 16:38:42 by aschenk           #+#    #+#             */
-/*   Updated: 2025/02/18 22:43:30 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /*
 This file contains a functions for terminating the program in a controlled
 manner whenever an error occurs. Before terminating, an error message is

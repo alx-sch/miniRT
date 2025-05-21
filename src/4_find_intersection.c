@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   4_find_intersection.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 11:59:09 by aschenk           #+#    #+#             */
-/*   Updated: 2025/03/03 17:03:31 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /*
 Handles camera ray -> object intersection for planes, spheres, and cylinders
 in the parsed object list. Determines the intersection data for the closest

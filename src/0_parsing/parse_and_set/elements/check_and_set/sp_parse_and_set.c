@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sp_parse_and_set.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 18:51:18 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/18 22:00:39 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "main.h"
 
 /*Stores all the data of the current sphere in the linked list of objects.*/

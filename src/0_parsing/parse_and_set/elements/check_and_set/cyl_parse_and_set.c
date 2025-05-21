@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cyl_parse_and_set.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 15:53:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/22 12:03:08 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "main.h"
 
 /*Stores various attributes of the cylinder in the linked list of objects.*/

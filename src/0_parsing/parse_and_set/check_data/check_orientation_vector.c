@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_orientation_vector.c                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 16:33:28 by nholbroo          #+#    #+#             */
-/*   Updated: 2025/02/22 12:06:17 by aschenk          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "main.h"
 
 /*Checks if the values only consist of '+', '-', numbers and decimal point,
