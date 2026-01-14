@@ -432,7 +432,7 @@ $$
 t^2 +  2t \left( \vec{oc} \cdot \vec{d} \right) + \left( \vec{oc} \cdot \vec{oc} \right) - r^2 = 0
 $$
 
-As explained [above](https://github.com/alx-sch/42_miniRT/blob/main/README.md#quadratic-intersections-in-ray-tracing), this solves into:
+As explained [above](#quadratic-equation), this solves into:
 
 $$
 t = \frac{-b \pm \sqrt{b^2 - 4c}}{2}
@@ -554,7 +554,7 @@ $$
 \Vert \vec{p} \Vert^2 - (\vec{p} \cdot \vec{u})^2 = r^2
 $$
 
-The parametric form of the [ray equation](https://github.com/alx-sch/42_miniRT/blob/main/README.md#ray-equation) is:
+The parametric form of the [ray equation](#ray-equation) is:
 
 $$
 P_x(t) = O_x + tD_x
@@ -933,7 +933,7 @@ void	find_intersection(t_vec3 ray_ori, t_vec3 ray_dir, t_rt *rt, t_ix *ix)
 }
 ```
 
-For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](https://github.com/alx-sch/42_miniRT/blob/main/src/4_find_intersection.c)) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
+For each object, the appropriate intersection function (`plane_ix`, `sphere_ix`, `cyl_ix`, see in [find_intersection.c](src/4_find_intersection.c)) is called based on the object's type. These functions check if the ray intersects the object and update the intersection data (`ix`) if the intersection is the closest one found so far.
     
 While the origins of the camera rays are known, the following chapter will explain how to calculate the direction of each camera ray.
 
