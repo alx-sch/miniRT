@@ -20,8 +20,8 @@ This project is a collaboration between:
 ## Overview
 <div id="top"></div>
 
-- **[How to Use](README.md#overview)**: Building miniRT and defining scene elements in `.rt` files.
-- **[Introduction to Ray Tracing](README.md#overviewintroduction-to-ray-tracing)**
+- **[How to Use](#how-to-use)**: Building miniRT and defining scene elements in `.rt` files.
+- **[Introduction to Ray Tracing](#ray-tracing-files-rt-files)**
 - **[Ray-Object Intersection](README.md#overviewray-object-intersection)**: Mathematical definitions of object surfaces and functions for finding intersections.
   - [Ray Equation](README.md#overviewray-equation)
   - [Quadratic Equation](README.md#overviewquadratic-equation)
@@ -29,9 +29,9 @@ This project is a collaboration between:
   - [Sphere Intersection](README.md#overviewsphere-intersection)
   - [Cylinder Intersection](README.md#overviewcylinder-intersection)
   - [Finding Intersections with Objects](README.md#overviewfinding-intersections-with-objects)
-- **[Camera Ray](README.md#the-camera-ray)**: Computing the direction of camera rays and transforming them into world space.
-- **[Shadow Ray](README.md#the-shadow-ray)**: Check if the intersection point is in shadow by verifying if the light source is blocked.
-- **[Shading](README.md#shading)**: Calculate the color at the intersection point based on its surface properties and its orientation relative to the light source.
+- **[Camera Ray](#the-camera-ray)**: Computing the direction of camera rays and transforming them into world space.
+- **[Shadow Ray](#the-shadow-ray)**: Check if the intersection point is in shadow by verifying if the light source is blocked.
+- **[Shading](#shading)**: Calculate the color at the intersection point based on its surface properties and its orientation relative to the light source.
   - [Phong Reflection Model](README.md#phong-reflection-model)
   - [Diffuse Shading](README.md#diffuse-shading)
   - [Specular Reflection](README.md#specular-reflection)
