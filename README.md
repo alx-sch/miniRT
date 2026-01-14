@@ -21,21 +21,21 @@ This project is a collaboration between:
 <div id="top"></div>
 
 - **[How to Use](#how-to-use)**: Building miniRT and defining scene elements in `.rt` files.
-- **[Introduction to Ray Tracing](#ray-tracing-files-rt-files)**
-- **[Ray-Object Intersection](README.md#overviewray-object-intersection)**: Mathematical definitions of object surfaces and functions for finding intersections.
-  - [Ray Equation](README.md#overviewray-equation)
-  - [Quadratic Equation](README.md#overviewquadratic-equation)
-  - [Plane Intersection](README.md#overviewplane-intersection)
-  - [Sphere Intersection](README.md#overviewsphere-intersection)
-  - [Cylinder Intersection](README.md#overviewcylinder-intersection)
-  - [Finding Intersections with Objects](README.md#overviewfinding-intersections-with-objects)
+- **[Introduction to Ray Tracing](#introduction-to-ray-tracing)**
+- **[Ray-Object Intersection](#ray-object-intersection)**: Mathematical definitions of object surfaces and functions for finding intersections.
+  - [Ray Equation](#ray-equation)
+  - [Plane Intersection](#plane-intersection)
+  - [Quadratic Equation](#quadratic-equation)
+  - [Sphere Intersection](#sphere-intersection)
+  - [Cylinder Intersection](#cylinder-intersection)
+  - [Finding Intersections with Objects](#finding-intersections-with-objects)
 - **[Camera Ray](#the-camera-ray)**: Computing the direction of camera rays and transforming them into world space.
 - **[Shadow Ray](#the-shadow-ray)**: Check if the intersection point is in shadow by verifying if the light source is blocked.
 - **[Shading](#shading)**: Calculate the color at the intersection point based on its surface properties and its orientation relative to the light source.
-  - [Phong Reflection Model](README.md#phong-reflection-model)
-  - [Diffuse Shading](README.md#diffuse-shading)
-  - [Specular Reflection](README.md#specular-reflection)
-  - [Combining Shading Components](README.md#combining-shading-components)
+  - [Phong Reflection Model](#phong-reflection-model)
+  - [Diffuse Shading](#diffuse-shading)
+  - [Specular Reflection](#specular-reflection)
+  - [Combining Shading Components](#combining-shading-components)
 
 ---
 
